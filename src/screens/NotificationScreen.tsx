@@ -1,0 +1,129 @@
+import { useState } from 'react'
+import { ArrowLeft, ChevronRight, MoreVertical, X, Mail, Trash2 } from 'lucide-react'
+import { Str } from '../components/Str'
+import { useApp } from '../context/AppContext'
+import { MOCK_NOTIFICATIONS } from '../data/mockContent'
+
+export function NotificationScreen() {
+  const { closeNotif } = useApp()
+  const [notifications, setNotifications] = useState(MOCK_NOTIFICATIONS)
+  const [optionsFor, setOptionsFor] = useState<string | null>(null)
+
+  function markAsRead(id: string) {
+    setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)))
+    setOptionsFor(null)
+  }
+
+  function deleteNotif(id: string) {
+    setNotifications((prev) => prev.filter((n) => n.id !== id))
+    setOptionsFor(null)
+  }
+
+  return (
+    <div className="h-full flex flex-col relative">
+      {/* header */}
+      <div className="flex items-center gap-3 px-3 py-2.5 border-b border-imely-line shrink-0">
+        <button
+          onClick={closeNotif}
+          className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-100 transition-transform"
+        >
+          <ArrowLeft size={18} />
+        </button>
+        <div className="font-bold text-[17px] text-imely-ink">
+          <Str k="navigation.noti.subtab_home.noti_all_tab_name" />
+        </div>
+      </div>
+
+      <div className="flex-1 overflow-y-auto">
+        {/* placeholder promo banner */}
+        <button className="w-full flex items-center justify-between bg-imely-mint px-4 py-3 active:bg-imely-mintDeep transition-colors">
+          <span className="text-[13.5px] font-semibold text-imely-primaryDark">
+            📢 Pemberitahuan dari imely
+          </span>
+          <ChevronRight size={16} className="text-imely-primaryDark" />
+        </button>
+
+        <div className="px-4 pt-4 pb-2 font-bold text-[15px] text-imely-ink">
+          <Str k="navigation.noti.subtab_home.tab_name_1" />
+        </div>
+
+        <div className="bg-sky-50/70">
+          {notifications.map((n) => (
+            <div
+              key={n.id}
+              className={`flex items-start gap-3 px-4 py-3 border-b border-white ${
+                n.read ? 'bg-transparent' : ''
+              }`}
+            >
+              <div className="w-10 h-10 rounded-full border-2 border-imely-primary bg-imely-ink flex items-center justify-center text-white text-[15px] shrink-0">
+                🐱
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-[13.5px] text-imely-ink leading-snug">{n.text}</div>
+                <div className="text-[11px] text-gray-400 mt-1">{n.time}</div>
+              </div>
+              <button
+                onClick={() => setOptionsFor(n.id)}
+                className="text-gray-400 shrink-0 active:scale-90 transition-transform p-1"
+              >
+                <MoreVertical size={16} />
+              </button>
+            </div>
+          ))}
+
+          {notifications.length === 0 && (
+            <div className="text-center text-[13px] text-gray-400 py-10">
+              <Str k="noti_list.empty_list" />
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Opsi bottom sheet for the selected notification */}
+      {optionsFor && (
+        <div className="absolute inset-0">
+          <button
+            onClick={() => setOptionsFor(null)}
+            aria-label="Close options"
+            className="absolute inset-0 bg-black/40"
+          />
+          <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl">
+            <div className="relative flex items-center justify-center px-4 py-4 border-b border-imely-line">
+              <div className="font-bold text-[16px] text-imely-ink">
+                <Str k="menu.noti_option_menu.header" />
+              </div>
+              <button
+                onClick={() => setOptionsFor(null)}
+                className="absolute right-4 text-gray-400 active:scale-90 transition-transform"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <button
+              onClick={() => markAsRead(optionsFor)}
+              className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors"
+            >
+              <Mail size={17} className="text-imely-ink" />
+              <span className="text-[14px] text-imely-ink">
+                <Str k="menu.noti_option_menu.mark_as_read" />
+              </span>
+            </button>
+
+            <button
+              onClick={() => deleteNotif(optionsFor)}
+              className="w-full flex items-center gap-3 px-4 py-3.5 active:bg-gray-50 transition-colors"
+            >
+              <Trash2 size={17} className="text-imely-ink" />
+              <span className="text-[14px] text-imely-ink">
+                <Str k="menu.noti_option_menu.delete_noti" />
+              </span>
+            </button>
+
+            <div className="h-2" />
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
