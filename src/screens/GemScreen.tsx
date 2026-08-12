@@ -1,10 +1,24 @@
-import { ArrowLeft, ChevronRight, Plus, Copy, Pencil, Check } from 'lucide-react'
+import { useState } from 'react'
+import { ArrowLeft, ChevronRight, Plus, Copy, Pencil, Check, X } from 'lucide-react'
 import { Str } from '../components/Str'
 import { useApp } from '../context/AppContext'
+import { ZoneScope } from '../context/ScreenScope'
+import { usePopupRequest } from '../hooks/usePopupRequest'
 import { MOCK_USER, MOCK_INVITE_CODE, MOCK_GEM_MISSIONS } from '../data/mockContent'
+
+// Placeholder — per-user gem lot breakdown, not xlsx content (see gem_history.*
+// for the real column-header strings, used on the fuller history screen).
+// Amounts sum to MOCK_USER.dailyGems so the detail modal stays consistent
+// with the overview card behind it.
+const DAILY_GEM_LOTS = [
+  { amount: 100, expiresToday: true, date: null as string | null },
+  { amount: 2146, expiresToday: false, date: '31/12/2026' },
+]
 
 export function GemScreen() {
   const { closeGems, showToast } = useApp()
+  const [dailyDetailOpen, setDailyDetailOpen] = useState(false)
+  usePopupRequest('gems', 'popup', setDailyDetailOpen)
 
   function copyInviteCode() {
     navigator.clipboard?.writeText(MOCK_INVITE_CODE).catch(() => {})
@@ -12,7 +26,7 @@ export function GemScreen() {
   }
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col relative">
       {/* header */}
       <div className="flex items-center px-3 py-2.5 shrink-0">
         <button
@@ -51,7 +65,7 @@ export function GemScreen() {
               <Str k="user_gem_overview.expirable" />: {MOCK_USER.dailyGems.toLocaleString('id-ID')} 💎
             </div>
             <button
-              onClick={() => showToast('Detail gem harian — segera hadir')}
+              onClick={() => setDailyDetailOpen(true)}
               className="text-[12.5px] font-semibold border border-imely-line rounded-full px-3.5 py-1.5 active:scale-95 active:bg-gray-50 transition-transform"
             >
               Detail
@@ -185,6 +199,52 @@ export function GemScreen() {
           </div>
         </div>
       </div>
+
+      {/* gem harian breakdown — opened from the "Detail" button on the overview card */}
+      {dailyDetailOpen && (
+        <ZoneScope zone="popup">
+          <div className="absolute inset-0 z-10">
+            <button
+              onClick={() => setDailyDetailOpen(false)}
+              aria-label="Close gem detail"
+              className="absolute inset-0 bg-black/40"
+            />
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl p-5 max-h-[70%] overflow-y-auto">
+              <div className="flex items-center justify-between">
+                <div className="font-bold text-[17px] text-imely-ink">
+                  <Str k="user_gem_overview.title" />
+                </div>
+                <button
+                  onClick={() => setDailyDetailOpen(false)}
+                  className="text-gray-400 active:scale-90 transition-transform"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <div className="mt-4 space-y-3 text-[14px] text-imely-ink">
+                <div>
+                  <Str k="user_gem_overview.total" />: <span className="font-bold">{MOCK_USER.gems.toLocaleString('id-ID')}</span>💎
+                </div>
+                <div>
+                  <Str k="user_gem_overview.persist" />: <span className="font-bold">{MOCK_USER.permanentGems}</span> 💎
+                </div>
+                <div>
+                  <Str k="user_gem_overview.expirable" />: <span className="font-bold">{MOCK_USER.dailyGems.toLocaleString('id-ID')}</span>💎
+                  <div className="mt-1.5 space-y-1 text-[12.5px] text-gray-500">
+                    {DAILY_GEM_LOTS.map((lot, i) => (
+                      <div key={i}>
+                        • {lot.amount}💎 <Str k="user_gem_overview.expire_at" /> 23:59{' '}
+                        {lot.expiresToday ? <Str k="user_gem_overview.txt_today" /> : lot.date}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ZoneScope>
+      )}
     </div>
   )
 }

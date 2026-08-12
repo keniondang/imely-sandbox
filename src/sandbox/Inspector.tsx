@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Search, X, AlertTriangle, RotateCcw, ChevronRight } from 'lucide-react'
-import { useApp, type ScreenId } from '../context/AppContext'
+import { useApp, type ScreenId, type Zone } from '../context/AppContext'
 import { ALL_STRINGS, getEntry, type Locale } from '../lib/strings'
 import { MOCK_CHAT_THREADS } from '../data/mockContent'
+import { buildStrSelector } from '../components/Str'
 
 const LOCALES: { id: Locale; label: string }[] = [
   { id: 'id', label: 'ID' },
@@ -19,12 +20,34 @@ const SCREEN_LABEL: Record<ScreenId, string> = {
   gems: 'Gem (overlay)',
 }
 
+// Display order + label for zones within a screen section. Zones not listed
+// here (a screen introducing a new one later) still render, just alphabetically
+// after these and labeled with their raw name.
+const ZONE_ORDER = ['page', 'menu', 'popup']
+const ZONE_LABEL: Record<string, string> = {
+  page: 'Halaman',
+  menu: 'Menu',
+  popup: 'Popup',
+}
+
+function sortedZones(zones: string[]): string[] {
+  return [...zones].sort((a, b) => {
+    const ia = ZONE_ORDER.indexOf(a)
+    const ib = ZONE_ORDER.indexOf(b)
+    if (ia === -1 && ib === -1) return a.localeCompare(b)
+    if (ia === -1) return 1
+    if (ib === -1) return -1
+    return ia - ib
+  })
+}
+
 export function Inspector() {
   const {
     locale,
     setLocale,
     usage,
     requestFocus,
+    requestPopup,
     currentScreen,
     setCurrentScreen,
     overrides,
@@ -42,6 +65,10 @@ export function Inspector() {
   } = useApp()
   const [query, setQuery] = useState('')
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
+  // Which exact occurrence of selectedKey is showing in the detail panel —
+  // null when the key isn't wired anywhere. Needed alongside selectedKey
+  // because the same key can render in more than one screen/zone.
+  const [selectedOccurrence, setSelectedOccurrence] = useState<{ screenId: ScreenId; zone: Zone } | null>(null)
   const [overflowFlag, setOverflowFlag] = useState<boolean | null>(null)
   const [openScreens, setOpenScreens] = useState<Set<ScreenId>>(() => new Set(['feed']))
 
@@ -72,20 +99,29 @@ export function Inspector() {
 
   const wiredKeys = useMemo(() => new Set(usage.map((u) => u.key)), [usage])
 
+  // screenId -> zone -> keys in that zone. The same key can legitimately
+  // appear in more than one zone on a screen (e.g. a gem total shown on both
+  // the page and inside a detail popup) — each occurrence is jumpable on its own.
   const usageByScreen = useMemo(() => {
-    const map: Record<ScreenId, string[]> = {
-      feed: [],
-      chatlist: [],
-      profile: [],
-      chatdetail: [],
-      notification: [],
-      gems: [],
+    const map: Record<ScreenId, Record<string, string[]>> = {
+      feed: {},
+      chatlist: {},
+      profile: {},
+      chatdetail: {},
+      notification: {},
+      gems: {},
     }
     usage.forEach((u) => {
-      if (!map[u.screenId].includes(u.key)) map[u.screenId].push(u.key)
+      const zoneMap = map[u.screenId]
+      if (!zoneMap[u.zone]) zoneMap[u.zone] = []
+      if (!zoneMap[u.zone].includes(u.key)) zoneMap[u.zone].push(u.key)
     })
     return map
   }, [usage])
+
+  function screenCount(screenId: ScreenId): number {
+    return Object.values(usageByScreen[screenId]).reduce((n, keys) => n + keys.length, 0)
+  }
 
   const searchResults = useMemo(() => {
     if (!query.trim()) return []
@@ -103,9 +139,18 @@ export function Inspector() {
   // their own boolean in AppContext, not by currentScreen — so jumping to a
   // key that lives on one of them has to open that overlay directly, or the
   // highlighter finds nothing in the DOM and silently does nothing.
-  function jumpTo(key: string) {
+  //
+  // Within a screen, a key can also live inside a popup/menu zone rather than
+  // the page itself (e.g. the notification Opsi sheet, the gem detail modal).
+  // Those are local component state, not AppContext booleans, so they're
+  // reached via requestPopup + usePopupRequest instead of a dedicated opener
+  // here. screenId/zone are passed explicitly from the per-screen accordion
+  // (which knows exactly which occurrence was clicked); search results only
+  // know the key, so they fall back to its first registered usage.
+  function jumpTo(key: string, screenId?: ScreenId, zone?: Zone) {
     setSelectedKey(key)
-    const rec = usage.find((u) => u.key === key)
+    const rec = screenId ? { screenId, zone: zone ?? 'page' } : usage.find((u) => u.key === key)
+    setSelectedOccurrence(rec ? { screenId: rec.screenId, zone: rec.zone } : null)
     if (rec) {
       closeChat()
       closeNotif()
@@ -121,14 +166,17 @@ export function Inspector() {
       } else {
         setCurrentScreen(rec.screenId)
       }
+      requestPopup(rec.screenId, rec.zone)
+      requestFocus(key, rec.screenId, rec.zone)
     }
-    requestFocus(key)
   }
 
   useEffect(() => {
     if (!selectedKey) return
     const t = setTimeout(() => {
-      const el = document.querySelector(`[data-str-key="${CSS.escape(selectedKey)}"]`) as HTMLElement | null
+      const el = document.querySelector(
+        buildStrSelector(selectedKey, selectedOccurrence?.screenId, selectedOccurrence?.zone)
+      ) as HTMLElement | null
       if (el) {
         setOverflowFlag(el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1)
       } else {
@@ -137,7 +185,7 @@ export function Inspector() {
     }, 380)
     return () => clearTimeout(t)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedKey, locale, overrides[selectedKey ?? '']])
+  }, [selectedKey, selectedOccurrence, locale, overrides[selectedKey ?? '']])
 
   const selectedEntry = selectedKey ? getEntry(selectedKey) : null
 
@@ -196,6 +244,7 @@ export function Inspector() {
         ) : (
           (['feed', 'chatlist', 'profile', 'chatdetail', 'notification', 'gems'] as ScreenId[]).map((screenId) => {
             const isOpen = openScreens.has(screenId)
+            const zones = sortedZones(Object.keys(usageByScreen[screenId]))
             return (
               <div key={screenId} className="p-2">
                 <button
@@ -203,7 +252,7 @@ export function Inspector() {
                   className="w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-gray-50"
                 >
                   <span className="text-[11px] font-bold text-gray-400 uppercase">
-                    {SCREEN_LABEL[screenId]} · {usageByScreen[screenId].length}
+                    {SCREEN_LABEL[screenId]} · {screenCount(screenId)}
                   </span>
                   <ChevronRight
                     size={13}
@@ -211,19 +260,32 @@ export function Inspector() {
                   />
                 </button>
                 {isOpen &&
-                  usageByScreen[screenId].map((key) => {
-                    const e = getEntry(key)
-                    return (
-                      <KeyRow
-                        key={key}
-                        entryKey={key}
-                        label={e?.locales.id || e?.locales.en || key}
-                        wired
-                        active={selectedKey === key}
-                        onClick={() => jumpTo(key)}
-                      />
-                    )
-                  })}
+                  zones.map((zone) => (
+                    <div key={zone} className="mt-0.5">
+                      {zone !== 'page' && (
+                        <div className="text-[10px] font-semibold text-gray-400 uppercase px-2 pt-2 pb-0.5">
+                          {ZONE_LABEL[zone] ?? zone}
+                        </div>
+                      )}
+                      {usageByScreen[screenId][zone].map((key) => {
+                        const e = getEntry(key)
+                        return (
+                          <KeyRow
+                            key={`${zone}-${key}`}
+                            entryKey={key}
+                            label={e?.locales.id || e?.locales.en || key}
+                            wired
+                            active={
+                              selectedKey === key &&
+                              selectedOccurrence?.screenId === screenId &&
+                              selectedOccurrence?.zone === zone
+                            }
+                            onClick={() => jumpTo(key, screenId, zone)}
+                          />
+                        )
+                      })}
+                    </div>
+                  ))}
               </div>
             )
           })
@@ -234,7 +296,13 @@ export function Inspector() {
         <div className="border-t border-imely-line p-3 bg-gray-50 max-h-[46%] overflow-y-auto">
           <div className="flex items-center justify-between">
             <div className="font-mono text-[11px] text-gray-500 break-all pr-2">{selectedEntry.key}</div>
-            <button onClick={() => setSelectedKey(null)} className="text-gray-400 shrink-0">
+            <button
+              onClick={() => {
+                setSelectedKey(null)
+                setSelectedOccurrence(null)
+              }}
+              className="text-gray-400 shrink-0"
+            >
               <X size={14} />
             </button>
           </div>

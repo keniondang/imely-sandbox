@@ -3,9 +3,20 @@ import type { Locale } from '../lib/strings'
 
 export type ScreenId = 'feed' | 'chatlist' | 'profile' | 'chatdetail' | 'notification' | 'gems'
 
+// 'page' is a screen's always-visible content. Anything else ('menu', 'popup', ...)
+// is a sub-surface that only exists in the DOM while its own local state has it
+// open — see ScreenScope.tsx's ZoneScope and hooks/usePopupRequest.ts.
+export type Zone = string
+
 interface UsageRecord {
   key: string
   screenId: ScreenId
+  zone: Zone
+}
+
+interface PopupRequest {
+  screenId: ScreenId
+  zone: Zone
 }
 
 export interface ChatTarget {
@@ -27,14 +38,26 @@ interface AppState {
   inspectorOpen: boolean
   setInspectorOpen: (v: boolean) => void
 
-  // key currently requested to be located + highlighted in the live preview
+  // key (+ its exact screen/zone occurrence) currently requested to be
+  // located + highlighted in the live preview — screen/zone matter because
+  // the same key can render more than once on a screen (e.g. on the page
+  // and inside a popup), so the key alone doesn't address a unique element
   focusKey: string | null
+  focusScreenId: ScreenId | null
+  focusZone: Zone | null
   focusToken: number
-  requestFocus: (key: string) => void
+  requestFocus: (key: string, screenId: ScreenId, zone: Zone) => void
 
-  // registry of which screen renders which string key, built as screens mount
+  // registry of which screen (and zone within it — page/menu/popup/…) renders
+  // which string key, built as screens mount
   usage: UsageRecord[]
   registerUsage: (rec: UsageRecord) => void
+
+  // broadcast request for a screen's local popup/menu state to open (or close,
+  // if a different zone on the same screen was requested) — see usePopupRequest
+  popupRequest: PopupRequest | null
+  popupRequestToken: number
+  requestPopup: (screenId: ScreenId, zone: Zone) => void
 
   // full-screen chat overlay, opened by tapping a thread or a character card
   activeChat: ChatTarget | null
@@ -69,8 +92,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [overrides, setOverrides] = useState<Record<string, string>>({})
   const [inspectorOpen, setInspectorOpen] = useState(true)
   const [focusKey, setFocusKey] = useState<string | null>(null)
+  const [focusScreenId, setFocusScreenId] = useState<ScreenId | null>(null)
+  const [focusZone, setFocusZone] = useState<Zone | null>(null)
   const [focusToken, setFocusToken] = useState(0)
   const [usage, setUsage] = useState<UsageRecord[]>([])
+  const [popupRequest, setPopupRequest] = useState<PopupRequest | null>(null)
+  const [popupRequestToken, setPopupRequestToken] = useState(0)
   const [activeChat, setActiveChat] = useState<ChatTarget | null>(null)
   const [filterOpen, setFilterOpen] = useState(false)
   const [notifOpen, setNotifOpen] = useState(false)
@@ -89,14 +116,21 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const registerUsage = (rec: UsageRecord) => {
     setUsage((prev) => {
-      if (prev.some((u) => u.key === rec.key && u.screenId === rec.screenId)) return prev
+      if (prev.some((u) => u.key === rec.key && u.screenId === rec.screenId && u.zone === rec.zone)) return prev
       return [...prev, rec]
     })
   }
 
-  const requestFocus = (key: string) => {
+  const requestFocus = (key: string, screenId: ScreenId, zone: Zone) => {
     setFocusKey(key)
+    setFocusScreenId(screenId)
+    setFocusZone(zone)
     setFocusToken((t) => t + 1)
+  }
+
+  const requestPopup = (screenId: ScreenId, zone: Zone) => {
+    setPopupRequest({ screenId, zone })
+    setPopupRequestToken((t) => t + 1)
   }
 
   const openChat = (target: ChatTarget) => setActiveChat(target)
@@ -128,10 +162,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
       inspectorOpen,
       setInspectorOpen,
       focusKey,
+      focusScreenId,
+      focusZone,
       focusToken,
       requestFocus,
       usage,
       registerUsage,
+      popupRequest,
+      popupRequestToken,
+      requestPopup,
       activeChat,
       openChat,
       closeChat,
@@ -153,8 +192,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
       overrides,
       inspectorOpen,
       focusKey,
+      focusScreenId,
+      focusZone,
       focusToken,
       usage,
+      popupRequest,
+      popupRequestToken,
       activeChat,
       filterOpen,
       notifOpen,

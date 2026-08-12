@@ -2,12 +2,18 @@ import { useState } from 'react'
 import { ArrowLeft, ChevronRight, MoreVertical, X, Mail, Trash2 } from 'lucide-react'
 import { Str } from '../components/Str'
 import { useApp } from '../context/AppContext'
+import { ZoneScope } from '../context/ScreenScope'
+import { usePopupRequest } from '../hooks/usePopupRequest'
 import { MOCK_NOTIFICATIONS } from '../data/mockContent'
 
 export function NotificationScreen() {
   const { closeNotif } = useApp()
   const [notifications, setNotifications] = useState(MOCK_NOTIFICATIONS)
   const [optionsFor, setOptionsFor] = useState<string | null>(null)
+
+  usePopupRequest('notification', 'menu', (open) => {
+    setOptionsFor(open ? notifications[0]?.id ?? null : null)
+  })
 
   function markAsRead(id: string) {
     setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)))
@@ -81,48 +87,50 @@ export function NotificationScreen() {
 
       {/* Opsi bottom sheet for the selected notification */}
       {optionsFor && (
-        <div className="absolute inset-0">
-          <button
-            onClick={() => setOptionsFor(null)}
-            aria-label="Close options"
-            className="absolute inset-0 bg-black/40"
-          />
-          <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl">
-            <div className="relative flex items-center justify-center px-4 py-4 border-b border-imely-line">
-              <div className="font-bold text-[16px] text-imely-ink">
-                <Str k="menu.noti_option_menu.header" />
+        <ZoneScope zone="menu">
+          <div className="absolute inset-0">
+            <button
+              onClick={() => setOptionsFor(null)}
+              aria-label="Close options"
+              className="absolute inset-0 bg-black/40"
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl">
+              <div className="relative flex items-center justify-center px-4 py-4 border-b border-imely-line">
+                <div className="font-bold text-[16px] text-imely-ink">
+                  <Str k="menu.noti_option_menu.header" />
+                </div>
+                <button
+                  onClick={() => setOptionsFor(null)}
+                  className="absolute right-4 text-gray-400 active:scale-90 transition-transform"
+                >
+                  <X size={18} />
+                </button>
               </div>
+
               <button
-                onClick={() => setOptionsFor(null)}
-                className="absolute right-4 text-gray-400 active:scale-90 transition-transform"
+                onClick={() => markAsRead(optionsFor)}
+                className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors"
               >
-                <X size={18} />
+                <Mail size={17} className="text-imely-ink" />
+                <span className="text-[14px] text-imely-ink">
+                  <Str k="menu.noti_option_menu.mark_as_read" />
+                </span>
               </button>
+
+              <button
+                onClick={() => deleteNotif(optionsFor)}
+                className="w-full flex items-center gap-3 px-4 py-3.5 active:bg-gray-50 transition-colors"
+              >
+                <Trash2 size={17} className="text-imely-ink" />
+                <span className="text-[14px] text-imely-ink">
+                  <Str k="menu.noti_option_menu.delete_noti" />
+                </span>
+              </button>
+
+              <div className="h-2" />
             </div>
-
-            <button
-              onClick={() => markAsRead(optionsFor)}
-              className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors"
-            >
-              <Mail size={17} className="text-imely-ink" />
-              <span className="text-[14px] text-imely-ink">
-                <Str k="menu.noti_option_menu.mark_as_read" />
-              </span>
-            </button>
-
-            <button
-              onClick={() => deleteNotif(optionsFor)}
-              className="w-full flex items-center gap-3 px-4 py-3.5 active:bg-gray-50 transition-colors"
-            >
-              <Trash2 size={17} className="text-imely-ink" />
-              <span className="text-[14px] text-imely-ink">
-                <Str k="menu.noti_option_menu.delete_noti" />
-              </span>
-            </button>
-
-            <div className="h-2" />
           </div>
-        </div>
+        </ZoneScope>
       )}
     </div>
   )

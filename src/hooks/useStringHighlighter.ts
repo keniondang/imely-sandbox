@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
 import { useApp } from '../context/AppContext'
+import { buildStrSelector } from '../components/Str'
 
 const HIGHLIGHT_MS = 2000
 
 export function useStringHighlighter() {
-  const { focusKey, focusToken } = useApp()
+  const { focusKey, focusScreenId, focusZone, focusToken } = useApp()
 
   useEffect(() => {
     if (!focusKey) return
@@ -16,16 +17,24 @@ export function useStringHighlighter() {
       .querySelectorAll('[data-str-highlighted="true"]')
       .forEach((el) => el.removeAttribute('data-str-highlighted'))
 
-    const el = document.querySelector<HTMLElement>(
-      `[data-str-key="${CSS.escape(focusKey)}"]`
-    )
-    if (!el) return
+    // A jump can also fire a popupRequest (see usePopupRequest) that opens a
+    // menu/modal in a follow-up render — give that a tick to land in the DOM
+    // before searching for the target element, or a same-click jump into a
+    // popup finds nothing and silently no-ops.
+    const find = setTimeout(() => {
+      // Qualified by screen + zone too — the same key can render more than
+      // once on a screen (e.g. a total shown on the page AND inside a popup),
+      // and an unqualified lookup always lands on whichever copy is first in
+      // the DOM regardless of which occurrence was actually requested.
+      const el = document.querySelector<HTMLElement>(buildStrSelector(focusKey, focusScreenId, focusZone))
+      if (!el) return
 
-    el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    el.setAttribute('data-str-highlighted', 'true')
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      el.setAttribute('data-str-highlighted', 'true')
+      setTimeout(() => el.removeAttribute('data-str-highlighted'), HIGHLIGHT_MS)
+    }, 60)
 
-    const t = setTimeout(() => el.removeAttribute('data-str-highlighted'), HIGHLIGHT_MS)
-    return () => clearTimeout(t)
+    return () => clearTimeout(find)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focusToken])
 }
