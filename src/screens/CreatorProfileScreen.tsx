@@ -1,39 +1,28 @@
 import { useState } from 'react'
 import { ArrowLeft, Share2, MoreVertical, MessageCircle, FileText } from 'lucide-react'
 import { Str } from '../components/Str'
+import { ProfileOptionsSheets } from '../components/ProfileOptionsSheets'
 import { useApp } from '../context/AppContext'
-import { resolveString } from '../lib/strings'
+import { useProfileOptions } from '../hooks/useProfileOptions'
 import { MOCK_FEED_CHARACTERS } from '../data/mockContent'
 
 export function CreatorProfileScreen() {
-  const { locale, activeCreatorName, closeCreatorProfile, openCharacterProfile, openChat, showToast } = useApp()
+  const { activeCreatorName, closeCreatorProfile, closeCharacterProfile, openCharacterProfile, showToast } = useApp()
   const [tab, setTab] = useState<'characters' | 'info'>('characters')
-  const [following, setFollowing] = useState(false)
 
   const characters = MOCK_FEED_CHARACTERS.filter((c) => c.creatorName === activeCreatorName)
   const rep = characters[0]
-  if (!activeCreatorName || !rep) return null
 
-  function toggleFollow() {
-    setFollowing((f) => !f)
-    showToast(
-      following
-        ? resolveString('identity.follow.un_follow_success_toast', locale)
-        : `${resolveString('identity.follow.follow_success_toast', locale)} ${activeCreatorName}`
-    )
-  }
+  const opts = useProfileOptions('creatorprofile', activeCreatorName ?? '', closeCharacterProfile)
+
+  if (!activeCreatorName || !rep) return null
 
   function viewCharacter(id: string) {
     openCharacterProfile(id)
   }
 
-  function startChat() {
-    openChat({ id: rep.id, name: rep.name, color: rep.color })
-    closeCreatorProfile()
-  }
-
   return (
-    <div className="h-full flex flex-col bg-white">
+    <div className="h-full flex flex-col bg-white relative">
       <div className="flex items-center justify-between px-3 py-2.5 border-b border-imely-line shrink-0">
         <button
           onClick={closeCreatorProfile}
@@ -49,7 +38,7 @@ export function CreatorProfileScreen() {
             <Share2 size={16} />
           </button>
           <button
-            onClick={() => showToast('Menu lainnya — segera hadir')}
+            onClick={() => opts.setOptionsOpen(true)}
             className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-100 transition-transform"
           >
             <MoreVertical size={18} />
@@ -127,18 +116,37 @@ export function CreatorProfileScreen() {
 
       <div className="shrink-0 p-4 border-t border-imely-line flex gap-2">
         <button
-          onClick={toggleFollow}
+          onClick={opts.toggleFollow}
           className="flex-1 border border-imely-primary text-imely-primaryDark bg-imely-mint/30 font-bold rounded-full py-3 active:scale-[0.97] transition-transform"
         >
-          <Str k={following ? 'toolbar_menu.unfollow' : 'toolbar_menu.follow'} />
+          <Str k={opts.following ? 'identity.follow.btn_followed' : 'identity.follow.btn_follow'} />
         </button>
         <button
-          onClick={startChat}
+          onClick={() => showToast('Pesan — segera hadir')}
           className="flex-1 bg-imely-primary text-white font-bold rounded-full py-3 active:scale-[0.97] active:bg-imely-primaryDark transition-transform"
         >
           <Str k="toolbar_menu.chat" />
         </button>
       </div>
+
+      <ProfileOptionsSheets
+        targetName={activeCreatorName}
+        optionsOpen={opts.optionsOpen}
+        onCloseOptions={() => opts.setOptionsOpen(false)}
+        following={opts.following}
+        onToggleFollow={opts.toggleFollow}
+        onOpenBlockConfirm={opts.openBlockConfirm}
+        onOpenReport={opts.openReport}
+        blockConfirmOpen={opts.blockConfirmOpen}
+        onCloseBlockConfirm={() => opts.setBlockConfirmOpen(false)}
+        onConfirmBlock={opts.confirmBlock}
+        reportOpen={opts.reportOpen}
+        onCloseReport={() => opts.setReportOpen(false)}
+        reportReason={opts.reportReason}
+        onSelectReportReason={opts.setReportReason}
+        onSendReport={opts.sendReport}
+        onModerate={() => showToast('Moderasi — khusus internal')}
+      />
     </div>
   )
 }

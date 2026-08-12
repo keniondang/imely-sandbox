@@ -1,36 +1,20 @@
 import { useState } from 'react'
-import { ArrowLeft, Share2, MoreVertical, Sparkles, ChevronRight, Lock, UserPlus, UserMinus, Ban, Flag } from 'lucide-react'
+import { ArrowLeft, Share2, MoreVertical, Sparkles, ChevronRight } from 'lucide-react'
 import { Str } from '../components/Str'
+import { ProfileOptionsSheets } from '../components/ProfileOptionsSheets'
 import { useApp } from '../context/AppContext'
-import { ZoneScope } from '../context/ScreenScope'
-import { usePopupRequest } from '../hooks/usePopupRequest'
-import { resolveString } from '../lib/strings'
+import { useProfileOptions } from '../hooks/useProfileOptions'
 import { MOCK_FEED_CHARACTERS, type MockCharacter } from '../data/mockContent'
 
-const REPORT_REASONS = [
-  'report_news.obscene_content',
-  'report_news.illegal_content',
-  'report_news.bad_rumors_content',
-  'report_news.report_issue',
-]
-
 export function CharacterProfileScreen() {
-  const { locale, activeCharacterId, closeCharacterProfile, openCharacterProfile, openCreatorProfile, openChat, showToast } =
+  const { activeCharacterId, closeCharacterProfile, openCharacterProfile, openCreatorProfile, openChat, showToast } =
     useApp()
   const [readMore, setReadMore] = useState(false)
-  const [following, setFollowing] = useState(false)
-
-  const [optionsOpen, setOptionsOpen] = useState(false)
-  usePopupRequest('characterprofile', 'menu', setOptionsOpen)
-
-  const [blockConfirmOpen, setBlockConfirmOpen] = useState(false)
-  usePopupRequest('characterprofile', 'block_confirm', setBlockConfirmOpen)
-
-  const [reportOpen, setReportOpen] = useState(false)
-  const [reportReason, setReportReason] = useState<string | null>(null)
-  usePopupRequest('characterprofile', 'report', setReportOpen)
 
   const character = MOCK_FEED_CHARACTERS.find((c) => c.id === activeCharacterId)
+
+  const opts = useProfileOptions('characterprofile', character?.name ?? '', closeCharacterProfile)
+
   if (!character) return null
 
   const similar = MOCK_FEED_CHARACTERS.filter((c) => c.id !== character.id)
@@ -43,38 +27,6 @@ export function CharacterProfileScreen() {
   function startChat() {
     openChat({ id: character.id, name: character.name, color: character.color })
     closeCharacterProfile()
-  }
-
-  function toggleFollow() {
-    setOptionsOpen(false)
-    setFollowing((f) => !f)
-    showToast(
-      following
-        ? resolveString('identity.follow.un_follow_success_toast', locale)
-        : `${resolveString('identity.follow.follow_success_toast', locale)} ${character.name}`
-    )
-  }
-
-  function openBlockConfirm() {
-    setOptionsOpen(false)
-    setBlockConfirmOpen(true)
-  }
-
-  function confirmBlock() {
-    setBlockConfirmOpen(false)
-    showToast(`${character.name} diblokir`)
-    closeCharacterProfile()
-  }
-
-  function openReport() {
-    setOptionsOpen(false)
-    setReportOpen(true)
-  }
-
-  function sendReport() {
-    setReportOpen(false)
-    setReportReason(null)
-    showToast(resolveString('report_news.report_success_toast', locale))
   }
 
   return (
@@ -95,7 +47,7 @@ export function CharacterProfileScreen() {
             <Share2 size={16} />
           </button>
           <button
-            onClick={() => setOptionsOpen(true)}
+            onClick={() => opts.setOptionsOpen(true)}
             className="w-8 h-8 rounded-full flex items-center justify-center active:scale-90 active:bg-white/10 transition-transform"
           >
             <MoreVertical size={18} />
@@ -209,146 +161,24 @@ export function CharacterProfileScreen() {
         </button>
       </div>
 
-      {/* Opsi bottom sheet — opened from the header's three-dot button */}
-      {optionsOpen && (
-        <ZoneScope zone="menu">
-          <div className="absolute inset-0 z-10">
-            <button
-              onClick={() => setOptionsOpen(false)}
-              aria-label="Close options"
-              className="absolute inset-0 bg-black/40"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl">
-              <div className="text-center py-4 border-b border-imely-line font-bold text-[16px] text-imely-ink">
-                <Str k="toolbar_menu.header" />
-              </div>
-              <button
-                onClick={() => showToast('Moderasi — khusus internal')}
-                className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors text-left"
-              >
-                <Lock size={17} className="text-imely-ink" />
-                <span className="text-[14px] text-imely-ink">
-                  <Str k="profile_menu.censor_content" />
-                </span>
-              </button>
-              <button
-                onClick={toggleFollow}
-                className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors text-left"
-              >
-                {following ? <UserMinus size={17} className="text-imely-ink" /> : <UserPlus size={17} className="text-imely-ink" />}
-                <span className="text-[14px] text-imely-ink">
-                  <Str k={following ? 'toolbar_menu.unfollow' : 'toolbar_menu.follow'} />
-                </span>
-              </button>
-              <button
-                onClick={openBlockConfirm}
-                className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors text-left"
-              >
-                <Ban size={17} className="text-imely-ink" />
-                <span className="text-[14px] text-imely-ink">
-                  <Str k="toolbar_menu.block" />
-                </span>
-              </button>
-              <button
-                onClick={openReport}
-                className="w-full flex items-center gap-3 px-4 py-3.5 active:bg-gray-50 transition-colors text-left"
-              >
-                <Flag size={17} className="text-imely-ink" />
-                <span className="text-[14px] text-imely-ink">
-                  <Str k="toolbar_menu.report" />
-                </span>
-              </button>
-              <div className="h-2" />
-            </div>
-          </div>
-        </ZoneScope>
-      )}
-
-      {/* block confirmation — opened from the Opsi sheet's "Blokir" row */}
-      {blockConfirmOpen && (
-        <ZoneScope zone="block_confirm">
-          <div className="absolute inset-0 z-20">
-            <button
-              onClick={() => setBlockConfirmOpen(false)}
-              aria-label="Close block confirmation"
-              className="absolute inset-0 bg-black/40"
-            />
-            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl p-5">
-              <div className="font-bold text-[17px] text-imely-ink">
-                <Str k="profile_menu.block_dialog_title" /> {character.name}?
-              </div>
-              <div className="mt-2 text-[13px] text-gray-500 leading-relaxed">
-                <Str k="profile_menu.block_dialog_msg" /> {character.name}.
-              </div>
-              <div className="mt-4 flex justify-end gap-4">
-                <button
-                  onClick={() => setBlockConfirmOpen(false)}
-                  className="font-semibold text-[14px] text-imely-ink active:opacity-70 transition-opacity"
-                >
-                  <Str k="profile_menu.block_dialog_btn_cancel" />
-                </button>
-                <button
-                  onClick={confirmBlock}
-                  className="font-semibold text-[14px] text-imely-primaryDark active:opacity-70 transition-opacity"
-                >
-                  <Str k="profile_menu.block_dialog_btn_confirm" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </ZoneScope>
-      )}
-
-      {/* report reasons — opened from the Opsi sheet's "Laporkan" row */}
-      {reportOpen && (
-        <ZoneScope zone="report">
-          <div className="absolute inset-0 z-10">
-            <button
-              onClick={() => setReportOpen(false)}
-              aria-label="Close report"
-              className="absolute inset-0 bg-black/40"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl">
-              <div className="text-center py-4 border-b border-imely-line font-bold text-[16px] text-imely-ink">
-                <Str k="report_news.header" />
-              </div>
-              {REPORT_REASONS.map((key) => (
-                <button
-                  key={key}
-                  onClick={() => setReportReason(key)}
-                  className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors text-left"
-                >
-                  <span
-                    className={`w-[18px] h-[18px] rounded-full border flex items-center justify-center shrink-0 ${
-                      reportReason === key ? 'border-imely-primary' : 'border-gray-300'
-                    }`}
-                  >
-                    {reportReason === key && <span className="w-2.5 h-2.5 rounded-full bg-imely-primary" />}
-                  </span>
-                  <span className="text-[14px] text-imely-ink">
-                    <Str k={key} />
-                  </span>
-                </button>
-              ))}
-              <div className="flex gap-2 p-4">
-                <button
-                  onClick={() => setReportOpen(false)}
-                  className="flex-1 border border-imely-line rounded-full py-2.5 font-semibold text-[13.5px] text-imely-ink active:scale-95 transition-transform"
-                >
-                  <Str k="report_news.btn_cancel" />
-                </button>
-                <button
-                  onClick={sendReport}
-                  disabled={!reportReason}
-                  className="flex-1 bg-imely-primary text-white rounded-full py-2.5 font-semibold text-[13.5px] active:scale-95 active:bg-imely-primaryDark transition-transform disabled:opacity-40"
-                >
-                  <Str k="report_news.btn_send" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </ZoneScope>
-      )}
+      <ProfileOptionsSheets
+        targetName={character.name}
+        optionsOpen={opts.optionsOpen}
+        onCloseOptions={() => opts.setOptionsOpen(false)}
+        following={opts.following}
+        onToggleFollow={opts.toggleFollow}
+        onOpenBlockConfirm={opts.openBlockConfirm}
+        onOpenReport={opts.openReport}
+        blockConfirmOpen={opts.blockConfirmOpen}
+        onCloseBlockConfirm={() => opts.setBlockConfirmOpen(false)}
+        onConfirmBlock={opts.confirmBlock}
+        reportOpen={opts.reportOpen}
+        onCloseReport={() => opts.setReportOpen(false)}
+        reportReason={opts.reportReason}
+        onSelectReportReason={opts.setReportReason}
+        onSendReport={opts.sendReport}
+        onModerate={() => showToast('Moderasi — khusus internal')}
+      />
     </div>
   )
 }
