@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Search, X, AlertTriangle, RotateCcw } from 'lucide-react'
+import { Search, X, AlertTriangle, RotateCcw, ChevronRight } from 'lucide-react'
 import { useApp, type ScreenId } from '../context/AppContext'
 import { ALL_STRINGS, getEntry, type Locale } from '../lib/strings'
 import { MOCK_CHAT_THREADS } from '../data/mockContent'
@@ -25,13 +25,17 @@ export function Inspector() {
     setLocale,
     usage,
     requestFocus,
+    currentScreen,
     setCurrentScreen,
     overrides,
     setOverride,
+    activeChat,
     openChat,
     closeChat,
+    notifOpen,
     openNotif,
     closeNotif,
+    gemsOpen,
     openGems,
     closeGems,
     closeFilter,
@@ -39,6 +43,32 @@ export function Inspector() {
   const [query, setQuery] = useState('')
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
   const [overflowFlag, setOverflowFlag] = useState<boolean | null>(null)
+  const [openScreens, setOpenScreens] = useState<Set<ScreenId>>(() => new Set(['feed']))
+
+  // Whichever screen is actually visible in the live preview right now —
+  // base screens track currentScreen, but overlays (chat detail, notification,
+  // gems) render independently of it, so check those booleans first.
+  const activeScreenId: ScreenId = useMemo(() => {
+    if (activeChat) return 'chatdetail'
+    if (notifOpen) return 'notification'
+    if (gemsOpen) return 'gems'
+    return currentScreen
+  }, [activeChat, notifOpen, gemsOpen, currentScreen])
+
+  // Keep the accordion in sync with the live preview: whenever the visible
+  // screen changes, open only that section and collapse the rest.
+  useEffect(() => {
+    setOpenScreens(new Set([activeScreenId]))
+  }, [activeScreenId])
+
+  function toggleScreen(screenId: ScreenId) {
+    setOpenScreens((prev) => {
+      const next = new Set(prev)
+      if (next.has(screenId)) next.delete(screenId)
+      else next.add(screenId)
+      return next
+    })
+  }
 
   const wiredKeys = useMemo(() => new Set(usage.map((u) => u.key)), [usage])
 
@@ -164,26 +194,39 @@ export function Inspector() {
             ))}
           </div>
         ) : (
-          (['feed', 'chatlist', 'profile', 'chatdetail', 'notification', 'gems'] as ScreenId[]).map((screenId) => (
-            <div key={screenId} className="p-2">
-              <div className="text-[11px] font-bold text-gray-400 uppercase px-2 py-1">
-                {SCREEN_LABEL[screenId]} · {usageByScreen[screenId].length}
-              </div>
-              {usageByScreen[screenId].map((key) => {
-                const e = getEntry(key)
-                return (
-                  <KeyRow
-                    key={key}
-                    entryKey={key}
-                    label={e?.locales.id || e?.locales.en || key}
-                    wired
-                    active={selectedKey === key}
-                    onClick={() => jumpTo(key)}
+          (['feed', 'chatlist', 'profile', 'chatdetail', 'notification', 'gems'] as ScreenId[]).map((screenId) => {
+            const isOpen = openScreens.has(screenId)
+            return (
+              <div key={screenId} className="p-2">
+                <button
+                  onClick={() => toggleScreen(screenId)}
+                  className="w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-gray-50"
+                >
+                  <span className="text-[11px] font-bold text-gray-400 uppercase">
+                    {SCREEN_LABEL[screenId]} · {usageByScreen[screenId].length}
+                  </span>
+                  <ChevronRight
+                    size={13}
+                    className={`text-gray-400 shrink-0 transition-transform ${isOpen ? 'rotate-90' : ''}`}
                   />
-                )
-              })}
-            </div>
-          ))
+                </button>
+                {isOpen &&
+                  usageByScreen[screenId].map((key) => {
+                    const e = getEntry(key)
+                    return (
+                      <KeyRow
+                        key={key}
+                        entryKey={key}
+                        label={e?.locales.id || e?.locales.en || key}
+                        wired
+                        active={selectedKey === key}
+                        onClick={() => jumpTo(key)}
+                      />
+                    )
+                  })}
+              </div>
+            )
+          })
         )}
       </div>
 
