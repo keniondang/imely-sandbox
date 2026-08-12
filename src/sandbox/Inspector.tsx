@@ -22,6 +22,7 @@ const SCREEN_LABEL: Record<ScreenId, string> = {
   purchase: 'Beli MeLy Club / Gem (overlay)',
   characterprofile: 'Profil Karakter (overlay)',
   creatorprofile: 'Profil Kreator (overlay)',
+  chatoptions: 'Opsi Chat (overlay)',
 }
 
 // Display order + label for zones within a screen section. Zones not listed
@@ -36,6 +37,10 @@ const ZONE_ORDER = [
   'lucky_result',
   'block_confirm',
   'report',
+  'mode_picker',
+  'relationship',
+  'role_summary',
+  'role_edit',
   'club',
   'gem',
 ]
@@ -48,6 +53,10 @@ const ZONE_LABEL: Record<string, string> = {
   lucky_result: 'Popup: Hasil Undian',
   block_confirm: 'Popup: Konfirmasi Blokir',
   report: 'Popup: Laporkan',
+  mode_picker: 'Popup: Mode Obrolan',
+  relationship: 'Popup: Level Kedekatan',
+  role_summary: 'Popup: Ganti Peran',
+  role_edit: 'Popup: Edit Peran',
   club: 'Tab: MêLy Club',
   gem: 'Tab: Gem',
 }
@@ -77,6 +86,9 @@ export function Inspector() {
     activeChat,
     openChat,
     closeChat,
+    chatOptionsOpen,
+    openChatOptions,
+    closeChatOptions,
     activeCharacterId,
     openCharacterProfile,
     closeCharacterProfile,
@@ -110,6 +122,7 @@ export function Inspector() {
   // base screens track currentScreen, but overlays (chat detail, notification,
   // gems) render independently of it, so check those booleans first.
   const activeScreenId: ScreenId = useMemo(() => {
+    if (activeChat && chatOptionsOpen) return 'chatoptions'
     if (activeChat) return 'chatdetail'
     if (activeCharacterId && activeCreatorName) return 'creatorprofile'
     if (activeCharacterId) return 'characterprofile'
@@ -118,7 +131,17 @@ export function Inspector() {
     if (gemHistoryOpen) return 'gemhistory'
     if (gemsOpen) return 'gems'
     return currentScreen
-  }, [activeChat, activeCharacterId, activeCreatorName, notifOpen, purchaseOpen, gemHistoryOpen, gemsOpen, currentScreen])
+  }, [
+    activeChat,
+    chatOptionsOpen,
+    activeCharacterId,
+    activeCreatorName,
+    notifOpen,
+    purchaseOpen,
+    gemHistoryOpen,
+    gemsOpen,
+    currentScreen,
+  ])
 
   // Keep the accordion in sync with the live preview: whenever the visible
   // screen changes, open only that section and collapse the rest.
@@ -152,6 +175,7 @@ export function Inspector() {
       purchase: {},
       characterprofile: {},
       creatorprofile: {},
+      chatoptions: {},
     }
     usage.forEach((u) => {
       const zoneMap = map[u.screenId]
@@ -195,6 +219,7 @@ export function Inspector() {
     setSelectedOccurrence(rec ? { screenId: rec.screenId, zone: rec.zone } : null)
     if (rec) {
       closeChat()
+      closeChatOptions()
       closeCharacterProfile()
       closeCreatorProfile()
       closeNotif()
@@ -205,6 +230,10 @@ export function Inspector() {
       if (rec.screenId === 'chatdetail') {
         const preview = MOCK_CHAT_THREADS[0]
         openChat({ id: preview.id, name: preview.name, color: preview.color })
+      } else if (rec.screenId === 'chatoptions') {
+        const preview = MOCK_CHAT_THREADS[0]
+        openChat({ id: preview.id, name: preview.name, color: preview.color })
+        openChatOptions()
       } else if (rec.screenId === 'characterprofile') {
         openCharacterProfile(MOCK_FEED_CHARACTERS[0].id)
       } else if (rec.screenId === 'creatorprofile') {
@@ -304,6 +333,7 @@ export function Inspector() {
               'chatlist',
               'profile',
               'chatdetail',
+              'chatoptions',
               'characterprofile',
               'creatorprofile',
               'notification',

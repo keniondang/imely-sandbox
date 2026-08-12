@@ -16,6 +16,7 @@ import { GemHistoryScreen } from './screens/GemHistoryScreen'
 import { PurchaseScreen } from './screens/PurchaseScreen'
 import { CharacterProfileScreen } from './screens/CharacterProfileScreen'
 import { CreatorProfileScreen } from './screens/CreatorProfileScreen'
+import { ChatOptionsScreen } from './screens/ChatOptionsScreen'
 import { Inspector } from './sandbox/Inspector'
 
 function Shell() {
@@ -24,6 +25,7 @@ function Shell() {
     inspectorOpen,
     setInspectorOpen,
     activeChat,
+    chatOptionsOpen,
     activeCharacterId,
     activeCreatorName,
     filterOpen,
@@ -93,6 +95,15 @@ function Shell() {
               </div>
             )}
 
+            {/* chat's Opsi page — pushed on top of chatdetail from its three-dot button */}
+            {activeChat && chatOptionsOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+                <ScreenScope id="chatoptions">
+                  <ChatOptionsScreen />
+                </ScreenScope>
+              </div>
+            )}
+
             {/* character profile — opened by tapping a character card in the feed */}
             {activeCharacterId && (
               <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
@@ -155,7 +166,7 @@ function Shell() {
             )}
 
             {/* stub-action toast, anchored to the phone frame not the browser viewport */}
-            {toast && !activeChat && (
+            {toast && (!activeChat || chatOptionsOpen) && (
               <div className="absolute left-1/2 -translate-x-1/2 bottom-20 z-40 bg-imely-ink text-white text-[12.5px] font-medium px-4 py-2 rounded-full shadow-lg pointer-events-none whitespace-nowrap">
                 {toast}
               </div>

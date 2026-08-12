@@ -12,6 +12,7 @@ export type ScreenId =
   | 'purchase'
   | 'characterprofile'
   | 'creatorprofile'
+  | 'chatoptions'
 
 export type PurchaseTab = 'club' | 'gem'
 
@@ -77,6 +78,11 @@ interface AppState {
   openChat: (target: ChatTarget) => void
   closeChat: () => void
 
+  // chat's Opsi page — pushed on top of chatdetail from its three-dot button
+  chatOptionsOpen: boolean
+  openChatOptions: () => void
+  closeChatOptions: () => void
+
   // character profile overlay, opened by tapping a character card in the feed
   // (or a "Karakter Serupa" card); id looks up the full record in
   // MOCK_FEED_CHARACTERS, same as activeChat does for chat threads/cards
@@ -139,6 +145,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [popupRequest, setPopupRequest] = useState<PopupRequest | null>(null)
   const [popupRequestToken, setPopupRequestToken] = useState(0)
   const [activeChat, setActiveChat] = useState<ChatTarget | null>(null)
+  const [chatOptionsOpen, setChatOptionsOpen] = useState(false)
   const [activeCharacterId, setActiveCharacterId] = useState<string | null>(null)
   const [activeCreatorName, setActiveCreatorName] = useState<string | null>(null)
   const [filterOpen, setFilterOpen] = useState(false)
@@ -179,7 +186,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }
 
   const openChat = (target: ChatTarget) => setActiveChat(target)
-  const closeChat = () => setActiveChat(null)
+  const closeChat = () => {
+    setActiveChat(null)
+    setChatOptionsOpen(false)
+  }
+
+  const openChatOptions = () => setChatOptionsOpen(true)
+  const closeChatOptions = () => setChatOptionsOpen(false)
 
   const openCharacterProfile = (id: string) => setActiveCharacterId(id)
   const closeCharacterProfile = () => {
@@ -240,6 +253,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       activeChat,
       openChat,
       closeChat,
+      chatOptionsOpen,
+      openChatOptions,
+      closeChatOptions,
       activeCharacterId,
       openCharacterProfile,
       closeCharacterProfile,
@@ -278,6 +294,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       popupRequest,
       popupRequestToken,
       activeChat,
+      chatOptionsOpen,
       activeCharacterId,
       activeCreatorName,
       filterOpen,

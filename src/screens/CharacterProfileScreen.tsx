@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ArrowLeft, Share2, MoreVertical, Sparkles, ChevronRight } from 'lucide-react'
 import { Str } from '../components/Str'
-import { ProfileOptionsSheets } from '../components/ProfileOptionsSheets'
+import { OpsiMenuSheet, BlockConfirmDialog, ReportReasonsSheet } from '../components/ProfileOptionsSheets'
 import { useApp } from '../context/AppContext'
 import { useProfileOptions } from '../hooks/useProfileOptions'
 import { MOCK_FEED_CHARACTERS, type MockCharacter } from '../data/mockContent'
@@ -161,23 +161,27 @@ export function CharacterProfileScreen() {
         </button>
       </div>
 
-      <ProfileOptionsSheets
-        targetName={character.name}
+      <OpsiMenuSheet
         optionsOpen={opts.optionsOpen}
-        onCloseOptions={() => opts.setOptionsOpen(false)}
+        onClose={() => opts.setOptionsOpen(false)}
         following={opts.following}
         onToggleFollow={opts.toggleFollow}
         onOpenBlockConfirm={opts.openBlockConfirm}
         onOpenReport={opts.openReport}
-        blockConfirmOpen={opts.blockConfirmOpen}
-        onCloseBlockConfirm={() => opts.setBlockConfirmOpen(false)}
-        onConfirmBlock={opts.confirmBlock}
-        reportOpen={opts.reportOpen}
-        onCloseReport={() => opts.setReportOpen(false)}
-        reportReason={opts.reportReason}
-        onSelectReportReason={opts.setReportReason}
-        onSendReport={opts.sendReport}
         onModerate={() => showToast('Moderasi — khusus internal')}
+      />
+      <BlockConfirmDialog
+        targetName={character.name}
+        open={opts.blockConfirmOpen}
+        onClose={() => opts.setBlockConfirmOpen(false)}
+        onConfirm={opts.confirmBlock}
+      />
+      <ReportReasonsSheet
+        open={opts.reportOpen}
+        onClose={() => opts.setReportOpen(false)}
+        reason={opts.reportReason}
+        onSelectReason={opts.setReportReason}
+        onSend={opts.sendReport}
       />
     </div>
   )
