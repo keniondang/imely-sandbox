@@ -27,7 +27,7 @@ export function buildStrSelector(key: string, screenId?: ScreenId | null, zone?:
 // its own highlight state, so there's exactly one source of truth for
 // "what's lit up right now" (see hooks/useStringHighlighter.ts).
 export function Str({ k, vars, as: Tag = 'span', className }: StrProps) {
-  const { locale, overrides, registerUsage } = useApp()
+  const { locale, overrides, livePreview, registerUsage } = useApp()
   const screenId = useScreenScope()
   const zone = useZoneScope()
 
@@ -36,7 +36,11 @@ export function Str({ k, vars, as: Tag = 'span', className }: StrProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [k, screenId, zone])
 
-  const text = overrides[k] ?? resolveString(k, locale, vars)
+  // Live preview (still typing, not yet applied) wins over an applied
+  // override, which wins over the real locale text — both are scoped to the
+  // currently selected locale, same as the applied override.
+  const liveText = livePreview && livePreview.key === k && livePreview.locale === locale ? livePreview.text : undefined
+  const text = liveText ?? overrides[k]?.[locale] ?? resolveString(k, locale, vars)
 
   return (
     <Tag data-str-key={k} data-str-screen={screenId} data-str-zone={zone} className={className}>

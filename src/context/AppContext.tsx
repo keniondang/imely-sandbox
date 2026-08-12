@@ -45,8 +45,27 @@ interface AppState {
   currentScreen: ScreenId
   setCurrentScreen: (s: ScreenId) => void
 
-  overrides: Record<string, string>
-  setOverride: (key: string, value: string | null) => void
+  // Translator drafts, scoped per key AND per locale — a draft written while
+  // "ID" was selected only shows up again when "ID" is selected, matching
+  // "the language is whatever the translator had chosen when they wrote it."
+  // Only written on Apply; see livePreview for what shows while still typing.
+  overrides: Record<string, Partial<Record<Locale, string>>>
+  applyOverride: (key: string, locale: Locale, value: string) => void
+  resetOverride: (key: string, locale: Locale) => void
+
+  // Ephemeral — mirrors the translation panel's textarea into the live phone
+  // preview on every keystroke, before Apply commits it into `overrides`.
+  // Single slot: switching keys/locale without applying just drops it, since
+  // scratch drafts aren't meant to be remembered (only applied ones are).
+  livePreview: { key: string; locale: Locale; text: string } | null
+  setLivePreview: (v: { key: string; locale: Locale; text: string } | null) => void
+
+  // Which key (+ exact screen/zone occurrence) the translation panel is
+  // showing — shared between the Inspector (which sets it) and the panel
+  // (which reads it), since they're now separate components on opposite sides.
+  selectedKey: string | null
+  selectedOccurrence: { screenId: ScreenId; zone: Zone } | null
+  selectKey: (key: string | null, occurrence: { screenId: ScreenId; zone: Zone } | null) => void
 
   inspectorOpen: boolean
   setInspectorOpen: (v: boolean) => void
@@ -135,7 +154,10 @@ const AppCtx = createContext<AppState | null>(null)
 export function AppProvider({ children }: { children: ReactNode }) {
   const [locale, setLocale] = useState<Locale>('id')
   const [currentScreen, setCurrentScreen] = useState<ScreenId>('feed')
-  const [overrides, setOverrides] = useState<Record<string, string>>({})
+  const [overrides, setOverrides] = useState<Record<string, Partial<Record<Locale, string>>>>({})
+  const [livePreview, setLivePreview] = useState<{ key: string; locale: Locale; text: string } | null>(null)
+  const [selectedKey, setSelectedKey] = useState<string | null>(null)
+  const [selectedOccurrence, setSelectedOccurrence] = useState<{ screenId: ScreenId; zone: Zone } | null>(null)
   const [inspectorOpen, setInspectorOpen] = useState(true)
   const [focusKey, setFocusKey] = useState<string | null>(null)
   const [focusScreenId, setFocusScreenId] = useState<ScreenId | null>(null)
@@ -157,13 +179,26 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const setOverride = (key: string, value: string | null) => {
+  const applyOverride = (key: string, locale: Locale, value: string) => {
+    setOverrides((prev) => ({ ...prev, [key]: { ...prev[key], [locale]: value } }))
+  }
+
+  const resetOverride = (key: string, locale: Locale) => {
     setOverrides((prev) => {
+      if (!prev[key]) return prev
+      const nextForKey = { ...prev[key] }
+      delete nextForKey[locale]
       const next = { ...prev }
-      if (value === null || value === '') delete next[key]
-      else next[key] = value
+      if (Object.keys(nextForKey).length === 0) delete next[key]
+      else next[key] = nextForKey
       return next
     })
+  }
+
+  const selectKey = (key: string | null, occurrence: { screenId: ScreenId; zone: Zone } | null) => {
+    setSelectedKey(key)
+    setSelectedOccurrence(occurrence)
+    setLivePreview(null)
   }
 
   const registerUsage = (rec: UsageRecord) => {
@@ -237,7 +272,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
       currentScreen,
       setCurrentScreen,
       overrides,
-      setOverride,
+      applyOverride,
+      resetOverride,
+      livePreview,
+      setLivePreview,
+      selectedKey,
+      selectedOccurrence,
+      selectKey,
       inspectorOpen,
       setInspectorOpen,
       focusKey,
@@ -291,6 +332,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
       focusZone,
       focusToken,
       usage,
+      overrides,
+      livePreview,
+      selectedKey,
+      selectedOccurrence,
       popupRequest,
       popupRequestToken,
       activeChat,

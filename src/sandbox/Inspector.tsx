@@ -1,9 +1,26 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Search, X, AlertTriangle, RotateCcw, ChevronRight } from 'lucide-react'
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
+import {
+  Search,
+  X,
+  AlertTriangle,
+  ChevronRight,
+  Home,
+  MessageCircle,
+  MessageSquare,
+  User,
+  UserCircle,
+  UserCircle2,
+  Bell,
+  Gem,
+  History,
+  ShoppingBag,
+  SlidersHorizontal,
+  LayoutGrid,
+  Tags,
+} from 'lucide-react'
 import { useApp, type ScreenId, type Zone } from '../context/AppContext'
-import { ALL_STRINGS, getEntry, type Locale } from '../lib/strings'
+import { ALL_STRINGS, getEntry, type Locale, type StringEntry } from '../lib/strings'
 import { MOCK_CHAT_THREADS, MOCK_FEED_CHARACTERS } from '../data/mockContent'
-import { buildStrSelector } from '../components/Str'
 
 const LOCALES: { id: Locale; label: string }[] = [
   { id: 'id', label: 'ID' },
@@ -16,14 +33,42 @@ const SCREEN_LABEL: Record<ScreenId, string> = {
   chatlist: 'Obrolan (Chat list)',
   profile: 'Profil',
   chatdetail: 'Chat detail (overlay)',
+  chatoptions: 'Opsi Chat (overlay)',
+  characterprofile: 'Profil Karakter (overlay)',
+  creatorprofile: 'Profil Kreator (overlay)',
   notification: 'Notifikasi (overlay)',
   gems: 'Gem (overlay)',
   gemhistory: 'Riwayat Gem (overlay)',
   purchase: 'Beli MeLy Club / Gem (overlay)',
-  characterprofile: 'Profil Karakter (overlay)',
-  creatorprofile: 'Profil Kreator (overlay)',
-  chatoptions: 'Opsi Chat (overlay)',
 }
+
+const SCREEN_ICON: Record<ScreenId, typeof Home> = {
+  feed: Home,
+  chatlist: MessageCircle,
+  profile: User,
+  chatdetail: MessageSquare,
+  chatoptions: SlidersHorizontal,
+  characterprofile: UserCircle,
+  creatorprofile: UserCircle2,
+  notification: Bell,
+  gems: Gem,
+  gemhistory: History,
+  purchase: ShoppingBag,
+}
+
+const SCREEN_ORDER: ScreenId[] = [
+  'feed',
+  'chatlist',
+  'profile',
+  'chatdetail',
+  'chatoptions',
+  'characterprofile',
+  'creatorprofile',
+  'notification',
+  'gems',
+  'gemhistory',
+  'purchase',
+]
 
 // Display order + label for zones within a screen section. Zones not listed
 // here (a screen introducing a new one later) still render, just alphabetically
@@ -72,6 +117,21 @@ function sortedZones(zones: string[]): string[] {
   })
 }
 
+type FilterMode = 'all' | 'wired' | 'unwired' | 'overridden'
+
+const FILTERS: { id: FilterMode; label: string }[] = [
+  { id: 'all', label: 'Semua' },
+  { id: 'wired', label: 'Wired' },
+  { id: 'unwired', label: 'Belum wired' },
+  { id: 'overridden', label: 'Ada override' },
+]
+
+interface SearchHit {
+  key: string
+  screenId: ScreenId | null
+  zone: Zone | null
+}
+
 export function Inspector() {
   const {
     locale,
@@ -82,7 +142,9 @@ export function Inspector() {
     currentScreen,
     setCurrentScreen,
     overrides,
-    setOverride,
+    selectedKey,
+    selectedOccurrence,
+    selectKey,
     activeChat,
     openChat,
     closeChat,
@@ -110,13 +172,16 @@ export function Inspector() {
     closeFilter,
   } = useApp()
   const [query, setQuery] = useState('')
-  const [selectedKey, setSelectedKey] = useState<string | null>(null)
-  // Which exact occurrence of selectedKey is showing in the detail panel —
-  // null when the key isn't wired anywhere. Needed alongside selectedKey
-  // because the same key can render in more than one screen/zone.
-  const [selectedOccurrence, setSelectedOccurrence] = useState<{ screenId: ScreenId; zone: Zone } | null>(null)
-  const [overflowFlag, setOverflowFlag] = useState<boolean | null>(null)
+  const [viewMode, setViewMode] = useState<'screens' | 'categories'>('screens')
+  const [filterMode, setFilterMode] = useState<FilterMode>('all')
   const [openScreens, setOpenScreens] = useState<Set<ScreenId>>(() => new Set(['feed']))
+  const [openCategories, setOpenCategories] = useState<Set<string>>(new Set())
+  // Composite `key::screenId::zone` strings currently overflowing their
+  // container, re-scanned on an interval — see the bulk-scan effect below.
+  const [overflowingKeys, setOverflowingKeys] = useState<Set<string>>(new Set())
+  const [focusedIndex, setFocusedIndex] = useState(-1)
+  const searchInputRef = useRef<HTMLInputElement>(null)
+  const rowRefs = useRef(new Map<number, HTMLButtonElement>())
 
   // Whichever screen is actually visible in the live preview right now —
   // base screens track currentScreen, but overlays (chat detail, notification,
@@ -158,6 +223,15 @@ export function Inspector() {
     })
   }
 
+  function toggleCategory(cat: string) {
+    setOpenCategories((prev) => {
+      const next = new Set(prev)
+      if (next.has(cat)) next.delete(cat)
+      else next.add(cat)
+      return next
+    })
+  }
+
   const wiredKeys = useMemo(() => new Set(usage.map((u) => u.key)), [usage])
 
   // screenId -> zone -> keys in that zone. The same key can legitimately
@@ -169,13 +243,13 @@ export function Inspector() {
       chatlist: {},
       profile: {},
       chatdetail: {},
+      chatoptions: {},
+      characterprofile: {},
+      creatorprofile: {},
       notification: {},
       gems: {},
       gemhistory: {},
       purchase: {},
-      characterprofile: {},
-      creatorprofile: {},
-      chatoptions: {},
     }
     usage.forEach((u) => {
       const zoneMap = map[u.screenId]
@@ -189,17 +263,113 @@ export function Inspector() {
     return Object.values(usageByScreen[screenId]).reduce((n, keys) => n + keys.length, 0)
   }
 
+  // All 1,479 keys grouped by their xlsx category, for "Semua Kategori" browsing —
+  // most of them aren't wired into any screen yet, so this is the only way to
+  // reach them without already knowing the exact text to search for.
+  const categoryGroups = useMemo(() => {
+    const map = new Map<string, StringEntry[]>()
+    for (const s of ALL_STRINGS) {
+      const cat = String(s.category)
+      if (!map.has(cat)) map.set(cat, [])
+      map.get(cat)!.push(s)
+    }
+    return [...map.entries()].sort((a, b) => a[0].localeCompare(b[0]))
+  }, [])
+
+  function matchesFilter(key: string): boolean {
+    if (filterMode === 'wired') return wiredKeys.has(key)
+    if (filterMode === 'unwired') return !wiredKeys.has(key)
+    if (filterMode === 'overridden') return Boolean(overrides[key] && Object.keys(overrides[key]).length > 0)
+    return true
+  }
+
+  // Prefer whichever locale is selected in the pills above, so the list
+  // matches what the live preview is actually showing right now.
+  function localizedLabel(entry: { locales: Record<Locale, string> }): string {
+    return entry.locales[locale] || entry.locales.id || entry.locales.en || ''
+  }
+
   const searchResults = useMemo(() => {
     if (!query.trim()) return []
     const q = query.toLowerCase()
     return ALL_STRINGS.filter(
       (s) =>
-        s.key.toLowerCase().includes(q) ||
-        String(s.category).toLowerCase().includes(q) ||
-        s.locales.id?.toLowerCase().includes(q) ||
-        s.locales.en?.toLowerCase().includes(q)
-    ).slice(0, 60)
+        (s.key.toLowerCase().includes(q) ||
+          String(s.category).toLowerCase().includes(q) ||
+          s.locales.id?.toLowerCase().includes(q) ||
+          s.locales.en?.toLowerCase().includes(q) ||
+          s.locales.vi?.toLowerCase().includes(q)) &&
+        matchesFilter(s.key)
+    ).slice(0, 80)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query, filterMode, wiredKeys, overrides])
+
+  // Search results grouped by which screen(s) actually render them — a key
+  // wired into 3 places shows up under all 3, keys never wired land in a
+  // trailing "not used anywhere" bucket. Scanning 60+ flat results for one
+  // term is hard to read; grouping mirrors how you'd actually go find it.
+  const searchGroups = useMemo(() => {
+    if (!query.trim()) return [] as { screenId: ScreenId | null; hits: SearchHit[] }[]
+    const groups = new Map<ScreenId | null, SearchHit[]>()
+    for (const s of searchResults) {
+      const occurrences = usage.filter((u) => u.key === s.key)
+      if (occurrences.length === 0) {
+        const arr = groups.get(null) ?? []
+        arr.push({ key: s.key, screenId: null, zone: null })
+        groups.set(null, arr)
+      } else {
+        for (const occ of occurrences) {
+          const arr = groups.get(occ.screenId) ?? []
+          arr.push({ key: s.key, screenId: occ.screenId, zone: occ.zone })
+          groups.set(occ.screenId, arr)
+        }
+      }
+    }
+    const ordered: { screenId: ScreenId | null; hits: SearchHit[] }[] = []
+    for (const screenId of SCREEN_ORDER) {
+      const hits = groups.get(screenId)
+      if (hits) ordered.push({ screenId, hits })
+    }
+    const unwired = groups.get(null)
+    if (unwired) ordered.push({ screenId: null, hits: unwired })
+    return ordered
+  }, [searchResults, usage, query])
+
+  const flatSearchRows = useMemo(() => searchGroups.flatMap((g) => g.hits), [searchGroups])
+  const searchRowIndex = useMemo(() => {
+    const m = new Map<SearchHit, number>()
+    flatSearchRows.forEach((h, i) => m.set(h, i))
+    return m
+  }, [flatSearchRows])
+
+  useEffect(() => {
+    setFocusedIndex(-1)
   }, [query])
+
+  useEffect(() => {
+    if (focusedIndex < 0) return
+    rowRefs.current.get(focusedIndex)?.scrollIntoView({ block: 'nearest' })
+  }, [focusedIndex])
+
+  function handleSearchKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    if (!flatSearchRows.length) return
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setFocusedIndex((i) => Math.min(i + 1, flatSearchRows.length - 1))
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setFocusedIndex((i) => Math.max(i - 1, 0))
+    } else if (e.key === 'Enter') {
+      const row = flatSearchRows[focusedIndex] ?? flatSearchRows[0]
+      if (row) {
+        e.preventDefault()
+        jumpTo(row.key, row.screenId ?? undefined, row.zone ?? undefined)
+      }
+    } else if (e.key === 'Escape') {
+      setFocusedIndex(-1)
+      searchInputRef.current?.blur()
+    }
+  }
 
   // Chat detail, notification, and gems are full-screen overlays toggled by
   // their own boolean in AppContext, not by currentScreen — so jumping to a
@@ -214,9 +384,8 @@ export function Inspector() {
   // (which knows exactly which occurrence was clicked); search results only
   // know the key, so they fall back to its first registered usage.
   function jumpTo(key: string, screenId?: ScreenId, zone?: Zone) {
-    setSelectedKey(key)
     const rec = screenId ? { screenId, zone: zone ?? 'page' } : usage.find((u) => u.key === key)
-    setSelectedOccurrence(rec ? { screenId: rec.screenId, zone: rec.zone } : null)
+    selectKey(key, rec ? { screenId: rec.screenId, zone: rec.zone } : null)
     if (rec) {
       closeChat()
       closeChatOptions()
@@ -256,23 +425,33 @@ export function Inspector() {
     }
   }
 
+  // Bulk overflow scan — re-checks every <Str> currently mounted in the live
+  // preview (whatever screen/popup happens to be open) on a short interval,
+  // so the list can flag overflowing strings without clicking each one.
   useEffect(() => {
-    if (!selectedKey) return
-    const t = setTimeout(() => {
-      const el = document.querySelector(
-        buildStrSelector(selectedKey, selectedOccurrence?.screenId, selectedOccurrence?.zone)
-      ) as HTMLElement | null
-      if (el) {
-        setOverflowFlag(el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1)
-      } else {
-        setOverflowFlag(null)
-      }
-    }, 380)
-    return () => clearTimeout(t)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedKey, selectedOccurrence, locale, overrides[selectedKey ?? '']])
+    function scan() {
+      const els = document.querySelectorAll<HTMLElement>('[data-str-key]')
+      const next = new Set<string>()
+      els.forEach((el) => {
+        const k = el.getAttribute('data-str-key')
+        if (!k) return
+        const s = el.getAttribute('data-str-screen') ?? ''
+        const z = el.getAttribute('data-str-zone') ?? ''
+        if (el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1) {
+          next.add(`${k}::${s}::${z}`)
+        }
+      })
+      setOverflowingKeys(next)
+    }
+    scan()
+    const id = setInterval(scan, 1200)
+    return () => clearInterval(id)
+  }, [])
 
-  const selectedEntry = selectedKey ? getEntry(selectedKey) : null
+  function isOverflowing(key: string, screenId?: ScreenId | null, zone?: Zone | null): boolean {
+    if (!screenId) return false
+    return overflowingKeys.has(`${key}::${screenId}::${zone ?? 'page'}`)
+  }
 
   return (
     <div className="w-[360px] shrink-0 h-full border-r border-imely-line bg-white flex flex-col">
@@ -281,8 +460,10 @@ export function Inspector() {
         <div className="relative">
           <Search size={14} className="absolute left-2.5 top-2.5 text-gray-400" />
           <input
+            ref={searchInputRef}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleSearchKeyDown}
             placeholder="Search all 1,479 keys…"
             className="w-full text-[13px] border border-imely-line rounded-lg pl-8 pr-7 py-2 outline-none focus:border-imely-primary"
           />
@@ -307,51 +488,170 @@ export function Inspector() {
             </button>
           ))}
         </div>
+
+        {!query.trim() && (
+          <div className="flex gap-1.5 mt-2">
+            <button
+              onClick={() => setViewMode('screens')}
+              className={`flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-full border ${
+                viewMode === 'screens'
+                  ? 'bg-imely-ink text-white border-imely-ink'
+                  : 'border-imely-line text-gray-500'
+              }`}
+            >
+              <LayoutGrid size={11} /> Per Layar
+            </button>
+            <button
+              onClick={() => setViewMode('categories')}
+              className={`flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-full border ${
+                viewMode === 'categories'
+                  ? 'bg-imely-ink text-white border-imely-ink'
+                  : 'border-imely-line text-gray-500'
+              }`}
+            >
+              <Tags size={11} /> Semua Kategori
+            </button>
+          </div>
+        )}
+
+        <div className="flex gap-1.5 mt-2 flex-wrap">
+          {FILTERS.map((f) => (
+            <button
+              key={f.id}
+              onClick={() => setFilterMode(f.id)}
+              className={`text-[10.5px] font-medium px-2 py-0.5 rounded-full border ${
+                filterMode === f.id
+                  ? 'bg-imely-mint border-imely-primary text-imely-primaryDark'
+                  : 'border-imely-line text-gray-400'
+              }`}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="flex-1 overflow-y-auto">
         {query.trim() ? (
           <div className="p-2">
             <div className="text-[11px] text-gray-400 px-2 py-1">
-              {searchResults.length} match{searchResults.length !== 1 ? 'es' : ''}
+              {flatSearchRows.length} match{flatSearchRows.length !== 1 ? 'es' : ''}
             </div>
-            {searchResults.map((s) => (
-              <KeyRow
-                key={s.key}
-                entryKey={s.key}
-                label={s.locales.id || s.locales.en}
-                wired={wiredKeys.has(s.key)}
-                active={selectedKey === s.key}
-                onClick={() => jumpTo(s.key)}
-              />
-            ))}
+            {searchGroups.map((group) => {
+              const Icon = group.screenId ? SCREEN_ICON[group.screenId] : null
+              return (
+                <div key={group.screenId ?? '__unwired__'} className="mb-1">
+                  <div className="sticky top-0 z-10 bg-white flex items-center gap-1.5 text-[10px] font-bold text-gray-400 uppercase px-2 py-1.5">
+                    {Icon && <Icon size={11} className="shrink-0" />}
+                    <span className="truncate">
+                      {group.screenId ? SCREEN_LABEL[group.screenId] : 'Belum digunakan di layar manapun'}
+                    </span>
+                  </div>
+                  {group.hits.map((hit) => {
+                    const e = getEntry(hit.key)
+                    const idx = searchRowIndex.get(hit)!
+                    return (
+                      <KeyRow
+                        key={`${group.screenId ?? 'unwired'}-${hit.zone ?? ''}-${hit.key}`}
+                        rowRef={(el) => {
+                          if (el) rowRefs.current.set(idx, el)
+                          else rowRefs.current.delete(idx)
+                        }}
+                        entryKey={hit.key}
+                        label={e ? localizedLabel(e) : hit.key}
+                        wired={wiredKeys.has(hit.key)}
+                        overflowing={isOverflowing(hit.key, hit.screenId, hit.zone)}
+                        active={
+                          selectedKey === hit.key &&
+                          selectedOccurrence?.screenId === hit.screenId &&
+                          selectedOccurrence?.zone === (hit.zone ?? 'page')
+                        }
+                        focused={idx === focusedIndex}
+                        onClick={() => jumpTo(hit.key, hit.screenId ?? undefined, hit.zone ?? undefined)}
+                      />
+                    )
+                  })}
+                </div>
+              )
+            })}
           </div>
-        ) : (
-          (
-            [
-              'feed',
-              'chatlist',
-              'profile',
-              'chatdetail',
-              'chatoptions',
-              'characterprofile',
-              'creatorprofile',
-              'notification',
-              'gems',
-              'gemhistory',
-              'purchase',
-            ] as ScreenId[]
-          ).map((screenId) => {
+        ) : viewMode === 'screens' ? (
+          SCREEN_ORDER.map((screenId) => {
             const isOpen = openScreens.has(screenId)
             const zones = sortedZones(Object.keys(usageByScreen[screenId]))
+            const count = screenCount(screenId)
+            const isEmpty = count === 0
+            const Icon = SCREEN_ICON[screenId]
             return (
               <div key={screenId} className="p-2">
                 <button
-                  onClick={() => toggleScreen(screenId)}
-                  className="w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-gray-50"
+                  onClick={() => !isEmpty && toggleScreen(screenId)}
+                  className={`sticky top-0 z-10 bg-white w-full flex items-center justify-between px-2 py-1 rounded-md ${
+                    isEmpty ? 'opacity-40' : 'hover:bg-gray-50'
+                  }`}
                 >
-                  <span className="text-[11px] font-bold text-gray-400 uppercase">
-                    {SCREEN_LABEL[screenId]} · {screenCount(screenId)}
+                  <span className="flex items-center gap-1.5 text-[11px] font-bold text-gray-400 uppercase">
+                    <Icon size={12} className="shrink-0" />
+                    {SCREEN_LABEL[screenId]} · {count}
+                  </span>
+                  {!isEmpty && (
+                    <ChevronRight
+                      size={13}
+                      className={`text-gray-400 shrink-0 transition-transform ${isOpen ? 'rotate-90' : ''}`}
+                    />
+                  )}
+                </button>
+                {isOpen &&
+                  !isEmpty &&
+                  zones.map((zone) => {
+                    const keys = usageByScreen[screenId][zone].filter(matchesFilter)
+                    if (!keys.length) return null
+                    return (
+                      <div key={zone} className="mt-0.5">
+                        {zone !== 'page' && (
+                          <div className="text-[10px] font-semibold text-gray-400 uppercase px-2 pt-2 pb-0.5">
+                            {ZONE_LABEL[zone] ?? zone}
+                          </div>
+                        )}
+                        {keys.map((key) => {
+                          const e = getEntry(key)
+                          return (
+                            <KeyRow
+                              key={`${zone}-${key}`}
+                              entryKey={key}
+                              label={e ? localizedLabel(e) : key}
+                              wired
+                              overflowing={isOverflowing(key, screenId, zone)}
+                              active={
+                                selectedKey === key &&
+                                selectedOccurrence?.screenId === screenId &&
+                                selectedOccurrence?.zone === zone
+                              }
+                              onClick={() => jumpTo(key, screenId, zone)}
+                            />
+                          )
+                        })}
+                      </div>
+                    )
+                  })}
+              </div>
+            )
+          })
+        ) : (
+          categoryGroups.map(([cat, entries]) => {
+            const filtered = entries.filter((e) => matchesFilter(e.key))
+            if (!filtered.length) return null
+            const isOpen = openCategories.has(cat)
+            const wiredCount = entries.filter((e) => wiredKeys.has(e.key)).length
+            return (
+              <div key={cat} className="p-2">
+                <button
+                  onClick={() => toggleCategory(cat)}
+                  className="sticky top-0 z-10 bg-white w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-gray-50"
+                >
+                  <span className="text-[11px] font-bold text-gray-400 uppercase truncate pr-2">
+                    {cat} · {entries.length}{' '}
+                    <span className="text-imely-primary normal-case font-medium">({wiredCount} wired)</span>
                   </span>
                   <ChevronRight
                     size={13}
@@ -359,99 +659,25 @@ export function Inspector() {
                   />
                 </button>
                 {isOpen &&
-                  zones.map((zone) => (
-                    <div key={zone} className="mt-0.5">
-                      {zone !== 'page' && (
-                        <div className="text-[10px] font-semibold text-gray-400 uppercase px-2 pt-2 pb-0.5">
-                          {ZONE_LABEL[zone] ?? zone}
-                        </div>
-                      )}
-                      {usageByScreen[screenId][zone].map((key) => {
-                        const e = getEntry(key)
-                        return (
-                          <KeyRow
-                            key={`${zone}-${key}`}
-                            entryKey={key}
-                            label={e?.locales.id || e?.locales.en || key}
-                            wired
-                            active={
-                              selectedKey === key &&
-                              selectedOccurrence?.screenId === screenId &&
-                              selectedOccurrence?.zone === zone
-                            }
-                            onClick={() => jumpTo(key, screenId, zone)}
-                          />
-                        )
-                      })}
-                    </div>
-                  ))}
+                  filtered.map((e) => {
+                    const occ = usage.find((u) => u.key === e.key)
+                    return (
+                      <KeyRow
+                        key={e.key}
+                        entryKey={e.key}
+                        label={localizedLabel(e)}
+                        wired={wiredKeys.has(e.key)}
+                        overflowing={isOverflowing(e.key, occ?.screenId, occ?.zone)}
+                        active={selectedKey === e.key}
+                        onClick={() => jumpTo(e.key)}
+                      />
+                    )
+                  })}
               </div>
             )
           })
         )}
       </div>
-
-      {selectedEntry && (
-        <div className="border-t border-imely-line p-3 bg-gray-50 max-h-[46%] overflow-y-auto">
-          <div className="flex items-center justify-between">
-            <div className="font-mono text-[11px] text-gray-500 break-all pr-2">{selectedEntry.key}</div>
-            <button
-              onClick={() => {
-                setSelectedKey(null)
-                setSelectedOccurrence(null)
-              }}
-              className="text-gray-400 shrink-0"
-            >
-              <X size={14} />
-            </button>
-          </div>
-          <div className="text-[10px] text-gray-400 mt-0.5">
-            {selectedEntry.category} {selectedEntry.subcategory ? `› ${selectedEntry.subcategory}` : ''}
-          </div>
-
-          {!wiredKeys.has(selectedEntry.key) && (
-            <div className="mt-2 text-[11px] text-amber-600 bg-amber-50 rounded-md px-2 py-1.5">
-              Not wired into a screen in this build yet — locale values only.
-            </div>
-          )}
-
-          {overflowFlag && wiredKeys.has(selectedEntry.key) && (
-            <div className="mt-2 flex items-center gap-1.5 text-[11px] text-red-600 bg-red-50 rounded-md px-2 py-1.5">
-              <AlertTriangle size={13} /> Text overflows its container at this length
-            </div>
-          )}
-
-          <div className="mt-2 space-y-1.5">
-            {LOCALES.map((l) => (
-              <div key={l.id} className="text-[12px]">
-                <span className="text-gray-400 font-semibold mr-1">{l.label}:</span>
-                <span className="text-imely-ink">{selectedEntry.locales[l.id]}</span>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-2.5">
-            <div className="text-[11px] font-semibold text-gray-500 mb-1 flex items-center justify-between">
-              Test override (stress-test length)
-              {overrides[selectedEntry.key] && (
-                <button
-                  onClick={() => setOverride(selectedEntry.key, null)}
-                  className="text-gray-400 flex items-center gap-0.5"
-                >
-                  <RotateCcw size={11} /> reset
-                </button>
-              )}
-            </div>
-            <textarea
-              value={overrides[selectedEntry.key] ?? ''}
-              onChange={(e) => setOverride(selectedEntry.key, e.target.value)}
-              placeholder="Type a long translation to test overflow…"
-              className="w-full text-[12px] border border-imely-line rounded-lg p-2 outline-none focus:border-imely-primary resize-none"
-              rows={2}
-            />
-          </div>
-        </div>
-      )}
     </div>
   )
 }
@@ -461,24 +687,32 @@ function KeyRow({
   label,
   wired,
   active,
+  focused,
+  overflowing,
   onClick,
+  rowRef,
 }: {
   entryKey: string
   label?: string
   wired: boolean
   active: boolean
+  focused?: boolean
+  overflowing?: boolean
   onClick: () => void
+  rowRef?: (el: HTMLButtonElement | null) => void
 }) {
   return (
     <button
+      ref={rowRef}
       onClick={onClick}
       title={entryKey}
       className={`w-full text-left px-2 py-1.5 rounded-lg flex items-center gap-1.5 ${
-        active ? 'bg-imely-mint' : 'hover:bg-gray-50'
+        active ? 'bg-imely-mint' : focused ? 'bg-gray-100 ring-1 ring-inset ring-imely-primary' : 'hover:bg-gray-50'
       }`}
     >
       <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${wired ? 'bg-imely-primary' : 'bg-gray-300'}`} />
       <span className="text-[12.5px] text-imely-ink truncate flex-1">{label}</span>
+      {overflowing && <AlertTriangle size={12} className="text-red-500 shrink-0" />}
     </button>
   )
 }

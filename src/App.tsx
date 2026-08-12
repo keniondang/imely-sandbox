@@ -18,6 +18,7 @@ import { CharacterProfileScreen } from './screens/CharacterProfileScreen'
 import { CreatorProfileScreen } from './screens/CreatorProfileScreen'
 import { ChatOptionsScreen } from './screens/ChatOptionsScreen'
 import { Inspector } from './sandbox/Inspector'
+import { TranslationPanel } from './sandbox/TranslationPanel'
 
 function Shell() {
   const {
@@ -174,6 +175,8 @@ function Shell() {
           </PhoneFrame>
         </div>
       </div>
+
+      {inspectorOpen && <TranslationPanel />}
     </div>
   )
 }
