@@ -13,6 +13,9 @@ import { ChatDetailScreen } from './screens/ChatDetailScreen'
 import { NotificationScreen } from './screens/NotificationScreen'
 import { GemScreen } from './screens/GemScreen'
 import { GemHistoryScreen } from './screens/GemHistoryScreen'
+import { PurchaseScreen } from './screens/PurchaseScreen'
+import { CharacterProfileScreen } from './screens/CharacterProfileScreen'
+import { CreatorProfileScreen } from './screens/CreatorProfileScreen'
 import { Inspector } from './sandbox/Inspector'
 
 function Shell() {
@@ -21,11 +24,14 @@ function Shell() {
     inspectorOpen,
     setInspectorOpen,
     activeChat,
+    activeCharacterId,
+    activeCreatorName,
     filterOpen,
     closeFilter,
     notifOpen,
     gemsOpen,
     gemHistoryOpen,
+    purchaseOpen,
     toast,
   } = useApp()
   useStringHighlighter()
@@ -78,11 +84,29 @@ function Shell() {
               <BottomNav />
             </div>
 
-            {/* full-screen chat overlay — opened by tapping a thread or character card */}
+            {/* full-screen chat overlay — opened by tapping a thread, or from a character profile's "Pesan" button */}
             {activeChat && (
               <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white flex flex-col">
                 <ScreenScope id="chatdetail">
                   <ChatDetailScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* character profile — opened by tapping a character card in the feed */}
+            {activeCharacterId && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+                <ScreenScope id="characterprofile">
+                  <CharacterProfileScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* creator profile — pushed on top of a character profile from its "Kreator" row */}
+            {activeCharacterId && activeCreatorName && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+                <ScreenScope id="creatorprofile">
+                  <CreatorProfileScreen />
                 </ScreenScope>
               </div>
             )}
@@ -117,6 +141,15 @@ function Shell() {
               <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
                 <ScreenScope id="gemhistory">
                   <GemHistoryScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* MêLy Club / Gem purchase — reachable from multiple screens */}
+            {purchaseOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+                <ScreenScope id="purchase">
+                  <PurchaseScreen />
                 </ScreenScope>
               </div>
             )}

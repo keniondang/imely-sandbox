@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Search, X, AlertTriangle, RotateCcw, ChevronRight } from 'lucide-react'
 import { useApp, type ScreenId, type Zone } from '../context/AppContext'
 import { ALL_STRINGS, getEntry, type Locale } from '../lib/strings'
-import { MOCK_CHAT_THREADS } from '../data/mockContent'
+import { MOCK_CHAT_THREADS, MOCK_FEED_CHARACTERS } from '../data/mockContent'
 import { buildStrSelector } from '../components/Str'
 
 const LOCALES: { id: Locale; label: string }[] = [
@@ -19,16 +19,37 @@ const SCREEN_LABEL: Record<ScreenId, string> = {
   notification: 'Notifikasi (overlay)',
   gems: 'Gem (overlay)',
   gemhistory: 'Riwayat Gem (overlay)',
+  purchase: 'Beli MeLy Club / Gem (overlay)',
+  characterprofile: 'Profil Karakter (overlay)',
+  creatorprofile: 'Profil Kreator (overlay)',
 }
 
 // Display order + label for zones within a screen section. Zones not listed
 // here (a screen introducing a new one later) still render, just alphabetically
 // after these and labeled with their raw name.
-const ZONE_ORDER = ['page', 'menu', 'popup']
+const ZONE_ORDER = [
+  'page',
+  'menu',
+  'gem_detail',
+  'invite_input',
+  'lucky_wheel',
+  'lucky_result',
+  'block_confirm',
+  'report',
+  'club',
+  'gem',
+]
 const ZONE_LABEL: Record<string, string> = {
   page: 'Halaman',
   menu: 'Menu',
-  popup: 'Popup',
+  gem_detail: 'Popup: Detail Gem',
+  invite_input: 'Popup: Masukkan Kode',
+  lucky_wheel: 'Popup: Roda Keberuntungan',
+  lucky_result: 'Popup: Hasil Undian',
+  block_confirm: 'Popup: Konfirmasi Blokir',
+  report: 'Popup: Laporkan',
+  club: 'Tab: MêLy Club',
+  gem: 'Tab: Gem',
 }
 
 function sortedZones(zones: string[]): string[] {
@@ -56,6 +77,12 @@ export function Inspector() {
     activeChat,
     openChat,
     closeChat,
+    activeCharacterId,
+    openCharacterProfile,
+    closeCharacterProfile,
+    activeCreatorName,
+    openCreatorProfile,
+    closeCreatorProfile,
     notifOpen,
     openNotif,
     closeNotif,
@@ -65,6 +92,9 @@ export function Inspector() {
     gemHistoryOpen,
     openGemHistory,
     closeGemHistory,
+    purchaseOpen,
+    openPurchase,
+    closePurchase,
     closeFilter,
   } = useApp()
   const [query, setQuery] = useState('')
@@ -81,11 +111,14 @@ export function Inspector() {
   // gems) render independently of it, so check those booleans first.
   const activeScreenId: ScreenId = useMemo(() => {
     if (activeChat) return 'chatdetail'
+    if (activeCharacterId && activeCreatorName) return 'creatorprofile'
+    if (activeCharacterId) return 'characterprofile'
     if (notifOpen) return 'notification'
+    if (purchaseOpen) return 'purchase'
     if (gemHistoryOpen) return 'gemhistory'
     if (gemsOpen) return 'gems'
     return currentScreen
-  }, [activeChat, notifOpen, gemHistoryOpen, gemsOpen, currentScreen])
+  }, [activeChat, activeCharacterId, activeCreatorName, notifOpen, purchaseOpen, gemHistoryOpen, gemsOpen, currentScreen])
 
   // Keep the accordion in sync with the live preview: whenever the visible
   // screen changes, open only that section and collapse the rest.
@@ -116,6 +149,9 @@ export function Inspector() {
       notification: {},
       gems: {},
       gemhistory: {},
+      purchase: {},
+      characterprofile: {},
+      creatorprofile: {},
     }
     usage.forEach((u) => {
       const zoneMap = map[u.screenId]
@@ -159,13 +195,21 @@ export function Inspector() {
     setSelectedOccurrence(rec ? { screenId: rec.screenId, zone: rec.zone } : null)
     if (rec) {
       closeChat()
+      closeCharacterProfile()
+      closeCreatorProfile()
       closeNotif()
       closeGems()
       closeGemHistory()
+      closePurchase()
       closeFilter()
       if (rec.screenId === 'chatdetail') {
         const preview = MOCK_CHAT_THREADS[0]
         openChat({ id: preview.id, name: preview.name, color: preview.color })
+      } else if (rec.screenId === 'characterprofile') {
+        openCharacterProfile(MOCK_FEED_CHARACTERS[0].id)
+      } else if (rec.screenId === 'creatorprofile') {
+        openCharacterProfile(MOCK_FEED_CHARACTERS[0].id)
+        openCreatorProfile(MOCK_FEED_CHARACTERS[0].creatorName)
       } else if (rec.screenId === 'notification') {
         openNotif()
       } else if (rec.screenId === 'gems') {
@@ -173,6 +217,8 @@ export function Inspector() {
       } else if (rec.screenId === 'gemhistory') {
         openGems()
         openGemHistory()
+      } else if (rec.screenId === 'purchase') {
+        openPurchase(rec.zone === 'gem' ? 'gem' : 'club')
       } else {
         setCurrentScreen(rec.screenId)
       }
@@ -252,7 +298,20 @@ export function Inspector() {
             ))}
           </div>
         ) : (
-          (['feed', 'chatlist', 'profile', 'chatdetail', 'notification', 'gems', 'gemhistory'] as ScreenId[]).map((screenId) => {
+          (
+            [
+              'feed',
+              'chatlist',
+              'profile',
+              'chatdetail',
+              'characterprofile',
+              'creatorprofile',
+              'notification',
+              'gems',
+              'gemhistory',
+              'purchase',
+            ] as ScreenId[]
+          ).map((screenId) => {
             const isOpen = openScreens.has(screenId)
             const zones = sortedZones(Object.keys(usageByScreen[screenId]))
             return (

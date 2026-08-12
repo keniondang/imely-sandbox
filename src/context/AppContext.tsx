@@ -1,7 +1,19 @@
 import { createContext, useContext, useMemo, useRef, useState, type ReactNode } from 'react'
 import type { Locale } from '../lib/strings'
 
-export type ScreenId = 'feed' | 'chatlist' | 'profile' | 'chatdetail' | 'notification' | 'gems' | 'gemhistory'
+export type ScreenId =
+  | 'feed'
+  | 'chatlist'
+  | 'profile'
+  | 'chatdetail'
+  | 'notification'
+  | 'gems'
+  | 'gemhistory'
+  | 'purchase'
+  | 'characterprofile'
+  | 'creatorprofile'
+
+export type PurchaseTab = 'club' | 'gem'
 
 // 'page' is a screen's always-visible content. Anything else ('menu', 'popup', ...)
 // is a sub-surface that only exists in the DOM while its own local state has it
@@ -59,10 +71,24 @@ interface AppState {
   popupRequestToken: number
   requestPopup: (screenId: ScreenId, zone: Zone) => void
 
-  // full-screen chat overlay, opened by tapping a thread or a character card
+  // full-screen chat overlay, opened by tapping a thread or from a character
+  // profile's "Pesan" button
   activeChat: ChatTarget | null
   openChat: (target: ChatTarget) => void
   closeChat: () => void
+
+  // character profile overlay, opened by tapping a character card in the feed
+  // (or a "Karakter Serupa" card); id looks up the full record in
+  // MOCK_FEED_CHARACTERS, same as activeChat does for chat threads/cards
+  activeCharacterId: string | null
+  openCharacterProfile: (id: string) => void
+  closeCharacterProfile: () => void
+
+  // creator profile — pushed on top of a character profile from its "Kreator"
+  // row; name looks up the creator's characters in MOCK_FEED_CHARACTERS
+  activeCreatorName: string | null
+  openCreatorProfile: (name: string) => void
+  closeCreatorProfile: () => void
 
   // Beranda filter bottom-sheet
   filterOpen: boolean
@@ -85,6 +111,14 @@ interface AppState {
   openGemHistory: () => void
   closeGemHistory: () => void
 
+  // MêLy Club / Gem purchase overlay — reachable from multiple screens
+  // (gems, profile, …), so it's its own top-level overlay rather than local
+  // state on any one of them. openPurchase picks which tab it opens on.
+  purchaseOpen: boolean
+  purchaseTab: PurchaseTab
+  openPurchase: (tab: PurchaseTab) => void
+  closePurchase: () => void
+
   // lightweight toast, e.g. for stub actions not built yet
   toast: string | null
   showToast: (msg: string) => void
@@ -105,10 +139,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [popupRequest, setPopupRequest] = useState<PopupRequest | null>(null)
   const [popupRequestToken, setPopupRequestToken] = useState(0)
   const [activeChat, setActiveChat] = useState<ChatTarget | null>(null)
+  const [activeCharacterId, setActiveCharacterId] = useState<string | null>(null)
+  const [activeCreatorName, setActiveCreatorName] = useState<string | null>(null)
   const [filterOpen, setFilterOpen] = useState(false)
   const [notifOpen, setNotifOpen] = useState(false)
   const [gemsOpen, setGemsOpen] = useState(false)
   const [gemHistoryOpen, setGemHistoryOpen] = useState(false)
+  const [purchaseOpen, setPurchaseOpen] = useState(false)
+  const [purchaseTab, setPurchaseTab] = useState<PurchaseTab>('club')
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -143,6 +181,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const openChat = (target: ChatTarget) => setActiveChat(target)
   const closeChat = () => setActiveChat(null)
 
+  const openCharacterProfile = (id: string) => setActiveCharacterId(id)
+  const closeCharacterProfile = () => {
+    setActiveCharacterId(null)
+    setActiveCreatorName(null)
+  }
+
+  const openCreatorProfile = (name: string) => setActiveCreatorName(name)
+  const closeCreatorProfile = () => setActiveCreatorName(null)
+
   const openFilter = () => setFilterOpen(true)
   const closeFilter = () => setFilterOpen(false)
 
@@ -157,6 +204,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const openGemHistory = () => setGemHistoryOpen(true)
   const closeGemHistory = () => setGemHistoryOpen(false)
+
+  const openPurchase = (tab: PurchaseTab) => {
+    setPurchaseTab(tab)
+    setPurchaseOpen(true)
+  }
+  const closePurchase = () => setPurchaseOpen(false)
 
   const showToast = (msg: string) => {
     if (toastTimer.current) clearTimeout(toastTimer.current)
@@ -187,6 +240,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
       activeChat,
       openChat,
       closeChat,
+      activeCharacterId,
+      openCharacterProfile,
+      closeCharacterProfile,
+      activeCreatorName,
+      openCreatorProfile,
+      closeCreatorProfile,
       filterOpen,
       openFilter,
       closeFilter,
@@ -199,6 +258,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
       gemHistoryOpen,
       openGemHistory,
       closeGemHistory,
+      purchaseOpen,
+      purchaseTab,
+      openPurchase,
+      closePurchase,
       toast,
       showToast,
     }),
@@ -215,10 +278,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
       popupRequest,
       popupRequestToken,
       activeChat,
+      activeCharacterId,
+      activeCreatorName,
       filterOpen,
       notifOpen,
       gemsOpen,
       gemHistoryOpen,
+      purchaseOpen,
+      purchaseTab,
       toast,
     ]
   )

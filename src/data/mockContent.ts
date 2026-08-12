@@ -9,13 +9,92 @@ export interface MockCharacter {
   tags: string[]
   chatCount: string
   color: string // avatar bg fallback
+  // Character profile page fields — draft/placeholder, not xlsx content.
+  followers: string
+  creatorName: string
+  creatorFollowers: string
+  creatorBadgeKey: string
+  creatorNote: string
+  publicInfo: string
+  biography: string
+  firstMessage: string
 }
 
 export const MOCK_FEED_CHARACTERS: MockCharacter[] = [
-  { id: 'c1', name: 'Kael', tagline: 'coba rebut bola nya dari aku kalau bisa!!', tags: ['ngeselin!'], chatCount: '314', color: '#FDE68A' },
-  { id: 'c2', name: 'Reygan', tagline: '"pacaran biasa aja tpii serasa pacaran sama ank kecil"', tags: ['Clingy', 'Posesif'], chatCount: '1.6K', color: '#C7D2FE' },
-  { id: 'c3', name: 'Arka', tagline: 'diam itu bukan berarti aku gak peduli.', tags: ['Dingin', 'Protektif'], chatCount: '892', color: '#FBCFE8' },
-  { id: 'c4', name: 'Bima', tagline: 'kamu telat lagi. aku nunggu dari tadi.', tags: ['Posesif'], chatCount: '2.1K', color: '#BBF7D0' },
+  {
+    id: 'c1',
+    name: 'Kael',
+    tagline: 'coba rebut bola nya dari aku kalau bisa!!',
+    tags: ['ngeselin!'],
+    chatCount: '314',
+    color: '#FDE68A',
+    followers: '24',
+    creatorName: 'kopi.hujan',
+    creatorFollowers: '5',
+    creatorBadgeKey: 'badge.creator_rookie',
+    creatorNote: 'Jangan lupa mampir ke karakter lainku juga ya 🏀',
+    publicInfo:
+      'Kael adalah kapten tim basket sekolah yang selalu bikin gemas. Kamu adalah teman sekelasnya yang paling sering jadi sasaran godaannya.',
+    biography:
+      'Kael kelihatan cuek, tapi diam-diam dia selalu merhatiin kamu. Tiap kali kalian main bareng, dia selalu cari cara buat bikin kamu ketawa — atau kesel.',
+    firstMessage:
+      '*Kael melempar bola ke arahmu sambil nyengir*\n"Woy, bisa tangkep nggak? Atau emang lemah kayak biasanya?"',
+  },
+  {
+    id: 'c2',
+    name: 'Reygan',
+    tagline: '"pacaran biasa aja tpii serasa pacaran sama ank kecil"',
+    tags: ['Clingy', 'Posesif'],
+    chatCount: '1.6K',
+    color: '#C7D2FE',
+    followers: '312',
+    creatorName: 'senja_fiksi',
+    creatorFollowers: '47',
+    creatorBadgeKey: 'badge.creator_rookie',
+    creatorNote: 'Karakter ini based on true story temenku wkwk',
+    publicInfo:
+      'Reygan adalah pacar posesifmu yang nggak suka kamu deket-deket sama orang lain. Di balik sikapnya yang clingy, dia cuma takut kehilangan kamu.',
+    biography:
+      'Reygan tumbuh sendirian dan susah percaya orang. Sejak pacaran sama kamu, dia jadi terlalu takut kehilangan satu-satunya orang yang bikin dia ngerasa aman.',
+    firstMessage: '*Reygan meluk lenganmu erat-erat*\n"Kamu abis dari mana aja? Kok chat aku lama dibales..."',
+  },
+  {
+    id: 'c3',
+    name: 'Arka',
+    tagline: 'diam itu bukan berarti aku gak peduli.',
+    tags: ['Dingin', 'Protektif'],
+    chatCount: '892',
+    color: '#FBCFE8',
+    followers: '8',
+    creatorName: 'airin.wrt',
+    creatorFollowers: '2',
+    creatorBadgeKey: 'badge.creator_rookie',
+    creatorNote: 'Feedback selalu diterima, makasih udah baca ceritanya 🤍',
+    publicInfo:
+      'Arka adalah kakak kelas pendiam yang jarang ngomong. Tapi entah kenapa, dia selalu ada tiap kali kamu butuh.',
+    biography:
+      'Arka nggak pernah banyak bicara soal perasaannya. Diamnya dia bukan berarti dia nggak peduli — justru sebaliknya.',
+    firstMessage:
+      '*Arka berdiri di depan gerbang, menunggumu tanpa bicara*\n"...Lama. Kupikir kamu nggak pulang bareng aku hari ini."',
+  },
+  {
+    id: 'c4',
+    name: 'Bima',
+    tagline: 'kamu telat lagi. aku nunggu dari tadi.',
+    tags: ['Posesif'],
+    chatCount: '2.1K',
+    color: '#BBF7D0',
+    followers: '156',
+    creatorName: '°•Lyn_',
+    creatorFollowers: '19',
+    creatorBadgeKey: 'badge.creator_rookie',
+    creatorNote: 'Jangan di copy yaaa... ✌️🙃',
+    publicInfo:
+      'Bima adalah pacarmu yang nggak pernah suka nunggu. Kalau kamu telat sedikit aja, dia udah waspada duluan.',
+    biography:
+      'Bima pernah dikhianati orang yang dia sayang, jadi sekarang dia susah buat nggak khawatir berlebihan tiap kali kamu nggak keliatan.',
+    firstMessage: '*Bima duduk di teras sambil liat jam berkali-kali*\n"Kamu telat lagi. Aku nunggu dari tadi."',
+  },
 ]
 
 export interface MockChatThread {
@@ -88,6 +167,37 @@ export const FILTER_CATEGORIES = [
 
 // Placeholder — gender preference filter, single-select.
 export const GENDER_OPTIONS = ['All', 'Pria', 'Wanita', 'Non-biner']
+
+export interface MockClubPlan {
+  id: 'monthly' | 'yearly'
+  labelKey: string
+  price: string
+  oldPrice: string
+  discountPct: number
+}
+
+// Placeholder — IAP catalog (prices, discounts) is store config, not xlsx
+// content. Plan-name labels ARE real strings, keyed by labelKey.
+export const MOCK_CLUB_PLANS: MockClubPlan[] = [
+  { id: 'monthly', labelKey: 'product_purchase.subs_monthly', price: 'Rp299.000', oldPrice: 'Rp499.000', discountPct: 40 },
+  { id: 'yearly', labelKey: 'product_purchase.subs_yearly', price: 'Rp2.399.000', oldPrice: 'Rp5.988.000', discountPct: 60 },
+]
+
+export interface MockGemPack {
+  id: string
+  amount: number
+  price: string
+}
+
+// Placeholder — IAP gem-pack catalog, not xlsx content.
+export const MOCK_GEM_PACKS: MockGemPack[] = [
+  { id: 'g1', amount: 300, price: 'Rp29.000' },
+  { id: 'g2', amount: 600, price: 'Rp59.000' },
+  { id: 'g3', amount: 1500, price: 'Rp119.000' },
+  { id: 'g4', amount: 3500, price: 'Rp249.000' },
+  { id: 'g5', amount: 8000, price: 'Rp499.000' },
+  { id: 'g6', amount: 15000, price: 'Rp799.000' },
+]
 
 export interface MockGemActivity {
   id: string

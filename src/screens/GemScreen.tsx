@@ -4,6 +4,7 @@ import { Str } from '../components/Str'
 import { useApp } from '../context/AppContext'
 import { ZoneScope } from '../context/ScreenScope'
 import { usePopupRequest } from '../hooks/usePopupRequest'
+import { resolveString } from '../lib/strings'
 import { MOCK_USER, MOCK_INVITE_CODE, MOCK_GEM_MISSIONS } from '../data/mockContent'
 
 // Placeholder — per-user gem lot breakdown, not xlsx content (see gem_history.*
@@ -16,13 +17,59 @@ const DAILY_GEM_LOTS = [
 ]
 
 export function GemScreen() {
-  const { closeGems, openGemHistory, showToast } = useApp()
+  const { locale, closeGems, openGemHistory, openPurchase, showToast } = useApp()
+
+  // Balances/mission progress are local session state, not fixed mock
+  // constants — the lucky wheel actually pays out into them (see spinWheel).
+  const [totalGems, setTotalGems] = useState(MOCK_USER.gems)
+  const [dailyGems, setDailyGems] = useState(MOCK_USER.dailyGems)
+  const [dailyGemLots, setDailyGemLots] = useState(DAILY_GEM_LOTS)
+  const missions = MOCK_GEM_MISSIONS
+
   const [dailyDetailOpen, setDailyDetailOpen] = useState(false)
-  usePopupRequest('gems', 'popup', setDailyDetailOpen)
+  usePopupRequest('gems', 'gem_detail', setDailyDetailOpen)
+
+  const [inviteInputOpen, setInviteInputOpen] = useState(false)
+  const [inviteInputValue, setInviteInputValue] = useState('')
+  const [inviteInputError, setInviteInputError] = useState(false)
+  usePopupRequest('gems', 'invite_input', setInviteInputOpen)
+
+  const [luckyWheelOpen, setLuckyWheelOpen] = useState(false)
+  const [luckyResultOpen, setLuckyResultOpen] = useState(false)
+  const [luckyReward, setLuckyReward] = useState(0)
+  usePopupRequest('gems', 'lucky_wheel', setLuckyWheelOpen)
+  usePopupRequest('gems', 'lucky_result', setLuckyResultOpen)
 
   function copyInviteCode() {
     navigator.clipboard?.writeText(MOCK_INVITE_CODE).catch(() => {})
     showToast('Kode disalin')
+  }
+
+  function closeInviteInput() {
+    setInviteInputOpen(false)
+    setInviteInputValue('')
+    setInviteInputError(false)
+  }
+
+  function submitInviteCode() {
+    if (!inviteInputValue.trim()) {
+      setInviteInputError(true)
+      return
+    }
+    closeInviteInput()
+    showToast('Kode diterapkan')
+  }
+
+  function spinWheel() {
+    const reward = Math.floor(Math.random() * 201) // matches the "+ 0-200" reward range shown on the mission card
+    setLuckyReward(reward)
+    setTotalGems((g) => g + reward)
+    setDailyGems((g) => g + reward)
+    if (reward > 0) {
+      setDailyGemLots((prev) => [...prev, { amount: reward, expiresToday: false, date: '31/12/2026' }])
+    }
+    setLuckyWheelOpen(false)
+    setLuckyResultOpen(true)
   }
 
   return (
@@ -57,12 +104,12 @@ export function GemScreen() {
           </div>
 
           <div className="border-t border-imely-line px-4 py-3 text-[13.5px] text-imely-ink">
-            <Str k="user_gem_overview.total" />: {MOCK_USER.gems.toLocaleString('id-ID')} 💎
+            <Str k="user_gem_overview.total" />: {totalGems.toLocaleString('id-ID')} 💎
           </div>
 
           <div className="border-t border-imely-line px-4 py-3 flex items-center justify-between">
             <div className="text-[13.5px] text-imely-ink">
-              <Str k="user_gem_overview.expirable" />: {MOCK_USER.dailyGems.toLocaleString('id-ID')} 💎
+              <Str k="user_gem_overview.expirable" />: {dailyGems.toLocaleString('id-ID')} 💎
             </div>
             <button
               onClick={() => setDailyDetailOpen(true)}
@@ -109,7 +156,7 @@ export function GemScreen() {
           </div>
 
           <button
-            onClick={() => showToast('Alur pembelian — segera hadir')}
+            onClick={() => openPurchase('club')}
             className="mt-4 w-full bg-imely-primary text-white font-bold rounded-full py-3 active:scale-[0.97] active:bg-imely-primaryDark transition-transform"
           >
             <Str k="profile_me_v4.banner_upgrade.cta" />
@@ -154,7 +201,7 @@ export function GemScreen() {
                 <Str k="user_task.txt_22_input_subtitle" />
               </div>
               <button
-                onClick={() => showToast('Masukkan kode undangan — segera hadir')}
+                onClick={() => setInviteInputOpen(true)}
                 className="mt-3 w-full flex items-center gap-2 border border-imely-primary rounded-full px-4 py-2.5 bg-imely-mint/40 text-imely-primaryDark text-[13px] font-medium active:scale-[0.98] transition-transform"
               >
                 <Pencil size={14} />
@@ -166,12 +213,12 @@ export function GemScreen() {
             <MissionCard
               titleNode={
                 <>
-                  <Str k="user_gem_overview.view_ads" /> ({MOCK_GEM_MISSIONS[0].progress})
+                  <Str k="user_gem_overview.view_ads" /> ({missions[0].progress})
                 </>
               }
               limit={20}
-              reward={MOCK_GEM_MISSIONS[0].reward}
-              done={MOCK_GEM_MISSIONS[0].done}
+              reward={missions[0].reward}
+              done={missions[0].done}
               onDo={() => showToast('Tonton iklan — segera hadir')}
             />
 
@@ -179,21 +226,21 @@ export function GemScreen() {
             <MissionCard
               titleNode={
                 <>
-                  <Str k="companion_header.banners.lucky_draw_title" /> Harian ({MOCK_GEM_MISSIONS[1].progress})
+                  <Str k="companion_header.banners.lucky_draw_title" /> Harian ({missions[1].progress})
                 </>
               }
               limit={1}
-              reward={MOCK_GEM_MISSIONS[1].reward}
-              done={MOCK_GEM_MISSIONS[1].done}
-              onDo={() => showToast('Roda Keberuntungan — segera hadir')}
+              reward={missions[1].reward}
+              done={missions[1].done}
+              onDo={() => setLuckyWheelOpen(true)}
             />
 
             {/* daily gift — fully placeholder, not in the xlsx */}
             <MissionCard
-              titleNode={<>Hadiah Harian ({MOCK_GEM_MISSIONS[2].progress})</>}
+              titleNode={<>Hadiah Harian ({missions[2].progress})</>}
               limit={1}
-              reward={MOCK_GEM_MISSIONS[2].reward}
-              done={MOCK_GEM_MISSIONS[2].done}
+              reward={missions[2].reward}
+              done={missions[2].done}
               onDo={() => showToast('Hadiah harian — segera hadir')}
             />
           </div>
@@ -202,7 +249,7 @@ export function GemScreen() {
 
       {/* gem harian breakdown — opened from the "Detail" button on the overview card */}
       {dailyDetailOpen && (
-        <ZoneScope zone="popup">
+        <ZoneScope zone="gem_detail">
           <div className="absolute inset-0 z-10">
             <button
               onClick={() => setDailyDetailOpen(false)}
@@ -224,15 +271,15 @@ export function GemScreen() {
 
               <div className="mt-4 space-y-3 text-[14px] text-imely-ink">
                 <div>
-                  <Str k="user_gem_overview.total" />: <span className="font-bold">{MOCK_USER.gems.toLocaleString('id-ID')}</span>💎
+                  <Str k="user_gem_overview.total" />: <span className="font-bold">{totalGems.toLocaleString('id-ID')}</span>💎
                 </div>
                 <div>
                   <Str k="user_gem_overview.persist" />: <span className="font-bold">{MOCK_USER.permanentGems}</span> 💎
                 </div>
                 <div>
-                  <Str k="user_gem_overview.expirable" />: <span className="font-bold">{MOCK_USER.dailyGems.toLocaleString('id-ID')}</span>💎
+                  <Str k="user_gem_overview.expirable" />: <span className="font-bold">{dailyGems.toLocaleString('id-ID')}</span>💎
                   <div className="mt-1.5 space-y-1 text-[12.5px] text-gray-500">
-                    {DAILY_GEM_LOTS.map((lot, i) => (
+                    {dailyGemLots.map((lot, i) => (
                       <div key={i}>
                         • {lot.amount}💎 <Str k="user_gem_overview.expire_at" /> 23:59{' '}
                         {lot.expiresToday ? <Str k="user_gem_overview.txt_today" /> : lot.date}
@@ -241,6 +288,118 @@ export function GemScreen() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </ZoneScope>
+      )}
+
+      {/* enter invite code — opened from "Masukkan kode undanganmu..." */}
+      {inviteInputOpen && (
+        <ZoneScope zone="invite_input">
+          <div className="absolute inset-0 z-10">
+            <button
+              onClick={closeInviteInput}
+              aria-label="Close invite code input"
+              className="absolute inset-0 bg-black/40"
+            />
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl p-5">
+              <div className="font-bold text-[17px] text-imely-ink">
+                <Str k="input_invite_code.title" />
+              </div>
+              <div className="text-[13px] text-gray-500 mt-1">
+                <Str k="input_invite_code.subtitle" />
+              </div>
+              <input
+                value={inviteInputValue}
+                onChange={(e) => {
+                  setInviteInputValue(e.target.value)
+                  setInviteInputError(false)
+                }}
+                placeholder={resolveString('input_invite_code.hint', locale)}
+                className="mt-4 w-full bg-gray-100 rounded-full px-4 py-2.5 text-[13.5px] outline-none"
+              />
+              {inviteInputError && (
+                <div className="mt-1.5 text-[12px] text-red-500">
+                  <Str k="input_invite_code.error_empty_input" />
+                </div>
+              )}
+              <div className="mt-4 flex gap-2">
+                <button
+                  onClick={closeInviteInput}
+                  className="flex-1 border border-imely-line rounded-full py-2.5 font-semibold text-[13.5px] text-imely-ink active:scale-95 transition-transform"
+                >
+                  <Str k="input_invite_code.btn_close" />
+                </button>
+                <button
+                  onClick={submitInviteCode}
+                  className="flex-1 bg-imely-primary text-white rounded-full py-2.5 font-semibold text-[13.5px] active:scale-95 active:bg-imely-primaryDark transition-transform"
+                >
+                  <Str k="input_invite_code.btn_done" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </ZoneScope>
+      )}
+
+      {/* lucky wheel — opened from the "Roda Keberuntungan Harian" mission's Kerjakan button */}
+      {luckyWheelOpen && (
+        <ZoneScope zone="lucky_wheel">
+          <div className="absolute inset-0 z-10">
+            <button
+              onClick={() => setLuckyWheelOpen(false)}
+              aria-label="Close lucky wheel"
+              className="absolute inset-0 bg-black/40"
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl px-5 pt-6 pb-5 text-center">
+              <div className="text-[56px] leading-none">🎡</div>
+              <div className="mt-3 font-bold text-[16px] text-imely-ink">
+                <Str k="lucky_draw.title_time2" />
+              </div>
+              <div className="mt-2 text-[12.5px] text-gray-400">
+                <Str k="lucky_draw.subtitle_time2" />
+              </div>
+              <div className="mt-5 flex gap-2">
+                <button
+                  onClick={() => setLuckyWheelOpen(false)}
+                  className="flex-1 border border-imely-line rounded-full py-2.5 font-semibold text-[13.5px] text-imely-ink active:scale-95 transition-transform"
+                >
+                  <Str k="lucky_draw.btn_close" />
+                </button>
+                <button
+                  onClick={spinWheel}
+                  className="flex-1 bg-imely-primary text-white rounded-full py-2.5 font-semibold text-[13.5px] active:scale-95 active:bg-imely-primaryDark transition-transform"
+                >
+                  <Str k="lucky_draw.btn_draw" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </ZoneScope>
+      )}
+
+      {/* lucky wheel result — shown after "Putar sekarang" */}
+      {luckyResultOpen && (
+        <ZoneScope zone="lucky_result">
+          <div className="absolute inset-0 z-10">
+            <button
+              onClick={() => setLuckyResultOpen(false)}
+              aria-label="Close lucky wheel result"
+              className="absolute inset-0 bg-black/40"
+            />
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl p-5 text-center">
+              <div className="font-bold text-[18px] text-imely-ink">
+                <Str k="lucky_draw.congrats_title1" />
+              </div>
+              <div className="mt-3 text-[15px] text-imely-ink">
+                <Str k="lucky_draw.congrats_subtitle1" />: <span className="font-bold text-imely-primaryDark">{luckyReward}💎</span>
+              </div>
+              <button
+                onClick={() => setLuckyResultOpen(false)}
+                className="mt-5 w-full bg-imely-primary text-white rounded-full py-2.5 font-semibold text-[13.5px] active:scale-95 active:bg-imely-primaryDark transition-transform"
+              >
+                <Str k="lucky_draw.btn_done" />
+              </button>
             </div>
           </div>
         </ZoneScope>

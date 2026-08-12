@@ -11,7 +11,7 @@ const SUBTABS = [
 ]
 
 export function FeedScreen() {
-  const { openChat, openFilter } = useApp()
+  const { openCharacterProfile, openFilter } = useApp()
   const [activeTab, setActiveTab] = useState('s1')
   const [tagsExpanded, setTagsExpanded] = useState(false)
 
@@ -73,12 +73,12 @@ export function FeedScreen() {
         ✨ Gebetan Baru!
       </div>
 
-      {/* card grid — tappable, opens chat with that character */}
+      {/* card grid — tappable, opens the character's profile page */}
       <div className="px-4 grid grid-cols-2 gap-3">
         {MOCK_FEED_CHARACTERS.map((c) => (
           <button
             key={c.id}
-            onClick={() => openChat({ id: c.id, name: c.name, color: c.color })}
+            onClick={() => openCharacterProfile(c.id)}
             className="rounded-2xl overflow-hidden border border-imely-line bg-white text-left active:scale-[0.97] transition-transform"
           >
             <div className="h-36 flex items-end p-2" style={{ backgroundColor: c.color }}>
