@@ -1,129 +1,26 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
-import {
-  Search,
-  X,
-  AlertTriangle,
-  ChevronRight,
-  Home,
-  MessageCircle,
-  MessageSquare,
-  User,
-  UserCircle,
-  UserCircle2,
-  Bell,
-  Gem,
-  History,
-  ShoppingBag,
-  SlidersHorizontal,
-  LayoutGrid,
-  Tags,
-} from 'lucide-react'
+import { Search, X, AlertTriangle, ChevronRight, LayoutGrid, Tags } from 'lucide-react'
 import { useApp, type ScreenId, type Zone } from '../context/AppContext'
 import { ALL_STRINGS, getEntry, type Locale, type StringEntry } from '../lib/strings'
-import { MOCK_CHAT_THREADS, MOCK_FEED_CHARACTERS } from '../data/mockContent'
+import { useNavigateToString, useOpenScreen } from '../hooks/useNavigateToString'
+import {
+  SCREEN_LABEL,
+  SCREEN_ICON,
+  SCREEN_ORDER,
+  PAGE_ORDER,
+  PAGE_CHILDREN,
+  SCREEN_PARENT,
+  CHILD_SCREENS,
+  ZONE_LABEL,
+  sortedZones,
+  pageIdFor,
+  FILTERS,
+} from './browseConfig'
 
 const LOCALES: { id: Locale; label: string }[] = [
   { id: 'id', label: 'ID' },
   { id: 'en', label: 'EN' },
   { id: 'vi', label: 'VI' },
-]
-
-const SCREEN_LABEL: Record<ScreenId, string> = {
-  feed: 'Beranda (Feed)',
-  chatlist: 'Obrolan (Chat list)',
-  profile: 'Profil',
-  chatdetail: 'Chat detail (overlay)',
-  chatoptions: 'Opsi Chat (overlay)',
-  characterprofile: 'Profil Karakter (overlay)',
-  creatorprofile: 'Profil Kreator (overlay)',
-  notification: 'Notifikasi (overlay)',
-  gems: 'Gem (overlay)',
-  gemhistory: 'Riwayat Gem (overlay)',
-  purchase: 'Beli MeLy Club / Gem (overlay)',
-}
-
-const SCREEN_ICON: Record<ScreenId, typeof Home> = {
-  feed: Home,
-  chatlist: MessageCircle,
-  profile: User,
-  chatdetail: MessageSquare,
-  chatoptions: SlidersHorizontal,
-  characterprofile: UserCircle,
-  creatorprofile: UserCircle2,
-  notification: Bell,
-  gems: Gem,
-  gemhistory: History,
-  purchase: ShoppingBag,
-}
-
-const SCREEN_ORDER: ScreenId[] = [
-  'feed',
-  'chatlist',
-  'profile',
-  'chatdetail',
-  'chatoptions',
-  'characterprofile',
-  'creatorprofile',
-  'notification',
-  'gems',
-  'gemhistory',
-  'purchase',
-]
-
-// Display order + label for zones within a screen section. Zones not listed
-// here (a screen introducing a new one later) still render, just alphabetically
-// after these and labeled with their raw name.
-const ZONE_ORDER = [
-  'page',
-  'menu',
-  'gem_detail',
-  'invite_input',
-  'lucky_wheel',
-  'lucky_result',
-  'block_confirm',
-  'report',
-  'mode_picker',
-  'relationship',
-  'role_summary',
-  'role_edit',
-  'club',
-  'gem',
-]
-const ZONE_LABEL: Record<string, string> = {
-  page: 'Halaman',
-  menu: 'Menu',
-  gem_detail: 'Popup: Detail Gem',
-  invite_input: 'Popup: Masukkan Kode',
-  lucky_wheel: 'Popup: Roda Keberuntungan',
-  lucky_result: 'Popup: Hasil Undian',
-  block_confirm: 'Popup: Konfirmasi Blokir',
-  report: 'Popup: Laporkan',
-  mode_picker: 'Popup: Mode Obrolan',
-  relationship: 'Popup: Level Kedekatan',
-  role_summary: 'Popup: Ganti Peran',
-  role_edit: 'Popup: Edit Peran',
-  club: 'Tab: MêLy Club',
-  gem: 'Tab: Gem',
-}
-
-function sortedZones(zones: string[]): string[] {
-  return [...zones].sort((a, b) => {
-    const ia = ZONE_ORDER.indexOf(a)
-    const ib = ZONE_ORDER.indexOf(b)
-    if (ia === -1 && ib === -1) return a.localeCompare(b)
-    if (ia === -1) return 1
-    if (ib === -1) return -1
-    return ia - ib
-  })
-}
-
-type FilterMode = 'all' | 'wired' | 'unwired' | 'overridden'
-
-const FILTERS: { id: FilterMode; label: string }[] = [
-  { id: 'all', label: 'Semua' },
-  { id: 'wired', label: 'Wired' },
-  { id: 'unwired', label: 'Belum wired' },
-  { id: 'overridden', label: 'Ada override' },
 ]
 
 interface SearchHit {
@@ -137,43 +34,26 @@ export function Inspector() {
     locale,
     setLocale,
     usage,
-    requestFocus,
-    requestPopup,
     currentScreen,
-    setCurrentScreen,
     overrides,
     selectedKey,
     selectedOccurrence,
-    selectKey,
+    viewMode,
+    setViewMode,
+    filterMode,
+    setFilterMode,
     activeChat,
-    openChat,
-    closeChat,
     chatOptionsOpen,
-    openChatOptions,
-    closeChatOptions,
     activeCharacterId,
-    openCharacterProfile,
-    closeCharacterProfile,
     activeCreatorName,
-    openCreatorProfile,
-    closeCreatorProfile,
     notifOpen,
-    openNotif,
-    closeNotif,
     gemsOpen,
-    openGems,
-    closeGems,
     gemHistoryOpen,
-    openGemHistory,
-    closeGemHistory,
     purchaseOpen,
-    openPurchase,
-    closePurchase,
-    closeFilter,
   } = useApp()
+  const navigateTo = useNavigateToString()
+  const openScreen = useOpenScreen()
   const [query, setQuery] = useState('')
-  const [viewMode, setViewMode] = useState<'screens' | 'categories'>('screens')
-  const [filterMode, setFilterMode] = useState<FilterMode>('all')
   const [openScreens, setOpenScreens] = useState<Set<ScreenId>>(() => new Set(['feed']))
   const [openCategories, setOpenCategories] = useState<Set<string>>(new Set())
   // Composite `key::screenId::zone` strings currently overflowing their
@@ -209,18 +89,27 @@ export function Inspector() {
   ])
 
   // Keep the accordion in sync with the live preview: whenever the visible
-  // screen changes, open only that section and collapse the rest.
+  // screen changes, open its full ancestor chain (base page, and its overlay
+  // parent too if it's nested 2 deep like Opsi Chat) and collapse the rest.
   useEffect(() => {
-    setOpenScreens(new Set([activeScreenId]))
+    const chain = new Set<ScreenId>([activeScreenId, pageIdFor(activeScreenId)])
+    const parent = SCREEN_PARENT[activeScreenId]
+    if (parent) chain.add(parent)
+    setOpenScreens(chain)
   }, [activeScreenId])
 
-  function toggleScreen(screenId: ScreenId) {
-    setOpenScreens((prev) => {
-      const next = new Set(prev)
-      if (next.has(screenId)) next.delete(screenId)
-      else next.add(screenId)
-      return next
-    })
+  // A section header both opens its screen in the live preview AND expands
+  // the tree to it. If it's already the one showing, clicking it again
+  // closes it instead — one level back up (Riwayat Gem -> Gem -> Beranda) —
+  // rather than being a no-op, since there was previously no way to close an
+  // overlay from the Inspector at all.
+  function headerClick(screenId: ScreenId) {
+    if (activeScreenId !== screenId) {
+      openScreen(screenId)
+      return
+    }
+    const back = SCREEN_PARENT[screenId] ?? pageIdFor(screenId)
+    if (back !== screenId) openScreen(back)
   }
 
   function toggleCategory(cat: string) {
@@ -363,65 +252,11 @@ export function Inspector() {
       const row = flatSearchRows[focusedIndex] ?? flatSearchRows[0]
       if (row) {
         e.preventDefault()
-        jumpTo(row.key, row.screenId ?? undefined, row.zone ?? undefined)
+        navigateTo(row.key, row.screenId ?? undefined, row.zone ?? undefined)
       }
     } else if (e.key === 'Escape') {
       setFocusedIndex(-1)
       searchInputRef.current?.blur()
-    }
-  }
-
-  // Chat detail, notification, and gems are full-screen overlays toggled by
-  // their own boolean in AppContext, not by currentScreen — so jumping to a
-  // key that lives on one of them has to open that overlay directly, or the
-  // highlighter finds nothing in the DOM and silently does nothing.
-  //
-  // Within a screen, a key can also live inside a popup/menu zone rather than
-  // the page itself (e.g. the notification Opsi sheet, the gem detail modal).
-  // Those are local component state, not AppContext booleans, so they're
-  // reached via requestPopup + usePopupRequest instead of a dedicated opener
-  // here. screenId/zone are passed explicitly from the per-screen accordion
-  // (which knows exactly which occurrence was clicked); search results only
-  // know the key, so they fall back to its first registered usage.
-  function jumpTo(key: string, screenId?: ScreenId, zone?: Zone) {
-    const rec = screenId ? { screenId, zone: zone ?? 'page' } : usage.find((u) => u.key === key)
-    selectKey(key, rec ? { screenId: rec.screenId, zone: rec.zone } : null)
-    if (rec) {
-      closeChat()
-      closeChatOptions()
-      closeCharacterProfile()
-      closeCreatorProfile()
-      closeNotif()
-      closeGems()
-      closeGemHistory()
-      closePurchase()
-      closeFilter()
-      if (rec.screenId === 'chatdetail') {
-        const preview = MOCK_CHAT_THREADS[0]
-        openChat({ id: preview.id, name: preview.name, color: preview.color })
-      } else if (rec.screenId === 'chatoptions') {
-        const preview = MOCK_CHAT_THREADS[0]
-        openChat({ id: preview.id, name: preview.name, color: preview.color })
-        openChatOptions()
-      } else if (rec.screenId === 'characterprofile') {
-        openCharacterProfile(MOCK_FEED_CHARACTERS[0].id)
-      } else if (rec.screenId === 'creatorprofile') {
-        openCharacterProfile(MOCK_FEED_CHARACTERS[0].id)
-        openCreatorProfile(MOCK_FEED_CHARACTERS[0].creatorName)
-      } else if (rec.screenId === 'notification') {
-        openNotif()
-      } else if (rec.screenId === 'gems') {
-        openGems()
-      } else if (rec.screenId === 'gemhistory') {
-        openGems()
-        openGemHistory()
-      } else if (rec.screenId === 'purchase') {
-        openPurchase(rec.zone === 'gem' ? 'gem' : 'club')
-      } else {
-        setCurrentScreen(rec.screenId)
-      }
-      requestPopup(rec.screenId, rec.zone)
-      requestFocus(key, rec.screenId, rec.zone)
     }
   }
 
@@ -451,6 +286,40 @@ export function Inspector() {
   function isOverflowing(key: string, screenId?: ScreenId | null, zone?: Zone | null): boolean {
     if (!screenId) return false
     return overflowingKeys.has(`${key}::${screenId}::${zone ?? 'page'}`)
+  }
+
+  // Shared by all 3 accordion levels (page / primary overlay / nested
+  // overlay) — a screen's own zones + keys, zone-grouped and filtered.
+  function renderScreenRows(screenId: ScreenId) {
+    return sortedZones(Object.keys(usageByScreen[screenId])).map((zone) => {
+      const keys = usageByScreen[screenId][zone].filter(matchesFilter)
+      if (!keys.length) return null
+      return (
+        <div key={zone} className="mt-0.5">
+          {zone !== 'page' && (
+            <div className="text-[10px] font-semibold text-gray-400 uppercase px-2 pt-2 pb-0.5">
+              {ZONE_LABEL[zone] ?? zone}
+            </div>
+          )}
+          {keys.map((key) => {
+            const e = getEntry(key)
+            return (
+              <KeyRow
+                key={`${zone}-${key}`}
+                entryKey={key}
+                label={e ? localizedLabel(e) : key}
+                wired
+                overflowing={isOverflowing(key, screenId, zone)}
+                active={
+                  selectedKey === key && selectedOccurrence?.screenId === screenId && selectedOccurrence?.zone === zone
+                }
+                onClick={() => navigateTo(key, screenId, zone)}
+              />
+            )
+          })}
+        </div>
+      )
+    })
   }
 
   return (
@@ -567,7 +436,7 @@ export function Inspector() {
                           selectedOccurrence?.zone === (hit.zone ?? 'page')
                         }
                         focused={idx === focusedIndex}
-                        onClick={() => jumpTo(hit.key, hit.screenId ?? undefined, hit.zone ?? undefined)}
+                        onClick={() => navigateTo(hit.key, hit.screenId ?? undefined, hit.zone ?? undefined)}
                       />
                     )
                   })}
@@ -576,64 +445,93 @@ export function Inspector() {
             })}
           </div>
         ) : viewMode === 'screens' ? (
-          SCREEN_ORDER.map((screenId) => {
-            const isOpen = openScreens.has(screenId)
-            const zones = sortedZones(Object.keys(usageByScreen[screenId]))
-            const count = screenCount(screenId)
-            const isEmpty = count === 0
-            const Icon = SCREEN_ICON[screenId]
+          PAGE_ORDER.map((pageId) => {
+            const isOpen = openScreens.has(pageId)
+            const primaryOverlays = PAGE_CHILDREN[pageId] ?? []
+            const totalCount =
+              screenCount(pageId) +
+              primaryOverlays.reduce(
+                (n, o) => n + screenCount(o) + (CHILD_SCREENS[o] ?? []).reduce((n2, c) => n2 + screenCount(c), 0),
+                0
+              )
+            const Icon = SCREEN_ICON[pageId]
             return (
-              <div key={screenId} className="p-2">
+              <div key={pageId} className="p-2">
+                {/* Always clickable — even at 0 keys, so a page's overlays (Gem,
+                    Chat detail, ...) are reachable from the sidebar without
+                    first opening them by hand in the live preview. */}
                 <button
-                  onClick={() => !isEmpty && toggleScreen(screenId)}
-                  className={`sticky top-0 z-10 bg-white w-full flex items-center justify-between px-2 py-1 rounded-md ${
-                    isEmpty ? 'opacity-40' : 'hover:bg-gray-50'
-                  }`}
+                  onClick={() => headerClick(pageId)}
+                  className="sticky top-0 z-10 bg-white w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-gray-50"
                 >
                   <span className="flex items-center gap-1.5 text-[11px] font-bold text-gray-400 uppercase">
                     <Icon size={12} className="shrink-0" />
-                    {SCREEN_LABEL[screenId]} · {count}
+                    {SCREEN_LABEL[pageId]} · {totalCount}
                   </span>
-                  {!isEmpty && (
-                    <ChevronRight
-                      size={13}
-                      className={`text-gray-400 shrink-0 transition-transform ${isOpen ? 'rotate-90' : ''}`}
-                    />
-                  )}
+                  <ChevronRight
+                    size={13}
+                    className={`text-gray-400 shrink-0 transition-transform ${isOpen ? 'rotate-90' : ''}`}
+                  />
                 </button>
-                {isOpen &&
-                  !isEmpty &&
-                  zones.map((zone) => {
-                    const keys = usageByScreen[screenId][zone].filter(matchesFilter)
-                    if (!keys.length) return null
-                    return (
-                      <div key={zone} className="mt-0.5">
-                        {zone !== 'page' && (
-                          <div className="text-[10px] font-semibold text-gray-400 uppercase px-2 pt-2 pb-0.5">
-                            {ZONE_LABEL[zone] ?? zone}
-                          </div>
-                        )}
-                        {keys.map((key) => {
-                          const e = getEntry(key)
-                          return (
-                            <KeyRow
-                              key={`${zone}-${key}`}
-                              entryKey={key}
-                              label={e ? localizedLabel(e) : key}
-                              wired
-                              overflowing={isOverflowing(key, screenId, zone)}
-                              active={
-                                selectedKey === key &&
-                                selectedOccurrence?.screenId === screenId &&
-                                selectedOccurrence?.zone === zone
-                              }
-                              onClick={() => jumpTo(key, screenId, zone)}
+                {isOpen && (
+                  <>
+                    {renderScreenRows(pageId)}
+
+                    {primaryOverlays.map((overlayId) => {
+                      const overlayOpen = openScreens.has(overlayId)
+                      const grandchildren = CHILD_SCREENS[overlayId] ?? []
+                      const overlayTotal =
+                        screenCount(overlayId) + grandchildren.reduce((n, c) => n + screenCount(c), 0)
+                      const OverlayIcon = SCREEN_ICON[overlayId]
+                      return (
+                        <div key={overlayId} className="mt-1.5 ml-2.5 border-l border-imely-line pl-2">
+                          <button
+                            onClick={() => headerClick(overlayId)}
+                            className="sticky top-0 z-10 bg-white w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-gray-50"
+                          >
+                            <span className="flex items-center gap-1.5 text-[10.5px] font-bold text-gray-400 uppercase">
+                              <OverlayIcon size={11} className="shrink-0" />
+                              {SCREEN_LABEL[overlayId]} · {overlayTotal}
+                            </span>
+                            <ChevronRight
+                              size={12}
+                              className={`text-gray-400 shrink-0 transition-transform ${overlayOpen ? 'rotate-90' : ''}`}
                             />
-                          )
-                        })}
-                      </div>
-                    )
-                  })}
+                          </button>
+                          {overlayOpen && (
+                            <>
+                              {renderScreenRows(overlayId)}
+
+                              {grandchildren.map((childId) => {
+                                const childOpen = openScreens.has(childId)
+                                const childCount = screenCount(childId)
+                                const ChildIcon = SCREEN_ICON[childId]
+                                return (
+                                  <div key={childId} className="mt-1.5 ml-2.5 border-l border-imely-line pl-2">
+                                    <button
+                                      onClick={() => headerClick(childId)}
+                                      className="sticky top-0 z-10 bg-white w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-gray-50"
+                                    >
+                                      <span className="flex items-center gap-1.5 text-[10px] font-bold text-gray-400 uppercase">
+                                        <ChildIcon size={10} className="shrink-0" />
+                                        {SCREEN_LABEL[childId]} · {childCount}
+                                      </span>
+                                      <ChevronRight
+                                        size={11}
+                                        className={`text-gray-400 shrink-0 transition-transform ${childOpen ? 'rotate-90' : ''}`}
+                                      />
+                                    </button>
+                                    {childOpen && renderScreenRows(childId)}
+                                  </div>
+                                )
+                              })}
+                            </>
+                          )}
+                        </div>
+                      )
+                    })}
+                  </>
+                )}
               </div>
             )
           })
@@ -669,7 +567,7 @@ export function Inspector() {
                         wired={wiredKeys.has(e.key)}
                         overflowing={isOverflowing(e.key, occ?.screenId, occ?.zone)}
                         active={selectedKey === e.key}
-                        onClick={() => jumpTo(e.key)}
+                        onClick={() => navigateTo(e.key)}
                       />
                     )
                   })}

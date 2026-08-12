@@ -1,7 +1,10 @@
+import { useEffect, useState } from 'react'
 import { PanelLeftOpen, PanelLeftClose } from 'lucide-react'
 import { AppProvider, useApp } from './context/AppContext'
 import { ScreenScope } from './context/ScreenScope'
 import { useStringHighlighter } from './hooks/useStringHighlighter'
+import { useOpenScreen } from './hooks/useNavigateToString'
+import { WARM_UP_SCREENS } from './sandbox/browseConfig'
 import { PhoneFrame } from './components/shell/PhoneFrame'
 import { Header } from './components/shell/Header'
 import { BottomNav } from './components/shell/BottomNav'
@@ -38,6 +41,30 @@ function Shell() {
     toast,
   } = useApp()
   useStringHighlighter()
+  const openScreen = useOpenScreen()
+
+  // Visit every screen once behind a brief cover so the Inspector's key
+  // counts are accurate from the start, instead of showing 0 until a
+  // translator happens to open each overlay by hand first.
+  const [priming, setPriming] = useState(true)
+  useEffect(() => {
+    let cancelled = false
+    async function warmUp() {
+      for (const screenId of WARM_UP_SCREENS) {
+        if (cancelled) return
+        openScreen(screenId)
+        await new Promise((resolve) => setTimeout(resolve, 30))
+      }
+      if (cancelled) return
+      openScreen('feed')
+      setPriming(false)
+    }
+    warmUp()
+    return () => {
+      cancelled = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   function applyFilter() {
     closeFilter()
@@ -170,6 +197,14 @@ function Shell() {
             {toast && (!activeChat || chatOptionsOpen) && (
               <div className="absolute left-1/2 -translate-x-1/2 bottom-20 z-40 bg-imely-ink text-white text-[12.5px] font-medium px-4 py-2 rounded-full shadow-lg pointer-events-none whitespace-nowrap">
                 {toast}
+              </div>
+            )}
+
+            {/* one-time warm-up pass so the Inspector's counts are accurate
+                immediately — covers the brief flicker through every screen */}
+            {priming && (
+              <div className="absolute inset-0 z-50 bg-white flex items-center justify-center">
+                <div className="text-[12.5px] text-gray-400">Menyiapkan pratinjau…</div>
               </div>
             )}
           </PhoneFrame>

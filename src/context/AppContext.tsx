@@ -16,6 +16,12 @@ export type ScreenId =
 
 export type PurchaseTab = 'club' | 'gem'
 
+// Shared between the Inspector's browse list and the TranslationPanel's
+// prev/next navigation, so "next string" / "next page or category" steps
+// through exactly what the left sidebar is showing right now.
+export type BrowseViewMode = 'screens' | 'categories'
+export type FilterMode = 'all' | 'wired' | 'unwired' | 'overridden'
+
 // 'page' is a screen's always-visible content. Anything else ('menu', 'popup', ...)
 // is a sub-surface that only exists in the DOM while its own local state has it
 // open — see ScreenScope.tsx's ZoneScope and hooks/usePopupRequest.ts.
@@ -70,15 +76,13 @@ interface AppState {
   inspectorOpen: boolean
   setInspectorOpen: (v: boolean) => void
 
-  // key (+ its exact screen/zone occurrence) currently requested to be
-  // located + highlighted in the live preview — screen/zone matter because
-  // the same key can render more than once on a screen (e.g. on the page
-  // and inside a popup), so the key alone doesn't address a unique element
-  focusKey: string | null
-  focusScreenId: ScreenId | null
-  focusZone: Zone | null
-  focusToken: number
-  requestFocus: (key: string, screenId: ScreenId, zone: Zone) => void
+  // Browse list mode + filter — live in context (not local Inspector state)
+  // so the TranslationPanel's prev/next buttons can walk the same ordered
+  // list the left sidebar is currently showing.
+  viewMode: BrowseViewMode
+  setViewMode: (v: BrowseViewMode) => void
+  filterMode: FilterMode
+  setFilterMode: (v: FilterMode) => void
 
   // registry of which screen (and zone within it — page/menu/popup/…) renders
   // which string key, built as screens mount
@@ -159,10 +163,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
   const [selectedOccurrence, setSelectedOccurrence] = useState<{ screenId: ScreenId; zone: Zone } | null>(null)
   const [inspectorOpen, setInspectorOpen] = useState(true)
-  const [focusKey, setFocusKey] = useState<string | null>(null)
-  const [focusScreenId, setFocusScreenId] = useState<ScreenId | null>(null)
-  const [focusZone, setFocusZone] = useState<Zone | null>(null)
-  const [focusToken, setFocusToken] = useState(0)
+  const [viewMode, setViewMode] = useState<BrowseViewMode>('screens')
+  const [filterMode, setFilterMode] = useState<FilterMode>('all')
   const [usage, setUsage] = useState<UsageRecord[]>([])
   const [popupRequest, setPopupRequest] = useState<PopupRequest | null>(null)
   const [popupRequestToken, setPopupRequestToken] = useState(0)
@@ -206,13 +208,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
       if (prev.some((u) => u.key === rec.key && u.screenId === rec.screenId && u.zone === rec.zone)) return prev
       return [...prev, rec]
     })
-  }
-
-  const requestFocus = (key: string, screenId: ScreenId, zone: Zone) => {
-    setFocusKey(key)
-    setFocusScreenId(screenId)
-    setFocusZone(zone)
-    setFocusToken((t) => t + 1)
   }
 
   const requestPopup = (screenId: ScreenId, zone: Zone) => {
@@ -281,11 +276,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
       selectKey,
       inspectorOpen,
       setInspectorOpen,
-      focusKey,
-      focusScreenId,
-      focusZone,
-      focusToken,
-      requestFocus,
+      viewMode,
+      setViewMode,
+      filterMode,
+      setFilterMode,
       usage,
       registerUsage,
       popupRequest,
@@ -327,10 +321,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       currentScreen,
       overrides,
       inspectorOpen,
-      focusKey,
-      focusScreenId,
-      focusZone,
-      focusToken,
+      viewMode,
+      filterMode,
       usage,
       overrides,
       livePreview,
