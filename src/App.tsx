@@ -11,6 +11,7 @@ import { ChatListScreen } from './screens/ChatListScreen'
 import { ProfileScreen } from './screens/ProfileScreen'
 import { ChatDetailScreen } from './screens/ChatDetailScreen'
 import { NotificationScreen } from './screens/NotificationScreen'
+import { GemScreen } from './screens/GemScreen'
 import { Inspector } from './sandbox/Inspector'
 
 function Shell() {
@@ -22,6 +23,7 @@ function Shell() {
     filterOpen,
     closeFilter,
     notifOpen,
+    gemsOpen,
     toast,
   } = useApp()
   useStringHighlighter()
@@ -95,6 +97,15 @@ function Shell() {
               <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
                 <ScreenScope id="notification">
                   <NotificationScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* gem balance / missions page — opened from the gem pill in the header */}
+            {gemsOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+                <ScreenScope id="gems">
+                  <GemScreen />
                 </ScreenScope>
               </div>
             )}

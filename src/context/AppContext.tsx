@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo, useRef, useState, type ReactNode } from 'react'
 import type { Locale } from '../lib/strings'
 
-export type ScreenId = 'feed' | 'chatlist' | 'profile' | 'chatdetail' | 'notification'
+export type ScreenId = 'feed' | 'chatlist' | 'profile' | 'chatdetail' | 'notification' | 'gems'
 
 interface UsageRecord {
   key: string
@@ -51,6 +51,11 @@ interface AppState {
   openNotif: () => void
   closeNotif: () => void
 
+  // Gem balance / missions page overlay
+  gemsOpen: boolean
+  openGems: () => void
+  closeGems: () => void
+
   // lightweight toast, e.g. for stub actions not built yet
   toast: string | null
   showToast: (msg: string) => void
@@ -69,6 +74,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [activeChat, setActiveChat] = useState<ChatTarget | null>(null)
   const [filterOpen, setFilterOpen] = useState(false)
   const [notifOpen, setNotifOpen] = useState(false)
+  const [gemsOpen, setGemsOpen] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -102,6 +108,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const openNotif = () => setNotifOpen(true)
   const closeNotif = () => setNotifOpen(false)
 
+  const openGems = () => setGemsOpen(true)
+  const closeGems = () => setGemsOpen(false)
+
   const showToast = (msg: string) => {
     if (toastTimer.current) clearTimeout(toastTimer.current)
     setToast(msg)
@@ -132,6 +141,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       notifOpen,
       openNotif,
       closeNotif,
+      gemsOpen,
+      openGems,
+      closeGems,
       toast,
       showToast,
     }),
@@ -146,6 +158,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       activeChat,
       filterOpen,
       notifOpen,
+      gemsOpen,
       toast,
     ]
   )

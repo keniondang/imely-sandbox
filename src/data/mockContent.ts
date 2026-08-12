@@ -41,9 +41,30 @@ export const MOCK_USER = {
   name: 'Markus sahabatmu',
   handle: '@52UNcG (internal)',
   gems: 2250,
+  permanentGems: 4,
+  dailyGems: 2246,
   tierBadgeKey: 'badge.creator_rookie',
   avatarColor: '#111827',
 }
+
+// Placeholder — not in the xlsx (referral program is a real feature, but the
+// code itself is per-user generated data).
+export const MOCK_INVITE_CODE = '3337762727'
+
+export interface MockGemMission {
+  id: string
+  reward: string
+  done: boolean
+  progress: string
+}
+
+// Placeholder — mission progress/limits are per-user runtime state, not xlsx content.
+// Names/subtitles are composed from real user_task.* / user_gem_overview.* strings in GemScreen.
+export const MOCK_GEM_MISSIONS: MockGemMission[] = [
+  { id: 'watch_ads', reward: '+5', done: false, progress: '0/20' },
+  { id: 'lucky_wheel', reward: '+ 0-200', done: false, progress: '0/1' },
+  { id: 'daily_gift', reward: '+100', done: true, progress: '1/1' },
+]
 
 // Placeholder — not in the xlsx (character/story genre taxonomy, guided later).
 // Same list drives both the feed's tag row and the Filter modal's category grid.

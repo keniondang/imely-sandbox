@@ -3,7 +3,7 @@ import { MOCK_USER } from '../../data/mockContent'
 import { useApp } from '../../context/AppContext'
 
 export function Header() {
-  const { openNotif } = useApp()
+  const { openNotif, openGems } = useApp()
 
   return (
     <div className="flex items-center justify-between px-4 py-3">
@@ -15,10 +15,13 @@ export function Header() {
       </div>
 
       <div className="flex items-center gap-2">
-        <div className="flex items-center gap-1 bg-imely-mint rounded-full px-3 py-1.5 text-sm font-semibold text-imely-primaryDark">
+        <button
+          onClick={openGems}
+          className="flex items-center gap-1 bg-imely-mint rounded-full px-3 py-1.5 text-sm font-semibold text-imely-primaryDark active:scale-95 active:bg-imely-mintDeep transition-transform"
+        >
           <Gem size={14} className="text-sky-400" />
           {MOCK_USER.gems.toLocaleString('id-ID')}
-        </div>
+        </button>
         <IconButton icon={<Bell size={16} />} onClick={openNotif} />
         <IconButton icon={<Search size={16} />} />
         <IconButton icon={<Plus size={16} />} />

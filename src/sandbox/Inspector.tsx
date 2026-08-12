@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Search, X, AlertTriangle, RotateCcw } from 'lucide-react'
 import { useApp, type ScreenId } from '../context/AppContext'
 import { ALL_STRINGS, getEntry, type Locale } from '../lib/strings'
+import { MOCK_CHAT_THREADS } from '../data/mockContent'
 
 const LOCALES: { id: Locale; label: string }[] = [
   { id: 'id', label: 'ID' },
@@ -15,10 +16,26 @@ const SCREEN_LABEL: Record<ScreenId, string> = {
   profile: 'Profil',
   chatdetail: 'Chat detail (overlay)',
   notification: 'Notifikasi (overlay)',
+  gems: 'Gem (overlay)',
 }
 
 export function Inspector() {
-  const { locale, setLocale, usage, requestFocus, setCurrentScreen, overrides, setOverride } = useApp()
+  const {
+    locale,
+    setLocale,
+    usage,
+    requestFocus,
+    setCurrentScreen,
+    overrides,
+    setOverride,
+    openChat,
+    closeChat,
+    openNotif,
+    closeNotif,
+    openGems,
+    closeGems,
+    closeFilter,
+  } = useApp()
   const [query, setQuery] = useState('')
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
   const [overflowFlag, setOverflowFlag] = useState<boolean | null>(null)
@@ -32,6 +49,7 @@ export function Inspector() {
       profile: [],
       chatdetail: [],
       notification: [],
+      gems: [],
     }
     usage.forEach((u) => {
       if (!map[u.screenId].includes(u.key)) map[u.screenId].push(u.key)
@@ -51,10 +69,29 @@ export function Inspector() {
     ).slice(0, 60)
   }, [query])
 
+  // Chat detail, notification, and gems are full-screen overlays toggled by
+  // their own boolean in AppContext, not by currentScreen — so jumping to a
+  // key that lives on one of them has to open that overlay directly, or the
+  // highlighter finds nothing in the DOM and silently does nothing.
   function jumpTo(key: string) {
     setSelectedKey(key)
     const rec = usage.find((u) => u.key === key)
-    if (rec) setCurrentScreen(rec.screenId)
+    if (rec) {
+      closeChat()
+      closeNotif()
+      closeGems()
+      closeFilter()
+      if (rec.screenId === 'chatdetail') {
+        const preview = MOCK_CHAT_THREADS[0]
+        openChat({ id: preview.id, name: preview.name, color: preview.color })
+      } else if (rec.screenId === 'notification') {
+        openNotif()
+      } else if (rec.screenId === 'gems') {
+        openGems()
+      } else {
+        setCurrentScreen(rec.screenId)
+      }
+    }
     requestFocus(key)
   }
 
@@ -127,7 +164,7 @@ export function Inspector() {
             ))}
           </div>
         ) : (
-          (['feed', 'chatlist', 'profile', 'chatdetail', 'notification'] as ScreenId[]).map((screenId) => (
+          (['feed', 'chatlist', 'profile', 'chatdetail', 'notification', 'gems'] as ScreenId[]).map((screenId) => (
             <div key={screenId} className="p-2">
               <div className="text-[11px] font-bold text-gray-400 uppercase px-2 py-1">
                 {SCREEN_LABEL[screenId]} · {usageByScreen[screenId].length}
