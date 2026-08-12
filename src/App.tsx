@@ -12,6 +12,7 @@ import { ProfileScreen } from './screens/ProfileScreen'
 import { ChatDetailScreen } from './screens/ChatDetailScreen'
 import { NotificationScreen } from './screens/NotificationScreen'
 import { GemScreen } from './screens/GemScreen'
+import { GemHistoryScreen } from './screens/GemHistoryScreen'
 import { Inspector } from './sandbox/Inspector'
 
 function Shell() {
@@ -24,6 +25,7 @@ function Shell() {
     closeFilter,
     notifOpen,
     gemsOpen,
+    gemHistoryOpen,
     toast,
   } = useApp()
   useStringHighlighter()
@@ -106,6 +108,15 @@ function Shell() {
               <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
                 <ScreenScope id="gems">
                   <GemScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* gem history — pushed on top of the gems page from "Riwayat Gem-mu" */}
+            {gemsOpen && gemHistoryOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+                <ScreenScope id="gemhistory">
+                  <GemHistoryScreen />
                 </ScreenScope>
               </div>
             )}

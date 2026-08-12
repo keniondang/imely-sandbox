@@ -16,7 +16,7 @@ const DAILY_GEM_LOTS = [
 ]
 
 export function GemScreen() {
-  const { closeGems, showToast } = useApp()
+  const { closeGems, openGemHistory, showToast } = useApp()
   const [dailyDetailOpen, setDailyDetailOpen] = useState(false)
   usePopupRequest('gems', 'popup', setDailyDetailOpen)
 
@@ -73,7 +73,7 @@ export function GemScreen() {
           </div>
 
           <button
-            onClick={() => showToast('Riwayat Gem — segera hadir')}
+            onClick={openGemHistory}
             className="w-full border-t border-imely-line px-4 py-3 flex items-center justify-between active:bg-gray-50 transition-colors rounded-b-2xl"
           >
             <span className="text-[13.5px] text-imely-ink">

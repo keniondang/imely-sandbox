@@ -89,6 +89,50 @@ export const FILTER_CATEGORIES = [
 // Placeholder — gender preference filter, single-select.
 export const GENDER_OPTIONS = ['All', 'Pria', 'Wanita', 'Non-biner']
 
+export interface MockGemActivity {
+  id: string
+  description: string
+  receivedDate: string
+  expiry: string
+  change: string
+  expired: boolean
+}
+
+// Placeholder — per-user transaction log, not xlsx content. Column headers
+// and tab labels ARE real strings — see gem_history.* in GemHistoryScreen.tsx.
+export const MOCK_GEM_ACTIVITY: MockGemActivity[] = [
+  { id: 'a1', description: 'Kamu menerima 5💎 setelah menonton iklan sampai selesai', receivedDate: '12/08/2026', expiry: '31/12/2026', change: '+5', expired: false },
+  { id: 'a2', description: 'imely memberi kamu 100💎', receivedDate: '12/08/2026', expiry: '12/08/2026', change: '+100', expired: false },
+  { id: 'a3', description: 'Kamu memenangkan 18💎 dari putaran', receivedDate: '11/08/2026', expiry: '31/12/2026', change: '+18', expired: false },
+  { id: 'a4', description: 'imely memberi kamu 100💎', receivedDate: '11/08/2026', expiry: 'Kedaluwarsa', change: '+100', expired: true },
+  { id: 'a5', description: 'imely memberi kamu 100💎', receivedDate: '10/08/2026', expiry: 'Kedaluwarsa', change: '+100', expired: true },
+  { id: 'a6', description: 'imely memberi kamu 100💎', receivedDate: '07/08/2026', expiry: 'Kedaluwarsa', change: '+100', expired: true },
+  { id: 'a7', description: 'Kamu menerima hadiah senilai 150💎', receivedDate: '31/07/2026', expiry: '31/12/2026', change: '+150', expired: false },
+  { id: 'a8', description: 'Kamu menerima hadiah senilai 1500💎', receivedDate: '28/07/2026', expiry: '31/12/2026', change: '+1500', expired: false },
+]
+
+export interface MockGemUsage {
+  id: string
+  content: string
+  date: string
+  feature: string | null
+  amount: string
+  expired: boolean
+}
+
+// Placeholder — reuses MOCK_CHAT_THREADS names for the "chat" rows so this
+// stays consistent with the rest of the sandbox rather than inventing new ones.
+export const MOCK_GEM_USAGE: MockGemUsage[] = [
+  { id: 'u1', content: `Mengobrol dengan ${MOCK_CHAT_THREADS[0].name}`, date: '12/08/2026', feature: 'Chat', amount: '-5', expired: false },
+  { id: 'u2', content: 'Penarikan Gem kedaluwarsa', date: '11/08/2026', feature: null, amount: '-100', expired: true },
+  { id: 'u3', content: 'Penarikan Gem kedaluwarsa', date: '10/08/2026', feature: null, amount: '-100', expired: true },
+  { id: 'u4', content: `Mengobrol dengan ${MOCK_CHAT_THREADS[1].name}`, date: '06/08/2026', feature: 'Chat', amount: '-5', expired: false },
+  { id: 'u5', content: 'Penarikan Gem kedaluwarsa', date: '05/08/2026', feature: null, amount: '-95', expired: true },
+  { id: 'u6', content: `Mengobrol dengan ${MOCK_CHAT_THREADS[3].name}`, date: '04/08/2026', feature: 'Chat', amount: '-15', expired: false },
+  { id: 'u7', content: `Mengobrol dengan ${MOCK_CHAT_THREADS[5].name}`, date: '03/08/2026', feature: 'Chat', amount: '-5', expired: false },
+  { id: 'u8', content: 'Penarikan Gem kedaluwarsa', date: '02/08/2026', feature: null, amount: '-100', expired: true },
+]
+
 export interface MockNotification {
   id: string
   text: string

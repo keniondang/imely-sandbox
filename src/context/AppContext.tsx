@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo, useRef, useState, type ReactNode } from 'react'
 import type { Locale } from '../lib/strings'
 
-export type ScreenId = 'feed' | 'chatlist' | 'profile' | 'chatdetail' | 'notification' | 'gems'
+export type ScreenId = 'feed' | 'chatlist' | 'profile' | 'chatdetail' | 'notification' | 'gems' | 'gemhistory'
 
 // 'page' is a screen's always-visible content. Anything else ('menu', 'popup', ...)
 // is a sub-surface that only exists in the DOM while its own local state has it
@@ -79,6 +79,12 @@ interface AppState {
   openGems: () => void
   closeGems: () => void
 
+  // Gem history — pushed on top of the gems overlay from "Riwayat Gem-mu";
+  // its own back button just closes this and reveals gems again underneath
+  gemHistoryOpen: boolean
+  openGemHistory: () => void
+  closeGemHistory: () => void
+
   // lightweight toast, e.g. for stub actions not built yet
   toast: string | null
   showToast: (msg: string) => void
@@ -102,6 +108,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [filterOpen, setFilterOpen] = useState(false)
   const [notifOpen, setNotifOpen] = useState(false)
   const [gemsOpen, setGemsOpen] = useState(false)
+  const [gemHistoryOpen, setGemHistoryOpen] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -143,7 +150,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const closeNotif = () => setNotifOpen(false)
 
   const openGems = () => setGemsOpen(true)
-  const closeGems = () => setGemsOpen(false)
+  const closeGems = () => {
+    setGemsOpen(false)
+    setGemHistoryOpen(false)
+  }
+
+  const openGemHistory = () => setGemHistoryOpen(true)
+  const closeGemHistory = () => setGemHistoryOpen(false)
 
   const showToast = (msg: string) => {
     if (toastTimer.current) clearTimeout(toastTimer.current)
@@ -183,6 +196,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       gemsOpen,
       openGems,
       closeGems,
+      gemHistoryOpen,
+      openGemHistory,
+      closeGemHistory,
       toast,
       showToast,
     }),
@@ -202,6 +218,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       filterOpen,
       notifOpen,
       gemsOpen,
+      gemHistoryOpen,
       toast,
     ]
   )

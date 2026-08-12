@@ -18,6 +18,7 @@ const SCREEN_LABEL: Record<ScreenId, string> = {
   chatdetail: 'Chat detail (overlay)',
   notification: 'Notifikasi (overlay)',
   gems: 'Gem (overlay)',
+  gemhistory: 'Riwayat Gem (overlay)',
 }
 
 // Display order + label for zones within a screen section. Zones not listed
@@ -61,6 +62,9 @@ export function Inspector() {
     gemsOpen,
     openGems,
     closeGems,
+    gemHistoryOpen,
+    openGemHistory,
+    closeGemHistory,
     closeFilter,
   } = useApp()
   const [query, setQuery] = useState('')
@@ -78,9 +82,10 @@ export function Inspector() {
   const activeScreenId: ScreenId = useMemo(() => {
     if (activeChat) return 'chatdetail'
     if (notifOpen) return 'notification'
+    if (gemHistoryOpen) return 'gemhistory'
     if (gemsOpen) return 'gems'
     return currentScreen
-  }, [activeChat, notifOpen, gemsOpen, currentScreen])
+  }, [activeChat, notifOpen, gemHistoryOpen, gemsOpen, currentScreen])
 
   // Keep the accordion in sync with the live preview: whenever the visible
   // screen changes, open only that section and collapse the rest.
@@ -110,6 +115,7 @@ export function Inspector() {
       chatdetail: {},
       notification: {},
       gems: {},
+      gemhistory: {},
     }
     usage.forEach((u) => {
       const zoneMap = map[u.screenId]
@@ -155,6 +161,7 @@ export function Inspector() {
       closeChat()
       closeNotif()
       closeGems()
+      closeGemHistory()
       closeFilter()
       if (rec.screenId === 'chatdetail') {
         const preview = MOCK_CHAT_THREADS[0]
@@ -163,6 +170,9 @@ export function Inspector() {
         openNotif()
       } else if (rec.screenId === 'gems') {
         openGems()
+      } else if (rec.screenId === 'gemhistory') {
+        openGems()
+        openGemHistory()
       } else {
         setCurrentScreen(rec.screenId)
       }
@@ -242,7 +252,7 @@ export function Inspector() {
             ))}
           </div>
         ) : (
-          (['feed', 'chatlist', 'profile', 'chatdetail', 'notification', 'gems'] as ScreenId[]).map((screenId) => {
+          (['feed', 'chatlist', 'profile', 'chatdetail', 'notification', 'gems', 'gemhistory'] as ScreenId[]).map((screenId) => {
             const isOpen = openScreens.has(screenId)
             const zones = sortedZones(Object.keys(usageByScreen[screenId]))
             return (
