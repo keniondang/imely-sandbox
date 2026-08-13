@@ -124,11 +124,32 @@ export const MOCK_USER = {
   dailyGems: 2246,
   tierBadgeKey: 'badge.creator_rookie',
   avatarColor: '#111827',
+  // Kelola akun page fields — draft/placeholder, not xlsx content.
+  loginProvider: 'Google',
+  birthdate: '01/04/1990',
 }
 
 // Placeholder — not in the xlsx (referral program is a real feature, but the
 // code itself is per-user generated data).
 export const MOCK_INVITE_CODE = '3337762727'
+
+export interface MockDevice {
+  id: string
+  name: string
+  current?: boolean
+  loginDate: string
+  loginTime: string
+  city: string
+}
+
+// Placeholder — session/device metadata is backend-generated per login, not
+// xlsx content (the surrounding row/dialog copy still comes from the
+// "Active Session" category, see DevicesScreen).
+export const MOCK_DEVICES: MockDevice[] = [
+  { id: 'd1', name: 'Samsung Galaxy S21 Ultra 5G', current: true, loginDate: '21/07/2026', loginTime: '16:19', city: 'Thành phố Hồ Chí Minh' },
+  { id: 'd2', name: 'Asus ROG Phone 8 series', loginDate: '22/07/2026', loginTime: '14:37', city: 'Thành phố Hồ Chí Minh' },
+  { id: 'd3', name: 'iPhone 14 Pro Max', loginDate: '11/07/2026', loginTime: '09:11', city: 'Thành phố Hồ Chí Minh' },
+]
 
 export interface MockGemMission {
   id: string

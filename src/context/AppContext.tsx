@@ -13,6 +13,8 @@ export type ScreenId =
   | 'characterprofile'
   | 'creatorprofile'
   | 'chatoptions'
+  | 'devices'
+  | 'account'
 
 export type PurchaseTab = 'club' | 'gem'
 
@@ -148,6 +150,27 @@ interface AppState {
   openPurchase: (tab: PurchaseTab) => void
   closePurchase: () => void
 
+  // Profile's account "Opsi" sheet (3-dot button) — lives at this level
+  // rather than local ProfileScreen state so it can be positioned against
+  // the phone frame (see FilterModal) instead of Profile's own scrollable
+  // content box.
+  profileMenuOpen: boolean
+  openProfileMenu: () => void
+  closeProfileMenu: () => void
+
+  // "Perangkat Masuk" (active sessions) — pushed on top of Profile from the
+  // account Opsi sheet's "Perangkat Masuk" row
+  devicesOpen: boolean
+  openDevices: () => void
+  closeDevices: () => void
+
+  // "Kelola akun" — pushed on top of Profile from either its own pill button
+  // or the account Opsi sheet's "Kelola akun" row (two entry points, same
+  // destination)
+  accountOpen: boolean
+  openAccount: () => void
+  closeAccount: () => void
+
   // lightweight toast, e.g. for stub actions not built yet
   toast: string | null
   showToast: (msg: string) => void
@@ -178,6 +201,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [gemHistoryOpen, setGemHistoryOpen] = useState(false)
   const [purchaseOpen, setPurchaseOpen] = useState(false)
   const [purchaseTab, setPurchaseTab] = useState<PurchaseTab>('club')
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false)
+  const [devicesOpen, setDevicesOpen] = useState(false)
+  const [accountOpen, setAccountOpen] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -254,6 +280,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }
   const closePurchase = () => setPurchaseOpen(false)
 
+  const openProfileMenu = () => setProfileMenuOpen(true)
+  const closeProfileMenu = () => setProfileMenuOpen(false)
+
+  const openDevices = () => setDevicesOpen(true)
+  const closeDevices = () => setDevicesOpen(false)
+
+  const openAccount = () => setAccountOpen(true)
+  const closeAccount = () => setAccountOpen(false)
+
   const showToast = (msg: string) => {
     if (toastTimer.current) clearTimeout(toastTimer.current)
     setToast(msg)
@@ -313,6 +348,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
       purchaseTab,
       openPurchase,
       closePurchase,
+      profileMenuOpen,
+      openProfileMenu,
+      closeProfileMenu,
+      devicesOpen,
+      openDevices,
+      closeDevices,
+      accountOpen,
+      openAccount,
+      closeAccount,
       toast,
       showToast,
     }),
@@ -340,6 +384,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       gemHistoryOpen,
       purchaseOpen,
       purchaseTab,
+      profileMenuOpen,
+      devicesOpen,
+      accountOpen,
       toast,
     ]
   )

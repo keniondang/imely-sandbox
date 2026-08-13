@@ -139,6 +139,8 @@ export function Inspector() {
       gems: {},
       gemhistory: {},
       purchase: {},
+      devices: {},
+      account: {},
     }
     usage.forEach((u) => {
       const zoneMap = map[u.screenId]

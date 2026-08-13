@@ -1,11 +1,15 @@
-import { ChevronRight, MoreHorizontal, Camera, Grid2x2, UserCheck } from 'lucide-react'
+import { ChevronRight, MoreHorizontal, Camera, Grid2x2, UserCheck, Languages, Settings } from 'lucide-react'
 import { Str } from '../components/Str'
 import { MOCK_USER } from '../data/mockContent'
 import { useApp } from '../context/AppContext'
-import { resolveString } from '../lib/strings'
+import { usePopupRequest } from '../hooks/usePopupRequest'
 
 export function ProfileScreen() {
-  const { locale, showToast } = useApp()
+  const { showToast, openProfileMenu, closeProfileMenu, openAccount } = useApp()
+  // ProfileMenuSheet is rendered at the App.tsx level (see App.tsx), not
+  // nested here — but it still needs to open when the Inspector jumps to a
+  // string inside it, same as any other screen's local popup.
+  usePopupRequest('profile', 'menu', (open) => (open ? openProfileMenu() : closeProfileMenu()))
 
   return (
     <div className="pb-6">
@@ -30,16 +34,13 @@ export function ProfileScreen() {
           </div>
           <div className="text-gray-400 text-[13px] truncate">{MOCK_USER.handle}</div>
           <button
-            onClick={() => showToast('Kelola akun — segera hadir')}
+            onClick={openAccount}
             className="mt-1 text-[12px] font-semibold border border-imely-line rounded-full px-3 py-1 active:scale-95 active:bg-gray-50 transition-transform"
           >
             Kelola akun
           </button>
         </div>
-        <button
-          onClick={() => showToast('Menu lainnya — segera hadir')}
-          className="active:scale-90 transition-transform"
-        >
+        <button onClick={openProfileMenu} className="active:scale-90 transition-transform">
           <MoreHorizontal className="text-gray-400" />
         </button>
       </div>
@@ -121,10 +122,32 @@ export function ProfileScreen() {
           subtitleKey="profile_me_v4.following_desc"
           onTap={() => showToast('Mengikuti — segera hadir')}
         />
+        <ListRow
+          icon={<Languages size={18} />}
+          titleKey="setting_menu.font"
+          subtitleKey="setting.font_setting.language_current"
+          onTap={() => showToast('Tampilan & bahasa — segera hadir')}
+        />
+        <ListRow
+          icon={<Settings size={18} />}
+          titleKey="common.settings"
+          subtitleKey="common.settings_desc"
+          onTap={() => showToast('Pengaturan — segera hadir')}
+        />
       </div>
 
-      <div className="mt-2 text-[10px] text-gray-300 px-4">
-        preview locale: {locale} — {resolveString('profile_me_v4.support', locale)}
+      {/* support section */}
+      <div className="mt-2 border-t-8 border-imely-line pt-4">
+        <div className="px-4 font-bold text-[16px] text-imely-ink">
+          <Str k="profile_me_v4.support" />
+        </div>
+        <div className="mt-2">
+          <SupportRow labelKey="profile_me_v4.send_email" onTap={() => showToast('Kirim masukan — segera hadir')} />
+          <SupportRow labelKey="profile_me_v4.term_of_service" onTap={() => showToast('Ketentuan Layanan — segera hadir')} />
+          <SupportRow labelKey="profile_me_v4.privacy_policy" onTap={() => showToast('Kebijakan Privasi — segera hadir')} />
+          <SupportRow labelKey="profile_me_v4.copyright" onTap={() => showToast('Kebijakan Hak Cipta — segera hadir')} />
+          <SupportRow labelKey="profile_me_v4.about_us" onTap={() => showToast('Tentang Kami — segera hadir')} />
+        </div>
       </div>
     </div>
   )
@@ -180,6 +203,20 @@ function ListRow({
         <div className="text-[12px] text-gray-400">
           <Str k={subtitleKey} />
         </div>
+      </div>
+      <ChevronRight size={16} className="text-gray-300" />
+    </button>
+  )
+}
+
+function SupportRow({ labelKey, onTap }: { labelKey: string; onTap: () => void }) {
+  return (
+    <button
+      onClick={onTap}
+      className="w-full flex items-center justify-between px-4 py-3 border-b border-imely-line last:border-0 active:bg-gray-100 transition-colors"
+    >
+      <div className="text-[14px] text-imely-ink">
+        <Str k={labelKey} />
       </div>
       <ChevronRight size={16} className="text-gray-300" />
     </button>

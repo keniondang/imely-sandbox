@@ -10,6 +10,8 @@ import {
   History,
   ShoppingBag,
   SlidersHorizontal,
+  Smartphone,
+  UserCog,
 } from 'lucide-react'
 import type { ScreenId, FilterMode } from '../context/AppContext'
 
@@ -27,6 +29,8 @@ export const SCREEN_LABEL: Record<ScreenId, string> = {
   gems: 'Gem (overlay)',
   gemhistory: 'Riwayat Gem (overlay)',
   purchase: 'Beli MeLy Club / Gem (overlay)',
+  devices: 'Perangkat Masuk (overlay)',
+  account: 'Kelola Akun (overlay)',
 }
 
 export const SCREEN_ICON: Record<ScreenId, typeof Home> = {
@@ -41,6 +45,8 @@ export const SCREEN_ICON: Record<ScreenId, typeof Home> = {
   gems: Gem,
   gemhistory: History,
   purchase: ShoppingBag,
+  devices: Smartphone,
+  account: UserCog,
 }
 
 // Only the 3 bottom-nav tabs are top-level "pages" — every overlay screen
@@ -71,7 +77,7 @@ export const CHILD_SCREENS: Partial<Record<ScreenId, ScreenId[]>> = {
 export const PAGE_CHILDREN: Record<string, ScreenId[]> = {
   feed: ['characterprofile', 'notification', 'gems'],
   chatlist: ['chatdetail'],
-  profile: [],
+  profile: ['devices', 'account'],
 }
 
 // Every screen resolved all the way up to its base page (chatoptions ->
@@ -113,6 +119,8 @@ export function pageIdFor(screenId: ScreenId): ScreenId {
 export const WARM_UP_SCREENS: ScreenId[] = [
   'chatlist',
   'profile',
+  'devices',
+  'account',
   'creatorprofile',
   'notification',
   'gemhistory',

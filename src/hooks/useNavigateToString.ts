@@ -1,5 +1,5 @@
 import { useApp, type ScreenId, type Zone } from '../context/AppContext'
-import { MOCK_CHAT_THREADS, MOCK_FEED_CHARACTERS } from '../data/mockContent'
+import { MOCK_FEED_CHARACTERS } from '../data/mockContent'
 
 // Drives the live preview to whichever overlay a screen actually lives
 // behind — shared by navigateTo (jumping to a specific string) and
@@ -18,6 +18,9 @@ function useOpenOverlayChain() {
     closeGemHistory,
     closePurchase,
     closeFilter,
+    closeProfileMenu,
+    closeDevices,
+    closeAccount,
     openChat,
     openChatOptions,
     openCharacterProfile,
@@ -26,6 +29,8 @@ function useOpenOverlayChain() {
     openGems,
     openGemHistory,
     openPurchase,
+    openDevices,
+    openAccount,
     setCurrentScreen,
   } = useApp()
 
@@ -39,12 +44,15 @@ function useOpenOverlayChain() {
     closeGemHistory()
     closePurchase()
     closeFilter()
+    closeProfileMenu()
+    closeDevices()
+    closeAccount()
 
     if (screenId === 'chatdetail') {
-      const preview = MOCK_CHAT_THREADS[0]
+      const preview = MOCK_FEED_CHARACTERS[0]
       openChat({ id: preview.id, name: preview.name, color: preview.color })
     } else if (screenId === 'chatoptions') {
-      const preview = MOCK_CHAT_THREADS[0]
+      const preview = MOCK_FEED_CHARACTERS[0]
       openChat({ id: preview.id, name: preview.name, color: preview.color })
       openChatOptions()
     } else if (screenId === 'characterprofile') {
@@ -61,6 +69,10 @@ function useOpenOverlayChain() {
       openGemHistory()
     } else if (screenId === 'purchase') {
       openPurchase(zone === 'gem' ? 'gem' : 'club')
+    } else if (screenId === 'devices') {
+      openDevices()
+    } else if (screenId === 'account') {
+      openAccount()
     } else {
       setCurrentScreen(screenId)
     }

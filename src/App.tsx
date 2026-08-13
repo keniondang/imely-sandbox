@@ -20,6 +20,9 @@ import { PurchaseScreen } from './screens/PurchaseScreen'
 import { CharacterProfileScreen } from './screens/CharacterProfileScreen'
 import { CreatorProfileScreen } from './screens/CreatorProfileScreen'
 import { ChatOptionsScreen } from './screens/ChatOptionsScreen'
+import { DevicesScreen } from './screens/DevicesScreen'
+import { AccountScreen } from './screens/AccountScreen'
+import { ProfileMenuSheet } from './components/ProfileMenuSheet'
 import { Inspector } from './sandbox/Inspector'
 import { TranslationPanel } from './sandbox/TranslationPanel'
 
@@ -38,6 +41,12 @@ function Shell() {
     gemsOpen,
     gemHistoryOpen,
     purchaseOpen,
+    profileMenuOpen,
+    closeProfileMenu,
+    devicesOpen,
+    openDevices,
+    accountOpen,
+    openAccount,
     toast,
   } = useApp()
   useStringHighlighter()
@@ -190,6 +199,42 @@ function Shell() {
                 <ScreenScope id="purchase">
                   <PurchaseScreen />
                 </ScreenScope>
+              </div>
+            )}
+
+            {/* active sessions — pushed on top of Profile from its account Opsi sheet */}
+            {devicesOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+                <ScreenScope id="devices">
+                  <DevicesScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* Kelola akun — pushed on top of Profile from its pill button or the account Opsi sheet */}
+            {accountOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+                <ScreenScope id="account">
+                  <AccountScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* Profile's account Opsi sheet — opened from its three-dot button */}
+            {profileMenuOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30">
+                <ProfileMenuSheet
+                  open={profileMenuOpen}
+                  onClose={closeProfileMenu}
+                  onKelolaAkun={() => {
+                    closeProfileMenu()
+                    openAccount()
+                  }}
+                  onPerangkatMasuk={() => {
+                    closeProfileMenu()
+                    openDevices()
+                  }}
+                />
               </div>
             )}
 
