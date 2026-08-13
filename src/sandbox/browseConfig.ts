@@ -22,6 +22,7 @@ import {
   Mail,
   AtSign,
   Trash2,
+  UserPlus,
 } from 'lucide-react'
 import type { ScreenId, FilterMode } from '../context/AppContext'
 
@@ -52,6 +53,7 @@ export const SCREEN_LABEL: Record<ScreenId, string> = {
   verifyemail: 'Verifikasi Email (overlay)',
   username: 'Nama Pengguna (overlay)',
   deleteaccount: 'Hapus Akun (overlay)',
+  characterform: 'Buat/Edit Karakter (overlay)',
 }
 
 export const SCREEN_ICON: Record<ScreenId, typeof Home> = {
@@ -79,6 +81,7 @@ export const SCREEN_ICON: Record<ScreenId, typeof Home> = {
   verifyemail: Mail,
   username: AtSign,
   deleteaccount: Trash2,
+  characterform: UserPlus,
 }
 
 // Only the 3 bottom-nav tabs are top-level "pages" — every overlay screen
@@ -116,7 +119,7 @@ export const CHILD_SCREENS: Partial<Record<ScreenId, ScreenId[]>> = {
 export const PAGE_CHILDREN: Record<string, ScreenId[]> = {
   feed: ['characterprofile', 'notification', 'gems'],
   chatlist: ['chatdetail'],
-  profile: ['devices', 'account', 'mycharacters', 'following', 'badges', 'appearance', 'settings', 'about'],
+  profile: ['devices', 'account', 'mycharacters', 'following', 'badges', 'appearance', 'settings', 'about', 'characterform'],
 }
 
 // Every screen resolved all the way up to its base page (chatoptions ->
@@ -175,6 +178,7 @@ export const WARM_UP_SCREENS: ScreenId[] = [
   'gemhistory',
   'purchase',
   'chatoptions',
+  'characterform',
 ]
 
 // Display order + label for zones within a screen section. Zones not listed

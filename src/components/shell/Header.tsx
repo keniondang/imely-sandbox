@@ -3,7 +3,7 @@ import { MOCK_USER } from '../../data/mockContent'
 import { useApp } from '../../context/AppContext'
 
 export function Header() {
-  const { openNotif, openGems } = useApp()
+  const { openNotif, openGems, openCharacterForm } = useApp()
 
   return (
     <div className="flex items-center justify-between px-4 py-3">
@@ -24,7 +24,7 @@ export function Header() {
         </button>
         <IconButton icon={<Bell size={16} />} onClick={openNotif} />
         <IconButton icon={<Search size={16} />} />
-        <IconButton icon={<Plus size={16} />} />
+        <IconButton icon={<Plus size={16} />} onClick={() => openCharacterForm()} />
       </div>
     </div>
   )

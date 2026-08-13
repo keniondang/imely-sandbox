@@ -30,6 +30,7 @@ function useOpenOverlayChain() {
     closeVerifyEmail,
     closeUsername,
     closeDeleteAccount,
+    closeCharacterForm,
     openChat,
     openChatOptions,
     openCharacterProfile,
@@ -51,6 +52,7 @@ function useOpenOverlayChain() {
     openVerifyEmail,
     openUsername,
     openDeleteAccount,
+    openCharacterForm,
     setCurrentScreen,
   } = useApp()
 
@@ -76,6 +78,7 @@ function useOpenOverlayChain() {
     closeVerifyEmail()
     closeUsername()
     closeDeleteAccount()
+    closeCharacterForm()
 
     if (screenId === 'chatdetail') {
       const preview = MOCK_FEED_CHARACTERS[0]
@@ -129,6 +132,8 @@ function useOpenOverlayChain() {
     } else if (screenId === 'deleteaccount') {
       openAccount()
       openDeleteAccount()
+    } else if (screenId === 'characterform') {
+      openCharacterForm()
     } else {
       setCurrentScreen(screenId)
     }

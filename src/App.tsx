@@ -33,6 +33,7 @@ import { AboutScreen } from './screens/AboutScreen'
 import { VerifyEmailScreen } from './screens/VerifyEmailScreen'
 import { UsernameScreen } from './screens/UsernameScreen'
 import { DeleteAccountScreen } from './screens/DeleteAccountScreen'
+import { CharacterFormScreen } from './screens/CharacterFormScreen'
 import { ProfileMenuSheet } from './components/ProfileMenuSheet'
 import { Inspector } from './sandbox/Inspector'
 import { TranslationPanel } from './sandbox/TranslationPanel'
@@ -69,6 +70,7 @@ function Shell() {
     verifyEmailOpen,
     usernameOpen,
     deleteAccountOpen,
+    characterFormOpen,
     toast,
   } = useApp()
   useStringHighlighter()
@@ -103,7 +105,12 @@ function Shell() {
 
   return (
     <div className="h-screen w-screen flex bg-[#F4F5F7] overflow-hidden">
-      {inspectorOpen && <Inspector />}
+      {inspectorOpen && (
+        <>
+          <Inspector />
+          <TranslationPanel />
+        </>
+      )}
 
       <div className="flex-1 flex flex-col overflow-hidden">
         <div className="h-12 flex items-center gap-3 px-4 border-b border-imely-line bg-white shrink-0">
@@ -343,6 +350,17 @@ function Shell() {
               </div>
             )}
 
+            {/* Buat/Edit Karakter — always-on-top overlay reachable from the header
+                "+" icon, Karaktermu's "Buat Karakter" button, or its Opsi sheet's
+                "Edit Karakter" row; not scoped under any one page's overlay chain */}
+            {characterFormOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-40 bg-white">
+                <ScreenScope id="characterform">
+                  <CharacterFormScreen />
+                </ScreenScope>
+              </div>
+            )}
+
             {/* Profile's account Opsi sheet — opened from its three-dot button */}
             {profileMenuOpen && (
               <div className="absolute top-11 right-0 bottom-0 left-0 z-30">
@@ -378,8 +396,6 @@ function Shell() {
           </PhoneFrame>
         </div>
       </div>
-
-      {inspectorOpen && <TranslationPanel />}
     </div>
   )
 }

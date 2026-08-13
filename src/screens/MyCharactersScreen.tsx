@@ -9,7 +9,7 @@ import { MOCK_FEED_CHARACTERS, type MockCharacter } from '../data/mockContent'
 // user has created, kept in sync with the rest of the sandbox rather than
 // inventing a separate placeholder set.
 export function MyCharactersScreen() {
-  const { closeMyCharacters, openChat, openCharacterProfile, showToast } = useApp()
+  const { closeMyCharacters, openChat, openCharacterProfile, openCharacterForm, showToast } = useApp()
   const [menuFor, setMenuFor] = useState<MockCharacter | null>(null)
   const [deleteConfirmFor, setDeleteConfirmFor] = useState<MockCharacter | null>(null)
 
@@ -60,7 +60,7 @@ export function MyCharactersScreen() {
       </div>
 
       <button
-        onClick={() => showToast('Buat Karakter — segera hadir')}
+        onClick={() => openCharacterForm()}
         className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white border border-imely-line rounded-full pl-3.5 pr-4 py-2.5 shadow-lg active:scale-95 transition-transform"
       >
         <Plus size={16} className="text-imely-primary" />
@@ -84,8 +84,9 @@ export function MyCharactersScreen() {
               </div>
               <button
                 onClick={() => {
+                  const editId = menuFor.id
                   setMenuFor(null)
-                  showToast('Edit Karakter — segera hadir')
+                  openCharacterForm(editId)
                 }}
                 className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors text-left"
               >

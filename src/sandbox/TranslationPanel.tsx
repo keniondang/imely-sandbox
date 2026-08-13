@@ -162,7 +162,7 @@ export function TranslationPanel() {
 
   if (!selectedKey || !entry) {
     return (
-      <div className="w-[300px] shrink-0 h-full border-l border-imely-line bg-white flex flex-col items-center justify-center px-6 text-center">
+      <div className="w-[300px] shrink-0 h-full border-r border-imely-line bg-white flex flex-col items-center justify-center px-6 text-center">
         <div className="text-[13px] text-gray-400">
           Pilih string dari daftar di kiri untuk melihat dan menguji terjemahannya di sini.
         </div>
@@ -173,7 +173,7 @@ export function TranslationPanel() {
   const currentLocaleLabel = LOCALES.find((l) => l.id === locale)?.label ?? locale
 
   return (
-    <div className="w-[300px] shrink-0 h-full border-l border-imely-line bg-white flex flex-col">
+    <div className="w-[300px] shrink-0 h-full border-r border-imely-line bg-white flex flex-col">
       <div className="p-3 border-b border-imely-line flex items-center justify-between">
         <div className="font-bold text-sm text-imely-ink">Terjemahan</div>
         <button

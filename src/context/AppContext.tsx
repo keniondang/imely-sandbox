@@ -26,6 +26,7 @@ export type ScreenId =
   | 'verifyemail'
   | 'username'
   | 'deleteaccount'
+  | 'characterform'
 
 export type PurchaseTab = 'club' | 'gem'
 
@@ -246,6 +247,15 @@ interface AppState {
   openDeleteAccount: () => void
   closeDeleteAccount: () => void
 
+  // "Buat/Edit Karakter" — a top-level overlay (always renders above whatever
+  // else is open) since it's reachable from the always-present header "+"
+  // icon as well as from Karaktermu, not scoped to one page's overlay chain.
+  // `characterFormEditId` set = editing that character; null = creating new.
+  characterFormOpen: boolean
+  characterFormEditId: string | null
+  openCharacterForm: (editId?: string) => void
+  closeCharacterForm: () => void
+
   // lightweight toast, e.g. for stub actions not built yet
   toast: string | null
   showToast: (msg: string) => void
@@ -291,6 +301,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [verifyEmailOpen, setVerifyEmailOpen] = useState(false)
   const [usernameOpen, setUsernameOpen] = useState(false)
   const [deleteAccountOpen, setDeleteAccountOpen] = useState(false)
+  const [characterFormOpen, setCharacterFormOpen] = useState(false)
+  const [characterFormEditId, setCharacterFormEditId] = useState<string | null>(null)
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -413,6 +425,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const openDeleteAccount = () => setDeleteAccountOpen(true)
   const closeDeleteAccount = () => setDeleteAccountOpen(false)
 
+  const openCharacterForm = (editId?: string) => {
+    setCharacterFormEditId(editId ?? null)
+    setCharacterFormOpen(true)
+  }
+  const closeCharacterForm = () => setCharacterFormOpen(false)
+
   const showToast = (msg: string) => {
     if (toastTimer.current) clearTimeout(toastTimer.current)
     setToast(msg)
@@ -516,6 +534,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
       deleteAccountOpen,
       openDeleteAccount,
       closeDeleteAccount,
+      characterFormOpen,
+      characterFormEditId,
+      openCharacterForm,
+      closeCharacterForm,
       toast,
       showToast,
     }),
@@ -558,6 +580,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       verifyEmailOpen,
       usernameOpen,
       deleteAccountOpen,
+      characterFormOpen,
+      characterFormEditId,
       toast,
     ]
   )

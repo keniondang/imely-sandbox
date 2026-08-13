@@ -152,6 +152,7 @@ export function Inspector() {
       verifyemail: {},
       username: {},
       deleteaccount: {},
+      characterform: {},
     }
     usage.forEach((u) => {
       const zoneMap = map[u.screenId]
@@ -184,6 +185,16 @@ export function Inspector() {
     if (filterMode === 'overridden') return Boolean(overrides[key] && Object.keys(overrides[key]).length > 0)
     return true
   }
+
+  // Whether ANY key has an override yet, regardless of locale or screen —
+  // "Ada override" filters everything down to nothing until a translator has
+  // actually applied at least one draft, which otherwise looks identical to
+  // a broken filter (blank category list, or screen headers with nothing
+  // underneath) rather than an expected empty starting state.
+  const hasAnyOverride = useMemo(
+    () => Object.values(overrides).some((v) => v && Object.keys(v).length > 0),
+    [overrides]
+  )
 
   // Prefer whichever locale is selected in the pills above, so the list
   // matches what the live preview is actually showing right now.
@@ -336,21 +347,21 @@ export function Inspector() {
   }
 
   return (
-    <div className="w-[360px] shrink-0 h-full border-r border-imely-line bg-white flex flex-col">
-      <div className="p-3 border-b border-imely-line">
-        <div className="font-bold text-sm text-imely-ink mb-2">String Inspector</div>
+    <div className="w-[360px] shrink-0 h-full bg-imely-ink flex flex-col">
+      <div className="p-3 border-b border-white/10">
+        <div className="font-bold text-sm text-white mb-2">String Inspector</div>
         <div className="relative">
-          <Search size={14} className="absolute left-2.5 top-2.5 text-gray-400" />
+          <Search size={14} className="absolute left-2.5 top-2.5 text-gray-500" />
           <input
             ref={searchInputRef}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleSearchKeyDown}
             placeholder="Search all 1,479 keys…"
-            className="w-full text-[13px] border border-imely-line rounded-lg pl-8 pr-7 py-2 outline-none focus:border-imely-primary"
+            className="w-full text-[13px] bg-white/5 border border-white/15 text-white placeholder:text-gray-500 rounded-lg pl-8 pr-7 py-2 outline-none focus:border-imely-primary"
           />
           {query && (
-            <button onClick={() => setQuery('')} className="absolute right-2 top-2.5 text-gray-400">
+            <button onClick={() => setQuery('')} className="absolute right-2 top-2.5 text-gray-500">
               <X size={14} />
             </button>
           )}
@@ -363,7 +374,7 @@ export function Inspector() {
               className={`text-[12px] font-semibold px-2.5 py-1 rounded-full border ${
                 locale === l.id
                   ? 'bg-imely-primary text-white border-imely-primary'
-                  : 'border-imely-line text-gray-500'
+                  : 'border-white/15 text-gray-400'
               }`}
             >
               {l.label}
@@ -377,8 +388,8 @@ export function Inspector() {
               onClick={() => setViewMode('screens')}
               className={`flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-full border ${
                 viewMode === 'screens'
-                  ? 'bg-imely-ink text-white border-imely-ink'
-                  : 'border-imely-line text-gray-500'
+                  ? 'bg-imely-primary text-white border-imely-primary'
+                  : 'border-white/15 text-gray-400'
               }`}
             >
               <LayoutGrid size={11} /> Per Layar
@@ -387,8 +398,8 @@ export function Inspector() {
               onClick={() => setViewMode('categories')}
               className={`flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-full border ${
                 viewMode === 'categories'
-                  ? 'bg-imely-ink text-white border-imely-ink'
-                  : 'border-imely-line text-gray-500'
+                  ? 'bg-imely-primary text-white border-imely-primary'
+                  : 'border-white/15 text-gray-400'
               }`}
             >
               <Tags size={11} /> Semua Kategori
@@ -403,8 +414,8 @@ export function Inspector() {
               onClick={() => setFilterMode(f.id)}
               className={`text-[10.5px] font-medium px-2 py-0.5 rounded-full border ${
                 filterMode === f.id
-                  ? 'bg-imely-mint border-imely-primary text-imely-primaryDark'
-                  : 'border-imely-line text-gray-400'
+                  ? 'bg-imely-primary border-imely-primary text-white'
+                  : 'border-white/15 text-gray-500'
               }`}
             >
               {f.label}
@@ -416,14 +427,14 @@ export function Inspector() {
       <div className="flex-1 overflow-y-auto">
         {query.trim() ? (
           <div className="p-2">
-            <div className="text-[11px] text-gray-400 px-2 py-1">
+            <div className="text-[11px] text-gray-500 px-2 py-1">
               {flatSearchRows.length} match{flatSearchRows.length !== 1 ? 'es' : ''}
             </div>
             {searchGroups.map((group) => {
               const Icon = group.screenId ? SCREEN_ICON[group.screenId] : null
               return (
                 <div key={group.screenId ?? '__unwired__'} className="mb-1">
-                  <div className="sticky top-0 z-10 bg-white flex items-center gap-1.5 text-[10px] font-bold text-gray-400 uppercase px-2 py-1.5">
+                  <div className="sticky top-0 z-10 bg-imely-ink flex items-center gap-1.5 text-[10px] font-bold text-gray-400 uppercase px-2 py-1.5">
                     {Icon && <Icon size={11} className="shrink-0" />}
                     <span className="truncate">
                       {group.screenId ? SCREEN_LABEL[group.screenId] : 'Belum digunakan di layar manapun'}
@@ -457,6 +468,33 @@ export function Inspector() {
               )
             })}
           </div>
+        ) : filterMode === 'overridden' && !hasAnyOverride ? (
+          <div className="p-5 text-center">
+            <div className="text-[12.5px] text-gray-400 leading-relaxed">
+              Belum ada <span className="font-semibold text-white">override</span> yang diterapkan. Pilih sebuah
+              string, ketik draf terjemahan di panel Terjemahan, lalu klik{' '}
+              <span className="font-semibold text-white">Terapkan</span> untuk membuat override pertama.
+            </div>
+            <button
+              onClick={() => setFilterMode('all')}
+              className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-semibold text-imely-primary border border-imely-primary rounded-full px-3 py-1.5 hover:bg-imely-primary/10"
+            >
+              Lihat Semua String
+            </button>
+          </div>
+        ) : viewMode === 'screens' && filterMode === 'unwired' ? (
+          <div className="p-5 text-center">
+            <div className="text-[12.5px] text-gray-400 leading-relaxed">
+              String yang <span className="font-semibold text-white">belum wired</span> belum dipakai di layar
+              manapun, jadi tidak muncul di tampilan Per Layar. Lihat semuanya di Semua Kategori.
+            </div>
+            <button
+              onClick={() => setViewMode('categories')}
+              className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-semibold text-imely-primary border border-imely-primary rounded-full px-3 py-1.5 hover:bg-imely-primary/10"
+            >
+              <Tags size={12} /> Ke Semua Kategori
+            </button>
+          </div>
         ) : viewMode === 'screens' ? (
           PAGE_ORDER.map((pageId) => {
             const isOpen = openScreens.has(pageId)
@@ -475,7 +513,7 @@ export function Inspector() {
                     first opening them by hand in the live preview. */}
                 <button
                   onClick={() => headerClick(pageId)}
-                  className="sticky top-0 z-10 bg-white w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-gray-50"
+                  className="sticky top-0 z-10 bg-imely-ink w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-white/5"
                 >
                   <span className="flex items-center gap-1.5 text-[11px] font-bold text-gray-400 uppercase">
                     <Icon size={12} className="shrink-0" />
@@ -497,10 +535,10 @@ export function Inspector() {
                         screenCount(overlayId) + grandchildren.reduce((n, c) => n + screenCount(c), 0)
                       const OverlayIcon = SCREEN_ICON[overlayId]
                       return (
-                        <div key={overlayId} className="mt-1.5 ml-2.5 border-l border-imely-line pl-2">
+                        <div key={overlayId} className="mt-1.5 ml-2.5 border-l border-white/10 pl-2">
                           <button
                             onClick={() => headerClick(overlayId)}
-                            className="sticky top-0 z-10 bg-white w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-gray-50"
+                            className="sticky top-0 z-10 bg-imely-ink w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-white/5"
                           >
                             <span className="flex items-center gap-1.5 text-[10.5px] font-bold text-gray-400 uppercase">
                               <OverlayIcon size={11} className="shrink-0" />
@@ -520,10 +558,10 @@ export function Inspector() {
                                 const childCount = screenCount(childId)
                                 const ChildIcon = SCREEN_ICON[childId]
                                 return (
-                                  <div key={childId} className="mt-1.5 ml-2.5 border-l border-imely-line pl-2">
+                                  <div key={childId} className="mt-1.5 ml-2.5 border-l border-white/10 pl-2">
                                     <button
                                       onClick={() => headerClick(childId)}
-                                      className="sticky top-0 z-10 bg-white w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-gray-50"
+                                      className="sticky top-0 z-10 bg-imely-ink w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-white/5"
                                     >
                                       <span className="flex items-center gap-1.5 text-[10px] font-bold text-gray-400 uppercase">
                                         <ChildIcon size={10} className="shrink-0" />
@@ -558,7 +596,7 @@ export function Inspector() {
               <div key={cat} className="p-2">
                 <button
                   onClick={() => toggleCategory(cat)}
-                  className="sticky top-0 z-10 bg-white w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-gray-50"
+                  className="sticky top-0 z-10 bg-imely-ink w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-white/5"
                 >
                   <span className="text-[11px] font-bold text-gray-400 uppercase truncate pr-2">
                     {cat} · {entries.length}{' '}
@@ -618,12 +656,16 @@ function KeyRow({
       onClick={onClick}
       title={entryKey}
       className={`w-full text-left px-2 py-1.5 rounded-lg flex items-center gap-1.5 ${
-        active ? 'bg-imely-mint' : focused ? 'bg-gray-100 ring-1 ring-inset ring-imely-primary' : 'hover:bg-gray-50'
+        active
+          ? 'bg-imely-primary text-white'
+          : focused
+            ? 'bg-white/10 ring-1 ring-inset ring-imely-primary'
+            : 'hover:bg-white/5'
       }`}
     >
-      <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${wired ? 'bg-imely-primary' : 'bg-gray-300'}`} />
-      <span className="text-[12.5px] text-imely-ink truncate flex-1">{label}</span>
-      {overflowing && <AlertTriangle size={12} className="text-red-500 shrink-0" />}
+      <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${wired ? 'bg-imely-primary' : 'bg-white/25'}`} />
+      <span className={`text-[12.5px] truncate flex-1 ${active ? 'text-white' : 'text-gray-200'}`}>{label}</span>
+      {overflowing && <AlertTriangle size={12} className="text-red-400 shrink-0" />}
     </button>
   )
 }
