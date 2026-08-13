@@ -21,6 +21,8 @@ function useOpenOverlayChain() {
     closeProfileMenu,
     closeDevices,
     closeAccount,
+    closeMyCharacters,
+    closeFollowing,
     openChat,
     openChatOptions,
     openCharacterProfile,
@@ -31,6 +33,8 @@ function useOpenOverlayChain() {
     openPurchase,
     openDevices,
     openAccount,
+    openMyCharacters,
+    openFollowing,
     setCurrentScreen,
   } = useApp()
 
@@ -47,6 +51,8 @@ function useOpenOverlayChain() {
     closeProfileMenu()
     closeDevices()
     closeAccount()
+    closeMyCharacters()
+    closeFollowing()
 
     if (screenId === 'chatdetail') {
       const preview = MOCK_FEED_CHARACTERS[0]
@@ -73,6 +79,10 @@ function useOpenOverlayChain() {
       openDevices()
     } else if (screenId === 'account') {
       openAccount()
+    } else if (screenId === 'mycharacters') {
+      openMyCharacters()
+    } else if (screenId === 'following') {
+      openFollowing()
     } else {
       setCurrentScreen(screenId)
     }

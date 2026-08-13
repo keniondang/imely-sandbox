@@ -12,6 +12,8 @@ import {
   SlidersHorizontal,
   Smartphone,
   UserCog,
+  Grid2x2,
+  UserCheck,
 } from 'lucide-react'
 import type { ScreenId, FilterMode } from '../context/AppContext'
 
@@ -31,6 +33,8 @@ export const SCREEN_LABEL: Record<ScreenId, string> = {
   purchase: 'Beli MeLy Club / Gem (overlay)',
   devices: 'Perangkat Masuk (overlay)',
   account: 'Kelola Akun (overlay)',
+  mycharacters: 'Karaktermu (overlay)',
+  following: 'Mengikuti (overlay)',
 }
 
 export const SCREEN_ICON: Record<ScreenId, typeof Home> = {
@@ -47,6 +51,8 @@ export const SCREEN_ICON: Record<ScreenId, typeof Home> = {
   purchase: ShoppingBag,
   devices: Smartphone,
   account: UserCog,
+  mycharacters: Grid2x2,
+  following: UserCheck,
 }
 
 // Only the 3 bottom-nav tabs are top-level "pages" — every overlay screen
@@ -77,7 +83,7 @@ export const CHILD_SCREENS: Partial<Record<ScreenId, ScreenId[]>> = {
 export const PAGE_CHILDREN: Record<string, ScreenId[]> = {
   feed: ['characterprofile', 'notification', 'gems'],
   chatlist: ['chatdetail'],
-  profile: ['devices', 'account'],
+  profile: ['devices', 'account', 'mycharacters', 'following'],
 }
 
 // Every screen resolved all the way up to its base page (chatoptions ->
@@ -121,6 +127,8 @@ export const WARM_UP_SCREENS: ScreenId[] = [
   'profile',
   'devices',
   'account',
+  'mycharacters',
+  'following',
   'creatorprofile',
   'notification',
   'gemhistory',
@@ -139,6 +147,7 @@ export const ZONE_ORDER = [
   'lucky_wheel',
   'lucky_result',
   'block_confirm',
+  'delete_confirm',
   'report',
   'mode_picker',
   'relationship',
@@ -155,6 +164,7 @@ export const ZONE_LABEL: Record<string, string> = {
   lucky_wheel: 'Popup: Roda Keberuntungan',
   lucky_result: 'Popup: Hasil Undian',
   block_confirm: 'Popup: Konfirmasi Blokir',
+  delete_confirm: 'Popup: Konfirmasi Hapus',
   report: 'Popup: Laporkan',
   mode_picker: 'Popup: Mode Obrolan',
   relationship: 'Popup: Level Kedekatan',

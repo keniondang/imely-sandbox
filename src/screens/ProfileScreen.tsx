@@ -5,7 +5,8 @@ import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
 
 export function ProfileScreen() {
-  const { showToast, openProfileMenu, closeProfileMenu, openAccount } = useApp()
+  const { showToast, openProfileMenu, closeProfileMenu, openAccount, openPurchase, openMyCharacters, openFollowing } =
+    useApp()
   // ProfileMenuSheet is rendered at the App.tsx level (see App.tsx), not
   // nested here — but it still needs to open when the Inspector jumps to a
   // string inside it, same as any other screen's local popup.
@@ -83,7 +84,7 @@ export function ProfileScreen() {
         </div>
 
         <button
-          onClick={() => showToast('Alur pembelian — segera hadir')}
+          onClick={() => openPurchase('club')}
           className="mt-4 w-full bg-imely-primary text-white font-bold rounded-full py-3 active:scale-[0.97] active:bg-imely-primaryDark transition-transform"
         >
           <Str k="profile_me_v4.banner_upgrade.cta" />
@@ -99,7 +100,7 @@ export function ProfileScreen() {
           </div>
         </div>
         <button
-          onClick={() => showToast('Alur pembelian gem — segera hadir')}
+          onClick={() => openPurchase('gem')}
           className="bg-imely-primary text-white text-[13px] font-bold rounded-full px-5 py-2 active:scale-95 active:bg-imely-primaryDark transition-transform"
         >
           Beli
@@ -114,13 +115,13 @@ export function ProfileScreen() {
           icon={<Grid2x2 size={18} />}
           titleKey="profile_me_v4.my_companion_title"
           subtitleKey="profile_me_v4.my_companion_desc"
-          onTap={() => showToast('Karakter saya — segera hadir')}
+          onTap={openMyCharacters}
         />
         <ListRow
           icon={<UserCheck size={18} />}
           titleKey="profile_me_v4.following"
           subtitleKey="profile_me_v4.following_desc"
-          onTap={() => showToast('Mengikuti — segera hadir')}
+          onTap={openFollowing}
         />
         <ListRow
           icon={<Languages size={18} />}

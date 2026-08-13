@@ -22,6 +22,8 @@ import { CreatorProfileScreen } from './screens/CreatorProfileScreen'
 import { ChatOptionsScreen } from './screens/ChatOptionsScreen'
 import { DevicesScreen } from './screens/DevicesScreen'
 import { AccountScreen } from './screens/AccountScreen'
+import { MyCharactersScreen } from './screens/MyCharactersScreen'
+import { FollowingScreen } from './screens/FollowingScreen'
 import { ProfileMenuSheet } from './components/ProfileMenuSheet'
 import { Inspector } from './sandbox/Inspector'
 import { TranslationPanel } from './sandbox/TranslationPanel'
@@ -47,6 +49,8 @@ function Shell() {
     openDevices,
     accountOpen,
     openAccount,
+    myCharactersOpen,
+    followingOpen,
     toast,
   } = useApp()
   useStringHighlighter()
@@ -150,8 +154,9 @@ function Shell() {
               </div>
             )}
 
-            {/* creator profile — pushed on top of a character profile from its "Kreator" row */}
-            {activeCharacterId && activeCreatorName && (
+            {/* creator profile — pushed on top of a character profile from its "Kreator" row, or
+                reachable directly (e.g. Mengikuti's "Pencipta" tab) without a character underneath */}
+            {activeCreatorName && (
               <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
                 <ScreenScope id="creatorprofile">
                   <CreatorProfileScreen />
@@ -216,6 +221,24 @@ function Shell() {
               <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
                 <ScreenScope id="account">
                   <AccountScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* Karaktermu — pushed on top of Profile from its "Karakter saya" row */}
+            {myCharactersOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+                <ScreenScope id="mycharacters">
+                  <MyCharactersScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* Mengikuti — pushed on top of Profile from its "Mengikuti" row */}
+            {followingOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+                <ScreenScope id="following">
+                  <FollowingScreen />
                 </ScreenScope>
               </div>
             )}

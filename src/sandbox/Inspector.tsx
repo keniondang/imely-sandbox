@@ -141,6 +141,8 @@ export function Inspector() {
       purchase: {},
       devices: {},
       account: {},
+      mycharacters: {},
+      following: {},
     }
     usage.forEach((u) => {
       const zoneMap = map[u.screenId]

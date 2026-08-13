@@ -15,6 +15,8 @@ export type ScreenId =
   | 'chatoptions'
   | 'devices'
   | 'account'
+  | 'mycharacters'
+  | 'following'
 
 export type PurchaseTab = 'club' | 'gem'
 
@@ -171,6 +173,16 @@ interface AppState {
   openAccount: () => void
   closeAccount: () => void
 
+  // "Karaktermu" — pushed on top of Profile from its "Karakter saya" row
+  myCharactersOpen: boolean
+  openMyCharacters: () => void
+  closeMyCharacters: () => void
+
+  // "Mengikuti" — pushed on top of Profile from its "Mengikuti" row
+  followingOpen: boolean
+  openFollowing: () => void
+  closeFollowing: () => void
+
   // lightweight toast, e.g. for stub actions not built yet
   toast: string | null
   showToast: (msg: string) => void
@@ -204,6 +216,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [profileMenuOpen, setProfileMenuOpen] = useState(false)
   const [devicesOpen, setDevicesOpen] = useState(false)
   const [accountOpen, setAccountOpen] = useState(false)
+  const [myCharactersOpen, setMyCharactersOpen] = useState(false)
+  const [followingOpen, setFollowingOpen] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -289,6 +303,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const openAccount = () => setAccountOpen(true)
   const closeAccount = () => setAccountOpen(false)
 
+  const openMyCharacters = () => setMyCharactersOpen(true)
+  const closeMyCharacters = () => setMyCharactersOpen(false)
+
+  const openFollowing = () => setFollowingOpen(true)
+  const closeFollowing = () => setFollowingOpen(false)
+
   const showToast = (msg: string) => {
     if (toastTimer.current) clearTimeout(toastTimer.current)
     setToast(msg)
@@ -357,6 +377,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
       accountOpen,
       openAccount,
       closeAccount,
+      myCharactersOpen,
+      openMyCharacters,
+      closeMyCharacters,
+      followingOpen,
+      openFollowing,
+      closeFollowing,
       toast,
       showToast,
     }),
@@ -387,6 +413,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       profileMenuOpen,
       devicesOpen,
       accountOpen,
+      myCharactersOpen,
+      followingOpen,
       toast,
     ]
   )
