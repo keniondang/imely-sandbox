@@ -24,6 +24,11 @@ import { DevicesScreen } from './screens/DevicesScreen'
 import { AccountScreen } from './screens/AccountScreen'
 import { MyCharactersScreen } from './screens/MyCharactersScreen'
 import { FollowingScreen } from './screens/FollowingScreen'
+import { BadgesScreen } from './screens/BadgesScreen'
+import { AppearanceScreen } from './screens/AppearanceScreen'
+import { SettingsScreen } from './screens/SettingsScreen'
+import { NotificationSettingsScreen } from './screens/NotificationSettingsScreen'
+import { VideoSettingsScreen } from './screens/VideoSettingsScreen'
 import { ProfileMenuSheet } from './components/ProfileMenuSheet'
 import { Inspector } from './sandbox/Inspector'
 import { TranslationPanel } from './sandbox/TranslationPanel'
@@ -51,6 +56,11 @@ function Shell() {
     openAccount,
     myCharactersOpen,
     followingOpen,
+    badgesOpen,
+    appearanceOpen,
+    settingsOpen,
+    notificationSettingsOpen,
+    videoSettingsOpen,
     toast,
   } = useApp()
   useStringHighlighter()
@@ -239,6 +249,51 @@ function Shell() {
               <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
                 <ScreenScope id="following">
                   <FollowingScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* Lencana — pushed on top of Profile from its badge pill */}
+            {badgesOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+                <ScreenScope id="badges">
+                  <BadgesScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* Tampilan — pushed on top of Profile from its "Tampilan & bahasa" row */}
+            {appearanceOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+                <ScreenScope id="appearance">
+                  <AppearanceScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* Pengaturan — pushed on top of Profile from its "Pengaturan" row */}
+            {settingsOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+                <ScreenScope id="settings">
+                  <SettingsScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* Notifikasi settings — pushed on top of Pengaturan from its "Notifikasi" row */}
+            {settingsOpen && notificationSettingsOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+                <ScreenScope id="notificationsettings">
+                  <NotificationSettingsScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* Video settings — pushed on top of Pengaturan from its "Video" row */}
+            {settingsOpen && videoSettingsOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+                <ScreenScope id="videosettings">
+                  <VideoSettingsScreen />
                 </ScreenScope>
               </div>
             )}

@@ -5,8 +5,18 @@ import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
 
 export function ProfileScreen() {
-  const { showToast, openProfileMenu, closeProfileMenu, openAccount, openPurchase, openMyCharacters, openFollowing } =
-    useApp()
+  const {
+    showToast,
+    openProfileMenu,
+    closeProfileMenu,
+    openAccount,
+    openPurchase,
+    openMyCharacters,
+    openFollowing,
+    openBadges,
+    openAppearance,
+    openSettings,
+  } = useApp()
   // ProfileMenuSheet is rendered at the App.tsx level (see App.tsx), not
   // nested here — but it still needs to open when the Inspector jumps to a
   // string inside it, same as any other screen's local popup.
@@ -48,7 +58,7 @@ export function ProfileScreen() {
 
       {/* badge row */}
       <button
-        onClick={() => showToast('Lencana — segera hadir')}
+        onClick={openBadges}
         className="w-full px-4 mt-4 flex items-center justify-between active:opacity-70 transition-opacity"
       >
         <div className="flex items-center gap-2 bg-pink-50 rounded-full pl-2 pr-3 py-1">
@@ -127,13 +137,13 @@ export function ProfileScreen() {
           icon={<Languages size={18} />}
           titleKey="setting_menu.font"
           subtitleKey="setting.font_setting.language_current"
-          onTap={() => showToast('Tampilan & bahasa — segera hadir')}
+          onTap={openAppearance}
         />
         <ListRow
           icon={<Settings size={18} />}
           titleKey="common.settings"
           subtitleKey="common.settings_desc"
-          onTap={() => showToast('Pengaturan — segera hadir')}
+          onTap={openSettings}
         />
       </div>
 

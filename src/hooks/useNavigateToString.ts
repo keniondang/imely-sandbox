@@ -23,6 +23,9 @@ function useOpenOverlayChain() {
     closeAccount,
     closeMyCharacters,
     closeFollowing,
+    closeBadges,
+    closeAppearance,
+    closeSettings,
     openChat,
     openChatOptions,
     openCharacterProfile,
@@ -35,6 +38,11 @@ function useOpenOverlayChain() {
     openAccount,
     openMyCharacters,
     openFollowing,
+    openBadges,
+    openAppearance,
+    openSettings,
+    openNotificationSettings,
+    openVideoSettings,
     setCurrentScreen,
   } = useApp()
 
@@ -53,6 +61,9 @@ function useOpenOverlayChain() {
     closeAccount()
     closeMyCharacters()
     closeFollowing()
+    closeBadges()
+    closeAppearance()
+    closeSettings()
 
     if (screenId === 'chatdetail') {
       const preview = MOCK_FEED_CHARACTERS[0]
@@ -83,6 +94,18 @@ function useOpenOverlayChain() {
       openMyCharacters()
     } else if (screenId === 'following') {
       openFollowing()
+    } else if (screenId === 'badges') {
+      openBadges()
+    } else if (screenId === 'appearance') {
+      openAppearance()
+    } else if (screenId === 'settings') {
+      openSettings()
+    } else if (screenId === 'notificationsettings') {
+      openSettings()
+      openNotificationSettings()
+    } else if (screenId === 'videosettings') {
+      openSettings()
+      openVideoSettings()
     } else {
       setCurrentScreen(screenId)
     }

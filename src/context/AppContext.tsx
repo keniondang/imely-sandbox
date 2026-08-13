@@ -17,6 +17,11 @@ export type ScreenId =
   | 'account'
   | 'mycharacters'
   | 'following'
+  | 'badges'
+  | 'appearance'
+  | 'settings'
+  | 'notificationsettings'
+  | 'videosettings'
 
 export type PurchaseTab = 'club' | 'gem'
 
@@ -183,6 +188,31 @@ interface AppState {
   openFollowing: () => void
   closeFollowing: () => void
 
+  // "Lencana" — pushed on top of Profile from its badge pill
+  badgesOpen: boolean
+  openBadges: () => void
+  closeBadges: () => void
+
+  // "Tampilan" — pushed on top of Profile from its "Tampilan & bahasa" row
+  appearanceOpen: boolean
+  openAppearance: () => void
+  closeAppearance: () => void
+
+  // "Pengaturan" — pushed on top of Profile from its "Pengaturan" row
+  settingsOpen: boolean
+  openSettings: () => void
+  closeSettings: () => void
+
+  // "Notifikasi" settings — pushed on top of Pengaturan from its "Notifikasi" row
+  notificationSettingsOpen: boolean
+  openNotificationSettings: () => void
+  closeNotificationSettings: () => void
+
+  // "Video" settings — pushed on top of Pengaturan from its "Video" row
+  videoSettingsOpen: boolean
+  openVideoSettings: () => void
+  closeVideoSettings: () => void
+
   // lightweight toast, e.g. for stub actions not built yet
   toast: string | null
   showToast: (msg: string) => void
@@ -218,6 +248,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [accountOpen, setAccountOpen] = useState(false)
   const [myCharactersOpen, setMyCharactersOpen] = useState(false)
   const [followingOpen, setFollowingOpen] = useState(false)
+  const [badgesOpen, setBadgesOpen] = useState(false)
+  const [appearanceOpen, setAppearanceOpen] = useState(false)
+  const [settingsOpen, setSettingsOpen] = useState(false)
+  const [notificationSettingsOpen, setNotificationSettingsOpen] = useState(false)
+  const [videoSettingsOpen, setVideoSettingsOpen] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -309,6 +344,25 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const openFollowing = () => setFollowingOpen(true)
   const closeFollowing = () => setFollowingOpen(false)
 
+  const openBadges = () => setBadgesOpen(true)
+  const closeBadges = () => setBadgesOpen(false)
+
+  const openAppearance = () => setAppearanceOpen(true)
+  const closeAppearance = () => setAppearanceOpen(false)
+
+  const openSettings = () => setSettingsOpen(true)
+  const closeSettings = () => {
+    setSettingsOpen(false)
+    setNotificationSettingsOpen(false)
+    setVideoSettingsOpen(false)
+  }
+
+  const openNotificationSettings = () => setNotificationSettingsOpen(true)
+  const closeNotificationSettings = () => setNotificationSettingsOpen(false)
+
+  const openVideoSettings = () => setVideoSettingsOpen(true)
+  const closeVideoSettings = () => setVideoSettingsOpen(false)
+
   const showToast = (msg: string) => {
     if (toastTimer.current) clearTimeout(toastTimer.current)
     setToast(msg)
@@ -383,6 +437,21 @@ export function AppProvider({ children }: { children: ReactNode }) {
       followingOpen,
       openFollowing,
       closeFollowing,
+      badgesOpen,
+      openBadges,
+      closeBadges,
+      appearanceOpen,
+      openAppearance,
+      closeAppearance,
+      settingsOpen,
+      openSettings,
+      closeSettings,
+      notificationSettingsOpen,
+      openNotificationSettings,
+      closeNotificationSettings,
+      videoSettingsOpen,
+      openVideoSettings,
+      closeVideoSettings,
       toast,
       showToast,
     }),
@@ -415,6 +484,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
       accountOpen,
       myCharactersOpen,
       followingOpen,
+      badgesOpen,
+      appearanceOpen,
+      settingsOpen,
+      notificationSettingsOpen,
+      videoSettingsOpen,
       toast,
     ]
   )

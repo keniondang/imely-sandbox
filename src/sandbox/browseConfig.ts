@@ -14,6 +14,10 @@ import {
   UserCog,
   Grid2x2,
   UserCheck,
+  Award,
+  Palette,
+  Settings as SettingsIcon,
+  Video,
 } from 'lucide-react'
 import type { ScreenId, FilterMode } from '../context/AppContext'
 
@@ -35,6 +39,11 @@ export const SCREEN_LABEL: Record<ScreenId, string> = {
   account: 'Kelola Akun (overlay)',
   mycharacters: 'Karaktermu (overlay)',
   following: 'Mengikuti (overlay)',
+  badges: 'Lencana (overlay)',
+  appearance: 'Tampilan (overlay)',
+  settings: 'Pengaturan (overlay)',
+  notificationsettings: 'Notifikasi Pengaturan (overlay)',
+  videosettings: 'Video Pengaturan (overlay)',
 }
 
 export const SCREEN_ICON: Record<ScreenId, typeof Home> = {
@@ -53,6 +62,11 @@ export const SCREEN_ICON: Record<ScreenId, typeof Home> = {
   account: UserCog,
   mycharacters: Grid2x2,
   following: UserCheck,
+  badges: Award,
+  appearance: Palette,
+  settings: SettingsIcon,
+  notificationsettings: Bell,
+  videosettings: Video,
 }
 
 // Only the 3 bottom-nav tabs are top-level "pages" — every overlay screen
@@ -68,12 +82,15 @@ export const SCREEN_PARENT: Partial<Record<ScreenId, ScreenId>> = {
   creatorprofile: 'characterprofile',
   gemhistory: 'gems',
   purchase: 'gems',
+  notificationsettings: 'settings',
+  videosettings: 'settings',
 }
 
 export const CHILD_SCREENS: Partial<Record<ScreenId, ScreenId[]>> = {
   chatdetail: ['chatoptions'],
   characterprofile: ['creatorprofile'],
   gems: ['gemhistory', 'purchase'],
+  settings: ['notificationsettings', 'videosettings'],
 }
 
 // Which base page each "primary" overlay (one not already nested under
@@ -83,7 +100,7 @@ export const CHILD_SCREENS: Partial<Record<ScreenId, ScreenId[]>> = {
 export const PAGE_CHILDREN: Record<string, ScreenId[]> = {
   feed: ['characterprofile', 'notification', 'gems'],
   chatlist: ['chatdetail'],
-  profile: ['devices', 'account', 'mycharacters', 'following'],
+  profile: ['devices', 'account', 'mycharacters', 'following', 'badges', 'appearance', 'settings'],
 }
 
 // Every screen resolved all the way up to its base page (chatoptions ->
@@ -129,6 +146,10 @@ export const WARM_UP_SCREENS: ScreenId[] = [
   'account',
   'mycharacters',
   'following',
+  'badges',
+  'appearance',
+  'notificationsettings',
+  'videosettings',
   'creatorprofile',
   'notification',
   'gemhistory',

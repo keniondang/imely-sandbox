@@ -143,6 +143,11 @@ export function Inspector() {
       account: {},
       mycharacters: {},
       following: {},
+      badges: {},
+      appearance: {},
+      settings: {},
+      notificationsettings: {},
+      videosettings: {},
     }
     usage.forEach((u) => {
       const zoneMap = map[u.screenId]
