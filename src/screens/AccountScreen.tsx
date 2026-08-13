@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   ArrowLeft,
   Camera,
@@ -12,16 +13,83 @@ import {
   ChevronRight,
   ChevronDown,
   LogOut,
+  X,
+  AlertTriangle,
+  Globe,
+  Link2,
+  Check,
 } from 'lucide-react'
 import { Str } from '../components/Str'
+import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
 import { MOCK_USER } from '../data/mockContent'
 
+type PrivacyMode = 'only_me' | 'only_link' | 'public'
+type GenderMode = 'male' | 'female' | 'other'
+type ModalKind =
+  | 'identity'
+  | 'unlinkBlocked'
+  | 'privacy'
+  | 'gender'
+  | 'birthdate'
+  | 'bio'
+  | 'logout'
+  | null
+
+const GENDER_KEY: Record<GenderMode, string> = {
+  male: 'profile_me.gender_edit.male',
+  female: 'profile_me.gender_edit.female',
+  other: 'onboard.gender_other',
+}
+
+const MONTH_NAMES = [
+  'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+  'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
+]
+
+function fmtDate(d: Date): string {
+  return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`
+}
+function shiftDay(d: Date, delta: number): Date {
+  const n = new Date(d)
+  n.setDate(n.getDate() + delta)
+  return n
+}
+function shiftMonth(d: Date, delta: number): Date {
+  const n = new Date(d)
+  n.setMonth(n.getMonth() + delta)
+  return n
+}
+function shiftYear(d: Date, delta: number): Date {
+  const n = new Date(d)
+  n.setFullYear(n.getFullYear() + delta)
+  return n
+}
+
 export function AccountScreen() {
-  const { closeAccount, openPurchase, showToast } = useApp()
+  const { closeAccount, openPurchase, openVerifyEmail, openUsername, openDeleteAccount, accountUsername, showToast } =
+    useApp()
+  const [verifyOpen, setVerifyOpen] = useState(false)
+  const [modal, setModal] = useState<ModalKind>(null)
+
+  const [identityCard, setIdentityCard] = useState('')
+  const [identityCardDraft, setIdentityCardDraft] = useState('')
+
+  const [privacy, setPrivacy] = useState<PrivacyMode>('public')
+  const [gender, setGender] = useState<GenderMode>('female')
+
+  const [birthdate, setBirthdate] = useState(new Date(1990, 3, 1))
+  const [birthdateDraft, setBirthdateDraft] = useState(birthdate)
+
+  const [bio, setBio] = useState('')
+  const [bioDraft, setBioDraft] = useState('')
+
+  function closeModal() {
+    setModal(null)
+  }
 
   return (
-    <div className="h-full flex flex-col bg-white">
+    <div className="h-full flex flex-col bg-white relative">
       <div className="relative flex items-center gap-2 px-3 py-2.5 border-b border-imely-line shrink-0">
         <button
           onClick={closeAccount}
@@ -79,7 +147,7 @@ export function AccountScreen() {
               <Str k="user_profile_v2.banner_verify_acc.description" />
             </div>
             <button
-              onClick={() => showToast('Verifikasi akun — segera hadir')}
+              onClick={() => setVerifyOpen(true)}
               className="mt-3 bg-imely-primary text-white text-[13px] font-bold rounded-full px-5 py-2 active:scale-95 active:bg-imely-primaryDark transition-transform"
             >
               <Str k="user_profile_v2.banner_verify_acc.button_verify" />
@@ -102,7 +170,7 @@ export function AccountScreen() {
               icon={<Mail size={18} />}
               titleKey="user_profile_v2.identifer.email"
               subtitleKey="user_profile_v2.identifer.add_email"
-              onTap={() => showToast('Email — segera hadir')}
+              onTap={openVerifyEmail}
             />
             <AccountRow
               icon={<AtSign size={18} />}
@@ -113,8 +181,9 @@ export function AccountScreen() {
             <AccountRow
               icon={<User size={18} />}
               titleKey="user_profile_v2.identifer.username"
-              subtitleKey="user_profile_v2.identifer.create_username"
-              onTap={() => showToast('Nama Pengguna — segera hadir')}
+              subtitleKey={accountUsername ? undefined : 'user_profile_v2.identifer.create_username'}
+              subtitle={accountUsername || undefined}
+              onTap={openUsername}
             />
             <AccountRow
               icon={<KeyRound size={18} />}
@@ -125,13 +194,17 @@ export function AccountScreen() {
                   <span className="text-imely-primaryDark font-semibold">diverifikasi</span>...
                 </>
               }
-              onTap={() => showToast('Kata sandi — segera hadir')}
+              onTap={() => setVerifyOpen(true)}
             />
             <AccountRow
               icon={<CreditCard size={18} />}
               titleKey="user_profile_v2.identifer.identity_card"
-              subtitleKey="user_profile_v2.identifer.add_identity_card"
-              onTap={() => showToast('Nomor identifikasi pribadi — segera hadir')}
+              subtitleKey={identityCard ? undefined : 'user_profile_v2.identifer.add_identity_card'}
+              subtitle={identityCard || undefined}
+              onTap={() => {
+                setIdentityCardDraft(identityCard)
+                setModal('identity')
+              }}
               last
             />
           </div>
@@ -151,7 +224,7 @@ export function AccountScreen() {
             badge="G"
             badgeColor="#EA4335"
             actionKey="user_profile_v2.identifer.un_link_account_button"
-            onTap={() => showToast('Putuskan Google — segera hadir')}
+            onTap={() => setModal('unlinkBlocked')}
             outlined
           />
           <div className="pb-4 pt-1 text-[11px] text-gray-400">
@@ -172,10 +245,21 @@ export function AccountScreen() {
               <Str k="user_profile_v2.profile_info.privacy_mode" />
             </div>
             <button
-              onClick={() => showToast('Privasi — segera hadir')}
+              onClick={() => setModal('privacy')}
               className="flex items-center gap-1 text-[13px] font-medium text-imely-ink border border-imely-line rounded-full px-3 py-1 active:scale-95 transition-transform"
             >
-              🌐 Publik <ChevronDown size={13} className="text-gray-400" />
+              {privacy === 'only_me' ? (
+                <>
+                  🔒 <Str k="feed_privacy.mode.only_me" />
+                </>
+              ) : privacy === 'only_link' ? (
+                <>
+                  🔗 <Str k="feed_privacy.mode.only_link" />
+                </>
+              ) : (
+                <>🌐 Publik</>
+              )}
+              <ChevronDown size={13} className="text-gray-400" />
             </button>
           </div>
 
@@ -184,15 +268,18 @@ export function AccountScreen() {
               <Str k="user_profile_v2.profile_info.gender_mode" />
             </div>
             <button
-              onClick={() => showToast('Jenis kelamin — segera hadir')}
+              onClick={() => setModal('gender')}
               className="flex items-center gap-1 text-[13px] font-medium text-imely-ink border border-imely-line rounded-full px-3 py-1 active:scale-95 transition-transform"
             >
-              <Str k="user_profile_v2.profile_info.gender_picker_female" /> <ChevronDown size={13} className="text-gray-400" />
+              <Str k={GENDER_KEY[gender]} /> <ChevronDown size={13} className="text-gray-400" />
             </button>
           </div>
 
           <button
-            onClick={() => showToast('Tanggal lahir — segera hadir')}
+            onClick={() => {
+              setBirthdateDraft(birthdate)
+              setModal('birthdate')
+            }}
             className="w-full flex items-center justify-between py-3.5 border-b border-imely-line text-left active:bg-gray-50 transition-colors"
           >
             <div>
@@ -200,12 +287,15 @@ export function AccountScreen() {
                 <Str k="user_profile_v2.profile_info.year_of_birth" />
                 <Pencil size={12} className="text-gray-400" />
               </div>
-              <div className="text-[12.5px] text-gray-500 mt-0.5">{MOCK_USER.birthdate}</div>
+              <div className="text-[12.5px] text-gray-500 mt-0.5">{fmtDate(birthdate)}</div>
             </div>
           </button>
 
           <button
-            onClick={() => showToast('Perkenalan Diri — segera hadir')}
+            onClick={() => {
+              setBioDraft(bio)
+              setModal('bio')
+            }}
             className="w-full flex items-center justify-between py-3.5 text-left active:bg-gray-50 transition-colors"
           >
             <div>
@@ -214,7 +304,7 @@ export function AccountScreen() {
                 <Pencil size={12} className="text-gray-400" />
               </div>
               <div className="text-[12.5px] text-gray-400 mt-0.5">
-                <Str k="user_profile_v2.profile_info.bio_hint" />
+                {bio || <Str k="user_profile_v2.profile_info.bio_hint" />}
               </div>
             </div>
           </button>
@@ -222,7 +312,7 @@ export function AccountScreen() {
 
         <div className="border-t-8 border-imely-line px-4">
           <button
-            onClick={() => showToast('Keluar — segera hadir')}
+            onClick={() => setModal('logout')}
             className="w-full flex items-center gap-3 py-4 text-left active:bg-gray-50 transition-colors"
           >
             <LogOut size={18} className="text-red-500" />
@@ -234,13 +324,360 @@ export function AccountScreen() {
 
         <div className="border-t-8 border-imely-line py-5 text-center">
           <button
-            onClick={() => showToast('Hapus akun — segera hadir')}
+            onClick={openDeleteAccount}
             className="text-[12.5px] text-gray-400 underline active:opacity-70 transition-opacity"
           >
             <Str k="user_profile_v2.delete_account_AI_Hay" />
           </button>
         </div>
       </div>
+
+      {/* Verifikasi Akun sheet */}
+      {verifyOpen && (
+        <ZoneScope zone="verify_menu">
+          <div className="absolute inset-0 z-10">
+            <button onClick={() => setVerifyOpen(false)} aria-label="Close verify menu" className="absolute inset-0 bg-black/40" />
+            <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl pt-2 pb-6 px-5">
+              <div className="w-10 h-1 rounded-full bg-gray-200 mx-auto" />
+              <div className="flex justify-center mt-4">
+                <ShieldCheck size={44} className="text-sky-500" />
+              </div>
+              <div className="text-center font-bold text-[17px] text-imely-ink mt-2">
+                <Str k="login.opt_verify_acc.hint_verify_account" />
+              </div>
+              <button
+                onClick={() => {
+                  setVerifyOpen(false)
+                  openVerifyEmail()
+                }}
+                className="mt-5 w-full flex items-center justify-center gap-2 border border-imely-line rounded-full py-3 font-bold text-[14px] text-imely-ink active:scale-[0.97] transition-transform"
+              >
+                <Mail size={16} />
+                <Str k="login.opt_verify_acc.btn_verify_by_email" />
+              </button>
+              <div className="mt-4 text-center text-[11.5px] text-gray-400 leading-relaxed">
+                Dengan melanjutkan, Anda menyetujui <strong><Str k="profile_me_v4.term_of_service" /></strong>,{' '}
+                <strong><Str k="profile_me_v4.privacy_policy" /></strong> dan{' '}
+                <strong><Str k="profile_me_v4.copyright" /></strong> kami.
+              </div>
+            </div>
+          </div>
+        </ZoneScope>
+      )}
+
+      {/* Nomor identifikasi pribadi — input modal */}
+      {modal === 'identity' && (
+        <ZoneScope zone="identity_card_edit">
+          <div className="absolute inset-0 z-10">
+            <button onClick={closeModal} aria-label="Close" className="absolute inset-0 bg-black/40" />
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-3.5 border-b border-imely-line">
+                <div className="font-bold text-[15px] text-imely-ink">
+                  <Str k="user_profile_v2.identifer.identity_card" />
+                </div>
+                <button onClick={closeModal} className="text-gray-400 active:scale-90 transition-transform">
+                  <X size={18} />
+                </button>
+              </div>
+              <div className="p-4">
+                <input
+                  value={identityCardDraft}
+                  onChange={(e) => setIdentityCardDraft(e.target.value)}
+                  placeholder="Masukkan Nomor Identifikasi Pribadi-mu"
+                  className="w-full text-[14px] text-imely-ink outline-none placeholder:text-gray-400"
+                />
+              </div>
+              <div className="flex justify-end gap-4 px-4 pb-4">
+                <button onClick={closeModal} className="font-semibold text-[14px] text-imely-ink active:opacity-70 transition-opacity">
+                  <Str k="profile_me.id_identifier.btn_cancel" />
+                </button>
+                <button
+                  onClick={() => {
+                    setIdentityCard(identityCardDraft)
+                    closeModal()
+                  }}
+                  className="font-semibold text-[14px] text-imely-primaryDark active:opacity-70 transition-opacity"
+                >
+                  <Str k="profile_me.id_identifier.btn_confirm" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </ZoneScope>
+      )}
+
+      {/* Google unlink not allowed */}
+      {modal === 'unlinkBlocked' && (
+        <ZoneScope zone="unlink_blocked">
+          <div className="absolute inset-0 z-10">
+            <button onClick={closeModal} aria-label="Close" className="absolute inset-0 bg-black/40" />
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl overflow-hidden">
+              <div className="flex items-center gap-2 px-4 py-3.5 border-b border-imely-line">
+                <AlertTriangle size={17} className="text-amber-500 shrink-0" />
+                <div className="font-bold text-[14.5px] text-imely-ink">
+                  <Str k="user_profile_v2.identifer.unlink_google_account_not_allowed" />
+                </div>
+              </div>
+              <div className="p-4 text-[13.5px] text-imely-ink leading-relaxed">
+                <Str k="user_profile_v2.identifer.unlink_last_login_method_error" />
+              </div>
+              <div className="px-4 pb-2">
+                <button
+                  onClick={() => {
+                    closeModal()
+                    openVerifyEmail()
+                  }}
+                  className="font-bold text-[14px] text-imely-primaryDark active:opacity-70 transition-opacity"
+                >
+                  <Str k="user_profile_v2.identifer.add_email_2" />
+                </button>
+              </div>
+              <div className="px-4 pb-4 pt-2">
+                <button onClick={closeModal} className="font-bold text-[14px] text-imely-ink active:opacity-70 transition-opacity">
+                  <Str k="common.back" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </ZoneScope>
+      )}
+
+      {/* Opsi Privasi sheet */}
+      {modal === 'privacy' && (
+        <ZoneScope zone="privacy_menu">
+          <div className="absolute inset-0 z-10">
+            <button onClick={closeModal} aria-label="Close" className="absolute inset-0 bg-black/40" />
+            <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl pb-6">
+              <div className="flex items-center justify-between px-4 py-4 border-b border-imely-line">
+                <div className="font-bold text-[16px] text-imely-ink">
+                  <Str k="feed_privacy.header" />
+                </div>
+                <button onClick={closeModal} className="text-gray-400 active:scale-90 transition-transform">
+                  <X size={18} />
+                </button>
+              </div>
+              <PrivacyOption
+                icon={<Lock size={18} />}
+                titleKey="feed_privacy.mode.only_me"
+                hint="Hanya kamu yang bisa melihat. Orang yang punya tautannya pun nggak bisa buka."
+                selected={privacy === 'only_me'}
+                onSelect={() => {
+                  setPrivacy('only_me')
+                  closeModal()
+                }}
+              />
+              <PrivacyOption
+                icon={<Link2 size={18} />}
+                titleKey="feed_privacy.mode.only_link"
+                hintKey="feed_privacy.mode.only_link_hint"
+                selected={privacy === 'only_link'}
+                onSelect={() => {
+                  setPrivacy('only_link')
+                  closeModal()
+                }}
+              />
+              <PrivacyOption
+                icon={<Globe size={18} />}
+                title="Publik"
+                hint="Semua pengguna bisa lihat."
+                selected={privacy === 'public'}
+                onSelect={() => {
+                  setPrivacy('public')
+                  closeModal()
+                }}
+              />
+            </div>
+          </div>
+        </ZoneScope>
+      )}
+
+      {/* Jenis kelamin sheet */}
+      {modal === 'gender' && (
+        <ZoneScope zone="gender_menu">
+          <div className="absolute inset-0 z-10">
+            <button onClick={closeModal} aria-label="Close" className="absolute inset-0 bg-black/40" />
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-3.5 border-b border-imely-line">
+                <div className="font-bold text-[16px] text-imely-ink">
+                  <Str k="profile_me.gender_edit.title" />
+                </div>
+                <button onClick={closeModal} className="text-gray-400 active:scale-90 transition-transform">
+                  <X size={18} />
+                </button>
+              </div>
+              {(['male', 'female', 'other'] as GenderMode[]).map((g) => (
+                <button
+                  key={g}
+                  onClick={() => {
+                    setGender(g)
+                    closeModal()
+                  }}
+                  className="w-full flex items-center justify-between px-4 py-3.5 border-b border-imely-line last:border-0 active:bg-gray-50 transition-colors text-left"
+                >
+                  <span className="text-[14px] text-imely-ink">
+                    <Str k={GENDER_KEY[g]} />
+                  </span>
+                  {gender === g && <Check size={16} className="text-imely-primary" />}
+                </button>
+              ))}
+            </div>
+          </div>
+        </ZoneScope>
+      )}
+
+      {/* Tanggal lahir — wheel picker */}
+      {modal === 'birthdate' && (
+        <ZoneScope zone="birthdate_edit">
+          <div className="absolute inset-0 z-10">
+            <button onClick={closeModal} aria-label="Close" className="absolute inset-0 bg-black/40" />
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl overflow-hidden">
+              <div className="px-4 py-3.5 border-b border-imely-line font-bold text-[16px] text-imely-ink">
+                <Str k="user_profile_v2.profile_info.date_time_picker_title" />
+              </div>
+              <div className="flex justify-center gap-6 py-4">
+                <div className="flex flex-col items-center">
+                  <button
+                    onClick={() => setBirthdateDraft(shiftDay(birthdateDraft, -1))}
+                    className="text-gray-300 text-[14px] py-2 active:text-gray-400"
+                  >
+                    {shiftDay(birthdateDraft, -1).getDate()}
+                  </button>
+                  <div className="text-imely-ink text-[15px] font-semibold border-t border-b border-imely-primary py-2 px-2">
+                    {String(birthdateDraft.getDate()).padStart(2, '0')}
+                  </div>
+                  <button
+                    onClick={() => setBirthdateDraft(shiftDay(birthdateDraft, 1))}
+                    className="text-gray-300 text-[14px] py-2 active:text-gray-400"
+                  >
+                    {shiftDay(birthdateDraft, 1).getDate()}
+                  </button>
+                </div>
+                <div className="flex flex-col items-center">
+                  <button
+                    onClick={() => setBirthdateDraft(shiftMonth(birthdateDraft, -1))}
+                    className="text-gray-300 text-[14px] py-2 active:text-gray-400"
+                  >
+                    {MONTH_NAMES[shiftMonth(birthdateDraft, -1).getMonth()]}
+                  </button>
+                  <div className="text-imely-ink text-[15px] font-semibold border-t border-b border-imely-primary py-2 px-2">
+                    {MONTH_NAMES[birthdateDraft.getMonth()]}
+                  </div>
+                  <button
+                    onClick={() => setBirthdateDraft(shiftMonth(birthdateDraft, 1))}
+                    className="text-gray-300 text-[14px] py-2 active:text-gray-400"
+                  >
+                    {MONTH_NAMES[shiftMonth(birthdateDraft, 1).getMonth()]}
+                  </button>
+                </div>
+                <div className="flex flex-col items-center">
+                  <button
+                    onClick={() => setBirthdateDraft(shiftYear(birthdateDraft, -1))}
+                    className="text-gray-300 text-[14px] py-2 active:text-gray-400"
+                  >
+                    {shiftYear(birthdateDraft, -1).getFullYear()}
+                  </button>
+                  <div className="text-imely-ink text-[15px] font-semibold border-t border-b border-imely-primary py-2 px-2">
+                    {birthdateDraft.getFullYear()}
+                  </div>
+                  <button
+                    onClick={() => setBirthdateDraft(shiftYear(birthdateDraft, 1))}
+                    className="text-gray-300 text-[14px] py-2 active:text-gray-400"
+                  >
+                    {shiftYear(birthdateDraft, 1).getFullYear()}
+                  </button>
+                </div>
+              </div>
+              <div className="flex justify-end gap-4 px-4 pb-4">
+                <button onClick={closeModal} className="font-semibold text-[14px] text-imely-ink active:opacity-70 transition-opacity">
+                  <Str k="common.cancel" />
+                </button>
+                <button
+                  onClick={() => {
+                    setBirthdate(birthdateDraft)
+                    closeModal()
+                  }}
+                  className="font-semibold text-[14px] text-imely-primaryDark active:opacity-70 transition-opacity"
+                >
+                  <Str k="common.save" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </ZoneScope>
+      )}
+
+      {/* Bio (Perkenalan Diri) */}
+      {modal === 'bio' && (
+        <ZoneScope zone="bio_edit">
+          <div className="absolute inset-0 z-10">
+            <button onClick={closeModal} aria-label="Close" className="absolute inset-0 bg-black/40" />
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-3.5 border-b border-imely-line">
+                <div className="font-bold text-[16px] text-imely-ink">
+                  <Str k="profile_me.bio_edit.title" />
+                </div>
+                <button onClick={closeModal} className="text-gray-400 active:scale-90 transition-transform">
+                  <X size={18} />
+                </button>
+              </div>
+              <div className="p-4">
+                <textarea
+                  value={bioDraft}
+                  onChange={(e) => setBioDraft(e.target.value)}
+                  rows={4}
+                  className="w-full text-[14px] text-imely-ink outline-none resize-none placeholder:text-gray-400"
+                  placeholder="Tambahkan deskripsi singkat agar orang mengenalmu..."
+                />
+              </div>
+              <div className="flex justify-end gap-4 px-4 pb-4">
+                <button onClick={closeModal} className="font-semibold text-[14px] text-imely-ink active:opacity-70 transition-opacity">
+                  <Str k="profile_me.bio_edit.btn_cancel" />
+                </button>
+                <button
+                  onClick={() => {
+                    setBio(bioDraft)
+                    closeModal()
+                  }}
+                  className="font-semibold text-[14px] text-imely-primaryDark active:opacity-70 transition-opacity"
+                >
+                  <Str k="profile_me.bio_edit.btn_confirm" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </ZoneScope>
+      )}
+
+      {/* Keluar */}
+      {modal === 'logout' && (
+        <ZoneScope zone="logout_confirm">
+          <div className="absolute inset-0 z-10">
+            <button onClick={closeModal} aria-label="Close" className="absolute inset-0 bg-black/40" />
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl p-5">
+              <div className="font-bold text-[16px] text-imely-ink">
+                <Str k="user_profile_v2.logout_action_title" />
+              </div>
+              <div className="mt-1.5 text-[13px] text-gray-500">
+                <Str k="user_profile_v2.logout_action_msg" />
+              </div>
+              <div className="mt-4 flex justify-end gap-4">
+                <button onClick={closeModal} className="font-semibold text-[14px] text-imely-ink active:opacity-70 transition-opacity">
+                  <Str k="user_profile_v2.logout_action_button_cancel" />
+                </button>
+                <button
+                  onClick={() => {
+                    closeModal()
+                    showToast('Keluar — segera hadir')
+                  }}
+                  className="font-semibold text-[14px] text-imely-primaryDark active:opacity-70 transition-opacity"
+                >
+                  <Str k="user_profile_v2.logout_action_button_confirm" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </ZoneScope>
+      )}
     </div>
   )
 }
@@ -316,5 +753,39 @@ function LinkedAccountRow({
         <Str k={actionKey} />
       </button>
     </div>
+  )
+}
+
+function PrivacyOption({
+  icon,
+  titleKey,
+  title,
+  hintKey,
+  hint,
+  selected,
+  onSelect,
+}: {
+  icon: React.ReactNode
+  titleKey?: string
+  title?: string
+  hintKey?: string
+  hint?: string
+  selected: boolean
+  onSelect: () => void
+}) {
+  return (
+    <button
+      onClick={onSelect}
+      className={`w-full flex items-start gap-3 px-4 py-3.5 text-left transition-colors ${
+        selected ? 'bg-imely-mint/40' : 'active:bg-gray-50'
+      }`}
+    >
+      <div className="text-imely-ink shrink-0 mt-0.5">{icon}</div>
+      <div className="flex-1 min-w-0">
+        <div className="font-bold text-[14.5px] text-imely-ink">{titleKey ? <Str k={titleKey} /> : title}</div>
+        <div className="text-[12.5px] text-gray-500 mt-0.5">{hintKey ? <Str k={hintKey} /> : hint}</div>
+      </div>
+      {selected && <Check size={18} className="text-imely-primary shrink-0 mt-0.5" />}
+    </button>
   )
 }

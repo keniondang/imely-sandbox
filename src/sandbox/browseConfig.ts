@@ -18,6 +18,10 @@ import {
   Palette,
   Settings as SettingsIcon,
   Video,
+  Info,
+  Mail,
+  AtSign,
+  Trash2,
 } from 'lucide-react'
 import type { ScreenId, FilterMode } from '../context/AppContext'
 
@@ -44,6 +48,10 @@ export const SCREEN_LABEL: Record<ScreenId, string> = {
   settings: 'Pengaturan (overlay)',
   notificationsettings: 'Notifikasi Pengaturan (overlay)',
   videosettings: 'Video Pengaturan (overlay)',
+  about: 'Tentang Kami (overlay)',
+  verifyemail: 'Verifikasi Email (overlay)',
+  username: 'Nama Pengguna (overlay)',
+  deleteaccount: 'Hapus Akun (overlay)',
 }
 
 export const SCREEN_ICON: Record<ScreenId, typeof Home> = {
@@ -67,6 +75,10 @@ export const SCREEN_ICON: Record<ScreenId, typeof Home> = {
   settings: SettingsIcon,
   notificationsettings: Bell,
   videosettings: Video,
+  about: Info,
+  verifyemail: Mail,
+  username: AtSign,
+  deleteaccount: Trash2,
 }
 
 // Only the 3 bottom-nav tabs are top-level "pages" — every overlay screen
@@ -84,6 +96,9 @@ export const SCREEN_PARENT: Partial<Record<ScreenId, ScreenId>> = {
   purchase: 'gems',
   notificationsettings: 'settings',
   videosettings: 'settings',
+  verifyemail: 'account',
+  username: 'account',
+  deleteaccount: 'account',
 }
 
 export const CHILD_SCREENS: Partial<Record<ScreenId, ScreenId[]>> = {
@@ -91,6 +106,7 @@ export const CHILD_SCREENS: Partial<Record<ScreenId, ScreenId[]>> = {
   characterprofile: ['creatorprofile'],
   gems: ['gemhistory', 'purchase'],
   settings: ['notificationsettings', 'videosettings'],
+  account: ['verifyemail', 'username', 'deleteaccount'],
 }
 
 // Which base page each "primary" overlay (one not already nested under
@@ -100,7 +116,7 @@ export const CHILD_SCREENS: Partial<Record<ScreenId, ScreenId[]>> = {
 export const PAGE_CHILDREN: Record<string, ScreenId[]> = {
   feed: ['characterprofile', 'notification', 'gems'],
   chatlist: ['chatdetail'],
-  profile: ['devices', 'account', 'mycharacters', 'following', 'badges', 'appearance', 'settings'],
+  profile: ['devices', 'account', 'mycharacters', 'following', 'badges', 'appearance', 'settings', 'about'],
 }
 
 // Every screen resolved all the way up to its base page (chatoptions ->
@@ -150,6 +166,10 @@ export const WARM_UP_SCREENS: ScreenId[] = [
   'appearance',
   'notificationsettings',
   'videosettings',
+  'about',
+  'verifyemail',
+  'username',
+  'deleteaccount',
   'creatorprofile',
   'notification',
   'gemhistory',
@@ -169,6 +189,16 @@ export const ZONE_ORDER = [
   'lucky_result',
   'block_confirm',
   'delete_confirm',
+  'discard_confirm',
+  'verify_menu',
+  'identity_card_edit',
+  'unlink_blocked',
+  'privacy_menu',
+  'gender_menu',
+  'birthdate_edit',
+  'bio_edit',
+  'logout_confirm',
+  'delete_account_confirm',
   'report',
   'mode_picker',
   'relationship',
@@ -186,6 +216,16 @@ export const ZONE_LABEL: Record<string, string> = {
   lucky_result: 'Popup: Hasil Undian',
   block_confirm: 'Popup: Konfirmasi Blokir',
   delete_confirm: 'Popup: Konfirmasi Hapus',
+  discard_confirm: 'Popup: Batalkan Perubahan',
+  verify_menu: 'Popup: Verifikasi Akun',
+  identity_card_edit: 'Popup: Nomor Identifikasi',
+  unlink_blocked: 'Popup: Tautan Tidak Bisa Diputuskan',
+  privacy_menu: 'Popup: Opsi Privasi',
+  gender_menu: 'Popup: Jenis Kelamin',
+  birthdate_edit: 'Popup: Tanggal Lahir',
+  bio_edit: 'Popup: Bio',
+  logout_confirm: 'Popup: Konfirmasi Keluar',
+  delete_account_confirm: 'Popup: Konfirmasi Hapus Akun',
   report: 'Popup: Laporkan',
   mode_picker: 'Popup: Mode Obrolan',
   relationship: 'Popup: Level Kedekatan',

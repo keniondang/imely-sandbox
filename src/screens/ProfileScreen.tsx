@@ -16,6 +16,7 @@ export function ProfileScreen() {
     openBadges,
     openAppearance,
     openSettings,
+    openAbout,
   } = useApp()
   // ProfileMenuSheet is rendered at the App.tsx level (see App.tsx), not
   // nested here — but it still needs to open when the Inspector jumps to a
@@ -157,7 +158,7 @@ export function ProfileScreen() {
           <SupportRow labelKey="profile_me_v4.term_of_service" onTap={() => showToast('Ketentuan Layanan — segera hadir')} />
           <SupportRow labelKey="profile_me_v4.privacy_policy" onTap={() => showToast('Kebijakan Privasi — segera hadir')} />
           <SupportRow labelKey="profile_me_v4.copyright" onTap={() => showToast('Kebijakan Hak Cipta — segera hadir')} />
-          <SupportRow labelKey="profile_me_v4.about_us" onTap={() => showToast('Tentang Kami — segera hadir')} />
+          <SupportRow labelKey="profile_me_v4.about_us" onTap={openAbout} />
         </div>
       </div>
     </div>

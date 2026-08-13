@@ -22,6 +22,10 @@ export type ScreenId =
   | 'settings'
   | 'notificationsettings'
   | 'videosettings'
+  | 'about'
+  | 'verifyemail'
+  | 'username'
+  | 'deleteaccount'
 
 export type PurchaseTab = 'club' | 'gem'
 
@@ -213,6 +217,35 @@ interface AppState {
   openVideoSettings: () => void
   closeVideoSettings: () => void
 
+  // Username created via the "Nama Pengguna" screen — read back by Kelola
+  // akun's own "Nama Pengguna" row, so it has to live above both (they're
+  // sibling overlays, not nested), unlike the other Kelola akun edits which
+  // are simple modals local to AccountScreen itself.
+  accountUsername: string
+  setAccountUsername: (v: string) => void
+
+  // "Tentang Kami" — pushed on top of Profile from its support row
+  aboutOpen: boolean
+  openAbout: () => void
+  closeAbout: () => void
+
+  // "Verifikasi" email entry — pushed on top of Kelola akun from the
+  // Verifikasi Akun sheet's "Gunakan email" button, or directly from the
+  // "Email" row
+  verifyEmailOpen: boolean
+  openVerifyEmail: () => void
+  closeVerifyEmail: () => void
+
+  // "Nama Pengguna" — pushed on top of Kelola akun from its "Nama Pengguna" row
+  usernameOpen: boolean
+  openUsername: () => void
+  closeUsername: () => void
+
+  // "Hapus akun" — pushed on top of Kelola akun from its "Hapus akun imely" link
+  deleteAccountOpen: boolean
+  openDeleteAccount: () => void
+  closeDeleteAccount: () => void
+
   // lightweight toast, e.g. for stub actions not built yet
   toast: string | null
   showToast: (msg: string) => void
@@ -253,6 +286,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [notificationSettingsOpen, setNotificationSettingsOpen] = useState(false)
   const [videoSettingsOpen, setVideoSettingsOpen] = useState(false)
+  const [accountUsername, setAccountUsername] = useState('')
+  const [aboutOpen, setAboutOpen] = useState(false)
+  const [verifyEmailOpen, setVerifyEmailOpen] = useState(false)
+  const [usernameOpen, setUsernameOpen] = useState(false)
+  const [deleteAccountOpen, setDeleteAccountOpen] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -363,6 +401,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const openVideoSettings = () => setVideoSettingsOpen(true)
   const closeVideoSettings = () => setVideoSettingsOpen(false)
 
+  const openAbout = () => setAboutOpen(true)
+  const closeAbout = () => setAboutOpen(false)
+
+  const openVerifyEmail = () => setVerifyEmailOpen(true)
+  const closeVerifyEmail = () => setVerifyEmailOpen(false)
+
+  const openUsername = () => setUsernameOpen(true)
+  const closeUsername = () => setUsernameOpen(false)
+
+  const openDeleteAccount = () => setDeleteAccountOpen(true)
+  const closeDeleteAccount = () => setDeleteAccountOpen(false)
+
   const showToast = (msg: string) => {
     if (toastTimer.current) clearTimeout(toastTimer.current)
     setToast(msg)
@@ -452,6 +502,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
       videoSettingsOpen,
       openVideoSettings,
       closeVideoSettings,
+      accountUsername,
+      setAccountUsername,
+      aboutOpen,
+      openAbout,
+      closeAbout,
+      verifyEmailOpen,
+      openVerifyEmail,
+      closeVerifyEmail,
+      usernameOpen,
+      openUsername,
+      closeUsername,
+      deleteAccountOpen,
+      openDeleteAccount,
+      closeDeleteAccount,
       toast,
       showToast,
     }),
@@ -489,6 +553,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
       settingsOpen,
       notificationSettingsOpen,
       videoSettingsOpen,
+      accountUsername,
+      aboutOpen,
+      verifyEmailOpen,
+      usernameOpen,
+      deleteAccountOpen,
       toast,
     ]
   )

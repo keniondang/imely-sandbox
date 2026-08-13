@@ -29,6 +29,10 @@ import { AppearanceScreen } from './screens/AppearanceScreen'
 import { SettingsScreen } from './screens/SettingsScreen'
 import { NotificationSettingsScreen } from './screens/NotificationSettingsScreen'
 import { VideoSettingsScreen } from './screens/VideoSettingsScreen'
+import { AboutScreen } from './screens/AboutScreen'
+import { VerifyEmailScreen } from './screens/VerifyEmailScreen'
+import { UsernameScreen } from './screens/UsernameScreen'
+import { DeleteAccountScreen } from './screens/DeleteAccountScreen'
 import { ProfileMenuSheet } from './components/ProfileMenuSheet'
 import { Inspector } from './sandbox/Inspector'
 import { TranslationPanel } from './sandbox/TranslationPanel'
@@ -61,6 +65,10 @@ function Shell() {
     settingsOpen,
     notificationSettingsOpen,
     videoSettingsOpen,
+    aboutOpen,
+    verifyEmailOpen,
+    usernameOpen,
+    deleteAccountOpen,
     toast,
   } = useApp()
   useStringHighlighter()
@@ -294,6 +302,43 @@ function Shell() {
               <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
                 <ScreenScope id="videosettings">
                   <VideoSettingsScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* Tentang Kami — pushed on top of Profile from its support row */}
+            {aboutOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+                <ScreenScope id="about">
+                  <AboutScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* Verifikasi email — pushed on top of Kelola akun from its Verifikasi Akun
+                sheet or directly from the "Email" row */}
+            {accountOpen && verifyEmailOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+                <ScreenScope id="verifyemail">
+                  <VerifyEmailScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* Nama Pengguna — pushed on top of Kelola akun from its "Nama Pengguna" row */}
+            {accountOpen && usernameOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+                <ScreenScope id="username">
+                  <UsernameScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* Hapus akun — pushed on top of Kelola akun from its "Hapus akun imely" link */}
+            {accountOpen && deleteAccountOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+                <ScreenScope id="deleteaccount">
+                  <DeleteAccountScreen />
                 </ScreenScope>
               </div>
             )}

@@ -148,6 +148,10 @@ export function Inspector() {
       settings: {},
       notificationsettings: {},
       videosettings: {},
+      about: {},
+      verifyemail: {},
+      username: {},
+      deleteaccount: {},
     }
     usage.forEach((u) => {
       const zoneMap = map[u.screenId]
