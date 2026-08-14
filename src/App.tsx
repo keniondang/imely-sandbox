@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { PanelLeftOpen, PanelLeftClose, X } from 'lucide-react'
+import { PanelLeftOpen, PanelLeftClose, X, Download } from 'lucide-react'
 import { AppProvider, useApp } from './context/AppContext'
 import { ScreenScope } from './context/ScreenScope'
 import { useStringHighlighter } from './hooks/useStringHighlighter'
 import { useOpenScreen } from './hooks/useNavigateToString'
 import { WARM_UP_SCREENS, WARM_UP_ZONES } from './sandbox/browseConfig'
+import { exportStringsToXlsx } from './lib/exportXlsx'
 import { PhoneFrame } from './components/shell/PhoneFrame'
 import { Header } from './components/shell/Header'
 import { BottomNav } from './components/shell/BottomNav'
@@ -75,6 +76,7 @@ function Shell() {
     selectKey,
     requestPopup,
     toast,
+    overrides,
   } = useApp()
   useStringHighlighter()
   const openScreen = useOpenScreen()
@@ -148,6 +150,13 @@ function Shell() {
           </button>
           <span className="text-[13px] font-semibold text-imely-ink truncate">imely localization sandbox</span>
           <span className="text-[11px] text-gray-400 truncate">— live UI preview, not the real app</span>
+          <button
+            onClick={() => exportStringsToXlsx(overrides)}
+            title="Download every string as .xlsx — id/en/vi as in the sheet, zh-TW/th filled in from translations saved here"
+            className="ml-auto flex items-center gap-1.5 text-[12px] font-semibold text-white bg-imely-primary rounded-full pl-3 pr-3.5 py-1.5 shrink-0 active:scale-[0.97] transition-transform"
+          >
+            <Download size={13} /> Export .xlsx
+          </button>
         </div>
       </div>
 

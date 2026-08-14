@@ -1,17 +1,21 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Copy, Check, RotateCcw, AlertTriangle, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
+import { useEffect, useMemo, useState, type KeyboardEvent } from 'react'
+import {
+  Copy,
+  Check,
+  RotateCcw,
+  AlertTriangle,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+  SkipForward,
+} from 'lucide-react'
 import { useApp } from '../context/AppContext'
-import { getEntry, type Locale } from '../lib/strings'
+import { getEntry, isTargetLocale, LOCALE_LABEL, SOURCE_LOCALES } from '../lib/strings'
 import { buildStrSelector } from '../components/Str'
 import { useBrowseOrder, type BrowseRow } from '../hooks/useBrowseOrder'
 import { useNavigateToString } from '../hooks/useNavigateToString'
 import { ZONE_TYPE } from '../sandbox/browseConfig'
-
-const LOCALES: { id: Locale; label: string }[] = [
-  { id: 'id', label: 'ID' },
-  { id: 'en', label: 'EN' },
-  { id: 'vi', label: 'VI' },
-]
 
 // The right-side counterpart to the Inspector's browse/search list — picking
 // a key over there shows it here. Kept as its own panel (rather than a
@@ -128,6 +132,27 @@ export function TranslationPanel() {
     syncInspectorFocus(targetRow)
   }
 
+  // Next string with no override for the ACTIVE locale, searching forward
+  // from wherever we are and wrapping around — lets a translator resume mid-
+  // list without hunting for where they left off. Only meaningful for target
+  // locales (source locales don't have a "done" concept).
+  function nextUntranslatedRow(): BrowseRow | undefined {
+    for (let i = rowIndex + 1; i < rows.length; i++) {
+      if (!overrides[rows[i].key]?.[locale]) return rows[i]
+    }
+    for (let i = 0; i <= rowIndex; i++) {
+      if (!overrides[rows[i].key]?.[locale]) return rows[i]
+    }
+    return undefined
+  }
+
+  function goNextUntranslated() {
+    const target = nextUntranslatedRow()
+    if (!target) return
+    navigateTo(target.key, target.screenId ?? undefined, target.zone ?? undefined)
+    syncInspectorFocus(target)
+  }
+
   const entry = selectedKey ? getEntry(selectedKey) : null
   const wired = selectedKey ? usage.some((u) => u.key === selectedKey) : false
   const appliedForLocale = selectedKey ? overrides[selectedKey]?.[locale] : undefined
@@ -154,6 +179,25 @@ export function TranslationPanel() {
     setLivePreview(null)
     setJustApplied(true)
     setTimeout(() => setJustApplied(false), 1200)
+    // Translating into a new language is a long march through ~1,500 keys —
+    // auto-advancing to the next gap keeps a translator's hands on the
+    // keyboard instead of re-hunting the list after every save. Source
+    // locales stay put since "Apply" there is a one-off wording test, not a
+    // step in a checklist.
+    if (isTargetLocale(locale)) {
+      const target = nextUntranslatedRow()
+      if (target) {
+        navigateTo(target.key, target.screenId ?? undefined, target.zone ?? undefined)
+        syncInspectorFocus(target)
+      }
+    }
+  }
+
+  function handleTextareaKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+      e.preventDefault()
+      handleApply()
+    }
   }
 
   function handleReset() {
@@ -190,13 +234,16 @@ export function TranslationPanel() {
     return (
       <div className="w-[300px] shrink-0 h-full border-r border-imely-line bg-white flex flex-col items-center justify-center px-6 text-center">
         <div className="text-[13px] text-gray-400">
-          Select a string from the list on the left to view and test its translation here.
+          {isTargetLocale(locale)
+            ? 'Select a string from the list on the left to translate it here.'
+            : 'Select a string from the list on the left to view and test its translation here.'}
         </div>
       </div>
     )
   }
 
-  const currentLocaleLabel = LOCALES.find((l) => l.id === locale)?.label ?? locale
+  const targetMode = isTargetLocale(locale)
+  const currentLocaleLabel = LOCALE_LABEL[locale]
 
   return (
     <div className="w-[300px] shrink-0 h-full border-r border-imely-line bg-white flex flex-col">
@@ -273,6 +320,15 @@ export function TranslationPanel() {
             Next <ChevronRight size={13} />
           </button>
         </div>
+        {targetMode && (
+          <button
+            onClick={goNextUntranslated}
+            title="Jump to the next string with no translation yet"
+            className="w-full flex items-center justify-center gap-1 text-[10.5px] font-semibold text-imely-primary px-2 py-1 rounded-md hover:bg-imely-mint/30 active:scale-[0.98] transition-transform"
+          >
+            <SkipForward size={11} /> Skip to next untranslated
+          </button>
+        )}
       </div>
 
       <div className="flex-1 overflow-y-auto p-3">
@@ -304,49 +360,54 @@ export function TranslationPanel() {
 
         <div className="mt-3 text-[11px] font-semibold text-gray-500 uppercase">Original string</div>
         <div className="mt-1.5 space-y-1.5">
-          {LOCALES.map((l) => (
+          {SOURCE_LOCALES.map((l) => (
             <div
-              key={l.id}
-              className={`text-[12px] rounded-md px-2 py-1 ${l.id === locale ? 'bg-imely-mint/40' : ''}`}
+              key={l}
+              className={`text-[12px] rounded-md px-2 py-1 ${l === locale ? 'bg-imely-mint/40' : ''}`}
             >
-              <span className="text-gray-400 font-semibold mr-1">{l.label}:</span>
-              <span className="text-imely-ink">{entry.locales[l.id]}</span>
+              <span className="text-gray-400 font-semibold mr-1">{LOCALE_LABEL[l]}:</span>
+              <span className="text-imely-ink">{entry.locales[l]}</span>
             </div>
           ))}
         </div>
 
         <div className="mt-4">
           <div className="text-[11px] font-semibold text-gray-500 mb-1 flex items-center justify-between">
-            Draft translation ({currentLocaleLabel})
+            {targetMode ? 'Translation' : 'Draft translation'} ({currentLocaleLabel})
             {appliedForLocale && (
               <button onClick={handleReset} className="text-gray-400 flex items-center gap-0.5">
-                <RotateCcw size={11} /> reset
+                <RotateCcw size={11} /> {targetMode ? 'clear' : 'reset'}
               </button>
             )}
           </div>
           <textarea
             value={draftText}
             onChange={(e) => handleChange(e.target.value)}
-            placeholder="Type a draft translation to test overflow…"
+            onKeyDown={handleTextareaKeyDown}
+            placeholder={targetMode ? `Type the ${currentLocaleLabel} translation…` : 'Type a draft translation to test overflow…'}
             className="w-full text-[12px] border border-imely-line rounded-lg p-2 outline-none focus:border-imely-primary resize-none"
             rows={4}
           />
+          <div className="mt-1 text-[10px] text-gray-300">Ctrl/Cmd + Enter to {targetMode ? 'save' : 'apply'}</div>
           <button
             onClick={handleApply}
             disabled={!draftText.trim()}
-            className="mt-2 w-full bg-imely-primary text-white text-[12.5px] font-bold rounded-full py-2 flex items-center justify-center gap-1.5 active:scale-[0.97] active:bg-imely-primaryDark transition-transform disabled:opacity-40"
+            className="mt-1 w-full bg-imely-primary text-white text-[12.5px] font-bold rounded-full py-2 flex items-center justify-center gap-1.5 active:scale-[0.97] active:bg-imely-primaryDark transition-transform disabled:opacity-40"
           >
             {justApplied ? (
               <>
-                <Check size={13} /> Applied
+                <Check size={13} /> {targetMode ? 'Saved' : 'Applied'}
               </>
+            ) : targetMode ? (
+              'Save'
             ) : (
               'Apply'
             )}
           </button>
           {appliedForLocale && !justApplied && (
             <div className="mt-1.5 text-[10.5px] text-gray-400">
-              Applied {currentLocaleLabel} draft: "{appliedForLocale}"
+              {targetMode ? 'Saved' : 'Applied'} {currentLocaleLabel} {targetMode ? 'translation' : 'draft'}: "
+              {appliedForLocale}"
             </div>
           )}
         </div>

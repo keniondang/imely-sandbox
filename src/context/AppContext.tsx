@@ -1,5 +1,21 @@
-import { createContext, useContext, useMemo, useRef, useState, type ReactNode } from 'react'
+import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import type { Locale } from '../lib/strings'
+
+// Translations are real work product now, not throwaway test drafts — a
+// translator producing ~1,479 x 2 new-language strings across many sessions
+// can't afford to lose everything on an accidental refresh. Persisted as one
+// blob (small enough even fully filled in — well under localStorage's
+// ~5-10MB limit) rather than one key per string, to keep load/save trivial.
+const OVERRIDES_STORAGE_KEY = 'imely-sandbox:overrides'
+
+function loadStoredOverrides(): Record<string, Partial<Record<Locale, string>>> {
+  try {
+    const raw = localStorage.getItem(OVERRIDES_STORAGE_KEY)
+    return raw ? JSON.parse(raw) : {}
+  } catch {
+    return {}
+  }
+}
 
 export type ScreenId =
   | 'feed'
@@ -33,7 +49,12 @@ export type PurchaseTab = 'club' | 'gem'
 // Shared between the Inspector's browse list and the TranslationPanel's
 // prev/next navigation, so "next string" / "next page or category" steps
 // through exactly what the left sidebar is showing right now.
-export type FilterMode = 'all' | 'unwired' | 'overridden'
+// 'overridden' and 'untranslated' both key off the same underlying data
+// (whether `overrides[key][locale]` is set) — 'overridden' is shown for
+// id/en/vi (an alternate wording being tested against the sheet's real
+// value) and relabeled "Translated" for zh-TW/th, where 'untranslated' (the
+// exact inverse) is the actionable "what's left" view for a translator.
+export type FilterMode = 'all' | 'unwired' | 'overridden' | 'untranslated'
 
 // 'page' is a screen's always-visible content. Anything else ('menu', 'popup', ...)
 // is a sub-surface that only exists in the DOM while its own local state has it
@@ -271,7 +292,16 @@ const AppCtx = createContext<AppState | null>(null)
 export function AppProvider({ children }: { children: ReactNode }) {
   const [locale, setLocale] = useState<Locale>('id')
   const [currentScreen, setCurrentScreen] = useState<ScreenId>('feed')
-  const [overrides, setOverrides] = useState<Record<string, Partial<Record<Locale, string>>>>({})
+  const [overrides, setOverrides] = useState<Record<string, Partial<Record<Locale, string>>>>(loadStoredOverrides)
+  useEffect(() => {
+    try {
+      localStorage.setItem(OVERRIDES_STORAGE_KEY, JSON.stringify(overrides))
+    } catch {
+      // localStorage unavailable (private browsing, quota exceeded, ...) —
+      // translations still work for this session, just won't survive a
+      // reload. Nothing actionable to do here, so fail silently.
+    }
+  }, [overrides])
   const [livePreview, setLivePreview] = useState<{ key: string; locale: Locale; text: string } | null>(null)
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
   const [selectedOccurrence, setSelectedOccurrence] = useState<{ screenId: ScreenId; zone: Zone } | null>(null)

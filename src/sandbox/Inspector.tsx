@@ -1,7 +1,16 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import { Search, X, AlertTriangle, ChevronRight } from 'lucide-react'
 import { useApp, type ScreenId, type Zone } from '../context/AppContext'
-import { ALL_STRINGS, getEntry, type Locale, type StringEntry } from '../lib/strings'
+import {
+  ALL_STRINGS,
+  getEntry,
+  isTargetLocale,
+  LOCALE_LABEL,
+  SOURCE_LOCALES,
+  TARGET_LOCALES,
+  type Locale,
+  type StringEntry,
+} from '../lib/strings'
 import { useNavigateToString, useOpenScreen } from '../hooks/useNavigateToString'
 import {
   SCREEN_LABEL,
@@ -12,14 +21,8 @@ import {
   ZONE_TYPE,
   sortedZones,
   pageIdFor,
-  FILTERS,
+  filtersForLocale,
 } from './browseConfig'
-
-const LOCALES: { id: Locale; label: string }[] = [
-  { id: 'id', label: 'ID' },
-  { id: 'en', label: 'EN' },
-  { id: 'vi', label: 'VI' },
-]
 
 interface SearchHit {
   key: string
@@ -159,6 +162,17 @@ export function Inspector() {
     setFocusPath([])
   }, [filterMode, query])
 
+  // "Unwired" only exists for source locales and "Untranslated" only for
+  // target locales — switching locale with one of those selected would
+  // otherwise leave the filter pill row showing a selected pill that isn't
+  // even in the now-visible set, with the list silently stuck on whatever
+  // it last matched.
+  useEffect(() => {
+    const valid = filtersForLocale(locale).some((f) => f.id === filterMode)
+    if (!valid) setFilterMode('all')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locale])
+
   const wiredKeys = useMemo(() => new Set(usage.map((u) => u.key)), [usage])
 
   // screenId -> zone -> keys in that zone. The same key can legitimately
@@ -233,23 +247,40 @@ export function Inspector() {
     // shouldn't show as "has override" while browsing EN, since EN itself
     // was never touched and its draft box would come up empty if clicked.
     if (filterMode === 'overridden') return Boolean(overrides[key]?.[locale])
+    if (filterMode === 'untranslated') return !overrides[key]?.[locale]
     return true
   }
 
-  // Whether the CURRENT locale has any override yet — "Ada override" filters
-  // everything down to nothing until a translator has applied at least one
-  // draft for this specific locale, which otherwise looks identical to a
-  // broken filter (blank category list, or screen headers with nothing
-  // underneath) rather than an expected empty starting state.
+  // Whether the CURRENT locale has any override yet — "Overridden"/"Translated"
+  // filters everything down to nothing until a translator has applied at
+  // least one draft for this specific locale, which otherwise looks
+  // identical to a broken filter (blank category list, or screen headers
+  // with nothing underneath) rather than an expected empty starting state.
   const hasAnyOverride = useMemo(
     () => Object.values(overrides).some((v) => v && v[locale]),
     [overrides, locale]
   )
 
+  // How much of the whole sheet has a translation for the current TARGET
+  // locale — only meaningful for zh-TW/th, since id/en/vi already have a
+  // complete baseline from the sheet itself. Doubles as the "everything's
+  // done" check for the Untranslated filter's empty state.
+  const translationProgress = useMemo(() => {
+    if (!isTargetLocale(locale)) return null
+    const total = ALL_STRINGS.length
+    const done = ALL_STRINGS.reduce((n, s) => n + (overrides[s.key]?.[locale] ? 1 : 0), 0)
+    return { done, total }
+  }, [locale, overrides])
+
   // Prefer whichever locale is selected in the pills above, so the list
   // matches what the live preview is actually showing right now.
-  function localizedLabel(entry: { locales: Record<Locale, string> }): string {
-    return entry.locales[locale] || entry.locales.id || entry.locales.en || ''
+  // Applied translation takes priority over the sheet's own value — once a
+  // translator has saved a zh-TW/th draft, the row should show THEIR text,
+  // not silently keep displaying the id/en fallback underneath it.
+  function localizedLabel(entry: { key: string; locales: Partial<Record<Locale, string>> }): string {
+    return (
+      overrides[entry.key]?.[locale] || entry.locales[locale] || entry.locales.id || entry.locales.en || ''
+    )
   }
 
   const searchResults = useMemo(() => {
@@ -519,24 +550,53 @@ export function Inspector() {
             </button>
           )}
         </div>
-        <div className="flex gap-1.5 mt-2">
-          {LOCALES.map((l) => (
+        <div className="flex items-center gap-1.5 mt-2 flex-wrap">
+          {SOURCE_LOCALES.map((id) => (
             <button
-              key={l.id}
-              onClick={() => setLocale(l.id)}
+              key={id}
+              onClick={() => setLocale(id)}
+              title="Source locale — already in the sheet"
               className={`text-[12px] font-semibold px-2.5 py-1 rounded-full border ${
-                locale === l.id
-                  ? 'bg-imely-primary text-white border-imely-primary'
-                  : 'border-white/15 text-gray-400'
+                locale === id ? 'bg-imely-primary text-white border-imely-primary' : 'border-white/15 text-gray-400'
               }`}
             >
-              {l.label}
+              {LOCALE_LABEL[id]}
+            </button>
+          ))}
+          <span className="w-px h-4 bg-white/15 mx-0.5" />
+          {TARGET_LOCALES.map((id) => (
+            <button
+              key={id}
+              onClick={() => setLocale(id)}
+              title="Target locale — being translated in this tool"
+              className={`text-[12px] font-semibold px-2.5 py-1 rounded-full border ${
+                locale === id ? 'bg-imely-primary text-white border-imely-primary' : 'border-white/15 text-gray-400'
+              }`}
+            >
+              {LOCALE_LABEL[id]}
             </button>
           ))}
         </div>
 
+        {translationProgress && (
+          <div className="mt-2">
+            <div className="flex items-center justify-between text-[10.5px] text-gray-400">
+              <span>
+                {translationProgress.done.toLocaleString()} / {translationProgress.total.toLocaleString()} translated
+              </span>
+              <span>{Math.round((translationProgress.done / translationProgress.total) * 100)}%</span>
+            </div>
+            <div className="mt-1 h-1 rounded-full bg-white/10 overflow-hidden">
+              <div
+                className="h-full bg-imely-primary rounded-full transition-all"
+                style={{ width: `${(translationProgress.done / translationProgress.total) * 100}%` }}
+              />
+            </div>
+          </div>
+        )}
+
         <div className="flex gap-1.5 mt-2 flex-wrap">
-          {FILTERS.map((f) => (
+          {filtersForLocale(locale).map((f) => (
             <button
               key={f.id}
               onClick={() => setFilterMode(f.id)}
@@ -599,9 +659,32 @@ export function Inspector() {
         ) : filterMode === 'overridden' && !hasAnyOverride ? (
           <div className="p-5 text-center">
             <div className="text-[12.5px] text-gray-400 leading-relaxed">
-              No <span className="font-semibold text-white">overrides</span> applied yet. Pick a string, type a
-              draft translation in the Translation panel, then click{' '}
-              <span className="font-semibold text-white">Apply</span> to create your first override.
+              {isTargetLocale(locale) ? (
+                <>
+                  No <span className="font-semibold text-white">translations</span> saved yet. Pick a string, type
+                  it in the Translation panel, then click{' '}
+                  <span className="font-semibold text-white">Save</span> to create your first one.
+                </>
+              ) : (
+                <>
+                  No <span className="font-semibold text-white">overrides</span> applied yet. Pick a string, type a
+                  draft translation in the Translation panel, then click{' '}
+                  <span className="font-semibold text-white">Apply</span> to create your first override.
+                </>
+              )}
+            </div>
+            <button
+              onClick={() => setFilterMode('all')}
+              className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-semibold text-imely-primary border border-imely-primary rounded-full px-3 py-1.5 hover:bg-imely-primary/10"
+            >
+              View All Strings
+            </button>
+          </div>
+        ) : filterMode === 'untranslated' && translationProgress?.done === translationProgress?.total ? (
+          <div className="p-5 text-center">
+            <div className="text-[12.5px] text-gray-400 leading-relaxed">
+              🎉 All <span className="font-semibold text-white">{translationProgress?.total.toLocaleString()}</span>{' '}
+              strings have a {LOCALE_LABEL[locale]} translation.
             </div>
             <button
               onClick={() => setFilterMode('all')}
