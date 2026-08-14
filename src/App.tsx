@@ -126,11 +126,11 @@ function Shell() {
               <span className="text-[13px] font-semibold text-white">String Inspector</span>
             </div>
             <div className="w-[300px] shrink-0 bg-white border-b border-imely-line flex items-center justify-between px-3">
-              <span className="text-[13px] font-semibold text-imely-ink">Terjemahan</span>
+              <span className="text-[13px] font-semibold text-imely-ink">Translation</span>
               {selectedKey && (
                 <button
                   onClick={() => selectKey(null, null)}
-                  title="Tutup panel terjemahan"
+                  title="Close translation panel"
                   className="text-gray-400 active:scale-90 transition-transform"
                 >
                   <X size={16} />
@@ -427,7 +427,7 @@ function Shell() {
                 immediately — covers the brief flicker through every screen */}
             {priming && (
               <div className="absolute inset-0 z-50 bg-white flex items-center justify-center">
-                <div className="text-[12.5px] text-gray-400">Menyiapkan pratinjau…</div>
+                <div className="text-[12.5px] text-gray-400">Preparing preview…</div>
               </div>
             )}
           </PhoneFrame>

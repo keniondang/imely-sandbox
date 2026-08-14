@@ -5,7 +5,7 @@ import { buildStrSelector } from '../components/Str'
 // Keeps exactly one element highlighted: whichever key is currently selected
 // (i.e. showing in the right-side TranslationPanel). Tied to selection rather
 // than a fire-and-forget timeout, so the marker stays lit the whole time the
-// translator is working that key in the panel — clicking Terapkan/reset,
+// translator is working that key in the panel — clicking Apply/reset,
 // switching locale, etc. — and only clears when a different key is picked or
 // the panel is closed.
 export function useStringHighlighter() {

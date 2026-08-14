@@ -36,7 +36,7 @@ export function TranslationPanel() {
   // Keeps the Inspector's drill-down in sync with wherever prev/next lands
   // — opening "other pages" from here should open them in the sidebar too,
   // not just the live preview. A row in a Menu/Popup zone drills the
-  // sidebar one level further to match; a "Belum Dipakai" row (no screenId)
+  // sidebar one level further to match; an "Unused" row (no screenId)
   // drills into its category instead.
   function syncInspectorFocus(row: BrowseRow) {
     if (row.screenId) {
@@ -100,10 +100,10 @@ export function TranslationPanel() {
   const canNextOverlay = overlaySiblings.length > 0 && overlaySiblingIndex < overlaySiblings.length - 1
   const canPrevPage = pageIndex > 0
   const canNextPage = pageIndex >= 0 && pageIndex < pageSections.length - 1
-  // A "page" is either a real screen or one of the "Belum Dipakai" category
-  // tails appended after them — labeled differently since a category isn't
-  // really a page a translator would recognize from the live preview.
-  const pageUnitLabel = pageSections[pageIndex]?.id.startsWith('unwired:') ? 'Kategori' : 'Halaman'
+  // A "page" is either a real screen or one of the "Unused" category tails
+  // appended after them — labeled differently since a category isn't really
+  // a page a translator would recognize from the live preview.
+  const pageUnitLabel = pageSections[pageIndex]?.id.startsWith('unwired:') ? 'Category' : 'Page'
 
   function goRow(delta: number) {
     const target = rows[rowIndex + delta]
@@ -190,7 +190,7 @@ export function TranslationPanel() {
     return (
       <div className="w-[300px] shrink-0 h-full border-r border-imely-line bg-white flex flex-col items-center justify-center px-6 text-center">
         <div className="text-[13px] text-gray-400">
-          Pilih string dari daftar di kiri untuk melihat dan menguji terjemahannya di sini.
+          Select a string from the list on the left to view and test its translation here.
         </div>
       </div>
     )
@@ -205,7 +205,7 @@ export function TranslationPanel() {
           <button
             onClick={() => goPage(-1)}
             disabled={!canPrevPage}
-            title={`${pageUnitLabel} sebelumnya`}
+            title={`Previous ${pageUnitLabel}`}
             className="flex items-center gap-0.5 text-[10.5px] text-gray-500 px-2 py-1 rounded-md hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent"
           >
             <ChevronsLeft size={12} /> {pageUnitLabel}
@@ -219,7 +219,7 @@ export function TranslationPanel() {
           <button
             onClick={() => goPage(1)}
             disabled={!canNextPage}
-            title={`${pageUnitLabel} berikutnya`}
+            title={`Next ${pageUnitLabel}`}
             className="flex items-center gap-0.5 text-[10.5px] text-gray-500 px-2 py-1 rounded-md hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent"
           >
             {pageUnitLabel} <ChevronsRight size={12} />
@@ -232,10 +232,10 @@ export function TranslationPanel() {
           <button
             onClick={() => goOverlay(-1)}
             disabled={!canPrevOverlay}
-            title="Grup sebelumnya (Menu/Popup dalam layar ini)"
+            title="Previous group (Menu/Popup within this screen)"
             className="flex items-center gap-0.5 text-[10.5px] text-gray-500 px-2 py-1 rounded-md hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent"
           >
-            <ChevronLeft size={12} /> Grup
+            <ChevronLeft size={12} /> Group
           </button>
           <div
             className="text-[10.5px] text-gray-400 truncate max-w-[110px] text-center"
@@ -246,20 +246,20 @@ export function TranslationPanel() {
           <button
             onClick={() => goOverlay(1)}
             disabled={!canNextOverlay}
-            title="Grup berikutnya (Menu/Popup dalam layar ini)"
+            title="Next group (Menu/Popup within this screen)"
             className="flex items-center gap-0.5 text-[10.5px] text-gray-500 px-2 py-1 rounded-md hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent"
           >
-            Grup <ChevronRight size={12} />
+            Group <ChevronRight size={12} />
           </button>
         </div>
         <div className="flex items-center justify-between gap-1">
           <button
             onClick={() => goRow(-1)}
             disabled={!canPrevRow}
-            title="String sebelumnya"
+            title="Previous string"
             className="flex items-center gap-0.5 text-[11px] font-semibold text-imely-ink px-2 py-1 rounded-md hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent"
           >
-            <ChevronLeft size={13} /> Sebelumnya
+            <ChevronLeft size={13} /> Previous
           </button>
           <div className="text-[10.5px] text-gray-400 shrink-0">
             {rowIndex >= 0 ? `${rowIndex + 1} / ${rows.length}` : '—'}
@@ -267,10 +267,10 @@ export function TranslationPanel() {
           <button
             onClick={() => goRow(1)}
             disabled={!canNextRow}
-            title="String berikutnya"
+            title="Next string"
             className="flex items-center gap-0.5 text-[11px] font-semibold text-imely-ink px-2 py-1 rounded-md hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent"
           >
-            Berikutnya <ChevronRight size={13} />
+            Next <ChevronRight size={13} />
           </button>
         </div>
       </div>
@@ -280,7 +280,7 @@ export function TranslationPanel() {
           <div className="font-mono text-[11px] text-gray-500 break-all flex-1">{entry.key}</div>
           <button
             onClick={copyKey}
-            title="Salin key"
+            title="Copy key"
             className="text-gray-400 shrink-0 active:scale-90 transition-transform"
           >
             {copied ? <Check size={12} className="text-imely-primary" /> : <Copy size={12} />}
@@ -302,7 +302,7 @@ export function TranslationPanel() {
           </div>
         )}
 
-        <div className="mt-3 text-[11px] font-semibold text-gray-500 uppercase">String asli</div>
+        <div className="mt-3 text-[11px] font-semibold text-gray-500 uppercase">Original string</div>
         <div className="mt-1.5 space-y-1.5">
           {LOCALES.map((l) => (
             <div
@@ -317,7 +317,7 @@ export function TranslationPanel() {
 
         <div className="mt-4">
           <div className="text-[11px] font-semibold text-gray-500 mb-1 flex items-center justify-between">
-            Draf terjemahan ({currentLocaleLabel})
+            Draft translation ({currentLocaleLabel})
             {appliedForLocale && (
               <button onClick={handleReset} className="text-gray-400 flex items-center gap-0.5">
                 <RotateCcw size={11} /> reset
@@ -327,7 +327,7 @@ export function TranslationPanel() {
           <textarea
             value={draftText}
             onChange={(e) => handleChange(e.target.value)}
-            placeholder="Ketik draf terjemahan untuk menguji overflow…"
+            placeholder="Type a draft translation to test overflow…"
             className="w-full text-[12px] border border-imely-line rounded-lg p-2 outline-none focus:border-imely-primary resize-none"
             rows={4}
           />
@@ -338,15 +338,15 @@ export function TranslationPanel() {
           >
             {justApplied ? (
               <>
-                <Check size={13} /> Diterapkan
+                <Check size={13} /> Applied
               </>
             ) : (
-              'Terapkan'
+              'Apply'
             )}
           </button>
           {appliedForLocale && !justApplied && (
             <div className="mt-1.5 text-[10.5px] text-gray-400">
-              Draf {currentLocaleLabel} yang diterapkan: "{appliedForLocale}"
+              Applied {currentLocaleLabel} draft: "{appliedForLocale}"
             </div>
           )}
         </div>

@@ -141,7 +141,7 @@ export function Inspector() {
   }
 
   // Drill-down focus: opening a page/overlay, or a Menu/Popup group inside
-  // one, or a "Belum Dipakai" category, hides everything else at that level
+  // one, or a "Unused" category, hides everything else at that level
   // so only the opened thing's strings show — not just collapsing siblings'
   // content but hiding their header rows too. Closing it (clicking the same
   // path again) pops back out and the rest reappears. A plain array works
@@ -205,15 +205,15 @@ export function Inspector() {
   }
 
   // Same as screenCount but honoring the active filter — used so a narrower
-  // filter (Wired / Ada override) can hide whole branches of the Per Layar
-  // tree that have zero matches, instead of always showing every page and
-  // overlay header regardless of what's actually being filtered for.
+  // filter (Unwired / Overridden) can hide whole branches of the tree that
+  // have zero matches, instead of always showing every page and overlay
+  // header regardless of what's actually being filtered for.
   function screenFilteredCount(screenId: ScreenId): number {
     return Object.values(usageByScreen[screenId]).reduce((n, keys) => n + keys.filter(matchesFilter).length, 0)
   }
 
   // Every key NOT wired into any screen, grouped by xlsx category — the
-  // "Belum Dipakai" tail appended after the screen tree, since that's the
+  // "Unused" tail appended after the screen tree, since that's the
   // only way to reach content that hasn't been wired into the sandbox yet
   // without already knowing the exact text to search for.
   const unwiredCategoryGroups = useMemo(() => {
@@ -431,7 +431,7 @@ export function Inspector() {
     // Drilled one level further into just this entry's Menu or Popup group
     // (only meaningful while this entry itself is the focused one). The
     // three content areas — plain, Menu's rows, Popup's rows — are mutually
-    // exclusive, same as the "Halaman / Menu / Popup" tiers in Terjemahan:
+    // exclusive, same as the "Page / Group" tiers in the Translation panel:
     // opening a screen shows its plain content with both group headers
     // collapsed underneath; opening Menu collapses the plain content and
     // expands Menu's rows, with Popup's header still visible (just
@@ -565,7 +565,7 @@ export function Inspector() {
                   <div className="sticky top-0 z-10 bg-imely-ink flex items-center gap-1.5 text-[10px] font-bold text-gray-400 uppercase px-2 py-1.5">
                     {Icon && <Icon size={11} className="shrink-0" />}
                     <span className="truncate">
-                      {group.screenId ? SCREEN_LABEL[group.screenId] : 'Belum digunakan di layar manapun'}
+                      {group.screenId ? SCREEN_LABEL[group.screenId] : 'Not used in any screen'}
                     </span>
                   </div>
                   {group.hits.map((hit) => {
@@ -599,15 +599,15 @@ export function Inspector() {
         ) : filterMode === 'overridden' && !hasAnyOverride ? (
           <div className="p-5 text-center">
             <div className="text-[12.5px] text-gray-400 leading-relaxed">
-              Belum ada <span className="font-semibold text-white">override</span> yang diterapkan. Pilih sebuah
-              string, ketik draf terjemahan di panel Terjemahan, lalu klik{' '}
-              <span className="font-semibold text-white">Terapkan</span> untuk membuat override pertama.
+              No <span className="font-semibold text-white">overrides</span> applied yet. Pick a string, type a
+              draft translation in the Translation panel, then click{' '}
+              <span className="font-semibold text-white">Apply</span> to create your first override.
             </div>
             <button
               onClick={() => setFilterMode('all')}
               className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-semibold text-imely-primary border border-imely-primary rounded-full px-3 py-1.5 hover:bg-imely-primary/10"
             >
-              Lihat Semua String
+              View All Strings
             </button>
           </div>
         ) : (
@@ -616,7 +616,7 @@ export function Inspector() {
                 SCREEN_ORDER (each page immediately followed by its own
                 overlays) — no separate "Pages"/"Overlays" section, since a
                 translator checking strings doesn't need that distinction.
-                Hidden entirely while "Belum Dipakai" is the focused thing. */}
+                Hidden entirely while "Unused" is the focused thing. */}
             {(focusPath.length === 0 || focusPath[0] !== '__unwired__') &&
               SCREEN_ORDER.filter((id) => focusPath.length === 0 || focusPath[0] === id).map((screenId) =>
                 renderEntry(screenId)
@@ -630,7 +630,7 @@ export function Inspector() {
                   onClick={() => toggleFocus(['__unwired__'])}
                   className="mt-3 w-full flex items-center justify-between px-2 rounded-md hover:bg-white/5"
                 >
-                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wide">Belum Dipakai</span>
+                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wide">Unused</span>
                   <ChevronRight
                     size={11}
                     className={`text-gray-500 shrink-0 transition-transform ${focusPath[0] === '__unwired__' ? 'rotate-90' : ''}`}

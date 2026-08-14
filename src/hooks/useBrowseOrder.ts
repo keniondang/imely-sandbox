@@ -28,16 +28,16 @@ export interface BrowseOverlaySection extends BrowseSection {
 // The exact same ordering the Inspector's tree renders: every screen in
 // SCREEN_ORDER (each its own "page" section — pages and overlays are flat
 // siblings now, not nested; tier 1 only ever steps between these), followed
-// by a trailing "Belum Dipakai" tail — every xlsx key not wired into any
-// screen, grouped by category. Within a screen, its own plain content and
-// any Menu-type / Popup-type zones each form their own contiguous block and
+// by a trailing "Unused" tail — every xlsx key not wired into any screen,
+// grouped by category. Within a screen, its own plain content and any
+// Menu-type / Popup-type zones each form their own contiguous block and
 // their own "overlay" section (tier 2) — mirroring exactly how the
 // Inspector groups a screen's content, so the panel's second-tier prev/next
-// steps between the SAME Halaman/Menu/Popup groups the sidebar shows (tier
-// 1 stays focused purely on which screen, tier 2 handles moving around
-// within one). A screen with no Menu/Popup zones just has a single tier-2
-// stop (its own content), and a category in "Belum Dipakai" has none at
-// all, so the buttons disable rather than jumping to an unrelated screen.
+// steps between the SAME Page/Menu/Popup groups the sidebar shows (tier 1
+// stays focused purely on which screen, tier 2 handles moving around within
+// one). A screen with no Menu/Popup zones just has a single tier-2 stop
+// (its own content), and a category in "Unused" has none at all, so the
+// buttons disable rather than jumping to an unrelated screen.
 // Flattened into one array. Lives in its own hook (rather than inside
 // Inspector) so both sides of the screen compute identical results from
 // the same shared filterMode in context.
@@ -85,12 +85,12 @@ export function useBrowseOrder(): {
       }
       // The screen's own plain content is a tier-2 stop too, same as Menu
       // and Popup — otherwise there'd be no way to step back to it from
-      // Menu/Popup via the Grup buttons once you've moved past it, only by
+      // Menu/Popup via the Group buttons once you've moved past it, only by
       // jumping whole screens (tier 1) or crawling one string at a time.
       if (rows.length > pageStart) {
         overlaySections.push({
           id: `${screenId}:page`,
-          label: 'Halaman',
+          label: 'Page',
           startIndex: pageStart,
           endIndex: rows.length - 1,
           pageId: screenId,
@@ -135,9 +135,9 @@ export function useBrowseOrder(): {
       pageSections.push({ id: screenId, label: SCREEN_LABEL[screenId], startIndex: pageStart, endIndex: rows.length - 1 })
     }
 
-    // "Belum Dipakai" tail — every key not wired into any screen, grouped by
-    // xlsx category. No Menu/Popup concept here, so no tier-2 sections —
-    // just a flat page section per category, same as a screen with neither.
+    // "Unused" tail — every key not wired into any screen, grouped by xlsx
+    // category. No Menu/Popup concept here, so no tier-2 sections — just a
+    // flat page section per category, same as a screen with neither.
     const byCategory = new Map<string, typeof ALL_STRINGS>()
     for (const s of ALL_STRINGS) {
       if (wiredKeys.has(s.key)) continue

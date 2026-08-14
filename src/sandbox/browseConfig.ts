@@ -28,32 +28,38 @@ import type { ScreenId, FilterMode } from '../context/AppContext'
 
 export type { FilterMode }
 
+// Labels for the Inspector's own navigation tree — English, since this is
+// tool chrome, not simulated app content (the phone preview still shows
+// whatever locale is selected via its own real <Str> keys regardless of
+// what these say). The original Indonesian screen name stays in parens
+// where it isn't obvious from the English alone, so a translator can still
+// match a label back to the real app.
 export const SCREEN_LABEL: Record<ScreenId, string> = {
-  feed: 'Beranda (Feed)',
-  chatlist: 'Obrolan (Chat list)',
-  profile: 'Profil',
-  chatdetail: 'Chat detail',
-  chatoptions: 'Opsi Chat',
-  characterprofile: 'Profil Karakter',
-  creatorprofile: 'Profil Kreator',
-  notification: 'Notifikasi',
-  gems: 'Gem',
-  gemhistory: 'Riwayat Gem',
-  purchase: 'Beli MeLy Club / Gem',
-  devices: 'Perangkat Masuk',
-  account: 'Kelola Akun',
-  mycharacters: 'Karaktermu',
-  following: 'Mengikuti',
-  badges: 'Lencana',
-  appearance: 'Tampilan',
-  settings: 'Pengaturan',
-  notificationsettings: 'Notifikasi Pengaturan',
-  videosettings: 'Video Pengaturan',
-  about: 'Tentang Kami',
-  verifyemail: 'Verifikasi Email',
-  username: 'Nama Pengguna',
-  deleteaccount: 'Hapus Akun',
-  characterform: 'Buat/Edit Karakter',
+  feed: 'Feed (Beranda)',
+  chatlist: 'Chat List (Obrolan)',
+  profile: 'Profile (Profil)',
+  chatdetail: 'Chat Detail',
+  chatoptions: 'Chat Options',
+  characterprofile: 'Character Profile',
+  creatorprofile: 'Creator Profile',
+  notification: 'Notifications',
+  gems: 'Gems',
+  gemhistory: 'Gem History',
+  purchase: 'Buy MeLy Club / Gems',
+  devices: 'Logged-in Devices',
+  account: 'Manage Account',
+  mycharacters: 'Your Characters',
+  following: 'Following',
+  badges: 'Badges',
+  appearance: 'Appearance',
+  settings: 'Settings',
+  notificationsettings: 'Notification Settings',
+  videosettings: 'Video Settings',
+  about: 'About Us',
+  verifyemail: 'Verify Email',
+  username: 'Username',
+  deleteaccount: 'Delete Account',
+  characterform: 'Create/Edit Character',
 }
 
 export const SCREEN_ICON: Record<ScreenId, typeof Home> = {
@@ -188,7 +194,7 @@ export const WARM_UP_SCREENS: ScreenId[] = [
 // screen — each one lives behind its own button click inside that screen's
 // component, so warming up the screen alone (WARM_UP_SCREENS above) never
 // registers their strings. The startup pass also broadcasts a requestPopup
-// for each of these, briefly opening then closing it, so "Semua" shows
+// for each of these, briefly opening then closing it, so "All" shows
 // every popup/menu's content from the first render instead of only after a
 // translator has happened to open each one by hand at least once.
 export const WARM_UP_ZONES: Partial<Record<ScreenId, string[]>> = {
@@ -247,31 +253,31 @@ export const ZONE_ORDER = [
   'gem',
 ]
 export const ZONE_LABEL: Record<string, string> = {
-  page: 'Halaman',
-  menu: 'Opsi',
-  gem_detail: 'Popup: Detail Gem',
-  invite_input: 'Popup: Masukkan Kode',
-  lucky_wheel: 'Menu: Roda Keberuntungan',
-  lucky_result: 'Popup: Hasil Undian',
-  block_confirm: 'Popup: Konfirmasi Blokir',
-  delete_confirm: 'Popup: Konfirmasi Hapus',
-  discard_confirm: 'Popup: Batalkan Perubahan',
-  verify_menu: 'Menu: Verifikasi Akun',
-  identity_card_edit: 'Popup: Nomor Identifikasi',
-  unlink_blocked: 'Popup: Tautan Tidak Bisa Diputuskan',
-  privacy_menu: 'Menu: Opsi Privasi',
-  gender_menu: 'Menu: Jenis Kelamin',
-  birthdate_edit: 'Popup: Tanggal Lahir',
+  page: 'Page',
+  menu: 'Options',
+  gem_detail: 'Popup: Gem Detail',
+  invite_input: 'Popup: Enter Code',
+  lucky_wheel: 'Menu: Lucky Wheel',
+  lucky_result: 'Popup: Draw Result',
+  block_confirm: 'Popup: Block Confirmation',
+  delete_confirm: 'Popup: Delete Confirmation',
+  discard_confirm: 'Popup: Discard Changes',
+  verify_menu: 'Menu: Verify Account',
+  identity_card_edit: 'Popup: ID Number',
+  unlink_blocked: 'Popup: Cannot Unlink',
+  privacy_menu: 'Menu: Privacy Options',
+  gender_menu: 'Menu: Gender',
+  birthdate_edit: 'Popup: Birthdate',
   bio_edit: 'Popup: Bio',
-  logout_confirm: 'Popup: Konfirmasi Keluar',
-  delete_account_confirm: 'Popup: Konfirmasi Hapus Akun',
-  report: 'Menu: Laporkan',
-  mode_picker: 'Menu: Mode Obrolan',
-  relationship: 'Popup: Level Kedekatan',
-  role_summary: 'Popup: Ganti Peran',
-  role_edit: 'Popup: Edit Peran',
+  logout_confirm: 'Popup: Logout Confirmation',
+  delete_account_confirm: 'Popup: Delete Account Confirmation',
+  report: 'Menu: Report',
+  mode_picker: 'Menu: Chat Mode',
+  relationship: 'Popup: Relationship Level',
+  role_summary: 'Popup: Change Role',
+  role_edit: 'Popup: Edit Role',
   club: 'Tab: MêLy Club',
-  gem: 'Tab: Gem',
+  gem: 'Tab: Gems',
 }
 
 // Classifies each zone by how it actually renders in the real UI — verified
@@ -319,7 +325,7 @@ export function sortedZones(zones: string[]): string[] {
 }
 
 export const FILTERS: { id: FilterMode; label: string }[] = [
-  { id: 'all', label: 'Semua' },
-  { id: 'unwired', label: 'Belum wired' },
-  { id: 'overridden', label: 'Ada override' },
+  { id: 'all', label: 'All' },
+  { id: 'unwired', label: 'Unwired' },
+  { id: 'overridden', label: 'Overridden' },
 ]
