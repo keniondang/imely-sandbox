@@ -3,6 +3,7 @@ import { ArrowLeft } from 'lucide-react'
 import { Str } from '../components/Str'
 import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
+import { usePopupRequest } from '../hooks/usePopupRequest'
 import { resolveString } from '../lib/strings'
 
 // The confirm button below intentionally renders whatever the real
@@ -14,6 +15,7 @@ import { resolveString } from '../lib/strings'
 export function DeleteAccountScreen() {
   const { closeDeleteAccount, locale, showToast } = useApp()
   const [confirmOpen, setConfirmOpen] = useState(false)
+  usePopupRequest('deleteaccount', 'delete_account_confirm', setConfirmOpen)
 
   return (
     <div className="h-full flex flex-col bg-white relative">

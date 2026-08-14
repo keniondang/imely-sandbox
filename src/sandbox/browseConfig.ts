@@ -32,28 +32,28 @@ export const SCREEN_LABEL: Record<ScreenId, string> = {
   feed: 'Beranda (Feed)',
   chatlist: 'Obrolan (Chat list)',
   profile: 'Profil',
-  chatdetail: 'Chat detail (overlay)',
-  chatoptions: 'Opsi Chat (overlay)',
-  characterprofile: 'Profil Karakter (overlay)',
-  creatorprofile: 'Profil Kreator (overlay)',
-  notification: 'Notifikasi (overlay)',
-  gems: 'Gem (overlay)',
-  gemhistory: 'Riwayat Gem (overlay)',
-  purchase: 'Beli MeLy Club / Gem (overlay)',
-  devices: 'Perangkat Masuk (overlay)',
-  account: 'Kelola Akun (overlay)',
-  mycharacters: 'Karaktermu (overlay)',
-  following: 'Mengikuti (overlay)',
-  badges: 'Lencana (overlay)',
-  appearance: 'Tampilan (overlay)',
-  settings: 'Pengaturan (overlay)',
-  notificationsettings: 'Notifikasi Pengaturan (overlay)',
-  videosettings: 'Video Pengaturan (overlay)',
-  about: 'Tentang Kami (overlay)',
-  verifyemail: 'Verifikasi Email (overlay)',
-  username: 'Nama Pengguna (overlay)',
-  deleteaccount: 'Hapus Akun (overlay)',
-  characterform: 'Buat/Edit Karakter (overlay)',
+  chatdetail: 'Chat detail',
+  chatoptions: 'Opsi Chat',
+  characterprofile: 'Profil Karakter',
+  creatorprofile: 'Profil Kreator',
+  notification: 'Notifikasi',
+  gems: 'Gem',
+  gemhistory: 'Riwayat Gem',
+  purchase: 'Beli MeLy Club / Gem',
+  devices: 'Perangkat Masuk',
+  account: 'Kelola Akun',
+  mycharacters: 'Karaktermu',
+  following: 'Mengikuti',
+  badges: 'Lencana',
+  appearance: 'Tampilan',
+  settings: 'Pengaturan',
+  notificationsettings: 'Notifikasi Pengaturan',
+  videosettings: 'Video Pengaturan',
+  about: 'Tentang Kami',
+  verifyemail: 'Verifikasi Email',
+  username: 'Nama Pengguna',
+  deleteaccount: 'Hapus Akun',
+  characterform: 'Buat/Edit Karakter',
 }
 
 export const SCREEN_ICON: Record<ScreenId, typeof Home> = {
@@ -173,13 +173,48 @@ export const WARM_UP_SCREENS: ScreenId[] = [
   'verifyemail',
   'username',
   'deleteaccount',
+  'characterprofile',
   'creatorprofile',
   'notification',
+  'gems',
   'gemhistory',
   'purchase',
+  'chatdetail',
   'chatoptions',
   'characterform',
 ]
+
+// Every local popup/menu zone that isn't reachable just by mounting its
+// screen — each one lives behind its own button click inside that screen's
+// component, so warming up the screen alone (WARM_UP_SCREENS above) never
+// registers their strings. The startup pass also broadcasts a requestPopup
+// for each of these, briefly opening then closing it, so "Semua" shows
+// every popup/menu's content from the first render instead of only after a
+// translator has happened to open each one by hand at least once.
+export const WARM_UP_ZONES: Partial<Record<ScreenId, string[]>> = {
+  profile: ['menu'],
+  account: [
+    'verify_menu',
+    'identity_card_edit',
+    'unlink_blocked',
+    'privacy_menu',
+    'gender_menu',
+    'birthdate_edit',
+    'bio_edit',
+    'logout_confirm',
+  ],
+  mycharacters: ['menu', 'delete_confirm'],
+  deleteaccount: ['delete_account_confirm'],
+  username: ['discard_confirm'],
+  characterform: ['gender_menu', 'privacy_menu'],
+  gems: ['gem_detail', 'invite_input', 'lucky_wheel', 'lucky_result'],
+  chatdetail: ['mode_picker', 'relationship', 'role_summary', 'role_edit'],
+  notification: ['menu'],
+  purchase: ['club', 'gem'],
+  characterprofile: ['menu', 'block_confirm', 'report'],
+  creatorprofile: ['menu', 'block_confirm', 'report'],
+  chatoptions: ['menu', 'block_confirm', 'report'],
+}
 
 // Display order + label for zones within a screen section. Zones not listed
 // here (a screen introducing a new one later) still render, just alphabetically
@@ -213,30 +248,63 @@ export const ZONE_ORDER = [
 ]
 export const ZONE_LABEL: Record<string, string> = {
   page: 'Halaman',
-  menu: 'Menu',
+  menu: 'Opsi',
   gem_detail: 'Popup: Detail Gem',
   invite_input: 'Popup: Masukkan Kode',
-  lucky_wheel: 'Popup: Roda Keberuntungan',
+  lucky_wheel: 'Menu: Roda Keberuntungan',
   lucky_result: 'Popup: Hasil Undian',
   block_confirm: 'Popup: Konfirmasi Blokir',
   delete_confirm: 'Popup: Konfirmasi Hapus',
   discard_confirm: 'Popup: Batalkan Perubahan',
-  verify_menu: 'Popup: Verifikasi Akun',
+  verify_menu: 'Menu: Verifikasi Akun',
   identity_card_edit: 'Popup: Nomor Identifikasi',
   unlink_blocked: 'Popup: Tautan Tidak Bisa Diputuskan',
-  privacy_menu: 'Popup: Opsi Privasi',
-  gender_menu: 'Popup: Jenis Kelamin',
+  privacy_menu: 'Menu: Opsi Privasi',
+  gender_menu: 'Menu: Jenis Kelamin',
   birthdate_edit: 'Popup: Tanggal Lahir',
   bio_edit: 'Popup: Bio',
   logout_confirm: 'Popup: Konfirmasi Keluar',
   delete_account_confirm: 'Popup: Konfirmasi Hapus Akun',
-  report: 'Popup: Laporkan',
-  mode_picker: 'Popup: Mode Obrolan',
+  report: 'Menu: Laporkan',
+  mode_picker: 'Menu: Mode Obrolan',
   relationship: 'Popup: Level Kedekatan',
   role_summary: 'Popup: Ganti Peran',
   role_edit: 'Popup: Edit Peran',
   club: 'Tab: MêLy Club',
   gem: 'Tab: Gem',
+}
+
+// Classifies each zone by how it actually renders in the real UI — verified
+// against every ZoneScope in the codebase by its CSS: a bottom sheet
+// (`rounded-t-3xl` + `bottom-0`) is a MENU, a centered dialog (`rounded-2xl`
+// + `top-1/2`) is a POPUP. `tab` covers Beli MêLy Club/Gem's sub-tabs, which
+// are neither. Drives the Inspector's Menu/Popup grouping within a screen.
+export type ZoneKind = 'menu' | 'popup' | 'tab'
+export const ZONE_TYPE: Record<string, ZoneKind> = {
+  menu: 'menu',
+  verify_menu: 'menu',
+  privacy_menu: 'menu',
+  gender_menu: 'menu',
+  mode_picker: 'menu',
+  report: 'menu',
+  lucky_wheel: 'menu',
+  gem_detail: 'popup',
+  invite_input: 'popup',
+  lucky_result: 'popup',
+  block_confirm: 'popup',
+  delete_confirm: 'popup',
+  discard_confirm: 'popup',
+  identity_card_edit: 'popup',
+  unlink_blocked: 'popup',
+  birthdate_edit: 'popup',
+  bio_edit: 'popup',
+  logout_confirm: 'popup',
+  delete_account_confirm: 'popup',
+  relationship: 'popup',
+  role_summary: 'popup',
+  role_edit: 'popup',
+  club: 'tab',
+  gem: 'tab',
 }
 
 export function sortedZones(zones: string[]): string[] {
@@ -252,7 +320,6 @@ export function sortedZones(zones: string[]): string[] {
 
 export const FILTERS: { id: FilterMode; label: string }[] = [
   { id: 'all', label: 'Semua' },
-  { id: 'wired', label: 'Wired' },
   { id: 'unwired', label: 'Belum wired' },
   { id: 'overridden', label: 'Ada override' },
 ]

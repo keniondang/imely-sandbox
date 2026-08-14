@@ -3,6 +3,7 @@ import { ArrowLeft } from 'lucide-react'
 import { Str } from '../components/Str'
 import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
+import { usePopupRequest } from '../hooks/usePopupRequest'
 
 const USERNAME_RE = /^[A-Za-z][A-Za-z0-9_-]{3,31}$/
 
@@ -11,6 +12,7 @@ export function UsernameScreen() {
   const [username, setUsername] = useState('')
   const [error, setError] = useState(false)
   const [confirmDiscard, setConfirmDiscard] = useState(false)
+  usePopupRequest('username', 'discard_confirm', setConfirmDiscard)
 
   function handleBack() {
     if (username.trim().length > 0) {

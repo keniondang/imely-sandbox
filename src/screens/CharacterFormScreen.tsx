@@ -3,6 +3,7 @@ import { ArrowLeft, Camera, ChevronDown, X, Plus, Maximize2, Lock, Globe, Check 
 import { Str } from '../components/Str'
 import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
+import { usePopupRequest } from '../hooks/usePopupRequest'
 import { resolveString } from '../lib/strings'
 import { MOCK_FEED_CHARACTERS } from '../data/mockContent'
 
@@ -38,6 +39,8 @@ export function CharacterFormScreen() {
   const [note, setNote] = useState('')
   const [privacy, setPrivacy] = useState<Privacy>('private')
   const [privacyMenuOpen, setPrivacyMenuOpen] = useState(false)
+  usePopupRequest('characterform', 'gender_menu', setGenderMenuOpen)
+  usePopupRequest('characterform', 'privacy_menu', setPrivacyMenuOpen)
 
   // Seed from the character being edited — only the fields that actually
   // have a source in MockCharacter; the rest (gender, hashtag, kepribadian,

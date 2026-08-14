@@ -33,8 +33,7 @@ export type PurchaseTab = 'club' | 'gem'
 // Shared between the Inspector's browse list and the TranslationPanel's
 // prev/next navigation, so "next string" / "next page or category" steps
 // through exactly what the left sidebar is showing right now.
-export type BrowseViewMode = 'screens' | 'categories'
-export type FilterMode = 'all' | 'wired' | 'unwired' | 'overridden'
+export type FilterMode = 'all' | 'unwired' | 'overridden'
 
 // 'page' is a screen's always-visible content. Anything else ('menu', 'popup', ...)
 // is a sub-surface that only exists in the DOM while its own local state has it
@@ -90,13 +89,19 @@ interface AppState {
   inspectorOpen: boolean
   setInspectorOpen: (v: boolean) => void
 
-  // Browse list mode + filter — live in context (not local Inspector state)
-  // so the TranslationPanel's prev/next buttons can walk the same ordered
-  // list the left sidebar is currently showing.
-  viewMode: BrowseViewMode
-  setViewMode: (v: BrowseViewMode) => void
+  // Browse list filter — lives in context (not local Inspector state) so the
+  // TranslationPanel's prev/next buttons can walk the same ordered list the
+  // left sidebar is currently showing.
   filterMode: FilterMode
   setFilterMode: (v: FilterMode) => void
+
+  // Which single thing is drilled into in the Inspector's tree right now —
+  // e.g. ['account'] (just Kelola Akun open) or ['account', 'menu'] (drilled
+  // further into just its Menu group). Lives here (not local Inspector
+  // state) so the TranslationPanel's prev/next buttons can drive the same
+  // drill-down the sidebar shows, keeping both panels in sync.
+  focusPath: string[]
+  setFocusPath: (v: string[]) => void
 
   // registry of which screen (and zone within it — page/menu/popup/…) renders
   // which string key, built as screens mount
@@ -271,8 +276,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
   const [selectedOccurrence, setSelectedOccurrence] = useState<{ screenId: ScreenId; zone: Zone } | null>(null)
   const [inspectorOpen, setInspectorOpen] = useState(true)
-  const [viewMode, setViewMode] = useState<BrowseViewMode>('screens')
   const [filterMode, setFilterMode] = useState<FilterMode>('all')
+  const [focusPath, setFocusPath] = useState<string[]>([])
   const [usage, setUsage] = useState<UsageRecord[]>([])
   const [popupRequest, setPopupRequest] = useState<PopupRequest | null>(null)
   const [popupRequestToken, setPopupRequestToken] = useState(0)
@@ -453,10 +458,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
       selectKey,
       inspectorOpen,
       setInspectorOpen,
-      viewMode,
-      setViewMode,
       filterMode,
       setFilterMode,
+      focusPath,
+      setFocusPath,
       usage,
       registerUsage,
       popupRequest,
@@ -546,8 +551,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       currentScreen,
       overrides,
       inspectorOpen,
-      viewMode,
       filterMode,
+      focusPath,
       usage,
       overrides,
       livePreview,

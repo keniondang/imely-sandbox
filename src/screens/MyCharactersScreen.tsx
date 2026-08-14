@@ -3,6 +3,7 @@ import { ArrowLeft, MoreVertical, Pencil, MessageCircle, User, Trash2, Plus, X }
 import { Str } from '../components/Str'
 import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
+import { usePopupRequest } from '../hooks/usePopupRequest'
 import { MOCK_FEED_CHARACTERS, type MockCharacter } from '../data/mockContent'
 
 // Same character line-up as Beranda/Obrolan — these are the characters this
@@ -12,6 +13,12 @@ export function MyCharactersScreen() {
   const { closeMyCharacters, openChat, openCharacterProfile, openCharacterForm, showToast } = useApp()
   const [menuFor, setMenuFor] = useState<MockCharacter | null>(null)
   const [deleteConfirmFor, setDeleteConfirmFor] = useState<MockCharacter | null>(null)
+
+  // Inspector-driven popup jumps have no specific character in mind, so fall
+  // back to the first mock row — same stand-in pattern used elsewhere for
+  // "preview" navigation into character-scoped content.
+  usePopupRequest('mycharacters', 'menu', (open) => setMenuFor(open ? MOCK_FEED_CHARACTERS[0] : null))
+  usePopupRequest('mycharacters', 'delete_confirm', (open) => setDeleteConfirmFor(open ? MOCK_FEED_CHARACTERS[0] : null))
 
   function startChat(c: MockCharacter) {
     setMenuFor(null)

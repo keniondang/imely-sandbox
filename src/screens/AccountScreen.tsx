@@ -22,6 +22,7 @@ import {
 import { Str } from '../components/Str'
 import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
+import { usePopupRequest } from '../hooks/usePopupRequest'
 import { MOCK_USER } from '../data/mockContent'
 
 type PrivacyMode = 'only_me' | 'only_link' | 'public'
@@ -87,6 +88,23 @@ export function AccountScreen() {
   function closeModal() {
     setModal(null)
   }
+
+  // Lets the Inspector open each of this screen's popups on demand — both for
+  // "jump to string" and for the startup warm-up pass that registers their
+  // content so it shows up under "Semua" without a translator having opened
+  // them by hand first. `verify_menu` is its own boolean; the rest share the
+  // `modal` union, so each just sets/clears its own slot in it.
+  function modalPopup(kind: Exclude<ModalKind, null>) {
+    return (open: boolean) => setModal((prev) => (open ? kind : prev === kind ? null : prev))
+  }
+  usePopupRequest('account', 'verify_menu', setVerifyOpen)
+  usePopupRequest('account', 'identity_card_edit', modalPopup('identity'))
+  usePopupRequest('account', 'unlink_blocked', modalPopup('unlinkBlocked'))
+  usePopupRequest('account', 'privacy_menu', modalPopup('privacy'))
+  usePopupRequest('account', 'gender_menu', modalPopup('gender'))
+  usePopupRequest('account', 'birthdate_edit', modalPopup('birthdate'))
+  usePopupRequest('account', 'bio_edit', modalPopup('bio'))
+  usePopupRequest('account', 'logout_confirm', modalPopup('logout'))
 
   return (
     <div className="h-full flex flex-col bg-white relative">

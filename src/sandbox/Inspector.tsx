@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
-import { Search, X, AlertTriangle, ChevronRight, LayoutGrid, Tags } from 'lucide-react'
+import { Search, X, AlertTriangle, ChevronRight } from 'lucide-react'
 import { useApp, type ScreenId, type Zone } from '../context/AppContext'
 import { ALL_STRINGS, getEntry, type Locale, type StringEntry } from '../lib/strings'
 import { useNavigateToString, useOpenScreen } from '../hooks/useNavigateToString'
@@ -7,11 +7,9 @@ import {
   SCREEN_LABEL,
   SCREEN_ICON,
   SCREEN_ORDER,
-  PAGE_ORDER,
-  PAGE_CHILDREN,
   SCREEN_PARENT,
-  CHILD_SCREENS,
   ZONE_LABEL,
+  ZONE_TYPE,
   sortedZones,
   pageIdFor,
   FILTERS,
@@ -38,10 +36,10 @@ export function Inspector() {
     overrides,
     selectedKey,
     selectedOccurrence,
-    viewMode,
-    setViewMode,
     filterMode,
     setFilterMode,
+    focusPath,
+    setFocusPath,
     activeChat,
     chatOptionsOpen,
     activeCharacterId,
@@ -50,12 +48,24 @@ export function Inspector() {
     gemsOpen,
     gemHistoryOpen,
     purchaseOpen,
+    devicesOpen,
+    accountOpen,
+    myCharactersOpen,
+    followingOpen,
+    badgesOpen,
+    appearanceOpen,
+    settingsOpen,
+    notificationSettingsOpen,
+    videoSettingsOpen,
+    aboutOpen,
+    verifyEmailOpen,
+    usernameOpen,
+    deleteAccountOpen,
+    characterFormOpen,
   } = useApp()
   const navigateTo = useNavigateToString()
   const openScreen = useOpenScreen()
   const [query, setQuery] = useState('')
-  const [openScreens, setOpenScreens] = useState<Set<ScreenId>>(() => new Set(['feed']))
-  const [openCategories, setOpenCategories] = useState<Set<string>>(new Set())
   // Composite `key::screenId::zone` strings currently overflowing their
   // container, re-scanned on an interval — see the bulk-scan effect below.
   const [overflowingKeys, setOverflowingKeys] = useState<Set<string>>(new Set())
@@ -75,6 +85,20 @@ export function Inspector() {
     if (purchaseOpen) return 'purchase'
     if (gemHistoryOpen) return 'gemhistory'
     if (gemsOpen) return 'gems'
+    if (verifyEmailOpen) return 'verifyemail'
+    if (usernameOpen) return 'username'
+    if (deleteAccountOpen) return 'deleteaccount'
+    if (accountOpen) return 'account'
+    if (devicesOpen) return 'devices'
+    if (myCharactersOpen) return 'mycharacters'
+    if (followingOpen) return 'following'
+    if (badgesOpen) return 'badges'
+    if (appearanceOpen) return 'appearance'
+    if (notificationSettingsOpen) return 'notificationsettings'
+    if (videoSettingsOpen) return 'videosettings'
+    if (settingsOpen) return 'settings'
+    if (aboutOpen) return 'about'
+    if (characterFormOpen) return 'characterform'
     return currentScreen
   }, [
     activeChat,
@@ -85,18 +109,22 @@ export function Inspector() {
     purchaseOpen,
     gemHistoryOpen,
     gemsOpen,
+    verifyEmailOpen,
+    usernameOpen,
+    deleteAccountOpen,
+    accountOpen,
+    devicesOpen,
+    myCharactersOpen,
+    followingOpen,
+    badgesOpen,
+    appearanceOpen,
+    notificationSettingsOpen,
+    videoSettingsOpen,
+    settingsOpen,
+    aboutOpen,
+    characterFormOpen,
     currentScreen,
   ])
-
-  // Keep the accordion in sync with the live preview: whenever the visible
-  // screen changes, open its full ancestor chain (base page, and its overlay
-  // parent too if it's nested 2 deep like Opsi Chat) and collapse the rest.
-  useEffect(() => {
-    const chain = new Set<ScreenId>([activeScreenId, pageIdFor(activeScreenId)])
-    const parent = SCREEN_PARENT[activeScreenId]
-    if (parent) chain.add(parent)
-    setOpenScreens(chain)
-  }, [activeScreenId])
 
   // A section header both opens its screen in the live preview AND expands
   // the tree to it. If it's already the one showing, clicking it again
@@ -112,14 +140,24 @@ export function Inspector() {
     if (back !== screenId) openScreen(back)
   }
 
-  function toggleCategory(cat: string) {
-    setOpenCategories((prev) => {
-      const next = new Set(prev)
-      if (next.has(cat)) next.delete(cat)
-      else next.add(cat)
-      return next
-    })
+  // Drill-down focus: opening a page/overlay, or a Menu/Popup group inside
+  // one, or a "Belum Dipakai" category, hides everything else at that level
+  // so only the opened thing's strings show — not just collapsing siblings'
+  // content but hiding their header rows too. Closing it (clicking the same
+  // path again) pops back out and the rest reappears. A plain array works
+  // as a path since only one thing can ever be drilled into at a time —
+  // ['account'] focused on Kelola Akun, ['account', 'menu'] focused further
+  // into just its Menu group, etc. Lives in context (not local state) so the
+  // TranslationPanel's prev/next buttons can drive the same drill-down.
+  // Cleared on filter/search changes since a focused path may no longer
+  // even be visible under a new filter.
+  function toggleFocus(path: string[]) {
+    const same = focusPath.length === path.length && path.every((p, i) => focusPath[i] === p)
+    setFocusPath(same ? path.slice(0, -1) : path)
   }
+  useEffect(() => {
+    setFocusPath([])
+  }, [filterMode, query])
 
   const wiredKeys = useMemo(() => new Set(usage.map((u) => u.key)), [usage])
 
@@ -166,34 +204,46 @@ export function Inspector() {
     return Object.values(usageByScreen[screenId]).reduce((n, keys) => n + keys.length, 0)
   }
 
-  // All 1,479 keys grouped by their xlsx category, for "Semua Kategori" browsing —
-  // most of them aren't wired into any screen yet, so this is the only way to
-  // reach them without already knowing the exact text to search for.
-  const categoryGroups = useMemo(() => {
+  // Same as screenCount but honoring the active filter — used so a narrower
+  // filter (Wired / Ada override) can hide whole branches of the Per Layar
+  // tree that have zero matches, instead of always showing every page and
+  // overlay header regardless of what's actually being filtered for.
+  function screenFilteredCount(screenId: ScreenId): number {
+    return Object.values(usageByScreen[screenId]).reduce((n, keys) => n + keys.filter(matchesFilter).length, 0)
+  }
+
+  // Every key NOT wired into any screen, grouped by xlsx category — the
+  // "Belum Dipakai" tail appended after the screen tree, since that's the
+  // only way to reach content that hasn't been wired into the sandbox yet
+  // without already knowing the exact text to search for.
+  const unwiredCategoryGroups = useMemo(() => {
     const map = new Map<string, StringEntry[]>()
     for (const s of ALL_STRINGS) {
+      if (wiredKeys.has(s.key)) continue
       const cat = String(s.category)
       if (!map.has(cat)) map.set(cat, [])
       map.get(cat)!.push(s)
     }
     return [...map.entries()].sort((a, b) => a[0].localeCompare(b[0]))
-  }, [])
+  }, [wiredKeys])
 
   function matchesFilter(key: string): boolean {
-    if (filterMode === 'wired') return wiredKeys.has(key)
     if (filterMode === 'unwired') return !wiredKeys.has(key)
-    if (filterMode === 'overridden') return Boolean(overrides[key] && Object.keys(overrides[key]).length > 0)
+    // Scoped to the currently selected locale — a key overridden only in ID
+    // shouldn't show as "has override" while browsing EN, since EN itself
+    // was never touched and its draft box would come up empty if clicked.
+    if (filterMode === 'overridden') return Boolean(overrides[key]?.[locale])
     return true
   }
 
-  // Whether ANY key has an override yet, regardless of locale or screen —
-  // "Ada override" filters everything down to nothing until a translator has
-  // actually applied at least one draft, which otherwise looks identical to
-  // a broken filter (blank category list, or screen headers with nothing
+  // Whether the CURRENT locale has any override yet — "Ada override" filters
+  // everything down to nothing until a translator has applied at least one
+  // draft for this specific locale, which otherwise looks identical to a
+  // broken filter (blank category list, or screen headers with nothing
   // underneath) rather than an expected empty starting state.
   const hasAnyOverride = useMemo(
-    () => Object.values(overrides).some((v) => v && Object.keys(v).length > 0),
-    [overrides]
+    () => Object.values(overrides).some((v) => v && v[locale]),
+    [overrides, locale]
   )
 
   // Prefer whichever locale is selected in the pills above, so the list
@@ -215,7 +265,7 @@ export function Inspector() {
         matchesFilter(s.key)
     ).slice(0, 80)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, filterMode, wiredKeys, overrides])
+  }, [query, filterMode, wiredKeys, overrides, locale])
 
   // Search results grouped by which screen(s) actually render them — a key
   // wired into 3 places shows up under all 3, keys never wired land in a
@@ -312,44 +362,147 @@ export function Inspector() {
     return overflowingKeys.has(`${key}::${screenId}::${zone ?? 'page'}`)
   }
 
-  // Shared by all 3 accordion levels (page / primary overlay / nested
-  // overlay) — a screen's own zones + keys, zone-grouped and filtered.
-  function renderScreenRows(screenId: ScreenId) {
-    return sortedZones(Object.keys(usageByScreen[screenId])).map((zone) => {
-      const keys = usageByScreen[screenId][zone].filter(matchesFilter)
-      if (!keys.length) return null
-      return (
-        <div key={zone} className="mt-0.5">
-          {zone !== 'page' && (
-            <div className="text-[10px] font-semibold text-gray-400 uppercase px-2 pt-2 pb-0.5">
-              {ZONE_LABEL[zone] ?? zone}
-            </div>
-          )}
-          {keys.map((key) => {
-            const e = getEntry(key)
-            return (
-              <KeyRow
-                key={`${zone}-${key}`}
-                entryKey={key}
-                label={e ? localizedLabel(e) : key}
-                wired
-                overflowing={isOverflowing(key, screenId, zone)}
-                active={
-                  selectedKey === key && selectedOccurrence?.screenId === screenId && selectedOccurrence?.zone === zone
-                }
-                onClick={() => navigateTo(key, screenId, zone)}
-              />
-            )
-          })}
-        </div>
-      )
-    })
+  // A screen's own row count, ignoring anything it triggers open — the base
+  // case for screenFilteredCount above.
+
+  // A zone's own label (if not "page") + its filtered rows — reused for
+  // whichever group (plain, Menu, or Popup) a zone lands in below.
+  function renderZoneRows(screenId: ScreenId, zone: Zone) {
+    const keys = usageByScreen[screenId][zone].filter(matchesFilter)
+    if (!keys.length) return null
+    return (
+      <div key={zone} className="mt-0.5">
+        {zone !== 'page' && (
+          <div className="text-[10px] font-semibold text-gray-400 uppercase px-2 pt-2 pb-0.5">
+            {ZONE_LABEL[zone] ?? zone}
+          </div>
+        )}
+        {keys.map((key) => {
+          const e = getEntry(key)
+          return (
+            <KeyRow
+              key={key}
+              entryKey={key}
+              label={e ? localizedLabel(e) : key}
+              wired
+              overflowing={isOverflowing(key, screenId, zone)}
+              active={
+                selectedKey === key && selectedOccurrence?.screenId === screenId && selectedOccurrence?.zone === zone
+              }
+              onClick={() => navigateTo(key, screenId, zone)}
+            />
+          )
+        })}
+      </div>
+    )
+  }
+
+  // Renders one page or overlay entry — header, then its own content split
+  // into: plain content (the screen itself, plus any tab zones like Beli
+  // MêLy Club's tabs), a Menu group (bottom-sheet zones — Opsi, Verifikasi
+  // Akun, ...), and a Popup group (centered-dialog zones — confirmations,
+  // edit dialogs, ...), per ZONE_TYPE. Pages and overlays are siblings now
+  // (see the Pages/Overlays sections below) — an overlay no longer nests
+  // under whichever page happens to open it, so every screen renders with
+  // this exact same function, no recursion or ancestor-tracking needed.
+  function renderEntry(screenId: ScreenId): React.ReactNode {
+    const isFocused = focusPath[0] === screenId
+    // Expansion is purely click-driven now — only true when this exact
+    // entry is the focused one. Previously this also fell back to an
+    // "auto-follow the live preview" accordion state, but that caused a
+    // stale entry to silently re-expand as a side effect of navigation
+    // (e.g. closing Kelola Akun navigates the live preview back to Profil,
+    // which used to re-open Profil in the sidebar even though it was never
+    // clicked) — collapsed should stay collapsed until explicitly opened.
+    const isOpen = isFocused
+    const isFiltering = filterMode !== 'all'
+    const filteredTotal = screenFilteredCount(screenId)
+    if (isFiltering && filteredTotal === 0) return null
+    const totalCount = isFiltering ? filteredTotal : screenCount(screenId)
+    const Icon = SCREEN_ICON[screenId]
+
+    const zoneNames = Object.keys(usageByScreen[screenId])
+    const plainZones = zoneNames.filter((z) => (ZONE_TYPE[z] ?? null) !== 'menu' && ZONE_TYPE[z] !== 'popup')
+    const menuZones = zoneNames.filter((z) => ZONE_TYPE[z] === 'menu')
+    const popupZones = zoneNames.filter((z) => ZONE_TYPE[z] === 'popup')
+    const groupHasMatch = (zones: string[]) =>
+      zones.some((z) => usageByScreen[screenId][z].some(matchesFilter))
+
+    // Drilled one level further into just this entry's Menu or Popup group
+    // (only meaningful while this entry itself is the focused one). The
+    // three content areas — plain, Menu's rows, Popup's rows — are mutually
+    // exclusive, same as the "Halaman / Menu / Popup" tiers in Terjemahan:
+    // opening a screen shows its plain content with both group headers
+    // collapsed underneath; opening Menu collapses the plain content and
+    // expands Menu's rows, with Popup's header still visible (just
+    // collapsed) so it stays reachable without backing out first.
+    const subFocus = isFocused ? focusPath[1] : undefined
+    const showPlainRows = !subFocus
+    const showMenuRows = subFocus === 'menu'
+    const showPopupRows = subFocus === 'popup'
+
+    return (
+      <div key={screenId}>
+        <button
+          onClick={() => {
+            headerClick(screenId)
+            toggleFocus([screenId])
+          }}
+          className="sticky top-0 z-10 bg-imely-ink w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-white/5"
+        >
+          <span className="flex items-center gap-1.5 text-[11px] font-bold text-gray-400 uppercase">
+            <Icon size={12} className="shrink-0" />
+            {SCREEN_LABEL[screenId]} · {totalCount}
+          </span>
+          <ChevronRight
+            size={13}
+            className={`text-gray-400 shrink-0 transition-transform ${isOpen ? 'rotate-90' : ''}`}
+          />
+        </button>
+        {isOpen && (
+          <>
+            {showPlainRows && sortedZones(plainZones).map((zone) => renderZoneRows(screenId, zone))}
+
+            {menuZones.length > 0 && groupHasMatch(menuZones) && (
+              <div className="mt-1.5">
+                <button
+                  onClick={() => toggleFocus([screenId, 'menu'])}
+                  className="w-full flex items-center justify-between px-2 hover:bg-white/5 rounded-md"
+                >
+                  <span className="text-[9.5px] font-bold text-imely-primary/70 uppercase tracking-wide">Menu</span>
+                  <ChevronRight
+                    size={11}
+                    className={`text-imely-primary/70 shrink-0 transition-transform ${subFocus === 'menu' ? 'rotate-90' : ''}`}
+                  />
+                </button>
+                {showMenuRows && sortedZones(menuZones).map((zone) => renderZoneRows(screenId, zone))}
+              </div>
+            )}
+
+            {popupZones.length > 0 && groupHasMatch(popupZones) && (
+              <div className="mt-1.5">
+                <button
+                  onClick={() => toggleFocus([screenId, 'popup'])}
+                  className="w-full flex items-center justify-between px-2 hover:bg-white/5 rounded-md"
+                >
+                  <span className="text-[9.5px] font-bold text-imely-primary/70 uppercase tracking-wide">Popup</span>
+                  <ChevronRight
+                    size={11}
+                    className={`text-imely-primary/70 shrink-0 transition-transform ${subFocus === 'popup' ? 'rotate-90' : ''}`}
+                  />
+                </button>
+                {showPopupRows && sortedZones(popupZones).map((zone) => renderZoneRows(screenId, zone))}
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    )
   }
 
   return (
     <div className="w-[360px] shrink-0 h-full bg-imely-ink flex flex-col">
       <div className="p-3 border-b border-white/10">
-        <div className="font-bold text-sm text-white mb-2">String Inspector</div>
         <div className="relative">
           <Search size={14} className="absolute left-2.5 top-2.5 text-gray-500" />
           <input
@@ -381,31 +534,6 @@ export function Inspector() {
             </button>
           ))}
         </div>
-
-        {!query.trim() && (
-          <div className="flex gap-1.5 mt-2">
-            <button
-              onClick={() => setViewMode('screens')}
-              className={`flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-full border ${
-                viewMode === 'screens'
-                  ? 'bg-imely-primary text-white border-imely-primary'
-                  : 'border-white/15 text-gray-400'
-              }`}
-            >
-              <LayoutGrid size={11} /> Per Layar
-            </button>
-            <button
-              onClick={() => setViewMode('categories')}
-              className={`flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-full border ${
-                viewMode === 'categories'
-                  ? 'bg-imely-primary text-white border-imely-primary'
-                  : 'border-white/15 text-gray-400'
-              }`}
-            >
-              <Tags size={11} /> Semua Kategori
-            </button>
-          </div>
-        )}
 
         <div className="flex gap-1.5 mt-2 flex-wrap">
           {FILTERS.map((f) => (
@@ -482,149 +610,73 @@ export function Inspector() {
               Lihat Semua String
             </button>
           </div>
-        ) : viewMode === 'screens' && filterMode === 'unwired' ? (
-          <div className="p-5 text-center">
-            <div className="text-[12.5px] text-gray-400 leading-relaxed">
-              String yang <span className="font-semibold text-white">belum wired</span> belum dipakai di layar
-              manapun, jadi tidak muncul di tampilan Per Layar. Lihat semuanya di Semua Kategori.
-            </div>
-            <button
-              onClick={() => setViewMode('categories')}
-              className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-semibold text-imely-primary border border-imely-primary rounded-full px-3 py-1.5 hover:bg-imely-primary/10"
-            >
-              <Tags size={12} /> Ke Semua Kategori
-            </button>
-          </div>
-        ) : viewMode === 'screens' ? (
-          PAGE_ORDER.map((pageId) => {
-            const isOpen = openScreens.has(pageId)
-            const primaryOverlays = PAGE_CHILDREN[pageId] ?? []
-            const totalCount =
-              screenCount(pageId) +
-              primaryOverlays.reduce(
-                (n, o) => n + screenCount(o) + (CHILD_SCREENS[o] ?? []).reduce((n2, c) => n2 + screenCount(c), 0),
-                0
-              )
-            const Icon = SCREEN_ICON[pageId]
-            return (
-              <div key={pageId} className="p-2">
-                {/* Always clickable — even at 0 keys, so a page's overlays (Gem,
-                    Chat detail, ...) are reachable from the sidebar without
-                    first opening them by hand in the live preview. */}
-                <button
-                  onClick={() => headerClick(pageId)}
-                  className="sticky top-0 z-10 bg-imely-ink w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-white/5"
-                >
-                  <span className="flex items-center gap-1.5 text-[11px] font-bold text-gray-400 uppercase">
-                    <Icon size={12} className="shrink-0" />
-                    {SCREEN_LABEL[pageId]} · {totalCount}
-                  </span>
-                  <ChevronRight
-                    size={13}
-                    className={`text-gray-400 shrink-0 transition-transform ${isOpen ? 'rotate-90' : ''}`}
-                  />
-                </button>
-                {isOpen && (
-                  <>
-                    {renderScreenRows(pageId)}
-
-                    {primaryOverlays.map((overlayId) => {
-                      const overlayOpen = openScreens.has(overlayId)
-                      const grandchildren = CHILD_SCREENS[overlayId] ?? []
-                      const overlayTotal =
-                        screenCount(overlayId) + grandchildren.reduce((n, c) => n + screenCount(c), 0)
-                      const OverlayIcon = SCREEN_ICON[overlayId]
-                      return (
-                        <div key={overlayId} className="mt-1.5 ml-2.5 border-l border-white/10 pl-2">
-                          <button
-                            onClick={() => headerClick(overlayId)}
-                            className="sticky top-0 z-10 bg-imely-ink w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-white/5"
-                          >
-                            <span className="flex items-center gap-1.5 text-[10.5px] font-bold text-gray-400 uppercase">
-                              <OverlayIcon size={11} className="shrink-0" />
-                              {SCREEN_LABEL[overlayId]} · {overlayTotal}
-                            </span>
-                            <ChevronRight
-                              size={12}
-                              className={`text-gray-400 shrink-0 transition-transform ${overlayOpen ? 'rotate-90' : ''}`}
-                            />
-                          </button>
-                          {overlayOpen && (
-                            <>
-                              {renderScreenRows(overlayId)}
-
-                              {grandchildren.map((childId) => {
-                                const childOpen = openScreens.has(childId)
-                                const childCount = screenCount(childId)
-                                const ChildIcon = SCREEN_ICON[childId]
-                                return (
-                                  <div key={childId} className="mt-1.5 ml-2.5 border-l border-white/10 pl-2">
-                                    <button
-                                      onClick={() => headerClick(childId)}
-                                      className="sticky top-0 z-10 bg-imely-ink w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-white/5"
-                                    >
-                                      <span className="flex items-center gap-1.5 text-[10px] font-bold text-gray-400 uppercase">
-                                        <ChildIcon size={10} className="shrink-0" />
-                                        {SCREEN_LABEL[childId]} · {childCount}
-                                      </span>
-                                      <ChevronRight
-                                        size={11}
-                                        className={`text-gray-400 shrink-0 transition-transform ${childOpen ? 'rotate-90' : ''}`}
-                                      />
-                                    </button>
-                                    {childOpen && renderScreenRows(childId)}
-                                  </div>
-                                )
-                              })}
-                            </>
-                          )}
-                        </div>
-                      )
-                    })}
-                  </>
-                )}
-              </div>
-            )
-          })
         ) : (
-          categoryGroups.map(([cat, entries]) => {
-            const filtered = entries.filter((e) => matchesFilter(e.key))
-            if (!filtered.length) return null
-            const isOpen = openCategories.has(cat)
-            const wiredCount = entries.filter((e) => wiredKeys.has(e.key)).length
-            return (
-              <div key={cat} className="p-2">
+          <div className="p-2">
+            {/* Pages and overlays render as one continuous list, in
+                SCREEN_ORDER (each page immediately followed by its own
+                overlays) — no separate "Pages"/"Overlays" section, since a
+                translator checking strings doesn't need that distinction.
+                Hidden entirely while "Belum Dipakai" is the focused thing. */}
+            {(focusPath.length === 0 || focusPath[0] !== '__unwired__') &&
+              SCREEN_ORDER.filter((id) => focusPath.length === 0 || focusPath[0] === id).map((screenId) =>
+                renderEntry(screenId)
+              )}
+
+            {filterMode !== 'all' &&
+              (focusPath.length === 0 || focusPath[0] === '__unwired__') &&
+              unwiredCategoryGroups.some(([, entries]) => entries.some((e) => matchesFilter(e.key))) && (
+              <>
                 <button
-                  onClick={() => toggleCategory(cat)}
-                  className="sticky top-0 z-10 bg-imely-ink w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-white/5"
+                  onClick={() => toggleFocus(['__unwired__'])}
+                  className="mt-3 w-full flex items-center justify-between px-2 rounded-md hover:bg-white/5"
                 >
-                  <span className="text-[11px] font-bold text-gray-400 uppercase truncate pr-2">
-                    {cat} · {entries.length}{' '}
-                    <span className="text-imely-primary normal-case font-medium">({wiredCount} wired)</span>
-                  </span>
+                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wide">Belum Dipakai</span>
                   <ChevronRight
-                    size={13}
-                    className={`text-gray-400 shrink-0 transition-transform ${isOpen ? 'rotate-90' : ''}`}
+                    size={11}
+                    className={`text-gray-500 shrink-0 transition-transform ${focusPath[0] === '__unwired__' ? 'rotate-90' : ''}`}
                   />
                 </button>
-                {isOpen &&
-                  filtered.map((e) => {
-                    const occ = usage.find((u) => u.key === e.key)
+                {unwiredCategoryGroups
+                  .filter(([cat]) => focusPath[0] !== '__unwired__' || !focusPath[1] || focusPath[1] === cat)
+                  .map(([cat, entries]) => {
+                    const filtered = entries.filter((e) => matchesFilter(e.key))
+                    if (!filtered.length) return null
+                    const isOpen = focusPath[0] === '__unwired__' && focusPath[1] === cat
                     return (
-                      <KeyRow
-                        key={e.key}
-                        entryKey={e.key}
-                        label={localizedLabel(e)}
-                        wired={wiredKeys.has(e.key)}
-                        overflowing={isOverflowing(e.key, occ?.screenId, occ?.zone)}
-                        active={selectedKey === e.key}
-                        onClick={() => navigateTo(e.key)}
-                      />
+                      <div key={cat} className="mt-1">
+                        <button
+                          onClick={() => toggleFocus(['__unwired__', cat])}
+                          className="sticky top-0 z-10 bg-imely-ink w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-white/5"
+                        >
+                          <span className="text-[11px] font-bold text-gray-400 uppercase truncate pr-2">
+                            {cat} · {entries.length}
+                            {filterMode === 'overridden' && (
+                              <span className="text-imely-primary normal-case font-medium"> ({filtered.length} override)</span>
+                            )}
+                          </span>
+                          <ChevronRight
+                            size={13}
+                            className={`text-gray-400 shrink-0 transition-transform ${isOpen ? 'rotate-90' : ''}`}
+                          />
+                        </button>
+                        {isOpen &&
+                          filtered.map((e) => (
+                            <KeyRow
+                              key={e.key}
+                              entryKey={e.key}
+                              label={localizedLabel(e)}
+                              wired={false}
+                              overflowing={false}
+                              active={selectedKey === e.key}
+                              onClick={() => navigateTo(e.key)}
+                            />
+                          ))}
+                      </div>
                     )
                   })}
-              </div>
-            )
-          })
+              </>
+            )}
+          </div>
         )}
       </div>
     </div>

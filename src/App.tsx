@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { PanelLeftOpen, PanelLeftClose } from 'lucide-react'
+import { PanelLeftOpen, PanelLeftClose, X } from 'lucide-react'
 import { AppProvider, useApp } from './context/AppContext'
 import { ScreenScope } from './context/ScreenScope'
 import { useStringHighlighter } from './hooks/useStringHighlighter'
 import { useOpenScreen } from './hooks/useNavigateToString'
-import { WARM_UP_SCREENS } from './sandbox/browseConfig'
+import { WARM_UP_SCREENS, WARM_UP_ZONES } from './sandbox/browseConfig'
 import { PhoneFrame } from './components/shell/PhoneFrame'
 import { Header } from './components/shell/Header'
 import { BottomNav } from './components/shell/BottomNav'
@@ -71,6 +71,9 @@ function Shell() {
     usernameOpen,
     deleteAccountOpen,
     characterFormOpen,
+    selectedKey,
+    selectKey,
+    requestPopup,
     toast,
   } = useApp()
   useStringHighlighter()
@@ -78,7 +81,10 @@ function Shell() {
 
   // Visit every screen once behind a brief cover so the Inspector's key
   // counts are accurate from the start, instead of showing 0 until a
-  // translator happens to open each overlay by hand first.
+  // translator happens to open each overlay by hand first. Also briefly
+  // opens each screen's own local popups/menus (WARM_UP_ZONES) the same
+  // way — those live behind a button click inside the screen itself, so
+  // mounting the screen alone never registers their strings.
   const [priming, setPriming] = useState(true)
   useEffect(() => {
     let cancelled = false
@@ -87,6 +93,11 @@ function Shell() {
         if (cancelled) return
         openScreen(screenId)
         await new Promise((resolve) => setTimeout(resolve, 30))
+        for (const zone of WARM_UP_ZONES[screenId] ?? []) {
+          if (cancelled) return
+          requestPopup(screenId, zone)
+          await new Promise((resolve) => setTimeout(resolve, 20))
+        }
       }
       if (cancelled) return
       openScreen('feed')
@@ -104,25 +115,51 @@ function Shell() {
   }
 
   return (
-    <div className="h-screen w-screen flex bg-[#F4F5F7] overflow-hidden">
-      {inspectorOpen && (
-        <>
-          <Inspector />
-          <TranslationPanel />
-        </>
-      )}
-
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="h-12 flex items-center gap-3 px-4 border-b border-imely-line bg-white shrink-0">
+    <div className="h-screen w-screen flex flex-col bg-[#F4F5F7] overflow-hidden">
+      {/* one shared title bar spanning the full window, split into
+          color-matched segments so all three columns' content starts at the
+          same y-offset instead of each panel carrying its own header height */}
+      <div className="h-12 flex items-stretch shrink-0">
+        {inspectorOpen && (
+          <>
+            <div className="w-[360px] shrink-0 bg-imely-ink border-b border-white/10 flex items-center px-3">
+              <span className="text-[13px] font-semibold text-white">String Inspector</span>
+            </div>
+            <div className="w-[300px] shrink-0 bg-white border-b border-imely-line flex items-center justify-between px-3">
+              <span className="text-[13px] font-semibold text-imely-ink">Terjemahan</span>
+              {selectedKey && (
+                <button
+                  onClick={() => selectKey(null, null)}
+                  title="Tutup panel terjemahan"
+                  className="text-gray-400 active:scale-90 transition-transform"
+                >
+                  <X size={16} />
+                </button>
+              )}
+            </div>
+          </>
+        )}
+        <div className="flex-1 flex items-center gap-3 px-4 border-b border-imely-line bg-white min-w-0">
           <button
             onClick={() => setInspectorOpen(!inspectorOpen)}
-            className="w-7 h-7 rounded-md flex items-center justify-center text-gray-500 hover:bg-gray-100"
+            className="w-7 h-7 rounded-md flex items-center justify-center text-gray-500 hover:bg-gray-100 shrink-0"
           >
             {inspectorOpen ? <PanelLeftClose size={16} /> : <PanelLeftOpen size={16} />}
           </button>
-          <span className="text-[13px] font-semibold text-imely-ink">imely localization sandbox</span>
-          <span className="text-[11px] text-gray-400">— live UI preview, not the real app</span>
+          <span className="text-[13px] font-semibold text-imely-ink truncate">imely localization sandbox</span>
+          <span className="text-[11px] text-gray-400 truncate">— live UI preview, not the real app</span>
         </div>
+      </div>
+
+      <div className="flex-1 flex overflow-hidden">
+        {inspectorOpen && (
+          <>
+            <Inspector />
+            <TranslationPanel />
+          </>
+        )}
+
+        <div className="flex-1 flex flex-col overflow-hidden">
 
         <div className="flex-1 overflow-y-auto">
           <PhoneFrame>
@@ -395,6 +432,7 @@ function Shell() {
             )}
           </PhoneFrame>
         </div>
+      </div>
       </div>
     </div>
   )

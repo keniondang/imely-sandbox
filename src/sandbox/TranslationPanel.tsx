@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
-import { X, Copy, Check, RotateCcw, AlertTriangle, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
+import { Copy, Check, RotateCcw, AlertTriangle, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import { getEntry, type Locale } from '../lib/strings'
 import { buildStrSelector } from '../components/Str'
-import { useBrowseOrder } from '../hooks/useBrowseOrder'
+import { useBrowseOrder, type BrowseRow } from '../hooks/useBrowseOrder'
 import { useNavigateToString } from '../hooks/useNavigateToString'
+import { ZONE_TYPE } from '../sandbox/browseConfig'
 
 const LOCALES: { id: Locale; label: string }[] = [
   { id: 'id', label: 'ID' },
@@ -27,11 +28,25 @@ export function TranslationPanel() {
     setLivePreview,
     selectedKey,
     selectedOccurrence,
-    selectKey,
-    viewMode,
+    setFocusPath,
   } = useApp()
   const { rows, pageSections, overlaySections } = useBrowseOrder()
   const navigateTo = useNavigateToString()
+
+  // Keeps the Inspector's drill-down in sync with wherever prev/next lands
+  // — opening "other pages" from here should open them in the sidebar too,
+  // not just the live preview. A row in a Menu/Popup zone drills the
+  // sidebar one level further to match; a "Belum Dipakai" row (no screenId)
+  // drills into its category instead.
+  function syncInspectorFocus(row: BrowseRow) {
+    if (row.screenId) {
+      const zoneType = row.zone ? ZONE_TYPE[row.zone] : undefined
+      setFocusPath(zoneType === 'menu' || zoneType === 'popup' ? [row.screenId, zoneType] : [row.screenId])
+      return
+    }
+    const entry = getEntry(row.key)
+    setFocusPath(entry ? ['__unwired__', String(entry.category)] : [])
+  }
 
   const [draftText, setDraftText] = useState('')
   const [overflowFlag, setOverflowFlag] = useState<boolean | null>(null)
@@ -77,15 +92,24 @@ export function TranslationPanel() {
   const canPrevRow = rowIndex > 0
   const canNextRow = rowIndex >= 0 && rowIndex < rows.length - 1
   const canPrevOverlay = overlaySiblingIndex > 0
-  const canNextOverlay = overlaySiblingIndex >= 0 && overlaySiblingIndex < overlaySiblings.length - 1
+  // Not gated on `overlaySiblingIndex >= 0` — the current row is often in
+  // the screen's plain content (index -1, no Menu/Popup group yet), and
+  // "next" from there should still be able to step INTO the first group
+  // that exists rather than staying stuck because there's no "current"
+  // group to count from.
+  const canNextOverlay = overlaySiblings.length > 0 && overlaySiblingIndex < overlaySiblings.length - 1
   const canPrevPage = pageIndex > 0
   const canNextPage = pageIndex >= 0 && pageIndex < pageSections.length - 1
-  const pageUnitLabel = viewMode === 'screens' ? 'Halaman' : 'Kategori'
+  // A "page" is either a real screen or one of the "Belum Dipakai" category
+  // tails appended after them — labeled differently since a category isn't
+  // really a page a translator would recognize from the live preview.
+  const pageUnitLabel = pageSections[pageIndex]?.id.startsWith('unwired:') ? 'Kategori' : 'Halaman'
 
   function goRow(delta: number) {
     const target = rows[rowIndex + delta]
     if (!target) return
     navigateTo(target.key, target.screenId ?? undefined, target.zone ?? undefined)
+    syncInspectorFocus(target)
   }
 
   function goOverlay(delta: number) {
@@ -93,6 +117,7 @@ export function TranslationPanel() {
     const targetRow = target ? rows[target.startIndex] : undefined
     if (!targetRow) return
     navigateTo(targetRow.key, targetRow.screenId ?? undefined, targetRow.zone ?? undefined)
+    syncInspectorFocus(targetRow)
   }
 
   function goPage(delta: number) {
@@ -100,6 +125,7 @@ export function TranslationPanel() {
     const targetRow = targetSection ? rows[targetSection.startIndex] : undefined
     if (!targetRow) return
     navigateTo(targetRow.key, targetRow.screenId ?? undefined, targetRow.zone ?? undefined)
+    syncInspectorFocus(targetRow)
   }
 
   const entry = selectedKey ? getEntry(selectedKey) : null
@@ -174,16 +200,6 @@ export function TranslationPanel() {
 
   return (
     <div className="w-[300px] shrink-0 h-full border-r border-imely-line bg-white flex flex-col">
-      <div className="p-3 border-b border-imely-line flex items-center justify-between">
-        <div className="font-bold text-sm text-imely-ink">Terjemahan</div>
-        <button
-          onClick={() => selectKey(null, null)}
-          className="text-gray-400 active:scale-90 transition-transform"
-        >
-          <X size={16} />
-        </button>
-      </div>
-
       <div className="px-3 py-2 border-b border-imely-line space-y-1.5">
         <div className="flex items-center justify-between gap-1">
           <button
@@ -209,32 +225,33 @@ export function TranslationPanel() {
             {pageUnitLabel} <ChevronsRight size={12} />
           </button>
         </div>
-        {viewMode === 'screens' && overlaySiblings.length > 1 && (
-          <div className="flex items-center justify-between gap-1">
-            <button
-              onClick={() => goOverlay(-1)}
-              disabled={!canPrevOverlay}
-              title="Overlay sebelumnya (dalam halaman ini)"
-              className="flex items-center gap-0.5 text-[10.5px] text-gray-500 px-2 py-1 rounded-md hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent"
-            >
-              <ChevronLeft size={12} /> Overlay
-            </button>
-            <div
-              className="text-[10.5px] text-gray-400 truncate max-w-[110px] text-center"
-              title={overlaySections[overlayIndex]?.label}
-            >
-              {overlayIndex >= 0 ? overlaySections[overlayIndex]?.label : '—'}
-            </div>
-            <button
-              onClick={() => goOverlay(1)}
-              disabled={!canNextOverlay}
-              title="Overlay berikutnya (dalam halaman ini)"
-              className="flex items-center gap-0.5 text-[10.5px] text-gray-500 px-2 py-1 rounded-md hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent"
-            >
-              Overlay <ChevronRight size={12} />
-            </button>
+        {/* Always shown, even with nothing to step to — e.g. Beranda has no
+            Menu/Popup zones of its own, so both buttons just disable rather
+            than the row disappearing, which would look like it's missing. */}
+        <div className="flex items-center justify-between gap-1">
+          <button
+            onClick={() => goOverlay(-1)}
+            disabled={!canPrevOverlay}
+            title="Grup sebelumnya (Menu/Popup dalam layar ini)"
+            className="flex items-center gap-0.5 text-[10.5px] text-gray-500 px-2 py-1 rounded-md hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent"
+          >
+            <ChevronLeft size={12} /> Grup
+          </button>
+          <div
+            className="text-[10.5px] text-gray-400 truncate max-w-[110px] text-center"
+            title={overlaySections[overlayIndex]?.label}
+          >
+            {overlayIndex >= 0 ? overlaySections[overlayIndex]?.label : '—'}
           </div>
-        )}
+          <button
+            onClick={() => goOverlay(1)}
+            disabled={!canNextOverlay}
+            title="Grup berikutnya (Menu/Popup dalam layar ini)"
+            className="flex items-center gap-0.5 text-[10.5px] text-gray-500 px-2 py-1 rounded-md hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent"
+          >
+            Grup <ChevronRight size={12} />
+          </button>
+        </div>
         <div className="flex items-center justify-between gap-1">
           <button
             onClick={() => goRow(-1)}
