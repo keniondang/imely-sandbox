@@ -1,4 +1,5 @@
 import rawStrings from '../data/strings.json'
+import rawAiSuggestions from '../data/aiSuggestions.json'
 
 // Source locales already exist in the sheet — read-only reference material,
 // always present on every entry. Target locales are the languages being
@@ -68,3 +69,18 @@ export function resolveString(
 export const CATEGORIES = Array.from(
   new Set(ALL_STRINGS.map((s) => String(s.category)))
 ).sort()
+
+// Starting-point translations for the translator to accept, edit, or ignore
+// — kept as a separate file (not part of `overrides`) since it comes from a
+// different source (an AI pass, added later) rather than the translator's
+// own saved work. Empty for now; populated later by filling in
+// src/data/aiSuggestions.json with { [key]: { 'zh-TW': '...', th: '...' } }
+// entries — the moment a key has one, the Translation panel picks it up
+// with no further code changes.
+export type AiSuggestions = Record<string, Partial<Record<TargetLocale, string>>>
+export const AI_SUGGESTIONS = rawAiSuggestions as AiSuggestions
+
+export function getAiSuggestion(key: string, locale: Locale): string | undefined {
+  if (!isTargetLocale(locale)) return undefined
+  return AI_SUGGESTIONS[key]?.[locale]
+}

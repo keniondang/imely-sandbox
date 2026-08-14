@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type KeyboardEvent } from 'react'
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import {
   Copy,
   Check,
@@ -9,9 +9,17 @@ import {
   ChevronsLeft,
   ChevronsRight,
   SkipForward,
+  Sparkles,
 } from 'lucide-react'
 import { useApp } from '../context/AppContext'
-import { getEntry, isTargetLocale, LOCALE_LABEL, SOURCE_LOCALES } from '../lib/strings'
+import {
+  getAiSuggestion,
+  getEntry,
+  isTargetLocale,
+  LOCALE_LABEL,
+  SOURCE_LOCALES,
+  type SourceLocale,
+} from '../lib/strings'
 import { buildStrSelector } from '../components/Str'
 import { useBrowseOrder, type BrowseRow } from '../hooks/useBrowseOrder'
 import { useNavigateToString } from '../hooks/useNavigateToString'
@@ -156,6 +164,9 @@ export function TranslationPanel() {
   const entry = selectedKey ? getEntry(selectedKey) : null
   const wired = selectedKey ? usage.some((u) => u.key === selectedKey) : false
   const appliedForLocale = selectedKey ? overrides[selectedKey]?.[locale] : undefined
+  // Blank for every key until src/data/aiSuggestions.json is filled in later
+  // — see getAiSuggestion in lib/strings.ts. Nothing renders until then.
+  const aiSuggestion = selectedKey ? getAiSuggestion(selectedKey, locale) : undefined
 
   // Each locale keeps its own draft, so switching the key or the ID/EN/VI
   // pill re-seeds from whatever was already applied for THAT locale (or
@@ -359,17 +370,43 @@ export function TranslationPanel() {
         )}
 
         <div className="mt-3 text-[11px] font-semibold text-gray-500 uppercase">Original string</div>
-        <div className="mt-1.5 space-y-1.5">
+        <div className="text-[10px] text-gray-400 -mt-0.5 mb-1">Click any line to fix the source text itself.</div>
+        <div className="space-y-1.5">
           {SOURCE_LOCALES.map((l) => (
-            <div
+            <SourceStringRow
               key={l}
-              className={`text-[12px] rounded-md px-2 py-1 ${l === locale ? 'bg-imely-mint/40' : ''}`}
-            >
-              <span className="text-gray-400 font-semibold mr-1">{LOCALE_LABEL[l]}:</span>
-              <span className="text-imely-ink">{entry.locales[l]}</span>
-            </div>
+              srcLocale={l}
+              entryKey={selectedKey}
+              original={entry.locales[l] ?? ''}
+              overrideText={overrides[selectedKey]?.[l]}
+              isActiveLocale={l === locale}
+              onSave={(text) => applyOverride(selectedKey, l, text)}
+              onReset={() => resetOverride(selectedKey, l)}
+            />
           ))}
         </div>
+
+        {targetMode && (
+          <div className="mt-3">
+            <div className="text-[11px] font-semibold text-gray-500 mb-1 flex items-center justify-between">
+              <span className="flex items-center gap-1">
+                <Sparkles size={11} className="text-imely-primary" /> AI suggestion
+              </span>
+              {aiSuggestion && (
+                <button onClick={() => handleChange(aiSuggestion)} className="text-imely-primary font-semibold">
+                  Use this
+                </button>
+              )}
+            </div>
+            {aiSuggestion ? (
+              <div className="text-[12px] bg-imely-mint/30 rounded-md px-2 py-1.5 text-imely-ink">{aiSuggestion}</div>
+            ) : (
+              <div className="text-[12px] text-gray-300 italic rounded-md px-2 py-1.5 border border-dashed border-imely-line">
+                No suggestion yet
+              </div>
+            )}
+          </div>
+        )}
 
         <div className="mt-4">
           <div className="text-[11px] font-semibold text-gray-500 mb-1 flex items-center justify-between">
@@ -412,6 +449,110 @@ export function TranslationPanel() {
           )}
         </div>
       </div>
+    </div>
+  )
+}
+
+// One editable id/en/vi reference line. Source text used to be read-only
+// here — fixing a typo meant switching the whole panel's locale away from
+// whatever target language was being worked on. Saves through the same
+// `overrides` map as everything else (id/en/vi overrides already existed
+// for QA wording tests; this just adds a faster, inline way to write one)
+// so it shows up everywhere else that reads overrides — the sidebar list,
+// the live preview when that locale is active, and the .xlsx export.
+function SourceStringRow({
+  srcLocale,
+  entryKey,
+  original,
+  overrideText,
+  isActiveLocale,
+  onSave,
+  onReset,
+}: {
+  srcLocale: SourceLocale
+  entryKey: string
+  original: string
+  overrideText: string | undefined
+  isActiveLocale: boolean
+  onSave: (text: string) => void
+  onReset: () => void
+}) {
+  const effective = overrideText ?? original
+  const edited = overrideText !== undefined && overrideText !== original
+  const [draft, setDraft] = useState(effective)
+  const taRef = useRef<HTMLTextAreaElement>(null)
+  // Escape reverts the draft then blurs, which fires onBlur -> commit() —
+  // but commit() closes over `draft` from the same render as this handler,
+  // so it would still see the pre-revert text (setDraft hasn't flushed yet)
+  // and save THAT. A ref flag skips that one commit instead, since refs
+  // (unlike state) are visible immediately, with no render round-trip.
+  const skipNextCommitRef = useRef(false)
+
+  useEffect(() => {
+    setDraft(effective)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [entryKey, srcLocale, effective])
+
+  // Auto-grows to fit content, same as the read-only text it replaced
+  // wrapped instead of clipping to a fixed box height.
+  useEffect(() => {
+    const el = taRef.current
+    if (!el) return
+    el.style.height = 'auto'
+    el.style.height = `${el.scrollHeight}px`
+  }, [draft])
+
+  function commit() {
+    if (skipNextCommitRef.current) {
+      skipNextCommitRef.current = false
+      return
+    }
+    const trimmed = draft.trim()
+    if (trimmed === '') {
+      if (overrideText !== undefined) onReset()
+      setDraft(original)
+      return
+    }
+    if (draft !== effective) onSave(draft)
+  }
+
+  function handleKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      e.currentTarget.blur()
+    } else if (e.key === 'Escape') {
+      skipNextCommitRef.current = true
+      setDraft(effective)
+      e.currentTarget.blur()
+    }
+  }
+
+  return (
+    <div className={`rounded-md px-2 py-1 ${isActiveLocale ? 'bg-imely-mint/40' : ''}`}>
+      <div className="flex items-center justify-between">
+        <span className="text-gray-400 font-semibold text-[12px]">{LOCALE_LABEL[srcLocale]}:</span>
+        {edited && (
+          <button
+            onClick={() => {
+              onReset()
+              setDraft(original)
+            }}
+            title="Revert to the original sheet text"
+            className="text-gray-400 hover:text-imely-primary flex items-center gap-0.5 text-[10px]"
+          >
+            <RotateCcw size={10} /> reset
+          </button>
+        )}
+      </div>
+      <textarea
+        ref={taRef}
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+        onBlur={commit}
+        onKeyDown={handleKeyDown}
+        rows={1}
+        className="w-full text-[12px] text-imely-ink bg-transparent border border-transparent hover:border-imely-line focus:border-imely-primary focus:bg-white rounded-md px-1 py-0.5 -mx-1 outline-none resize-none overflow-hidden"
+      />
     </div>
   )
 }

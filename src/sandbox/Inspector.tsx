@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
-import { Search, X, AlertTriangle, ChevronRight } from 'lucide-react'
+import { Search, X, AlertTriangle, ChevronRight, Check } from 'lucide-react'
 import { useApp, type ScreenId, type Zone } from '../context/AppContext'
 import {
   ALL_STRINGS,
@@ -251,6 +251,14 @@ export function Inspector() {
     return true
   }
 
+  // Row-level highlight so a translator scanning "All" for zh-TW/th can see
+  // progress at a glance instead of relying purely on the filter pills.
+  // Meaningless for source locales (id/en/vi always have sheet text), so
+  // always false there — keeps QA-mode browsing looking exactly as before.
+  function isTranslated(key: string): boolean {
+    return isTargetLocale(locale) && Boolean(overrides[key]?.[locale])
+  }
+
   // Whether the CURRENT locale has any override yet — "Overridden"/"Translated"
   // filters everything down to nothing until a translator has applied at
   // least one draft for this specific locale, which otherwise looks
@@ -278,8 +286,14 @@ export function Inspector() {
   // translator has saved a zh-TW/th draft, the row should show THEIR text,
   // not silently keep displaying the id/en fallback underneath it.
   function localizedLabel(entry: { key: string; locales: Partial<Record<Locale, string>> }): string {
+    // Source strings (id/en) are now editable from the Translation panel even
+    // while browsing a target locale — so a corrected id/en has to outrank
+    // the untouched sheet value here too, not just when id/en is the active
+    // locale, or a fix made while translating TH would look like it did
+    // nothing back in the list.
+    const o = overrides[entry.key]
     return (
-      overrides[entry.key]?.[locale] || entry.locales[locale] || entry.locales.id || entry.locales.en || ''
+      o?.[locale] || entry.locales[locale] || o?.id || entry.locales.id || o?.en || entry.locales.en || ''
     )
   }
 
@@ -416,6 +430,7 @@ export function Inspector() {
               entryKey={key}
               label={e ? localizedLabel(e) : key}
               wired
+              translated={isTranslated(key)}
               overflowing={isOverflowing(key, screenId, zone)}
               active={
                 selectedKey === key && selectedOccurrence?.screenId === screenId && selectedOccurrence?.zone === zone
@@ -641,6 +656,7 @@ export function Inspector() {
                         entryKey={hit.key}
                         label={e ? localizedLabel(e) : hit.key}
                         wired={wiredKeys.has(hit.key)}
+                        translated={isTranslated(hit.key)}
                         overflowing={isOverflowing(hit.key, hit.screenId, hit.zone)}
                         active={
                           selectedKey === hit.key &&
@@ -749,6 +765,7 @@ export function Inspector() {
                               entryKey={e.key}
                               label={localizedLabel(e)}
                               wired={false}
+                              translated={isTranslated(e.key)}
                               overflowing={false}
                               active={selectedKey === e.key}
                               onClick={() => navigateTo(e.key)}
@@ -770,6 +787,7 @@ function KeyRow({
   entryKey,
   label,
   wired,
+  translated,
   active,
   focused,
   overflowing,
@@ -779,6 +797,7 @@ function KeyRow({
   entryKey: string
   label?: string
   wired: boolean
+  translated?: boolean
   active: boolean
   focused?: boolean
   overflowing?: boolean
@@ -790,16 +809,19 @@ function KeyRow({
       ref={rowRef}
       onClick={onClick}
       title={entryKey}
-      className={`w-full text-left px-2 py-1.5 rounded-lg flex items-center gap-1.5 ${
+      className={`w-full text-left px-2 py-1.5 rounded-lg flex items-center gap-1.5 border-l-2 ${
         active
-          ? 'bg-imely-primary text-white'
+          ? 'bg-imely-primary text-white border-transparent'
           : focused
-            ? 'bg-white/10 ring-1 ring-inset ring-imely-primary'
-            : 'hover:bg-white/5'
+            ? 'bg-white/10 ring-1 ring-inset ring-imely-primary border-transparent'
+            : translated
+              ? 'bg-emerald-500/10 border-emerald-500/60 hover:bg-emerald-500/15'
+              : 'border-transparent hover:bg-white/5'
       }`}
     >
       <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${wired ? 'bg-imely-primary' : 'bg-white/25'}`} />
       <span className={`text-[12.5px] truncate flex-1 ${active ? 'text-white' : 'text-gray-200'}`}>{label}</span>
+      {translated && !active && <Check size={11} className="text-emerald-400 shrink-0" />}
       {overflowing && <AlertTriangle size={12} className="text-red-400 shrink-0" />}
     </button>
   )
