@@ -3,12 +3,11 @@ import { Search, X, AlertTriangle, ChevronRight, Check } from 'lucide-react'
 import { useApp, type ScreenId, type Zone } from '../context/AppContext'
 import {
   ALL_STRINGS,
+  CATEGORIES,
   getEntry,
-  isTargetLocale,
   LOCALE_LABEL,
   SOURCE_LOCALES,
   TARGET_LOCALES,
-  type Locale,
   type StringEntry,
 } from '../lib/strings'
 import { useNavigateToString, useOpenScreen } from '../hooks/useNavigateToString'
@@ -21,7 +20,7 @@ import {
   ZONE_TYPE,
   sortedZones,
   pageIdFor,
-  filtersForLocale,
+  FILTERS,
 } from './browseConfig'
 
 interface SearchHit {
@@ -32,8 +31,10 @@ interface SearchHit {
 
 export function Inspector() {
   const {
-    locale,
-    setLocale,
+    targetLocale,
+    setTargetLocale,
+    baseLocale,
+    setBaseLocale,
     usage,
     currentScreen,
     overrides,
@@ -73,6 +74,7 @@ export function Inspector() {
   // container, re-scanned on an interval — see the bulk-scan effect below.
   const [overflowingKeys, setOverflowingKeys] = useState<Set<string>>(new Set())
   const [focusedIndex, setFocusedIndex] = useState(-1)
+  const [categoryProgressOpen, setCategoryProgressOpen] = useState(false)
   const searchInputRef = useRef<HTMLInputElement>(null)
   const rowRefs = useRef(new Map<number, HTMLButtonElement>())
 
@@ -162,17 +164,6 @@ export function Inspector() {
     setFocusPath([])
   }, [filterMode, query])
 
-  // "Unwired" only exists for source locales and "Untranslated" only for
-  // target locales — switching locale with one of those selected would
-  // otherwise leave the filter pill row showing a selected pill that isn't
-  // even in the now-visible set, with the list silently stuck on whatever
-  // it last matched.
-  useEffect(() => {
-    const valid = filtersForLocale(locale).some((f) => f.id === filterMode)
-    if (!valid) setFilterMode('all')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [locale])
-
   const wiredKeys = useMemo(() => new Set(usage.map((u) => u.key)), [usage])
 
   // screenId -> zone -> keys in that zone. The same key can legitimately
@@ -226,6 +217,20 @@ export function Inspector() {
     return Object.values(usageByScreen[screenId]).reduce((n, keys) => n + keys.filter(matchesFilter).length, 0)
   }
 
+  // Per-screen translation completion, for the header's mini progress bar —
+  // counts occurrences the same way screenCount does (a key wired into 2
+  // zones on one screen counts twice), so the bar's denominator always
+  // matches whatever number the header is showing next to it.
+  function screenProgress(screenId: ScreenId): { done: number; total: number } {
+    let done = 0
+    let total = 0
+    for (const keys of Object.values(usageByScreen[screenId])) {
+      total += keys.length
+      done += keys.filter((k) => overrides[k]?.[targetLocale]).length
+    }
+    return { done, total }
+  }
+
   // Every key NOT wired into any screen, grouped by xlsx category — the
   // "Unused" tail appended after the screen tree, since that's the
   // only way to reach content that hasn't been wired into the sandbox yet
@@ -243,57 +248,57 @@ export function Inspector() {
 
   function matchesFilter(key: string): boolean {
     if (filterMode === 'unwired') return !wiredKeys.has(key)
-    // Scoped to the currently selected locale — a key overridden only in ID
-    // shouldn't show as "has override" while browsing EN, since EN itself
-    // was never touched and its draft box would come up empty if clicked.
-    if (filterMode === 'overridden') return Boolean(overrides[key]?.[locale])
-    if (filterMode === 'untranslated') return !overrides[key]?.[locale]
+    if (filterMode === 'translated') return Boolean(overrides[key]?.[targetLocale])
+    if (filterMode === 'untranslated') return !overrides[key]?.[targetLocale]
     return true
   }
 
-  // Row-level highlight so a translator scanning "All" for zh-TW/th can see
-  // progress at a glance instead of relying purely on the filter pills.
-  // Meaningless for source locales (id/en/vi always have sheet text), so
-  // always false there — keeps QA-mode browsing looking exactly as before.
+  // Row-level highlight so a translator scanning "All" can see progress at
+  // a glance instead of relying purely on the filter pills.
   function isTranslated(key: string): boolean {
-    return isTargetLocale(locale) && Boolean(overrides[key]?.[locale])
+    return Boolean(overrides[key]?.[targetLocale])
   }
 
-  // Whether the CURRENT locale has any override yet — "Overridden"/"Translated"
-  // filters everything down to nothing until a translator has applied at
-  // least one draft for this specific locale, which otherwise looks
-  // identical to a broken filter (blank category list, or screen headers
-  // with nothing underneath) rather than an expected empty starting state.
-  const hasAnyOverride = useMemo(
-    () => Object.values(overrides).some((v) => v && v[locale]),
-    [overrides, locale]
+  // Whether the current target locale has any translation yet — "Translated"
+  // filters everything down to nothing until a translator has saved at
+  // least one, which otherwise looks identical to a broken filter (blank
+  // category list, screen headers with nothing underneath) rather than an
+  // expected empty starting state.
+  const hasAnyTranslation = useMemo(
+    () => Object.values(overrides).some((v) => v && v[targetLocale]),
+    [overrides, targetLocale]
   )
 
-  // How much of the whole sheet has a translation for the current TARGET
-  // locale — only meaningful for zh-TW/th, since id/en/vi already have a
-  // complete baseline from the sheet itself. Doubles as the "everything's
-  // done" check for the Untranslated filter's empty state.
+  // How much of the whole sheet has a translation for the current target
+  // locale. Doubles as the "everything's done" check for the Untranslated
+  // filter's empty state.
   const translationProgress = useMemo(() => {
-    if (!isTargetLocale(locale)) return null
     const total = ALL_STRINGS.length
-    const done = ALL_STRINGS.reduce((n, s) => n + (overrides[s.key]?.[locale] ? 1 : 0), 0)
+    const done = ALL_STRINGS.reduce((n, s) => n + (overrides[s.key]?.[targetLocale] ? 1 : 0), 0)
     return { done, total }
-  }, [locale, overrides])
+  }, [targetLocale, overrides])
 
-  // Prefer whichever locale is selected in the pills above, so the list
-  // matches what the live preview is actually showing right now.
-  // Applied translation takes priority over the sheet's own value — once a
-  // translator has saved a zh-TW/th draft, the row should show THEIR text,
-  // not silently keep displaying the id/en fallback underneath it.
-  function localizedLabel(entry: { key: string; locales: Partial<Record<Locale, string>> }): string {
-    // Source strings (id/en) are now editable from the Translation panel even
-    // while browsing a target locale — so a corrected id/en has to outrank
-    // the untouched sheet value here too, not just when id/en is the active
-    // locale, or a fix made while translating TH would look like it did
-    // nothing back in the list.
-    const o = overrides[entry.key]
+  // Per-category completion, for the "Progress by category" breakdown —
+  // lets a translator see which chunks of the sheet still need work instead
+  // of only a single sheet-wide percentage.
+  const categoryProgress = useMemo(() => {
+    const counts = new Map<string, { done: number; total: number }>()
+    for (const cat of CATEGORIES) counts.set(cat, { done: 0, total: 0 })
+    for (const s of ALL_STRINGS) {
+      const c = counts.get(String(s.category))
+      if (!c) continue
+      c.total += 1
+      if (overrides[s.key]?.[targetLocale]) c.done += 1
+    }
+    return CATEGORIES.map((cat) => ({ category: cat, ...counts.get(cat)! }))
+  }, [targetLocale, overrides])
+
+  // Applied translation takes priority over the chosen base language's sheet
+  // text — once a translator has saved a translation, the row should show
+  // THEIR text, not silently keep displaying the reference language underneath it.
+  function localizedLabel(entry: StringEntry): string {
     return (
-      o?.[locale] || entry.locales[locale] || o?.id || entry.locales.id || o?.en || entry.locales.en || ''
+      overrides[entry.key]?.[targetLocale] || entry.locales[baseLocale] || entry.locales.en || entry.locales.id || ''
     )
   }
 
@@ -310,7 +315,7 @@ export function Inspector() {
         matchesFilter(s.key)
     ).slice(0, 80)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, filterMode, wiredKeys, overrides, locale])
+  }, [query, filterMode, wiredKeys, overrides, targetLocale])
 
   // Search results grouped by which screen(s) actually render them — a key
   // wired into 3 places shows up under all 3, keys never wired land in a
@@ -422,6 +427,7 @@ export function Inspector() {
             {ZONE_LABEL[zone] ?? zone}
           </div>
         )}
+        <div className="space-y-0.5">
         {keys.map((key) => {
           const e = getEntry(key)
           return (
@@ -439,6 +445,7 @@ export function Inspector() {
             />
           )
         })}
+        </div>
       </div>
     )
   }
@@ -466,6 +473,7 @@ export function Inspector() {
     if (isFiltering && filteredTotal === 0) return null
     const totalCount = isFiltering ? filteredTotal : screenCount(screenId)
     const Icon = SCREEN_ICON[screenId]
+    const progress = screenProgress(screenId)
 
     const zoneNames = Object.keys(usageByScreen[screenId])
     const plainZones = zoneNames.filter((z) => (ZONE_TYPE[z] ?? null) !== 'menu' && ZONE_TYPE[z] !== 'popup')
@@ -488,22 +496,27 @@ export function Inspector() {
     const showPopupRows = subFocus === 'popup'
 
     return (
-      <div key={screenId}>
+      <div key={screenId} className="mb-1">
         <button
           onClick={() => {
             headerClick(screenId)
             toggleFocus([screenId])
           }}
-          className="sticky top-0 z-10 bg-imely-ink w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-white/5"
+          className="sticky top-0 z-10 bg-imely-ink w-full flex items-center justify-between px-2 py-1.5 rounded-md hover:bg-white/5"
         >
-          <span className="flex items-center gap-1.5 text-[11px] font-bold text-gray-400 uppercase">
+          <span className="flex items-center gap-1.5 text-[11px] font-bold text-gray-400 uppercase min-w-0">
             <Icon size={12} className="shrink-0" />
-            {SCREEN_LABEL[screenId]} · {totalCount}
+            <span className="truncate">
+              {SCREEN_LABEL[screenId]} · {totalCount}
+            </span>
           </span>
-          <ChevronRight
-            size={13}
-            className={`text-gray-400 shrink-0 transition-transform ${isOpen ? 'rotate-90' : ''}`}
-          />
+          <span className="flex items-center gap-1.5 shrink-0">
+            {progress.total > 0 && <MiniBar done={progress.done} total={progress.total} />}
+            <ChevronRight
+              size={13}
+              className={`text-gray-400 shrink-0 transition-transform ${isOpen ? 'rotate-90' : ''}`}
+            />
+          </span>
         </button>
         {isOpen && (
           <>
@@ -556,7 +569,7 @@ export function Inspector() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleSearchKeyDown}
-            placeholder="Search all 1,479 keys…"
+            placeholder={`Search all ${ALL_STRINGS.length.toLocaleString()} keys…`}
             className="w-full text-[13px] bg-white/5 border border-white/15 text-white placeholder:text-gray-500 rounded-lg pl-8 pr-7 py-2 outline-none focus:border-imely-primary"
           />
           {query && (
@@ -566,26 +579,15 @@ export function Inspector() {
           )}
         </div>
         <div className="flex items-center gap-1.5 mt-2 flex-wrap">
-          {SOURCE_LOCALES.map((id) => (
-            <button
-              key={id}
-              onClick={() => setLocale(id)}
-              title="Source locale — already in the sheet"
-              className={`text-[12px] font-semibold px-2.5 py-1 rounded-full border ${
-                locale === id ? 'bg-imely-primary text-white border-imely-primary' : 'border-white/15 text-gray-400'
-              }`}
-            >
-              {LOCALE_LABEL[id]}
-            </button>
-          ))}
-          <span className="w-px h-4 bg-white/15 mx-0.5" />
           {TARGET_LOCALES.map((id) => (
             <button
               key={id}
-              onClick={() => setLocale(id)}
-              title="Target locale — being translated in this tool"
+              onClick={() => setTargetLocale(id)}
+              title="Translate into this language"
               className={`text-[12px] font-semibold px-2.5 py-1 rounded-full border ${
-                locale === id ? 'bg-imely-primary text-white border-imely-primary' : 'border-white/15 text-gray-400'
+                targetLocale === id
+                  ? 'bg-imely-primary text-white border-imely-primary'
+                  : 'border-white/15 text-gray-400'
               }`}
             >
               {LOCALE_LABEL[id]}
@@ -593,37 +595,87 @@ export function Inspector() {
           ))}
         </div>
 
-        {translationProgress && (
-          <div className="mt-2">
-            <div className="flex items-center justify-between text-[10.5px] text-gray-400">
-              <span>
-                {translationProgress.done.toLocaleString()} / {translationProgress.total.toLocaleString()} translated
-              </span>
-              <span>{Math.round((translationProgress.done / translationProgress.total) * 100)}%</span>
-            </div>
-            <div className="mt-1 h-1 rounded-full bg-white/10 overflow-hidden">
-              <div
-                className="h-full bg-imely-primary rounded-full transition-all"
-                style={{ width: `${(translationProgress.done / translationProgress.total) * 100}%` }}
-              />
-            </div>
-          </div>
-        )}
-
-        <div className="flex gap-1.5 mt-2 flex-wrap">
-          {filtersForLocale(locale).map((f) => (
+        <div
+          className="flex items-center gap-1.5 mt-1.5 flex-wrap"
+          title="Reference language shown for anything not translated yet — id/en/vi themselves are never edited here, only chosen"
+        >
+          <span className="text-[10px] text-gray-500">Base:</span>
+          {SOURCE_LOCALES.map((id) => (
             <button
-              key={f.id}
-              onClick={() => setFilterMode(f.id)}
+              key={id}
+              onClick={() => setBaseLocale(id)}
               className={`text-[10.5px] font-medium px-2 py-0.5 rounded-full border ${
-                filterMode === f.id
-                  ? 'bg-imely-primary border-imely-primary text-white'
-                  : 'border-white/15 text-gray-500'
+                baseLocale === id ? 'bg-white/10 text-white border-white/25' : 'border-white/10 text-gray-500'
               }`}
             >
-              {f.label}
+              {LOCALE_LABEL[id]}
             </button>
           ))}
+        </div>
+
+        <div className="mt-2">
+          <div className="flex items-center justify-between text-[10.5px] text-gray-400">
+            <span>
+              {translationProgress.done.toLocaleString()} / {translationProgress.total.toLocaleString()} translated
+            </span>
+            <span>{Math.round((translationProgress.done / translationProgress.total) * 100)}%</span>
+          </div>
+          <div className="mt-1 h-1 rounded-full bg-white/10 overflow-hidden">
+            <div
+              className="h-full bg-imely-primary rounded-full transition-all"
+              style={{ width: `${(translationProgress.done / translationProgress.total) * 100}%` }}
+            />
+          </div>
+          <button
+            onClick={() => setCategoryProgressOpen((v) => !v)}
+            className="mt-1.5 w-full flex items-center justify-between text-[10px] text-gray-500 hover:text-gray-300"
+          >
+            <span>Progress by category</span>
+            <ChevronRight size={10} className={`transition-transform ${categoryProgressOpen ? 'rotate-90' : ''}`} />
+          </button>
+          {categoryProgressOpen && (
+            <div className="mt-1 max-h-40 overflow-y-auto rounded-md border border-white/10 divide-y divide-white/5">
+              {categoryProgress.map(({ category, done, total }) => (
+                <button
+                  key={category}
+                  onClick={() => {
+                    setQuery(category)
+                    setCategoryProgressOpen(false)
+                  }}
+                  className="w-full flex items-center gap-2 px-2 py-1 text-[10.5px] hover:bg-white/5"
+                >
+                  <span className="text-gray-300 truncate flex-1 text-left">{category}</span>
+                  <MiniBar done={done} total={total} />
+                  <span className={`shrink-0 w-9 text-right ${done === total ? 'text-emerald-400' : 'text-gray-500'}`}>
+                    {done}/{total}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="flex gap-1.5 mt-2 flex-wrap">
+          {FILTERS.map((f) => {
+            const active = filterMode === f.id
+            const activeClass =
+              f.id === 'untranslated'
+                ? 'bg-amber-500 border-amber-500 text-white'
+                : f.id === 'translated'
+                  ? 'bg-emerald-500 border-emerald-500 text-white'
+                  : 'bg-imely-primary border-imely-primary text-white'
+            return (
+              <button
+                key={f.id}
+                onClick={() => setFilterMode(f.id)}
+                className={`text-[10.5px] font-medium px-2 py-0.5 rounded-full border ${
+                  active ? activeClass : 'border-white/15 text-gray-500'
+                }`}
+              >
+                {f.label}
+              </button>
+            )
+          })}
         </div>
       </div>
 
@@ -672,22 +724,12 @@ export function Inspector() {
               )
             })}
           </div>
-        ) : filterMode === 'overridden' && !hasAnyOverride ? (
+        ) : filterMode === 'translated' && !hasAnyTranslation ? (
           <div className="p-5 text-center">
             <div className="text-[12.5px] text-gray-400 leading-relaxed">
-              {isTargetLocale(locale) ? (
-                <>
-                  No <span className="font-semibold text-white">translations</span> saved yet. Pick a string, type
-                  it in the Translation panel, then click{' '}
-                  <span className="font-semibold text-white">Save</span> to create your first one.
-                </>
-              ) : (
-                <>
-                  No <span className="font-semibold text-white">overrides</span> applied yet. Pick a string, type a
-                  draft translation in the Translation panel, then click{' '}
-                  <span className="font-semibold text-white">Apply</span> to create your first override.
-                </>
-              )}
+              No <span className="font-semibold text-white">translations</span> saved yet. Pick a string, type it in
+              the Translation panel, then click <span className="font-semibold text-white">Save</span> to create
+              your first one.
             </div>
             <button
               onClick={() => setFilterMode('all')}
@@ -696,11 +738,11 @@ export function Inspector() {
               View All Strings
             </button>
           </div>
-        ) : filterMode === 'untranslated' && translationProgress?.done === translationProgress?.total ? (
+        ) : filterMode === 'untranslated' && translationProgress.done === translationProgress.total ? (
           <div className="p-5 text-center">
             <div className="text-[12.5px] text-gray-400 leading-relaxed">
-              🎉 All <span className="font-semibold text-white">{translationProgress?.total.toLocaleString()}</span>{' '}
-              strings have a {LOCALE_LABEL[locale]} translation.
+              🎉 All <span className="font-semibold text-white">{translationProgress.total.toLocaleString()}</span>{' '}
+              strings have a {LOCALE_LABEL[targetLocale]} translation.
             </div>
             <button
               onClick={() => setFilterMode('all')}
@@ -749,8 +791,8 @@ export function Inspector() {
                         >
                           <span className="text-[11px] font-bold text-gray-400 uppercase truncate pr-2">
                             {cat} · {entries.length}
-                            {filterMode === 'overridden' && (
-                              <span className="text-imely-primary normal-case font-medium"> ({filtered.length} override)</span>
+                            {filterMode === 'translated' && (
+                              <span className="text-imely-primary normal-case font-medium"> ({filtered.length} translated)</span>
                             )}
                           </span>
                           <ChevronRight
@@ -779,6 +821,21 @@ export function Inspector() {
           </div>
         )}
       </div>
+    </div>
+  )
+}
+
+// Small inline completion bar, reused for a screen's header count and each
+// category breakdown row — lets progress be read at a glance without doing
+// the done/total division in your head every time.
+function MiniBar({ done, total }: { done: number; total: number }) {
+  const pct = total > 0 ? (done / total) * 100 : 0
+  return (
+    <div className="w-8 h-1 rounded-full bg-white/10 overflow-hidden shrink-0">
+      <div
+        className={`h-full rounded-full ${done === total && total > 0 ? 'bg-emerald-400' : 'bg-imely-primary'}`}
+        style={{ width: `${pct}%` }}
+      />
     </div>
   )
 }
@@ -820,7 +877,7 @@ function KeyRow({
       }`}
     >
       <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${wired ? 'bg-imely-primary' : 'bg-white/25'}`} />
-      <span className={`text-[12.5px] truncate flex-1 ${active ? 'text-white' : 'text-gray-200'}`}>{label}</span>
+      <span className={`text-[13px] truncate flex-1 ${active ? 'text-white' : 'text-gray-200'}`}>{label}</span>
       {translated && !active && <Check size={11} className="text-emerald-400 shrink-0" />}
       {overflowing && <AlertTriangle size={12} className="text-red-400 shrink-0" />}
     </button>

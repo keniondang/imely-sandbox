@@ -15,7 +15,9 @@ export function DevicesScreen() {
         >
           <ArrowLeft size={18} />
         </button>
-        <div className="font-bold text-[16px] text-imely-ink">Perangkat Masuk</div>
+        <div className="font-bold text-[16px] text-imely-ink">
+          <Str k="profile_me_v4.menu.login_managment" />
+        </div>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4">

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useApp, type ScreenId } from '../context/AppContext'
 import { usePopupRequest } from './usePopupRequest'
+import { useRegisterKeys } from '../components/Str'
 import { resolveString } from '../lib/strings'
 
 // Shared Opsi-menu / follow / block / report state for a character or
@@ -9,7 +10,12 @@ import { resolveString } from '../lib/strings'
 // <ProfileOptionsSheets> (see components/ProfileOptionsSheets.tsx) since
 // only the trigger button placement differs between them.
 export function useProfileOptions(screenId: ScreenId, targetName: string, onBlocked: () => void) {
-  const { locale, showToast } = useApp()
+  const { baseLocale, showToast } = useApp()
+  useRegisterKeys([
+    'identity.follow.un_follow_success_toast',
+    'identity.follow.follow_success_toast',
+    'report_news.report_success_toast',
+  ])
 
   const [optionsOpen, setOptionsOpen] = useState(false)
   usePopupRequest(screenId, 'menu', setOptionsOpen)
@@ -28,8 +34,8 @@ export function useProfileOptions(screenId: ScreenId, targetName: string, onBloc
     setFollowing((f) => !f)
     showToast(
       following
-        ? resolveString('identity.follow.un_follow_success_toast', locale)
-        : `${resolveString('identity.follow.follow_success_toast', locale)} ${targetName}`
+        ? resolveString('identity.follow.un_follow_success_toast', baseLocale)
+        : `${resolveString('identity.follow.follow_success_toast', baseLocale)} ${targetName}`
     )
   }
 
@@ -52,7 +58,7 @@ export function useProfileOptions(screenId: ScreenId, targetName: string, onBloc
   function sendReport() {
     setReportOpen(false)
     setReportReason(null)
-    showToast(resolveString('report_news.report_success_toast', locale))
+    showToast(resolveString('report_news.report_success_toast', baseLocale))
   }
 
   return {

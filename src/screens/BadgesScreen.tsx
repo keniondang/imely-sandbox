@@ -1,5 +1,5 @@
 import { ArrowLeft } from 'lucide-react'
-import { Str } from '../components/Str'
+import { Str, useRegisterKeys } from '../components/Str'
 import { useApp } from '../context/AppContext'
 import { resolveString } from '../lib/strings'
 
@@ -29,11 +29,14 @@ const CREATOR: BadgeItem[] = [
   { titleKey: 'badge.creator_exclusive', previewKey: 'badge.creator_exclusive.preview', detailKey: 'badge.creator_exclusive.body_earned', earned: false, emoji: '✨', bg: '#A6ECE0' },
 ]
 
+const ALL_BADGES = [...SULTAN, ...RANKING, ...CREATOR]
+
 export function BadgesScreen() {
-  const { closeBadges, locale, showToast } = useApp()
+  const { closeBadges, baseLocale, showToast } = useApp()
+  useRegisterKeys(ALL_BADGES.map((b) => b.detailKey))
 
   function tapBadge(b: BadgeItem) {
-    showToast(resolveString(b.detailKey, locale))
+    showToast(resolveString(b.detailKey, baseLocale))
   }
 
   return (

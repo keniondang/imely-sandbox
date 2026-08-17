@@ -34,7 +34,7 @@ export function PurchaseScreen() {
             <X size={16} />
           </button>
           <div className="font-extrabold text-white text-[32px] italic tracking-tight drop-shadow-sm">
-            MêLy Club
+            <Str k="product_purchase.tab1" />
           </div>
         </div>
 
@@ -178,7 +178,7 @@ export function PurchaseScreen() {
                     <Str k="product_purchase.btn_buy_gem" />
                   </div>
                   <div className="text-[12px] font-normal opacity-90">
-                    {pack.price}/{pack.amount.toLocaleString('id-ID')} Gem
+                    {pack.price}/{pack.amount.toLocaleString('id-ID')} <Str k="product_purchase.tab2" />
                   </div>
                 </>
               )}

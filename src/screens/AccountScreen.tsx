@@ -115,7 +115,9 @@ export function AccountScreen() {
         >
           <ArrowLeft size={18} />
         </button>
-        <div className="font-bold text-[16px] text-imely-ink">Kelola akun</div>
+        <div className="font-bold text-[16px] text-imely-ink">
+          <Str k="profile_me_v4.menu.account_management" />
+        </div>
       </div>
 
       <div className="flex-1 overflow-y-auto">

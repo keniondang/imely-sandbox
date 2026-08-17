@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ArrowLeft, MoreVertical, Send, Info, ChevronDown, ChevronRight, Play, Mic, Plus, Gem, Hand, X, Pencil } from 'lucide-react'
-import { Str } from '../components/Str'
+import { Str, useRegisterKeys } from '../components/Str'
 import { useApp } from '../context/AppContext'
 import { ZoneScope } from '../context/ScreenScope'
 import { usePopupRequest } from '../hooks/usePopupRequest'
@@ -25,9 +25,9 @@ interface Bubble {
 }
 
 const CANNED_REPLIES = [
-  'Hehe, kamu selalu tau apa yang harus dibilang.',
-  'Ceritain lebih lanjut dong, aku dengerin kok.',
-  'Wah, seru juga ya. Terus gimana?',
+  '[Balasan placeholder 1]',
+  '[Placeholder reply 2]',
+  '[Trả lời giữ chỗ 3]',
 ]
 
 // Real chat-mode catalog from the xlsx — no dedicated "pick a mode" sheet
@@ -39,12 +39,19 @@ const CHAT_MODES = [
 ]
 
 export function ChatDetailScreen() {
-  const { activeChat, closeChat, openChatOptions, openGems, locale, showToast } = useApp()
+  const { activeChat, closeChat, openChatOptions, openGems, baseLocale, showToast } = useApp()
+  useRegisterKeys([
+    'chat.mode.changed.toast',
+    'role.edit.success',
+    'chat.input_box_hint',
+    'role.edit.name.hint',
+    'role.edit.description.hint',
+  ])
   const character = activeChat ? MOCK_FEED_CHARACTERS.find((c) => c.id === activeChat.id) : undefined
 
   const [input, setInput] = useState('')
   const [bubbles, setBubbles] = useState<Bubble[]>(() => [
-    { id: 'b0', from: 'bot', text: character?.firstMessage ?? 'Hai! Lagi ngapain kamu?' },
+    { id: 'b0', from: 'bot', text: character?.firstMessage ?? '[Pesan pembuka placeholder]' },
   ])
   const [typing, setTyping] = useState(false)
   const [expandedInfo, setExpandedInfo] = useState<Set<string>>(new Set())
@@ -103,7 +110,7 @@ export function ChatDetailScreen() {
   function selectMode(mode: (typeof CHAT_MODES)[number]) {
     setChatMode(mode)
     setModePickerOpen(false)
-    showToast(resolveString('chat.mode.changed.toast', locale, { chatModeTitle: resolveString(mode.titleKey, locale) }))
+    showToast(resolveString('chat.mode.changed.toast', baseLocale, { chatModeTitle: resolveString(mode.titleKey, baseLocale) }))
   }
 
   function releaseVoice() {
@@ -123,7 +130,7 @@ export function ChatDetailScreen() {
     setPersonaName(personaDraftName.trim() || personaName)
     setPersonaDescription(personaDraftDescription)
     setRoleEditOpen(false)
-    showToast(resolveString('role.edit.success', locale))
+    showToast(resolveString('role.edit.success', baseLocale))
   }
 
   return (
@@ -332,7 +339,7 @@ export function ChatDetailScreen() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && send()}
-            placeholder={resolveString('chat.input_box_hint', locale)}
+            placeholder={resolveString('chat.input_box_hint', baseLocale)}
             className="flex-1 bg-gray-100 rounded-full px-4 py-2.5 text-[13.5px] outline-none"
           />
           {input.trim() ? (
@@ -434,13 +441,13 @@ export function ChatDetailScreen() {
                   <div>
                     • <Str k="relationship.detail.acquainted_days" />{' '}
                     <span className="font-semibold text-imely-ink">
-                      {resolveString('relationship.detail.acquainted_days_value', locale, { aDays: 0 })}
+                      <Str k="relationship.detail.acquainted_days_value" vars={{ aDays: 0 }} />
                     </span>
                   </div>
                   <div>
                     • <Str k="relationship.detail.sent_messages" />{' '}
                     <span className="font-semibold text-imely-ink">
-                      {resolveString('relationship.detail.sent_messages_value', locale, { smCount: sentCount })}
+                      <Str k="relationship.detail.sent_messages_value" vars={{ smCount: sentCount }} />
                     </span>
                   </div>
                 </div>
@@ -515,7 +522,9 @@ export function ChatDetailScreen() {
             />
             <div className="absolute left-3 right-3 top-1/2 -translate-y-1/2 bg-white rounded-2xl overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3.5 border-b border-imely-line">
-                <div className="font-bold text-[16px] text-imely-ink">Edit</div>
+                <div className="font-bold text-[16px] text-imely-ink">
+                  <Str k="button.edit" />
+                </div>
                 <button
                   onClick={() => setRoleEditOpen(false)}
                   className="text-gray-400 active:scale-90 transition-transform"
@@ -531,7 +540,7 @@ export function ChatDetailScreen() {
                 <input
                   value={personaDraftName}
                   onChange={(e) => setPersonaDraftName(e.target.value)}
-                  placeholder={resolveString('role.edit.name.hint', locale)}
+                  placeholder={resolveString('role.edit.name.hint', baseLocale)}
                   className="w-full bg-gray-100 rounded-xl px-3 py-2.5 text-[13.5px] outline-none"
                 />
                 <div className="text-[11px] text-gray-400 mt-1">
@@ -544,7 +553,7 @@ export function ChatDetailScreen() {
                 <textarea
                   value={personaDraftDescription}
                   onChange={(e) => setPersonaDraftDescription(e.target.value)}
-                  placeholder={resolveString('role.edit.description.hint', locale)}
+                  placeholder={resolveString('role.edit.description.hint', baseLocale)}
                   rows={3}
                   className="w-full bg-gray-100 rounded-xl px-3 py-2.5 text-[13.5px] outline-none resize-none"
                 />

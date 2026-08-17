@@ -29,9 +29,8 @@ export interface StringEntry {
   key: string
   category: string
   subcategory: string | null
-  // Only ever populated for the 3 source locales — target locales have no
-  // sheet data, hence `Partial` rather than `Record<Locale, string>`.
-  locales: Partial<Record<Locale, string>>
+  // Only ever the 3 source locales — target locales are never in the sheet.
+  locales: Partial<Record<SourceLocale, string>>
 }
 
 export const ALL_STRINGS = rawStrings as StringEntry[]
@@ -42,14 +41,15 @@ export function getEntry(key: string): StringEntry | undefined {
   return BY_KEY.get(key)
 }
 
-// Resolve a key -> localized text, with ${LAZY_DATA(x)} tokens swapped
-// for placeholder mock values passed in `vars`. Falls back through en/id
-// when the requested locale (including target locales, which never have
-// sheet data) has nothing — the live preview should still show SOMETHING
-// rather than a blank string while a translation is still in progress.
+// Resolve a key -> localized text in one of the SOURCE languages, with
+// ${LAZY_DATA(x)} tokens swapped for placeholder mock values passed in
+// `vars`. Falls back through en/id when the requested source locale has
+// nothing for this key. Target-locale text never goes through here — it's
+// either an applied override (checked by the caller first) or it doesn't
+// exist yet, in which case this base-language fallback is what shows.
 export function resolveString(
   key: string,
-  locale: Locale,
+  locale: SourceLocale,
   vars?: Record<string, string | number>
 ): string {
   const entry = BY_KEY.get(key)
@@ -80,7 +80,6 @@ export const CATEGORIES = Array.from(
 export type AiSuggestions = Record<string, Partial<Record<TargetLocale, string>>>
 export const AI_SUGGESTIONS = rawAiSuggestions as AiSuggestions
 
-export function getAiSuggestion(key: string, locale: Locale): string | undefined {
-  if (!isTargetLocale(locale)) return undefined
+export function getAiSuggestion(key: string, locale: TargetLocale): string | undefined {
   return AI_SUGGESTIONS[key]?.[locale]
 }

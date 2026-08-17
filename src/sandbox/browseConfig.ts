@@ -25,7 +25,6 @@ import {
   UserPlus,
 } from 'lucide-react'
 import type { ScreenId, FilterMode } from '../context/AppContext'
-import { isTargetLocale, type Locale } from '../lib/strings'
 
 export type { FilterMode }
 
@@ -325,26 +324,12 @@ export function sortedZones(zones: string[]): string[] {
   })
 }
 
-// Source locales (id/en/vi) are a QA-testing surface — "Overridden" means
-// "I've drafted an alternate wording to test." Target locales (zh-TW/th)
-// are an authoring surface — the same underlying check ("has an override
-// for the current locale") is relabeled "Translated", paired with its
-// inverse "Untranslated" so a translator can find what's left to do.
-// "Unwired" isn't meaningful for translation completeness (every key needs
-// translating eventually, regardless of whether this sandbox happens to
-// render it anywhere), so it's swapped out rather than just added to.
-const SOURCE_FILTERS: { id: FilterMode; label: string }[] = [
+// There's only one kind of locale to filter by now (the target being
+// translated into), so this is a single fixed list rather than switching
+// shape per locale.
+export const FILTERS: { id: FilterMode; label: string }[] = [
   { id: 'all', label: 'All' },
   { id: 'unwired', label: 'Unwired' },
-  { id: 'overridden', label: 'Overridden' },
-]
-
-const TARGET_FILTERS: { id: FilterMode; label: string }[] = [
-  { id: 'all', label: 'All' },
   { id: 'untranslated', label: 'Untranslated' },
-  { id: 'overridden', label: 'Translated' },
+  { id: 'translated', label: 'Translated' },
 ]
-
-export function filtersForLocale(locale: Locale): { id: FilterMode; label: string }[] {
-  return isTargetLocale(locale) ? TARGET_FILTERS : SOURCE_FILTERS
-}

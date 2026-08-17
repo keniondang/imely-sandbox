@@ -1,5 +1,8 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
-import type { Locale } from '../lib/strings'
+import type { SourceLocale, TargetLocale } from '../lib/strings'
+import zhTwBaselineRaw from '../data/zhTwBaseline.json'
+
+const ZH_TW_BASELINE = zhTwBaselineRaw as Record<string, string>
 
 // Translations are real work product now, not throwaway test drafts — a
 // translator producing ~1,479 x 2 new-language strings across many sessions
@@ -8,13 +11,26 @@ import type { Locale } from '../lib/strings'
 // ~5-10MB limit) rather than one key per string, to keep load/save trivial.
 const OVERRIDES_STORAGE_KEY = 'imely-sandbox:overrides'
 
-function loadStoredOverrides(): Record<string, Partial<Record<Locale, string>>> {
+function loadStoredOverrides(): Record<string, Partial<Record<TargetLocale, string>>> {
+  let stored: Record<string, Partial<Record<TargetLocale, string>>> = {}
   try {
     const raw = localStorage.getItem(OVERRIDES_STORAGE_KEY)
-    return raw ? JSON.parse(raw) : {}
+    stored = raw ? JSON.parse(raw) : {}
   } catch {
-    return {}
+    stored = {}
   }
+  // The source sheet now ships zh-TW ~99% pre-translated (imported via
+  // scripts/import-strings.mjs into zhTwBaseline.json) — seed it in as the
+  // starting value for any key the translator hasn't touched yet, so a
+  // fresh session starts near-complete instead of at 0%. Idempotent: only
+  // fills gaps, never overwrites a translator's own saved edit (even one
+  // that deliberately differs from the sheet).
+  const merged: Record<string, Partial<Record<TargetLocale, string>>> = { ...stored }
+  for (const key in ZH_TW_BASELINE) {
+    if (merged[key]?.['zh-TW'] !== undefined) continue
+    merged[key] = { ...merged[key], 'zh-TW': ZH_TW_BASELINE[key] }
+  }
+  return merged
 }
 
 export type ScreenId =
@@ -49,12 +65,10 @@ export type PurchaseTab = 'club' | 'gem'
 // Shared between the Inspector's browse list and the TranslationPanel's
 // prev/next navigation, so "next string" / "next page or category" steps
 // through exactly what the left sidebar is showing right now.
-// 'overridden' and 'untranslated' both key off the same underlying data
-// (whether `overrides[key][locale]` is set) — 'overridden' is shown for
-// id/en/vi (an alternate wording being tested against the sheet's real
-// value) and relabeled "Translated" for zh-TW/th, where 'untranslated' (the
-// exact inverse) is the actionable "what's left" view for a translator.
-export type FilterMode = 'all' | 'unwired' | 'overridden' | 'untranslated'
+// 'translated' and 'untranslated' key off the same underlying data (whether
+// `overrides[key][targetLocale]` is set) and are exact inverses — the
+// actionable "what's done" / "what's left" split for a translator.
+export type FilterMode = 'all' | 'unwired' | 'untranslated' | 'translated'
 
 // 'page' is a screen's always-visible content. Anything else ('menu', 'popup', ...)
 // is a sub-surface that only exists in the DOM while its own local state has it
@@ -79,26 +93,36 @@ export interface ChatTarget {
 }
 
 interface AppState {
-  locale: Locale
-  setLocale: (l: Locale) => void
+  // The language actively being translated into — the only thing that can
+  // be selected, edited, and tracked for completion. id/en/vi are reference
+  // material now, not alternate "locales" the whole tool can browse in.
+  targetLocale: TargetLocale
+  setTargetLocale: (l: TargetLocale) => void
+
+  // Which source language (id/en/vi) the live preview and translation panel
+  // show as the reference/fallback text for anything not yet translated —
+  // a translator's own preference, independent of targetLocale.
+  baseLocale: SourceLocale
+  setBaseLocale: (l: SourceLocale) => void
 
   currentScreen: ScreenId
   setCurrentScreen: (s: ScreenId) => void
 
-  // Translator drafts, scoped per key AND per locale — a draft written while
-  // "ID" was selected only shows up again when "ID" is selected, matching
-  // "the language is whatever the translator had chosen when they wrote it."
-  // Only written on Apply; see livePreview for what shows while still typing.
-  overrides: Record<string, Partial<Record<Locale, string>>>
-  applyOverride: (key: string, locale: Locale, value: string) => void
-  resetOverride: (key: string, locale: Locale) => void
+  // Translator drafts, scoped per key AND per target locale — a draft
+  // written while "TH" was selected only shows up again when "TH" is
+  // selected. Only written on Apply; see livePreview for what shows while
+  // still typing. id/en/vi are never overridden — they're read-only
+  // reference material pulled straight from the sheet.
+  overrides: Record<string, Partial<Record<TargetLocale, string>>>
+  applyOverride: (key: string, locale: TargetLocale, value: string) => void
+  resetOverride: (key: string, locale: TargetLocale) => void
 
   // Ephemeral — mirrors the translation panel's textarea into the live phone
   // preview on every keystroke, before Apply commits it into `overrides`.
   // Single slot: switching keys/locale without applying just drops it, since
   // scratch drafts aren't meant to be remembered (only applied ones are).
-  livePreview: { key: string; locale: Locale; text: string } | null
-  setLivePreview: (v: { key: string; locale: Locale; text: string } | null) => void
+  livePreview: { key: string; locale: TargetLocale; text: string } | null
+  setLivePreview: (v: { key: string; locale: TargetLocale; text: string } | null) => void
 
   // Which key (+ exact screen/zone occurrence) the translation panel is
   // showing — shared between the Inspector (which sets it) and the panel
@@ -290,9 +314,10 @@ interface AppState {
 const AppCtx = createContext<AppState | null>(null)
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocale] = useState<Locale>('id')
+  const [targetLocale, setTargetLocale] = useState<TargetLocale>('zh-TW')
+  const [baseLocale, setBaseLocale] = useState<SourceLocale>('id')
   const [currentScreen, setCurrentScreen] = useState<ScreenId>('feed')
-  const [overrides, setOverrides] = useState<Record<string, Partial<Record<Locale, string>>>>(loadStoredOverrides)
+  const [overrides, setOverrides] = useState<Record<string, Partial<Record<TargetLocale, string>>>>(loadStoredOverrides)
   useEffect(() => {
     try {
       localStorage.setItem(OVERRIDES_STORAGE_KEY, JSON.stringify(overrides))
@@ -302,7 +327,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       // reload. Nothing actionable to do here, so fail silently.
     }
   }, [overrides])
-  const [livePreview, setLivePreview] = useState<{ key: string; locale: Locale; text: string } | null>(null)
+  const [livePreview, setLivePreview] = useState<{ key: string; locale: TargetLocale; text: string } | null>(null)
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
   const [selectedOccurrence, setSelectedOccurrence] = useState<{ screenId: ScreenId; zone: Zone } | null>(null)
   const [inspectorOpen, setInspectorOpen] = useState(true)
@@ -341,11 +366,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const applyOverride = (key: string, locale: Locale, value: string) => {
+  const applyOverride = (key: string, locale: TargetLocale, value: string) => {
     setOverrides((prev) => ({ ...prev, [key]: { ...prev[key], [locale]: value } }))
   }
 
-  const resetOverride = (key: string, locale: Locale) => {
+  const resetOverride = (key: string, locale: TargetLocale) => {
     setOverrides((prev) => {
       if (!prev[key]) return prev
       const nextForKey = { ...prev[key] }
@@ -474,8 +499,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo(
     () => ({
-      locale,
-      setLocale,
+      targetLocale,
+      setTargetLocale,
+      baseLocale,
+      setBaseLocale,
       currentScreen,
       setCurrentScreen,
       overrides,
@@ -577,7 +604,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       showToast,
     }),
     [
-      locale,
+      targetLocale,
+      baseLocale,
       currentScreen,
       overrides,
       inspectorOpen,

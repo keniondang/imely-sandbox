@@ -1,1 +1,7001 @@
-{}
+{
+  "toast.feed_privacy_changed": {
+    "th": "เปลี่ยนความเป็นส่วนตัวแล้ว"
+  },
+  "toast.update_avatar_successfully": {
+    "th": "อัปเดตรูปโปรไฟล์สำเร็จ"
+  },
+  "toast.no_text_translation": {
+    "th": "ไม่พบเนื้อหาที่ต้องแปล"
+  },
+  "toast.did_block_user": {
+    "th": "บล็อก ${LAZY_DATA(name)} แล้ว"
+  },
+  "toast.did_unblock_user": {
+    "th": "เลิกบล็อก ${LAZY_DATA(name)} แล้ว"
+  },
+  "alert.camera_permission_title": {
+    "th": "อนุญาตให้เข้าถึงกล้อง"
+  },
+  "alert.camera_permission_msg": {
+    "th": "กรุณาอนุญาตให้เข้าถึงกล้องเพื่อถ่ายภาพ"
+  },
+  "alert.camera_permission_negative_button": {
+    "th": "ยกเลิก"
+  },
+  "alert.camera_permission_positive_button": {
+    "th": "เปิดการตั้งค่า"
+  },
+  "alert.general.cancel_button_lowcase": {
+    "th": "ยกเลิก"
+  },
+  "alert.general.cancel_button": {
+    "th": "ยกเลิก"
+  },
+  "alert.general.done_button": {
+    "th": "เสร็จสิ้น"
+  },
+  "alert.general.save_button": {
+    "th": "บันทึก"
+  },
+  "alert.permission.open_settings_button": {
+    "th": "เปิดการตั้งค่า"
+  },
+  "alert.login_required.login_button": {
+    "th": "เข้าสู่ระบบ"
+  },
+  "alert.login_required.login_to_chat_button": {
+    "th": "เข้าสู่ระบบเพื่อแชท"
+  },
+  "alert.login_required.cancel_button_lowcase": {
+    "th": "ปฏิเสธ"
+  },
+  "alert.login_required.login_button_lowcase": {
+    "th": "อนุญาต"
+  },
+  "alert.speech_recognition_permission.title": {
+    "th": "อนุญาตให้เข้าถึงการจดจำเสียงและไมโครโฟน"
+  },
+  "alert.speech_recognition_permission.msg": {
+    "th": "คุณต้องทำตามขั้นตอนต่อไปนี้:\n1. แตะ เปิดการตั้งค่า\n2. ไปที่: สิทธิ์การเข้าถึงแอป\n3. เปิดสิทธิ์ไมโครโฟน\n4. เปิดสิทธิ์การจดจำเสียง"
+  },
+  "alert.login.toast_cancel_login": {
+    "th": "การเข้าสู่ระบบถูกปฏิเสธ"
+  },
+  "alert.login.qr.subtitle": {
+    "th": "กรุณาตรวจสอบข้อมูลก่อนอนุญาตให้เข้าสู่ระบบ"
+  },
+  "alert.login.qr.title": {
+    "th": "เข้าสู่ระบบ imely"
+  },
+  "jumptop.action": {
+    "th": "ดูตัวละครใหม่"
+  },
+  "button.done": {
+    "th": "เสร็จสิ้น"
+  },
+  "button.retry": {
+    "th": "ลองใหม่"
+  },
+  "button.view_more": {
+    "th": "ดูเพิ่มเติม"
+  },
+  "button.read_more": {
+    "th": "อ่านเพิ่มเติม"
+  },
+  "button.edit": {
+    "th": "แก้ไข"
+  },
+  "button.delete": {
+    "th": "ลบ"
+  },
+  "button.cancel": {
+    "th": "ยกเลิก"
+  },
+  "button.confirm": {
+    "th": "ยืนยัน"
+  },
+  "button.later": {
+    "th": "ไว้ทีหลัง"
+  },
+  "error.unexpected": {
+    "th": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง"
+  },
+  "error.unexpected_cta": {
+    "th": "เกิดข้อผิดพลาด แตะเพื่อลองใหม่"
+  },
+  "error.unexpected_short": {
+    "th": "เกิดข้อผิดพลาด"
+  },
+  "error.unexpected_detail": {
+    "th": "เกิดข้อผิดพลาด (รหัสข้อผิดพลาด: ${LAZY_DATA(err)})"
+  },
+  "error.load_messages_failed": {
+    "th": "ไม่สามารถโหลดข้อความได้"
+  },
+  "error.unexpected_ads": {
+    "th": "เกิดข้อผิดพลาดขณะโหลดโฆษณา กรุณาลองใหม่อีกครั้ง!"
+  },
+  "error.maintenance": {
+    "th": "ฟีเจอร์นี้กำลังปรับปรุงระบบ กรุณากลับมาใหม่ภายหลัง"
+  },
+  "common.details": {
+    "th": "รายละเอียด"
+  },
+  "common.share": {
+    "th": "แชร์"
+  },
+  "common.search": {
+    "th": "ค้นหา"
+  },
+  "common.post": {
+    "th": "โพสต์"
+  },
+  "common.textinput.hint.general": {
+    "th": "กรอกเนื้อหา..."
+  },
+  "common.rename": {
+    "th": "เปลี่ยนชื่อ"
+  },
+  "common.downloadFile": {
+    "th": "ดาวน์โหลดไฟล์"
+  },
+  "common.moveToFolder": {
+    "th": "ย้ายไปยังโฟลเดอร์"
+  },
+  "common.uploadFile": {
+    "th": "อัปโหลดไฟล์"
+  },
+  "common.createFolder": {
+    "th": "สร้างโฟลเดอร์"
+  },
+  "common.downloadToAIHayDrive": {
+    "th": "ดาวน์โหลดไปยัง imely Drive"
+  },
+  "common.thoughts": {
+    "th": "ความคิด"
+  },
+  "common.rewriteQuestion": {
+    "th": "เขียนคำถามใหม่"
+  },
+  "common.searchVideo": {
+    "th": "ค้นหาวิดีโอ"
+  },
+  "common.summary": {
+    "th": "สรุป"
+  },
+  "common.createWebsite": {
+    "th": "สร้างเว็บไซต์"
+  },
+  "common.exportFile": {
+    "th": "สร้างไฟล์"
+  },
+  "common.createPdfFile": {
+    "th": "สร้างไฟล์ PDF"
+  },
+  "common.error_message": {
+    "th": "เกิดข้อผิดพลาด กรุณาลองใหม่ภายหลัง"
+  },
+  "common.back": {
+    "th": "ย้อนกลับ"
+  },
+  "common.preparingTable": {
+    "th": "กำลังเตรียมตาราง"
+  },
+  "common.download_successful": {
+    "th": "ดาวน์โหลดสำเร็จ"
+  },
+  "common.understood": {
+    "th": "ปิด"
+  },
+  "common.block": {
+    "th": "บล็อก"
+  },
+  "common.unblock": {
+    "th": "เลิกบล็อก"
+  },
+  "common.alert.emptyInput": {
+    "th": "ยังไม่ได้กรอกข้อมูล กรุณาลองใหม่อีกครั้ง"
+  },
+  "common.device": {
+    "th": "อุปกรณ์"
+  },
+  "common.time": {
+    "th": "เวลา"
+  },
+  "common.location": {
+    "th": "ตำแหน่งที่ตั้ง"
+  },
+  "common.viewFile": {
+    "th": "ดูไฟล์"
+  },
+  "common.cancel": {
+    "th": "ยกเลิก"
+  },
+  "common.save": {
+    "th": "บันทึก"
+  },
+  "common.done": {
+    "th": "เสร็จสิ้น"
+  },
+  "common.empty_list": {
+    "th": "ไม่มีข้อมูล"
+  },
+  "common.settings": {
+    "th": "การตั้งค่า"
+  },
+  "common.settings_desc": {
+    "th": "ปรับแต่งตัวเลือกของคุณ"
+  },
+  "common.empty_list_hashtag": {
+    "th": "รายการว่างเปล่า"
+  },
+  "common.imely_error": {
+    "th": "เมี้ยว... imely เกิดข้อผิดพลาด!"
+  },
+  "common.imely_error_msg": {
+    "th": "ทุกอย่างจะกลับมาเป็นปกติเร็วๆ นี้ กรุณาลองโหลดใหม่"
+  },
+  "common.imely_reload": {
+    "th": "โหลดใหม่"
+  },
+  "global.app_name": {
+    "th": "imely"
+  },
+  "global.ask_ai": {
+    "th": "ถาม AI"
+  },
+  "global.ai_hay": {
+    "th": "imely"
+  },
+  "global.anonymous_prefix": {
+    "th": "imely"
+  },
+  "navigation.ask.tab_name": {
+    "th": "ถาม AI"
+  },
+  "navigation.ask.subtab_ask.tab_name": {
+    "th": "หน้าแรก"
+  },
+  "navigation.ask.subtab_chat.tab_name": {
+    "th": "แชท"
+  },
+  "navigation.ask.subtab_history.tab_name": {
+    "th": "ประวัติ"
+  },
+  "navigation.ask.history.name": {
+    "th": "ประวัติการถาม"
+  },
+  "navigation.4u.tab_name": {
+    "th": "สำหรับคุณ"
+  },
+  "navigation.4u.tab_name_1": {
+    "th": "สำหรับคุณ"
+  },
+  "navigation.4u.subtab_ask.tab_name": {
+    "th": "กำลังนิยม"
+  },
+  "navigation.4u.subtab_link.tab_name": {
+    "th": "ลิงก์ยอดนิยม"
+  },
+  "navigation.4u.subtab_follow.tab_name": {
+    "th": "ติดตาม"
+  },
+  "navigation.4u.subtab_tutor.tab_name": {
+    "th": "ติวเตอร์"
+  },
+  "navigation.4u.subtab_link_dev.tab_name": {
+    "th": "ลิงก์ยอดนิยม (dev)"
+  },
+  "navigation.4u.subtab_trending_dev.tab_name": {
+    "th": "โซเชียล (dev)"
+  },
+  "navigation.4u.subtab_review_timeline_dev.tab_name": {
+    "th": "ล่าสุด (dev)"
+  },
+  "navigation.4u.subtab_censor_content_dev.tab_name": {
+    "th": "การตรวจสอบเนื้อหา (dev)"
+  },
+  "navigation.community.tab_name": {
+    "th": "หน้าแรก"
+  },
+  "navigation.community.subtab_summary.tab_name": {
+    "th": "คอมมูนิตี้"
+  },
+  "navigation.community.subtab_my_community.tab_name": {
+    "th": "คอมมูนิตี้"
+  },
+  "navigation.community.subtab_my_community.tab_name2": {
+    "th": "หัวข้อของฉัน"
+  },
+  "navigation.community.subtab_character_ai.tab_name": {
+    "th": "มาแรง"
+  },
+  "navigation.community.subtab_101.tab_name": {
+    "th": "ใหม่"
+  },
+  "navigation.community.subtab_102.tab_name": {
+    "th": "ไอดอลเกาหลี"
+  },
+  "navigation.community.subtab_103.tab_name": {
+    "th": "นิยาย"
+  },
+  "navigation.community.subtab_104.tab_name": {
+    "th": "ที่ปรึกษา"
+  },
+  "navigation.community.subtab_105.tab_name": {
+    "th": "ประวัติศาสตร์"
+  },
+  "navigation.community.subtab_106.tab_name": {
+    "th": "ผู้ชาย"
+  },
+  "navigation.community.subtab_107.tab_name": {
+    "th": "ผู้หญิง"
+  },
+  "navigation.community.subtab_108.tab_name": {
+    "th": "โรแมนติก"
+  },
+  "navigation.community.subtab_111.tab_name": {
+    "th": "การเรียน"
+  },
+  "navigation.noti.tab_name": {
+    "th": "กล่องข้อความ"
+  },
+  "navigation.noti.subtab_home.tab_name": {
+    "th": "ติดตาม"
+  },
+  "navigation.noti.subtab_social.tab_name": {
+    "th": "กิจกรรม"
+  },
+  "navigation.noti.subtab_timeline.tab_name": {
+    "th": "คอมมูนิตี้"
+  },
+  "navigation.noti.subtab_home.tab_name_1": {
+    "th": "ทั้งหมด"
+  },
+  "navigation.noti.subtab_unread.tab_name": {
+    "th": "ยังไม่อ่าน"
+  },
+  "navigation.noti.subtab_chat.tab_name": {
+    "th": "ข้อความ"
+  },
+  "navigation.noti.subtab_chat.tab_hint": {
+    "th": "imely"
+  },
+  "navigation.noti.subtab_home.noti_all_tab_name": {
+    "th": "การแจ้งเตือน"
+  },
+  "navigation.noti.subtab_test.tab_hint": {
+    "th": "TestUI (dev)"
+  },
+  "navigation.me.tab_name": {
+    "th": "โปรไฟล์"
+  },
+  "navigation.me.tab_name_dev": {
+    "th": "โปรไฟล์"
+  },
+  "navigation.discover.tab_name_discover": {
+    "th": "ค้นพบ"
+  },
+  "navigation.discover.tab_name_video": {
+    "th": "วิดีโอ"
+  },
+  "navigation.discover.btn_search": {
+    "th": "ค้นหาเลย"
+  },
+  "navigation.discover.subtab_summary_name": {
+    "th": "🔥 มาแรง"
+  },
+  "navigation.discover.menu_search": {
+    "th": "ค้นหาเลย"
+  },
+  "navigation.hone_ask.ai_hay": {
+    "th": "imely"
+  },
+  "navigation.home_ask.input.hint": {
+    "th": "ถามอะไรก็ได้..."
+  },
+  "navigation.timeline.tab_name": {
+    "th": "กำลังนิยม"
+  },
+  "navigation.timeline.subtab_public.tab_name": {
+    "th": "คอมมูนิตี้"
+  },
+  "navigation.timeline.subtab_friend.tab_name": {
+    "th": "เพื่อน"
+  },
+  "navigation.timeline.subtab_review.tab_name": {
+    "th": "ล่าสุด"
+  },
+  "navigation.timeline.subtab_censor_content.tab_name": {
+    "th": "การตรวจสอบเนื้อหา"
+  },
+  "navigation.trend.tab_name": {
+    "th": "ลิงก์ยอดนิยม"
+  },
+  "navigation.trend.hint_hay1": {
+    "th": "imely"
+  },
+  "navigation.trend.subtab_trending.tab_name": {
+    "th": "อ่านมากที่สุด"
+  },
+  "navigation.trend.subtab_4u.tab_name": {
+    "th": "สำหรับคุณ"
+  },
+  "navigation.trend.subtab_social.tab_name": {
+    "th": "โซเชียล(dev)"
+  },
+  "navigation.trend.subtab_nearby.tab_name": {
+    "th": "ใกล้คุณ"
+  },
+  "navigation.trend.subtab_top_news.tab_name": {
+    "th": "ล่าสุด"
+  },
+  "navigation.trend.subtab_social.tab_name_1": {
+    "th": "โซเชียล"
+  },
+  "navigation.trend.subtab_discover.tab_name": {
+    "th": "มาแรง"
+  },
+  "navigation.trend.subtab_interest.tab_name": {
+    "th": "ติดตาม"
+  },
+  "navigation.search.tab_name": {
+    "th": "ค้นหา"
+  },
+  "navigation.search.hint_hay1": {
+    "th": "imely"
+  },
+  "navigation.search.subtab_home.tab_name": {
+    "th": "ค้นหา"
+  },
+  "navigation.search.menu_search": {
+    "th": "ค้นหาเลย"
+  },
+  "navigation.action.menu_close": {
+    "th": "ปิด"
+  },
+  "login.option_login.login_ai_hay": {
+    "th": "เข้าสู่ระบบ imely"
+  },
+  "login.option_login.login_quota": {
+    "th": "คุณจะได้ถามคำถาม 30 ครั้งต่อวัน"
+  },
+  "login.option_login.login_with_google": {
+    "th": "ดำเนินการต่อด้วย Google"
+  },
+  "login.option_login.login_with_FB": {
+    "th": "ดำเนินการต่อด้วย Facebook"
+  },
+  "login.option_login.login_with_email": {
+    "th": "ใช้อีเมล / ชื่อผู้ใช้"
+  },
+  "login.option_login.login_with_phone": {
+    "th": "ใช้หมายเลขโทรศัพท์"
+  },
+  "login.option_login.dont_have_ai_hay_account_yet": {
+    "th": "ยังไม่มีบัญชี imely ใช่ไหม?"
+  },
+  "login.option_login.dont_have_hay1_account_yet": {
+    "th": "ยังไม่มีบัญชี imely ใช่ไหม?"
+  },
+  "login.option_login.create_account_free": {
+    "th": "สร้างบัญชีฟรี"
+  },
+  "login.option_login.policy_agreement": {
+    "th": "การดำเนินการต่อถือว่าคุณยอมรับ <b><a href=\"https://imely.ai/page/terms\">ข้อกำหนดการให้บริการ</a>, <a href=\"https://imely.ai/page/privacy\">นโยบายความเป็นส่วนตัว</a></b> และ <b><a href=\"https://imely.ai/page/copyright\">นโยบายลิขสิทธิ์</a></b>"
+  },
+  "login.option_login.login_with_apple": {
+    "th": "ดำเนินการต่อด้วย Apple"
+  },
+  "login.option_login.action_late": {
+    "th": "บันทึกไว้ทีหลัง"
+  },
+  "login.option_login.login_option_title_1": {
+    "th": "เข้าสู่ระบบเพื่อถามคำถามกับ imely! ❤️"
+  },
+  "login.option_login.login_option_title_2": {
+    "th": "เข้าสู่ระบบ imely"
+  },
+  "login.option_login.login_option_title_3": {
+    "th": "ช่วยให้คุณใช้ฟีเจอร์ทั้งหมดของ imely ได้"
+  },
+  "login.option_login.30_luot": {
+    "th": "ถามได้ 30 ครั้ง"
+  },
+  "login.option_login.out_of_quota_1": {
+    "th": "ระยะเวลาทดลองใช้ของคุณสิ้นสุดแล้ว\nกรุณาเข้าสู่ระบบเพื่อถามคำถามต่อ"
+  },
+  "login.option_login.out_of_quota_2": {
+    "th": "คุณถามครบ ${LAZY_DATA(totalTrialAskQuota)}/${LAZY_DATA(totalTrialAskQuota)} คำถามฟรีแล้ว เข้าสู่ระบบเพื่อถามฟรีต่อไป!"
+  },
+  "login.option_login.login_with_microsoft": {
+    "th": "ดำเนินการต่อด้วย Microsoft"
+  },
+  "login.create_account_congratulation": {
+    "th": "ยินดีด้วย! สร้างบัญชีของคุณสำเร็จแล้ว"
+  },
+  "login.create_account_auto_redirect_prefix": {
+    "th": "กำลังเปลี่ยนหน้าอัตโนมัติใน"
+  },
+  "login.create_account_auto_second": {
+    "th": "วินาที"
+  },
+  "login.login_by_pass.login_ai_hay": {
+    "th": "เข้าสู่ระบบ imely"
+  },
+  "login.login_by_pass.login_hay1": {
+    "th": "เข้าสู่ระบบ imely"
+  },
+  "login.login_by_pass.enter_email_hint": {
+    "th": "กรอกอีเมลหรือชื่อผู้ใช้..."
+  },
+  "login.login_by_pass.enter_phone_hint": {
+    "th": "กรอกหมายเลขโทรศัพท์..."
+  },
+  "login.login_by_pass.enter_email_or_phone_hint": {
+    "th": "อีเมล หมายเลขโทรศัพท์ หรือชื่อผู้ใช้..."
+  },
+  "login.login_by_pass.error_invalid_email": {
+    "th": "อีเมลหรือชื่อผู้ใช้ไม่ถูกต้อง"
+  },
+  "login.login_by_pass.error_invalid_phone": {
+    "th": "หมายเลขโทรศัพท์ไม่ถูกต้อง"
+  },
+  "login.login_by_pass.error_invalid_email_or_phone": {
+    "th": "อีเมล หมายเลขโทรศัพท์ หรือชื่อผู้ใช้ไม่ถูกต้อง"
+  },
+  "login.login_by_pass.hint_input_password": {
+    "th": "กรอกรหัสผ่าน..."
+  },
+  "login.login_by_pass.error_invalid_password": {
+    "th": "รหัสผ่านไม่ถูกต้อง"
+  },
+  "login.login_by_pass.forgot_password": {
+    "th": "ลืมรหัสผ่าน"
+  },
+  "login.login_by_pass.btn_login": {
+    "th": "เข้าสู่ระบบ"
+  },
+  "login.login_by_pass.toast_login_success": {
+    "th": "เข้าสู่ระบบสำเร็จ"
+  },
+  "login.login_by_pass.error_wrong_password": {
+    "th": "รหัสผ่านไม่ถูกต้อง"
+  },
+  "login.login_by_pass.toast_wrong_login_info": {
+    "th": "ข้อมูลเข้าสู่ระบบไม่ถูกต้อง! (รหัสข้อผิดพลาด: ${LAZY_DATA(errorCode)})"
+  },
+  "login.login_by_pass.btn_create_account": {
+    "th": "สร้างบัญชีใหม่"
+  },
+  "login.opt_create_account.create_account_AI_Hay_free": {
+    "th": "สร้างบัญชี imely ฟรี!"
+  },
+  "login.opt_create_account.create_account_Hay1_free": {
+    "th": "สร้างบัญชี imely ฟรี!"
+  },
+  "login.opt_create_account.hint_title": {
+    "th": "บันทึกหัวข้อและคอลเลกชันที่ชื่นชอบ แสดงความคิดเห็น และปลดล็อกฟีเจอร์เพิ่มเติม"
+  },
+  "login.opt_create_account.btn_use_email": {
+    "th": "ใช้อีเมล"
+  },
+  "login.opt_create_account.btn_use_phone": {
+    "th": "ใช้หมายเลขโทรศัพท์"
+  },
+  "login.opt_create_account.btn_use_FB": {
+    "th": "ดำเนินการต่อด้วย Facebook"
+  },
+  "login.opt_create_account.btn_use_Google": {
+    "th": "ดำเนินการต่อด้วย Google"
+  },
+  "login.opt_create_account.btn_use_Apple": {
+    "th": "ดำเนินการต่อด้วย Apple"
+  },
+  "login.opt_create_account.hint_already_have_AI_Hay": {
+    "th": "คุณมีบัญชี imely อยู่แล้วหรือไม่?"
+  },
+  "login.opt_create_account.hint_already_have_Hay1": {
+    "th": "คุณมีบัญชี imely อยู่แล้วหรือไม่?"
+  },
+  "login.opt_create_account.btn_login_now": {
+    "th": "เข้าสู่ระบบตอนนี้"
+  },
+  "login.opt_create_account.btn_cancel": {
+    "th": "ไว้ทีหลัง"
+  },
+  "login.create_acc_by_email.hint_create_AI_Hay_acc": {
+    "th": "สร้างบัญชี imely"
+  },
+  "login.create_acc_by_email.hint_create_Hay1_acc": {
+    "th": "สร้างบัญชี imely"
+  },
+  "login.create_acc_by_email.txtbox_display_name_hint": {
+    "th": "ชื่อของคุณ..."
+  },
+  "login.create_acc_by_email.error_invalid_name": {
+    "th": "ชื่อไม่ถูกต้อง"
+  },
+  "login.create_acc_by_email.txtbox_email_hint": {
+    "th": "กรอกอีเมล..."
+  },
+  "login.create_acc_by_email.error_invalid_email": {
+    "th": "อีเมลไม่ถูกต้อง"
+  },
+  "login.create_acc_by_email.btn_login": {
+    "th": "เข้าสู่ระบบ"
+  },
+  "login.create_acc_by_email.btn_create_by_phone": {
+    "th": "สร้างบัญชีด้วยหมายเลขโทรศัพท์"
+  },
+  "login.create_acc_by_email.btn_create_account": {
+    "th": "สร้างบัญชี"
+  },
+  "login.create_acc_by_email.toast_create_account_success": {
+    "th": "ลงทะเบียนสำเร็จ"
+  },
+  "login.create_acc_by_email.error_acc_AI_Hay_already_exits": {
+    "th": "อีเมลนี้สร้างบัญชี imely ไปแล้ว"
+  },
+  "login.create_acc_by_email.error_acc_Hay1_already_exits": {
+    "th": "อีเมลนี้สร้างบัญชี imely ไปแล้ว"
+  },
+  "login.create_acc_by_email.toast_error_retry_late": {
+    "th": "เกิดข้อผิดพลาด! กรุณาลองใหม่ภายหลัง (รหัสข้อผิดพลาด: ${LAZY_DATA(errorCode)})"
+  },
+  "login.create_acc_by_email.confirm_policy": {
+    "th": "ฉันยอมรับ <b><a href=\"https://imely.ai/page/terms\">ข้อกำหนดการให้บริการของ imely</a></b> และ <b><a href=\"https://imely.ai/page/privacy\">นโยบายความเป็นส่วนตัว</a></b>"
+  },
+  "login.create_acc_by_email.error_email_not_popular": {
+    "th": "อีเมลนี้ไม่ใช่ผู้ให้บริการที่ใช้กันทั่วไป กรุณาใช้อีเมล @gmail, @outlook หรืออื่นๆ เพื่อลงทะเบียนให้เสร็จสมบูรณ์"
+  },
+  "login.create_acc_by_phone.hint_create_AI_Hay_acc": {
+    "th": "สร้างบัญชี imely"
+  },
+  "login.create_acc_by_phone.hint_create_Hay1_acc": {
+    "th": "สร้างบัญชี imely"
+  },
+  "login.create_acc_by_phone.txtbox_display_name_hint": {
+    "th": "ชื่อของคุณ..."
+  },
+  "login.create_acc_by_phone.error_invalid_name": {
+    "th": "ชื่อไม่ถูกต้อง"
+  },
+  "login.create_acc_by_phone.txtbox_phone_hint": {
+    "th": "กรอกหมายเลขโทรศัพท์..."
+  },
+  "login.create_acc_by_phone.error_invalid_phone": {
+    "th": "หมายเลขโทรศัพท์ไม่ถูกต้อง"
+  },
+  "login.create_acc_by_phone.btn_login": {
+    "th": "เข้าสู่ระบบ"
+  },
+  "login.create_acc_by_phone.btn_create_by_email": {
+    "th": "สร้างบัญชีด้วยอีเมล"
+  },
+  "login.create_acc_by_phone.btn_create_account": {
+    "th": "สร้างบัญชี"
+  },
+  "login.create_acc_by_phone.toast_create_account_success": {
+    "th": "ลงทะเบียนสำเร็จ"
+  },
+  "login.create_acc_by_phone.error_acc_AI_Hay_already_exits": {
+    "th": "หมายเลขนี้สร้างบัญชี imely ไปแล้ว"
+  },
+  "login.create_acc_by_phone.error_acc_Hay1_already_exits": {
+    "th": "หมายเลขนี้สร้างบัญชี imely ไปแล้ว"
+  },
+  "login.create_acc_by_phone.toast_error_retry_late": {
+    "th": "เกิดข้อผิดพลาด! กรุณาลองใหม่ภายหลัง (รหัสข้อผิดพลาด: ${LAZY_DATA(errorCode)})"
+  },
+  "login.opt_verify_acc.hint_verify_account": {
+    "th": "การยืนยันบัญชี"
+  },
+  "login.opt_verify_acc.btn_verify_by_email": {
+    "th": "ใช้อีเมล"
+  },
+  "login.opt_verify_acc.btn_verify_by_phone": {
+    "th": "ใช้หมายเลขโทรศัพท์"
+  },
+  "login.opt_verify_acc.btn_cancel": {
+    "th": "ไว้ทีหลัง"
+  },
+  "login.opt_verify_acc.login_source": {
+    "th": "คุณเข้าสู่ระบบ imely โดยใช้บัญชี"
+  },
+  "login.opt_verify_acc.147_title": {
+    "th": "ตามกฤษฎีกาฉบับที่ 147/2024/ND-CP คุณต้องยืนยันบัญชี imely ของคุณ"
+  },
+  "login.opt_verify_acc.147_description_1": {
+    "th": "• ตั้งแต่วันที่ 25/12/2024 บัญชีโซเชียลมีเดียทั้งหมดต้องยืนยันตัวตนด้วยหมายเลขโทรศัพท์มือถือของเวียดนามหรือหมายเลขบัตรประจำตัวประชาชน"
+  },
+  "login.opt_verify_acc.147_description_2": {
+    "th": "• เฉพาะบัญชีที่ยืนยันตัวตนแล้วเท่านั้นที่สามารถโพสต์ข้อมูล (เขียนบทความ แสดงความคิดเห็น ไลฟ์สตรีม ฯลฯ) บนโซเชียลเน็ตเวิร์กได้"
+  },
+  "login.opt_verify_acc.147_link_detail": {
+    "th": "<a href=\"https://vanban.chinhphu.vn/?pageid=27160&docid=211654\">รายละเอียด</a>"
+  },
+  "login.opt_verify_acc.btn_147_verify": {
+    "th": "ยืนยันตอนนี้"
+  },
+  "login.is_loading_info": {
+    "th": "กำลังโหลดข้อมูล"
+  },
+  "login.please_wait_message": {
+    "th": "กรุณารอสักครู่..."
+  },
+  "login.verify_acc_by_otp.action_back_title_1": {
+    "th": "ยกเลิกกระบวนการสร้างบัญชี?"
+  },
+  "login.verify_acc_by_otp.action_back_title_2": {
+    "th": "ยกเลิกการอัปเดตบัญชี?"
+  },
+  "login.verify_acc_by_otp.action_back_title_3": {
+    "th": "ยกเลิกกระบวนการกู้คืนรหัสผ่าน?"
+  },
+  "login.verify_acc_by_otp.action_back_title_4": {
+    "th": "ยกเลิก?"
+  },
+  "login.verify_acc_by_otp.action_back_msg": {
+    "th": "ข้อมูลที่คุณกรอกไว้จะถูกลบ"
+  },
+  "login.verify_acc_by_otp.action_back_btn_confirm": {
+    "th": "ยกเลิก"
+  },
+  "login.verify_acc_by_otp.action_back_btn_cancel": {
+    "th": "ย้อนกลับ"
+  },
+  "login.verify_acc_by_otp.hint_input_verify_code": {
+    "th": "กรอกรหัสยืนยัน"
+  },
+  "login.verify_acc_by_otp.email_verify_already_send": {
+    "th": "ส่งอีเมลรหัสยืนยันไปที่:"
+  },
+  "login.verify_acc_by_otp.sms_verify_already_send": {
+    "th": "ส่ง SMS รหัสยืนยันไปที่:"
+  },
+  "login.verify_acc_by_otp.code_verify_already_send": {
+    "th": "ส่งรหัสยืนยันไปที่:"
+  },
+  "login.verify_acc_by_otp.hint_input_OTP": {
+    "th": "กรอกรหัส OTP..."
+  },
+  "login.verify_acc_by_otp.error_wrong_verify_code": {
+    "th": "รหัสยืนยันไม่ถูกต้อง"
+  },
+  "login.verify_acc_by_otp.hint_OTP_email": {
+    "th": "• อีเมลอาจอยู่ในโฟลเดอร์สแปม\n• รหัสยืนยันมีอายุใช้งาน 5 นาที"
+  },
+  "login.verify_acc_by_otp.hint_OTP_sms": {
+    "th": "• รหัสยืนยันมีอายุใช้งาน 5 นาที"
+  },
+  "login.verify_acc_by_otp.hint_OTP_code": {
+    "th": "• รหัสยืนยันมีอายุใช้งาน 5 นาที"
+  },
+  "login.verify_acc_by_otp.btn_resend_OTP": {
+    "th": "ส่งรหัสอีกครั้ง"
+  },
+  "login.verify_acc_by_otp.toast_OTP_sending_to_email": {
+    "th": "รหัสยืนยันจะถูกส่งไปยังอีเมลของคุณ"
+  },
+  "login.verify_acc_by_otp.toast_OTP_sending_to_phone": {
+    "th": "รหัสยืนยันจะถูกส่งไปยังหมายเลขโทรศัพท์ของคุณ"
+  },
+  "login.verify_acc_by_otp.toast_OTP_sending_to_you": {
+    "th": "รหัสยืนยันจะถูกส่งถึงคุณ"
+  },
+  "login.verify_acc_by_otp.toast_error_retry_late": {
+    "th": "ไม่สามารถส่งรหัสยืนยันอีกครั้งได้! กรุณาลองใหม่ภายหลัง (รหัสข้อผิดพลาด: ${LAZY_DATA(errorCode)})"
+  },
+  "login.verify_acc_by_otp.hint_resend_OTP_counter": {
+    "th": "ส่งรหัสอีกครั้ง"
+  },
+  "login.verify_acc_by_otp.hint_resend_OTP_counter_1": {
+    "th": "ส่งรหัสอีกครั้งใน ${LAZY_DATA(counter)} วินาที"
+  },
+  "login.verify_acc_by_otp.btn_verify": {
+    "th": "ยืนยัน"
+  },
+  "login.verify_acc_by_otp.toast_verify_OTP_success": {
+    "th": "ยืนยันสำเร็จ"
+  },
+  "login.verify_acc_by_otp.toast_wrong_OTP": {
+    "th": "รหัส OTP ไม่ถูกต้อง กรุณาตรวจสอบและกรอกใหม่"
+  },
+  "login.verify_acc_by_otp.toast_OTP_expired": {
+    "th": "รหัส OTP หมดอายุแล้ว กรุณาขอรหัส OTP ใหม่"
+  },
+  "login.verify_acc_by_otp.toast_error_occurred_retry_late": {
+    "th": "เกิดข้อผิดพลาด! กรุณาลองใหม่อีกครั้ง (รหัสข้อผิดพลาด: ${LAZY_DATA(errorCode)})"
+  },
+  "sz.30046.button_detail.label": {
+    "th": "รายละเอียด"
+  },
+  "sz.30046.button_chat.label": {
+    "th": "แชท"
+  },
+  "sz.243.comment_box.label": {
+    "th": "ความคิดเห็น"
+  },
+  "sz.368.title_photo_related": {
+    "th": "รูปภาพและข้อมูลที่เกี่ยวข้อง:"
+  },
+  "sz.368.title_link_related": {
+    "th": "👉 ลิงก์ที่เกี่ยวข้อง:"
+  },
+  "sz.368.title_comment_related": {
+    "th": "💬 ความคิดเห็นยอดนิยม:"
+  },
+  "sz.368.title_identity_related": {
+    "th": "👥 หัวข้อที่เกี่ยวข้อง:"
+  },
+  "sz.368.view_full_item.title": {
+    "th": "ขอบเขตเนื้อหา"
+  },
+  "sz.368.photo_related.hint_photo": {
+    "th": "[รูปภาพ]"
+  },
+  "sz.368.photo_related.hint_video": {
+    "th": "[วิดีโอ]"
+  },
+  "sz.750.title_new_version": {
+    "th": "imely มีเวอร์ชันใหม่"
+  },
+  "sz.750.description_new_version": {
+    "th": "ปรับปรุงประสิทธิภาพ แก้ไขข้อบกพร่อง และเพิ่มความเร็วแอป"
+  },
+  "sz.750.button_update": {
+    "th": "อัปเดต"
+  },
+  "sz.750.top_hint_title": {
+    "th": "คุณต้องการ"
+  },
+  "sz.750.top_hint_text_0": {
+    "th": "แก้โจทย์คณิตศาสตร์"
+  },
+  "sz.750.top_hint_text_1": {
+    "th": "เขียนเรียงความเชิงวิเคราะห์"
+  },
+  "sz.750.top_hint_text_2": {
+    "th": "เขียนเรียงความเชิงพรรณนาอารมณ์"
+  },
+  "sz.750.top_hint_text_3": {
+    "th": "เขียนเรียงความสังคม"
+  },
+  "sz.750.top_hint_text_4": {
+    "th": "เขียนเรียงความวรรณกรรม"
+  },
+  "sz.750.top_hint_text_5": {
+    "th": "เขียนเรียงความอธิบาย"
+  },
+  "sz.750.top_hint_text_6": {
+    "th": "เขียนเรียงความบรรยาย"
+  },
+  "sz.750.top_hint_text_7": {
+    "th": "แก้แบบฝึกหัดภาษาอังกฤษ"
+  },
+  "sz.750.top_hint_text_8": {
+    "th": "ค้นหาข้อมูล"
+  },
+  "sz.750.top_hint_text_9": {
+    "th": "ตอบคำถามอะไรก็ได้"
+  },
+  "sz.750.top_hint_text_10": {
+    "th": "เล่าความลับของคุณให้ฟัง"
+  },
+  "sz.750.top_hint_text_fill_1": {
+    "th": "เขียนเรียงความเชิงวิเคราะห์"
+  },
+  "sz.750.top_hint_text_fill_2": {
+    "th": "เขียนเรียงความเชิงพรรณนาอารมณ์เกี่ยวกับ"
+  },
+  "sz.750.top_hint_text_fill_3": {
+    "th": "เขียนเรียงความโต้แย้งทางสังคมเกี่ยวกับ"
+  },
+  "sz.750.top_hint_text_fill_4": {
+    "th": "เขียนเรียงความโต้แย้งทางวรรณกรรมเกี่ยวกับ"
+  },
+  "sz.750.top_hint_text_fill_5": {
+    "th": "อธิบายเกี่ยวกับ"
+  },
+  "sz.750.top_hint_text_fill_6": {
+    "th": "เขียนย่อหน้าบรรยายเกี่ยวกับ"
+  },
+  "profile_me_v4.click_to_login": {
+    "th": "แตะเพื่อเข้าสู่ระบบ"
+  },
+  "profile_me_v4.banner_suggest_login": {
+    "th": "เข้าสู่ระบบเพื่อบันทึกสถิติ หัวข้อที่ติดตาม และปลดล็อกฟีเจอร์ทั้งหมดของ imely"
+  },
+  "profile_me_v4.button_login": {
+    "th": "เข้าสู่ระบบ"
+  },
+  "profile_me_v4.update_profile_progress_1_3": {
+    "th": "อัปเดตโปรไฟล์ (1/3)"
+  },
+  "profile_me_v4.update_profile_progress_2_3": {
+    "th": "อัปเดตโปรไฟล์ (2/3)"
+  },
+  "profile_me_v4.update_profile_progress_1_2": {
+    "th": "อัปเดตโปรไฟล์ (1/2)"
+  },
+  "profile_me_v4.update_profile_progress_avatar": {
+    "th": "👉 ถัดไป: อัปเดตรูปโปรไฟล์"
+  },
+  "profile_me_v4.update_profile_progress_phone": {
+    "th": "👉 ถัดไป: อัปเดตหมายเลขโทรศัพท์"
+  },
+  "profile_me_v4.support": {
+    "th": "ช่วยเหลือ"
+  },
+  "profile_me_v4.buy_gem_title": {
+    "th": "ซื้อเพชร"
+  },
+  "profile_me_v4.buy_gem_desc": {
+    "th": "แชทได้ไม่จำกัด"
+  },
+  "profile_me_v4.invite_code_title": {
+    "th": "กรอกรหัสแนะนำเพื่อรับ 100💎"
+  },
+  "profile_me_v4.invite_code_desc": {
+    "th": "รหัสแนะนำใช้ได้เพียง 3 วันเท่านั้น"
+  },
+  "profile_me_v4.invite_code_btn": {
+    "th": "กรอกรหัส"
+  },
+  "profile_me_v4.my_companion_title": {
+    "th": "คู่หูของฉัน"
+  },
+  "profile_me_v4.my_companion_desc": {
+    "th": "คู่หูที่คุณสร้างขึ้น"
+  },
+  "profile_me_v4.chat_support": {
+    "th": "แชทกับฝ่ายช่วยเหลือของ imely"
+  },
+  "profile_me_v4.send_email": {
+    "th": "ส่งความคิดเห็นทางอีเมล"
+  },
+  "profile_me_v4.term_of_service": {
+    "th": "ข้อกำหนดการให้บริการ"
+  },
+  "profile_me_v4.privacy_policy": {
+    "th": "นโยบายความเป็นส่วนตัว"
+  },
+  "profile_me_v4.copyright": {
+    "th": "นโยบายลิขสิทธิ์"
+  },
+  "profile_me_v4.about_us": {
+    "th": "เกี่ยวกับเรา"
+  },
+  "profile_me_v4.message": {
+    "th": "ข้อความ"
+  },
+  "profile_me_v4.following": {
+    "th": "กำลังติดตาม"
+  },
+  "profile_me_v4.comment": {
+    "th": "ความคิดเห็น"
+  },
+  "profile_me_v4.following_desc": {
+    "th": "ผู้ใช้และตัวละครที่คุณติดตาม"
+  },
+  "pro_card.title": {
+    "th": "สมาชิก MêLy Club"
+  },
+  "pro_card.subtitle": {
+    "th": "วันหมดอายุ"
+  },
+  "pro_card.btn_done": {
+    "th": "ดู"
+  },
+  "member_card.upgrade": {
+    "th": "อัปเกรดเป็น MêLy Club"
+  },
+  "member_card.managment": {
+    "th": "จัดการ MêLy Club"
+  },
+  "subs_managment.header": {
+    "th": "จัดการแพ็กเกจ"
+  },
+  "subs_managment.account_title": {
+    "th": "บัญชี"
+  },
+  "subs_managment.account_free": {
+    "th": "ฟรี"
+  },
+  "subs_managment.account_pro": {
+    "th": "MêLy Club"
+  },
+  "subs_managment.deactive": {
+    "th": "ยกเลิก"
+  },
+  "subs_managment.expire_at": {
+    "th": "ใช้ได้ถึง"
+  },
+  "profile_me_v4.banner_upgrade.title": {
+    "th": "<b>เป็น</b><font color=\"common(ChatbotPrimary1)dark(D_ChatbotPrimary1)\"><b>สมาชิก MêLy Club</b></font><b></b>"
+  },
+  "profile_me_v4.banner_upgrade.subtitle": {
+    "th": "สิทธิประโยชน์เฉพาะสมาชิก:"
+  },
+  "profile_me_v4.banner_upgrade.feature_header": {
+    "th": "ฟีเจอร์"
+  },
+  "profile_me_v4.banner_upgrade.free_header": {
+    "th": "ฟรี"
+  },
+  "profile_me_v4.banner_upgrade.club_header": {
+    "th": "MêLy Club"
+  },
+  "profile_me_v4.banner_upgrade.feature_daily_gem": {
+    "th": "เพชรรายวัน"
+  },
+  "profile_me_v4.banner_upgrade.feature_unlimited_gem": {
+    "th": "เพชรไม่มีวันหมดอายุ"
+  },
+  "profile_me_v4.banner_upgrade.feature_avatar": {
+    "th": "อวาตาร์เคลื่อนไหว"
+  },
+  "profile_me_v4.banner_upgrade.club_avatar": {
+    "th": "มี"
+  },
+  "profile_me_v4.banner_upgrade.cta": {
+    "th": "ซื้อ MêLy Club"
+  },
+  "profile_me_v4.banner_suggest.title": {
+    "th": "สร้างบัญชี imely เพื่อบันทึก:"
+  },
+  "profile_me_v4.banner_suggest.description": {
+    "th": "• ตัวเลือกการแชทและข้อมูล\n• แชทบอทที่คุณชื่นชอบ\n• และใช้ฟีเจอร์อื่นๆ ทั้งหมด"
+  },
+  "profile_me_v4.banner_suggest.description_oneline": {
+    "th": "ตัวเลือกการแชทและข้อมูล แชทบอทที่คุณชื่นชอบ และใช้ฟีเจอร์อื่นๆ ทั้งหมด"
+  },
+  "profile_me_v4.banner_suggest.button_create_account": {
+    "th": "สร้างบัญชี"
+  },
+  "profile_me_v4.banner_suggest.button_login": {
+    "th": "เข้าสู่ระบบ"
+  },
+  "profile_me.banner_subscription.desc1": {
+    "th": "ความสามารถในการประมวลผลที่เหนือกว่า"
+  },
+  "profile_me.banner_subscription.desc2": {
+    "th": "ปลดล็อกขุมทรัพย์แห่งความรู้ไปกับเพื่อนของคุณ"
+  },
+  "profile_me.banner_subscription.btn_upgrade": {
+    "th": "อัปเกรดตอนนี้"
+  },
+  "profile_me_v4.ui_avatar.update_avatar_success": {
+    "th": "อัปเดตรูปโปรไฟล์สำเร็จ"
+  },
+  "profile_me_v4.ui_avatar.update_avatar_error": {
+    "th": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง"
+  },
+  "profile_me_v4.ui_tag_member.bronze_member": {
+    "th": "สมาชิกระดับบรอนซ์"
+  },
+  "profile_me_v4.ui_tag_member.silver_member": {
+    "th": "สมาชิกระดับซิลเวอร์"
+  },
+  "profile_me_v4.ui_tag_member.gold_member": {
+    "th": "สมาชิกระดับโกลด์"
+  },
+  "profile_me_v4.ui_subscription_tag.normal_account": {
+    "th": "อัปเกรดเป็นบัญชี Pro"
+  },
+  "profile_me_v4.ui_subscription_tag.pro_account": {
+    "th": "บัญชี"
+  },
+  "banner_redeem_pro.or": {
+    "th": "หรือ"
+  },
+  "banner_redeem_pro.title": {
+    "th": "อัปเกรด Pro ด้วยดาว"
+  },
+  "profile_me_v4.ui_inline_menu.star_count": {
+    "th": "ดาวของคุณ"
+  },
+  "profile_me_v4.ui_inline_menu.post_count": {
+    "th": "โพสต์"
+  },
+  "profile_me_v4.ui_inline_menu.view_count": {
+    "th": "การดู"
+  },
+  "profile_me_v4.ui_inline_menu.following_count": {
+    "th": "กำลังติดตาม"
+  },
+  "profile_me_v4.ui_inline_menu.view_more": {
+    "th": "ดูเพิ่มเติม"
+  },
+  "profile_me_v4.ui_inline_menu.history_count": {
+    "th": "ประวัติการอ่าน:"
+  },
+  "profile_me_v4.ui_inline_menu.follower_count": {
+    "th": "ผู้ติดตาม:"
+  },
+  "profile_me_v4.ui_inline_menu.post_count_2": {
+    "th": "โพสต์:"
+  },
+  "profile_me_v4.ui_inline_menu.comment_count": {
+    "th": "ความคิดเห็น:"
+  },
+  "profile_me_v4.ui_inline_menu.like_count": {
+    "th": "โพสต์ที่ถูกใจ:"
+  },
+  "profile_me_v4.ui_inline_menu.collection_count": {
+    "th": "คอลเลกชัน:"
+  },
+  "profile_me_v4.ui_supplemental.title": {
+    "th": "แชทและเครื่องมือ"
+  },
+  "profile_me_v4.ui_supplemental.title_2": {
+    "th": "แชท"
+  },
+  "profile_me_v4.ui_supplemental.title_1": {
+    "th": "เครื่องมือ"
+  },
+  "profile_me_v4.ui_supplemental.movie": {
+    "th": "หนังดีน่าดู"
+  },
+  "profile_me_v4.ui_supplemental.weather": {
+    "th": "สภาพอากาศ"
+  },
+  "profile_me_v4.ui_supplemental.calendar": {
+    "th": "ปฏิทิน"
+  },
+  "profile_me_v4.ui_supplemental.discover": {
+    "th": "ค้นพบ"
+  },
+  "profile_me_v4.ui_supplemental.weather.action_title": {
+    "th": "อัปเดตสภาพอากาศ"
+  },
+  "profile_me_v4.ui_supplemental.weather.action_msg": {
+    "th": "หากต้องการรับข้อมูลสภาพอากาศที่แม่นยำ คุณต้องอนุญาตให้แอปเข้าถึงตำแหน่งที่ตั้งของคุณ"
+  },
+  "profile_me_v4.ui_supplemental.weather.action_cancel": {
+    "th": "ยกเลิก"
+  },
+  "profile_me_v4.ui_supplemental.weather.action_open_setting": {
+    "th": "เปิดการตั้งค่า"
+  },
+  "profile_me_v4.menu.account_info": {
+    "th": "ข้อมูลบัญชี"
+  },
+  "profile_me_v4.menu.account_management": {
+    "th": "จัดการบัญชี"
+  },
+  "profile_me_v4.menu.read_history": {
+    "th": "ประวัติการอ่าน"
+  },
+  "profile_me_v4.menu.my_qr": {
+    "th": "คิวอาร์โค้ดของฉัน"
+  },
+  "profile_me_v4.menu.my_qr_require_login": {
+    "th": "คุณต้องเข้าสู่ระบบเพื่อดูคิวอาร์โค้ดของคุณ"
+  },
+  "profile_me_v4.menu.scan_qr": {
+    "th": "สแกนคิวอาร์โค้ด"
+  },
+  "profile_me_v4.menu.scan_qr_privacy_title": {
+    "th": "อนุญาตให้เข้าถึงกล้อง"
+  },
+  "profile_me_v4.menu.scan_qr_privacy_msg": {
+    "th": "คุณต้องทำตามขั้นตอนต่อไปนี้:\n1. แตะ เปิดการตั้งค่า\n2. ไปที่: สิทธิ์การเข้าถึงแอป ➡️ กล้อง\n3. เลือก: อนุญาต"
+  },
+  "profile_me_v4.menu.scan_qr_privacy_cancel": {
+    "th": "ยกเลิก"
+  },
+  "profile_me_v4.menu.scan_qr_privacy_open_setting": {
+    "th": "เปิดการตั้งค่า"
+  },
+  "profile_me_v4.menu.header": {
+    "th": "ตัวเลือก"
+  },
+  "profile_me_v4.menu.header_close": {
+    "th": "ปิด"
+  },
+  "profile_me_v4.menu.login_managment": {
+    "th": "จัดการการเข้าสู่ระบบ"
+  },
+  "profile_me_v4.change_name.enter_you_name": {
+    "th": "กรอกชื่อของคุณ..."
+  },
+  "profile_me_v4.change_name.update_success": {
+    "th": "อัปเดตสำเร็จ"
+  },
+  "profile_me_v4.change_name.error_min_character": {
+    "th": "ชื่อต้องมีอย่างน้อย 3 ตัวอักษร กรุณากรอกใหม่"
+  },
+  "profile_me_v4.qr_connect_description": {
+    "th": "ผู้คนสามารถค้นหาและเชื่อมต่อกับคุณบน imely ได้ง่ายๆ ด้วยการสแกนคิวอาร์โค้ดนี้"
+  },
+  "profile_me_v4.share_profile": {
+    "th": "แชร์โปรไฟล์"
+  },
+  "profile_me_v4.share_qr_code": {
+    "th": "แชร์\nคิวอาร์โค้ด"
+  },
+  "profile_me_v4.save_qr_image": {
+    "th": "บันทึก\nรูปคิวอาร์โค้ด"
+  },
+  "profile_me_v4.copy_link": {
+    "th": "คัดลอก\nลิงก์"
+  },
+  "user_profile_v2.update_avatar_success": {
+    "th": "อัปเดตรูปโปรไฟล์สำเร็จ"
+  },
+  "user_profile_v2.error_try_again": {
+    "th": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง"
+  },
+  "user_profile_v2.error_get_photo_try_again": {
+    "th": "โหลดรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง"
+  },
+  "user_profile_v2.login_by": {
+    "th": "เข้าสู่ระบบด้วย"
+  },
+  "user_profile_v2.logout": {
+    "th": "ออกจากระบบ"
+  },
+  "user_profile_v2.logout_action_title": {
+    "th": "ออกจากระบบ"
+  },
+  "user_profile_v2.logout_action_msg": {
+    "th": "ออกจากระบบและจดจำฉันไว้ในครั้งถัดไป"
+  },
+  "user_profile_v2.logout_action_button_confirm": {
+    "th": "ออกจากระบบ"
+  },
+  "user_profile_v2.logout_success": {
+    "th": "ออกจากระบบแล้ว"
+  },
+  "user_profile_v2.logout_action_button_cancel": {
+    "th": "ยกเลิก"
+  },
+  "user_profile_v2.delete_account_AI_Hay": {
+    "th": "ลบบัญชี imely"
+  },
+  "user_profile_v2.click_2_login": {
+    "th": "แตะเพื่อเข้าสู่ระบบ"
+  },
+  "user_profile_v2.header": {
+    "th": "ข้อมูลบัญชี"
+  },
+  "user_profile_v2.banner_verify_acc.title": {
+    "th": "ยืนยันตัวตนบัญชีของคุณด้วยอีเมลหรือหมายเลขโทรศัพท์"
+  },
+  "user_profile_v2.banner_verify_acc.title_email": {
+    "th": "ยืนยันตัวตนบัญชีของคุณด้วยอีเมล"
+  },
+  "user_profile_v2.banner_verify_acc.description": {
+    "th": "ช่วยให้คุณติดตาม:\n• ตัวเลือกการแชทและข้อมูล\n• แชทบอทที่คุณชื่นชอบ\n• และใช้ฟีเจอร์อื่นๆ ทั้งหมด"
+  },
+  "user_profile_v2.banner_verify_acc.button_verify": {
+    "th": "ยืนยันตัวตนบัญชี"
+  },
+  "user_profile_v2.identifer.verify_account": {
+    "th": "ยืนยันตัวตนบัญชี"
+  },
+  "user_profile_v2.identifer.only_show_with_you": {
+    "th": "ข้อมูลยืนยันตัวตนมองเห็นได้เฉพาะคุณเท่านั้น"
+  },
+  "user_profile_v2.identifer.username": {
+    "th": "ชื่อผู้ใช้"
+  },
+  "user_profile_v2.identifer.create_username": {
+    "th": "สร้าง @ชื่อผู้ใช้..."
+  },
+  "user_profile_v2.identifer.password": {
+    "th": "รหัสผ่าน"
+  },
+  "user_profile_v2.identifer.update_password_hint": {
+    "th": "หากต้องการเปลี่ยนรหัสผ่าน คุณต้อง<font color=\"#00B6A1\"><b>ยืนยันตัวตนบัญชี</b></font>"
+  },
+  "user_profile_v2.identifer.create_password_hint": {
+    "th": "หากต้องการสร้างรหัสผ่าน คุณต้อง<font color=\"#00B6A1\"><b>ยืนยันตัวตนบัญชี</b></font>"
+  },
+  "user_profile_v2.identifer.create_password": {
+    "th": "สร้างรหัสผ่าน..."
+  },
+  "user_profile_v2.identifer.email": {
+    "th": "อีเมล"
+  },
+  "user_profile_v2.identifer.add_email": {
+    "th": "เพิ่มอีเมล..."
+  },
+  "user_profile_v2.identifer.add_email_2": {
+    "th": "เพิ่มอีเมล"
+  },
+  "user_profile_v2.identifer.phone_number": {
+    "th": "หมายเลขโทรศัพท์"
+  },
+  "user_profile_v2.identifer.add_phone_number": {
+    "th": "เพิ่มหมายเลขโทรศัพท์..."
+  },
+  "user_profile_v2.identifer.identity_card": {
+    "th": "หมายเลขบัตรประจำตัวประชาชน"
+  },
+  "user_profile_v2.identifer.add_identity_card": {
+    "th": "เพิ่มหมายเลขบัตรประจำตัวประชาชน..."
+  },
+  "user_profile_v2.identifer.link_account": {
+    "th": "การเชื่อมต่อบัญชี:"
+  },
+  "user_profile_v2.identifer.link_account_fb": {
+    "th": "Facebook"
+  },
+  "user_profile_v2.identifer.link_account_button": {
+    "th": "เชื่อมต่อ"
+  },
+  "user_profile_v2.identifer.un_link_account_button": {
+    "th": "ลบ"
+  },
+  "user_profile_v2.identifer.link_account_google": {
+    "th": "Google"
+  },
+  "user_profile_v2.identifer.link_account_apple": {
+    "th": "Apple"
+  },
+  "user_profile_v2.identifer.link_account_hint": {
+    "th": "* คุณสามารถเข้าสู่ระบบ imely ด้วยบัญชีที่เชื่อมต่อไว้ได้"
+  },
+  "user_profile_v2.identifer.link_account_success_google": {
+    "th": "เชื่อมต่อบัญชี Google สำเร็จ"
+  },
+  "user_profile_v2.identifer.link_account_success_facebook": {
+    "th": "เชื่อมต่อบัญชี Facebook สำเร็จ"
+  },
+  "user_profile_v2.identifer.link_account_success_apple": {
+    "th": "เชื่อมต่อบัญชี Apple สำเร็จ"
+  },
+  "user_profile_v2.identifer.account_exist": {
+    "th": "บัญชีนี้มีอยู่ในระบบแล้ว กรุณาเลือกบัญชีเชื่อมต่ออื่น"
+  },
+  "user_profile_v2.identifer.link_account_fail": {
+    "th": "เชื่อมต่อไม่สำเร็จ กรุณาลองใหม่อีกครั้ง"
+  },
+  "user_profile_v2.identifer.unlink_account_fail": {
+    "th": "ยกเลิกการเชื่อมต่อไม่สำเร็จ กรุณาลองใหม่อีกครั้ง"
+  },
+  "user_profile_v2.identifer.unlink_account_confirm": {
+    "th": "คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการเชื่อมต่อบัญชี"
+  },
+  "user_profile_v2.identifer.unlink_account_title": {
+    "th": "ยกเลิกการเชื่อมต่อบัญชี"
+  },
+  "user_profile_v2.identifer.unlink_account_post_fix": {
+    "th": "สำเร็จ"
+  },
+  "user_profile_v2.identifer.unlink_apple_account_not_allowed": {
+    "th": "คุณไม่สามารถยกเลิกการเชื่อมต่อบัญชี Apple ได้"
+  },
+  "user_profile_v2.identifer.unlink_facebook_account_not_allowed": {
+    "th": "คุณไม่สามารถยกเลิกการเชื่อมต่อบัญชี Facebook ได้"
+  },
+  "user_profile_v2.identifer.unlink_google_account_not_allowed": {
+    "th": "คุณไม่สามารถยกเลิกการเชื่อมต่อบัญชี Google ได้"
+  },
+  "user_profile_v2.identifer.unlink_account_not_allowed": {
+    "th": "คุณไม่สามารถยกเลิกการเชื่อมต่อบัญชีได้"
+  },
+  "user_profile_v2.identifer.unlink_last_login_method_error": {
+    "th": "บัญชีนี้เป็นวิธีเข้าสู่ระบบเดียวของคุณ กรุณาเพิ่มอีเมลหรือหมายเลขโทรศัพท์ก่อนยกเลิกการเชื่อมต่อ"
+  },
+  "user_profile_v2.identifer.unlink_last_login_method_error_email": {
+    "th": "บัญชีนี้เป็นวิธีเข้าสู่ระบบเดียวของคุณ กรุณาเพิ่มอีเมลก่อนยกเลิกการเชื่อมต่อ"
+  },
+  "user_profile_v2.profile_info.title": {
+    "th": "ข้อมูลโปรไฟล์"
+  },
+  "user_profile_v2.profile_info.privacy_title": {
+    "th": "ควบคุมว่าใครสามารถเห็นข้อมูลในหน้าโปรไฟล์ของคุณได้"
+  },
+  "user_profile_v2.profile_info.privacy_mode": {
+    "th": "โหมดการแสดงผล:"
+  },
+  "user_profile_v2.profile_info.gender_mode": {
+    "th": "เพศ:"
+  },
+  "user_profile_v2.profile_info.gender_picker_male": {
+    "th": "ชาย"
+  },
+  "user_profile_v2.profile_info.gender_picker_female": {
+    "th": "หญิง"
+  },
+  "user_profile_v2.profile_info.gender_picker_none": {
+    "th": "เลือก..."
+  },
+  "user_profile_v2.profile_info.year_of_birth": {
+    "th": "ปีเกิด"
+  },
+  "user_profile_v2.profile_info.date_time_picker_title": {
+    "th": "ปีเกิด"
+  },
+  "user_profile_v2.profile_info.birthday_picker_hint": {
+    "th": "เลือกวันเกิดของคุณ"
+  },
+  "user_profile_v2.profile_info.birthday_update_success": {
+    "th": "อัปเดตสำเร็จ"
+  },
+  "user_profile_v2.profile_info.bio": {
+    "th": "แนะนำตัวเอง"
+  },
+  "user_profile_v2.profile_info.bio_hint": {
+    "th": "เพิ่มประวัติย่อเพื่อให้คนอื่นรู้จักคุณ..."
+  },
+  "profile_creator.tab.characters": {
+    "th": "ตัวละคร AI"
+  },
+  "profile_creator.tab.info": {
+    "th": "ข้อมูล"
+  },
+  "profile_creator.characters.empty": {
+    "th": "ยังไม่มีตัวละคร"
+  },
+  "profile_creator.about.label": {
+    "th": "เกี่ยวกับ:"
+  },
+  "profile_creator.about.empty": {
+    "th": "ยังไม่มีข้อมูล"
+  },
+  "profile_creator.badge.creator": {
+    "th": "ผู้สร้าง"
+  },
+  "profile_creator.badge.verified": {
+    "th": "ยืนยันแล้ว"
+  },
+  "profile_creator.stat.followers": {
+    "th": "ผู้ติดตาม"
+  },
+  "profile_creator.stat.characters": {
+    "th": "ตัวละคร"
+  },
+  "profile_creator.stat.chats": {
+    "th": "แชท"
+  },
+  "profile_user.about.label": {
+    "th": "เกี่ยวกับ: "
+  },
+  "profile_user.about.edit": {
+    "th": "แก้ไข"
+  },
+  "profile_user.biography_dialog.title": {
+    "th": "ข้อมูล"
+  },
+  "profile_user.deleted": {
+    "th": "บัญชีถูกลบ"
+  },
+  "profile_user.deleted_chat_desc": {
+    "th": "คุณไม่สามารถส่งข้อความถึงบัญชีนี้ได้"
+  },
+  "login.update_email.title": {
+    "th": "การยืนยันตัวตน"
+  },
+  "login.update_email.tb_input_email_hint": {
+    "th": "กรอกอีเมล..."
+  },
+  "login.update_email.error_invalid_email": {
+    "th": "อีเมลไม่ถูกต้อง"
+  },
+  "login.update_email.btn_login": {
+    "th": "เข้าสู่ระบบ"
+  },
+  "login.update_email.btn_next": {
+    "th": "ดำเนินการต่อ"
+  },
+  "login.update_email.error_already_exits": {
+    "th": "อีเมลนี้ถูกใช้ไปแล้ว กรุณาใช้อีเมลอื่น"
+  },
+  "login.update_email.error_invalid_name": {
+    "th": "ชื่อไม่ถูกต้อง"
+  },
+  "login.update_phone.title": {
+    "th": "การยืนยันตัวตน"
+  },
+  "login.update_phone.tb_input_phone_hint": {
+    "th": "กรอกหมายเลขโทรศัพท์..."
+  },
+  "login.update_phone.error_invalid_phone": {
+    "th": "หมายเลขโทรศัพท์ไม่ถูกต้อง"
+  },
+  "login.update_phone.btn_move_2_login": {
+    "th": "เข้าสู่ระบบ"
+  },
+  "login.update_phone.btn_next": {
+    "th": "ดำเนินการต่อ"
+  },
+  "login.update_phone.error_phone_already_exits": {
+    "th": "หมายเลขโทรศัพท์นี้ถูกใช้ไปแล้ว กรุณาใช้หมายเลขอื่น"
+  },
+  "login.update_phone.error_invalid_name": {
+    "th": "ชื่อไม่ถูกต้อง"
+  },
+  "login.update_phone.sub_title": {
+    "th": "คุณต้องใช้หมายเลขโทรศัพท์มือถือของเวียดนามในการยืนยันตัวตน"
+  },
+  "post_feed.home_ask_footer.post_ask_hint": {
+    "th": "กรอกคำถามของคุณ..."
+  },
+  "post_feed.pick_file.error": {
+    "th": "รองรับเฉพาะไฟล์เอกสารเท่านั้น กรุณาลองใหม่อีกครั้ง"
+  },
+  "post_feed.pick_file.out_of_size": {
+    "th": "แอปรองรับไฟล์ขนาดไม่เกิน 10 MB เท่านั้น\nกรุณาลองใหม่อีกครั้ง"
+  },
+  "post_feed.ask_plugin.tu_vi_2025": {
+    "th": "ดวงชะตา"
+  },
+  "post_feed.ask_plugin.face_reading": {
+    "th": "ดูดวงจากใบหน้า"
+  },
+  "post_feed.ask_plugin.medicine": {
+    "th": "ยา"
+  },
+  "post_feed.ask_plugin.bhxh": {
+    "th": "นโยบายสังคม"
+  },
+  "post_feed.ask_plugin.gold": {
+    "th": "ทองคำและดอกเบี้ย"
+  },
+  "post_feed.ask_plugin.picture": {
+    "th": "ถามจากรูปภาพ"
+  },
+  "post_feed.ask_plugin.link": {
+    "th": "วางลิงก์"
+  },
+  "post_feed.ask_plugin.homework": {
+    "th": "การบ้าน"
+  },
+  "post_feed.ask_plugin.roast": {
+    "th": "กวนโอ๊ย"
+  },
+  "post_feed.ask_plugin.writing": {
+    "th": "เขียนด้วย AI"
+  },
+  "post_feed.ask_plugin.chat": {
+    "th": "แชท"
+  },
+  "post_feed.ask_plugin.translate": {
+    "th": "แปลภาษา"
+  },
+  "post_feed.ask_plugin.mindmap": {
+    "th": "แผนผังความคิด"
+  },
+  "post_feed.ask_plugin.sumup": {
+    "th": "สรุป"
+  },
+  "post_feed.ask_plugin.personal": {
+    "th": "ปรับให้เข้ากับคุณ"
+  },
+  "post_feed.ask_plugin.unipredict": {
+    "th": "คาดการณ์ UniPass"
+  },
+  "post_feed.ask_plugin.location": {
+    "th": "ตำแหน่งที่ตั้ง"
+  },
+  "post_feed.ask_plugin.research": {
+    "th": "ค้นคว้าวิจัย"
+  },
+  "post_feed.ask_plugin.unidocuments": {
+    "th": "เอกสาร Uni"
+  },
+  "post_feed.ask_plugin.stock": {
+    "th": "หุ้น"
+  },
+  "post_feed.ask_plugin.ppt_maker": {
+    "th": "สร้าง PPT"
+  },
+  "post_feed.ask_plugin.drive": {
+    "th": "AI Drive"
+  },
+  "ask_sumup.file_title": {
+    "th": "สรุปไฟล์"
+  },
+  "ask_sumup.link_title": {
+    "th": "สรุปลิงก์"
+  },
+  "ask_sumup.video_title": {
+    "th": "สรุปวิดีโอ YouTube"
+  },
+  "ask_sumup.file_subtitle": {
+    "th": "ขนาดไม่เกิน 10MB"
+  },
+  "ask_sumup.link_subtitle": {
+    "th": "สรุปเนื้อหาเว็บไซต์ ข่าวในและต่างประเทศ"
+  },
+  "ask_sumup.video_subtitle": {
+    "th": "สรุปวิดีโอ YouTube จับใจความสำคัญได้ใน 5 วินาที"
+  },
+  "ask_sumup.file_text_fill": {
+    "th": "ช่วยสรุปไฟล์นี้ให้ฉันหน่อย"
+  },
+  "ask_sumup.link_text_fill": {
+    "th": "ช่วยสรุปลิงก์นี้ให้ฉันหน่อย"
+  },
+  "ask_sumup.video_text_fill": {
+    "th": "ช่วยสรุปเนื้อหาวิดีโอนี้ให้ฉันหน่อย"
+  },
+  "ask_sumup.error.empty_link": {
+    "th": "ไม่พบลิงก์สำหรับสรุป!"
+  },
+  "ask_sumup.exceed_file_quota": {
+    "th": "คุณใช้โควตาสรุปไฟล์ของวันนี้หมดแล้ว กรุณากลับมาใหม่พรุ่งนี้!"
+  },
+  "ask_mindmap.style_title": {
+    "th": "หมวดหมู่"
+  },
+  "ask_mindmap.option_title": {
+    "th": "ตัวเลือก"
+  },
+  "ask_mindmap.style_1": {
+    "th": "มาตรฐาน"
+  },
+  "ask_mindmap.style_2": {
+    "th": "SWOT"
+  },
+  "ask_mindmap.style_3": {
+    "th": "ข้อดีข้อเสีย"
+  },
+  "ask_mindmap.style_4": {
+    "th": "สรุปแผน"
+  },
+  "ask_mindmap.style_5": {
+    "th": "บันทึกการประชุม"
+  },
+  "ask_mindmap.style_6": {
+    "th": "รายการสิ่งที่ต้องทำ"
+  },
+  "ask_mindmap.style_1_prefill": {
+    "th": "สร้างแผนผังความคิดแบบมาตรฐานเกี่ยวกับ"
+  },
+  "ask_mindmap.style_2_prefill": {
+    "th": "สร้างแผนผังความคิด SWOT เกี่ยวกับ"
+  },
+  "ask_mindmap.style_3_prefill": {
+    "th": "สร้างแผนผังความคิดข้อดีข้อเสียของ"
+  },
+  "ask_mindmap.style_4_prefill": {
+    "th": "สร้างแผนผังความคิดและสรุปแผนเกี่ยวกับ..."
+  },
+  "ask_mindmap.style_5_prefill": {
+    "th": "สร้างแผนผังความคิดสำหรับบันทึกการประชุม"
+  },
+  "ask_mindmap.style_6_prefill": {
+    "th": "สร้างแผนผังความคิด/รายการสิ่งที่ต้องทำ"
+  },
+  "ask_mindmap.length_title": {
+    "th": "ความยาว"
+  },
+  "ask_mindmap.length_1": {
+    "th": "ค่าเริ่มต้น"
+  },
+  "ask_mindmap.length_2": {
+    "th": "ละเอียด"
+  },
+  "ask_mindmap.length_3": {
+    "th": "สั้นกระชับ"
+  },
+  "ask_location.fill_0": {
+    "th": "อัปเดตที่อยู่ใหม่"
+  },
+  "ask_location.fill_1": {
+    "th": "รีวิว"
+  },
+  "ask_location.fill_2": {
+    "th": "ที่อยู่เดิมของ"
+  },
+  "ask_location.title_0": {
+    "th": "อัปเดตที่อยู่"
+  },
+  "ask_location.title_1": {
+    "th": "รีวิว"
+  },
+  "ask_location.title_2": {
+    "th": "ค้นหาที่อยู่เดิม"
+  },
+  "ask_location.desc_0": {
+    "th": "เปลี่ยนเป็นที่อยู่ใหม่หลังการควบรวม"
+  },
+  "ask_location.desc_1": {
+    "th": "ประเมินสถานที่ให้บริการ องค์กร ฯลฯ"
+  },
+  "ask_location.desc_2": {
+    "th": "กรอกที่อยู่ใหม่เพื่อค้นหาที่อยู่ก่อนการควบรวม"
+  },
+  "post_feed.input_compose.ask_followup_hint": {
+    "th": "เจาะลึกหัวข้อนี้เพิ่มเติม..."
+  },
+  "post_feed.input_compose.ask_hint": {
+    "th": "ถามอะไรก็ได้..."
+  },
+  "post_feed.input_compose.ask_empty_hint": {
+    "th": "กรุณากรอกคำถามของคุณ!"
+  },
+  "post_feed.ui_present.toolbar_title_roast": {
+    "th": "กวนโอ๊ย"
+  },
+  "post_feed.ui_present.toolbar_title_writing": {
+    "th": "เขียนด้วย AI"
+  },
+  "post_feed.ui_present.toolbar_title_ask": {
+    "th": "ถาม imely"
+  },
+  "post_feed.ui_present.toolbar_title_ask_quota_2": {
+    "th": "ครั้ง"
+  },
+  "post_feed.ui_present.toolbar_title_ask_quota": {
+    "th": "ครั้ง"
+  },
+  "post_feed.ui_present.toolbar_title_translate": {
+    "th": "แปลภาษา"
+  },
+  "post_feed.ui_present.toolbar_title_mindmap": {
+    "th": "แผนผังความคิด"
+  },
+  "post_feed.ui_present.toolbar_title_summary": {
+    "th": "สรุป"
+  },
+  "post_feed.pro_search.label": {
+    "th": "ค้นหาแบบ Pro"
+  },
+  "post_feed.agentic.label": {
+    "th": "Agentic"
+  },
+  "post_feed.reasoning.label": {
+    "th": "การให้เหตุผล"
+  },
+  "post_feed.deep_research.label": {
+    "th": "ค้นคว้าเชิงลึก"
+  },
+  "post_feed.options.label": {
+    "th": "ตัวเลือก"
+  },
+  "post_feed.pro_search.pro_search_on_toast": {
+    "th": "เปิดใช้งานค้นหาแบบ Pro แล้ว"
+  },
+  "post_feed.pro_search.pro_search_off_toast": {
+    "th": "ปิดใช้งานค้นหาแบบ Pro แล้ว"
+  },
+  "post_feed.agentic.on_toast": {
+    "th": "เปิดใช้งาน Agentic แล้ว"
+  },
+  "post_feed.agentic.off_toast": {
+    "th": "ปิดใช้งาน Agentic แล้ว"
+  },
+  "post_feed.pro_search.reasoning_on_toast": {
+    "th": "เปิดใช้งานการให้เหตุผลแล้ว"
+  },
+  "post_feed.pro_search.reasoning_off_toast": {
+    "th": "ปิดใช้งานการให้เหตุผลแล้ว"
+  },
+  "post_feed.pro_search.deep_research_on_toast": {
+    "th": "เปิดใช้งานค้นคว้าเชิงลึกแล้ว"
+  },
+  "post_feed.pro_search.deep_research_off_toast": {
+    "th": "ปิดใช้งานค้นคว้าเชิงลึกแล้ว"
+  },
+  "post_feed.pro_search.all_modes_off_toast": {
+    "th": "ปิดใช้งานโหมดทั้งหมดแล้ว"
+  },
+  "post_feed.pro_search.not_using": {
+    "th": "ไม่ได้ใช้งาน"
+  },
+  "post_feed.pro_search.turn_off_options": {
+    "th": "ไม่ใช้"
+  },
+  "post_feed.pro_search.turn_off_options_toast": {
+    "th": "ปิดใช้งานแล้ว"
+  },
+  "post_feed.stock_research.label": {
+    "th": "หุ้น"
+  },
+  "post_feed.stock_market_research.label": {
+    "th": "ตลาด"
+  },
+  "post_feed.auto.title": {
+    "th": "อัตโนมัติ"
+  },
+  "post_feed.auto.description": {
+    "th": "imely จะเลือกตัวเลือกที่เหมาะสมให้กับคำถามของคุณ"
+  },
+  "post_feed.pro_search.auto_on_toast": {
+    "th": "เปิดใช้งานอัตโนมัติแล้ว"
+  },
+  "post_feed.pro_search.quota_exhausted_before_number": {
+    "th": "คุณใช้ครบแล้ว"
+  },
+  "post_feed.pro_search.quota_exhausted_after_number": {
+    "th": "ครั้งของการค้นหาแบบ Pro"
+  },
+  "post_feed.pro_search.quota_status_before_numbers": {
+    "th": "คุณมี"
+  },
+  "post_feed.pro_search.quota_status_after_numbers": {
+    "th": "ครั้งของการค้นหาแบบ Pro เหลืออยู่"
+  },
+  "post_feed.analysis.stock": {
+    "th": "วิเคราะห์หุ้น"
+  },
+  "post_feed.analysis.stock_enabled": {
+    "th": "เปิดใช้งานวิเคราะห์หุ้นแล้ว"
+  },
+  "post_feed.analysis.market_enabled": {
+    "th": "เปิดใช้งานวิเคราะห์ตลาดแล้ว"
+  },
+  "post_feed.analysis.market": {
+    "th": "วิเคราะห์ตลาด"
+  },
+  "post_feed.analysis.stock_description": {
+    "th": "ค้นคว้าและประเมินสัญลักษณ์หุ้น คาดการณ์แนวโน้ม และแนะนำกลยุทธ์"
+  },
+  "post_feed.media_picker.error_empty_media": {
+    "th": "ไม่สามารถโหลดรูปภาพหรือวิดีโอได้"
+  },
+  "post_feed.writing.type_title": {
+    "th": "หมวดหมู่"
+  },
+  "post_feed.writing.type_1": {
+    "th": "วิเคราะห์"
+  },
+  "post_feed.writing.type_2": {
+    "th": "พรรณนาอารมณ์"
+  },
+  "post_feed.writing.type_3": {
+    "th": "เรียงความสังคม"
+  },
+  "post_feed.writing.type_4": {
+    "th": "เรียงความวรรณกรรม"
+  },
+  "post_feed.writing.type_5": {
+    "th": "เรียงความอธิบาย"
+  },
+  "post_feed.writing.type_6": {
+    "th": "เรียงความบรรยาย"
+  },
+  "post_feed.writing.type_7": {
+    "th": "เรื่องเล่า"
+  },
+  "post_feed.writing.type_8": {
+    "th": "จดหมาย"
+  },
+  "post_feed.writing.type_fill_1": {
+    "th": "เขียนเรียงความเชิงวิเคราะห์"
+  },
+  "post_feed.writing.type_fill_2": {
+    "th": "เขียนเรียงความเชิงพรรณนาอารมณ์เกี่ยวกับ"
+  },
+  "post_feed.writing.type_fill_3": {
+    "th": "เขียนเรียงความโต้แย้งทางสังคมเกี่ยวกับ"
+  },
+  "post_feed.writing.type_fill_4": {
+    "th": "เขียนเรียงความโต้แย้งทางวรรณกรรมเกี่ยวกับ"
+  },
+  "post_feed.writing.type_fill_5": {
+    "th": "เขียนเรียงความอธิบายเกี่ยวกับ"
+  },
+  "post_feed.writing.type_fill_6": {
+    "th": "เขียนย่อหน้าบรรยายเกี่ยวกับ"
+  },
+  "post_feed.writing.type_fill_7": {
+    "th": "เขียนเรื่องเล่า"
+  },
+  "post_feed.writing.type_fill_8": {
+    "th": "เขียนจดหมายถึง"
+  },
+  "post_feed.writing.option_title": {
+    "th": "ตัวเลือก"
+  },
+  "post_feed.writing.style_title": {
+    "th": "สไตล์"
+  },
+  "post_feed.writing.style_1": {
+    "th": "กระชับ"
+  },
+  "post_feed.writing.style_2": {
+    "th": "ทางการ"
+  },
+  "post_feed.writing.style_3": {
+    "th": "สุภาพ"
+  },
+  "post_feed.writing.style_4": {
+    "th": "เป็นกันเอง"
+  },
+  "post_feed.writing.style_5": {
+    "th": "บรรยาย"
+  },
+  "post_feed.writing.lang_title": {
+    "th": "ภาษา"
+  },
+  "post_feed.writing.lang_1": {
+    "th": "เวียดนาม"
+  },
+  "post_feed.writing.lang_2": {
+    "th": "อังกฤษ"
+  },
+  "post_feed.writing.length_title": {
+    "th": "ความยาว"
+  },
+  "post_feed.writing.length_1": {
+    "th": "ค่าเริ่มต้น"
+  },
+  "post_feed.writing.length_2": {
+    "th": "ยาว"
+  },
+  "post_feed.writing.length_3": {
+    "th": "สั้น"
+  },
+  "post_feed.writing.length_4": {
+    "th": "โครงร่าง"
+  },
+  "ask.translate.file_button": {
+    "th": "แปลไฟล์"
+  },
+  "ask.translate.file_description": {
+    "th": "ขนาดไฟล์ไม่เกิน 10MB"
+  },
+  "ask.translate.file_quota_hint": {
+    "th": "คุณใช้โควตาแปลไฟล์ของวันนี้หมดแล้ว กรุณากลับมาใหม่พรุ่งนี้!"
+  },
+  "ask.translate.link_button": {
+    "th": "แปลลิงก์"
+  },
+  "ask.translate.link_description": {
+    "th": "วางลิงก์ที่ต้องการแปล"
+  },
+  "ask.translate.link_empty": {
+    "th": "ไม่พบลิงก์สำหรับแปล"
+  },
+  "ask.translate.link_invalid": {
+    "th": "ลิงก์นี้ไม่รองรับการแปล"
+  },
+  "ask.translate.link_promp": {
+    "th": "ช่วยแปลลิงก์นี้ให้ฉันหน่อย"
+  },
+  "ask.translate.camera_button": {
+    "th": "แปลด่วน"
+  },
+  "ask.translate.camera_description": {
+    "th": "ถ่ายภาพแล้วแปล"
+  },
+  "ask.translate.text_auto_fill": {
+    "th": "แปลภาษา"
+  },
+  "post_feed.translate.type_title": {
+    "th": "ภาษา"
+  },
+  "post_feed.translate.option_title": {
+    "th": "ตัวเลือก"
+  },
+  "post_feed.translate.style_title": {
+    "th": "สไตล์"
+  },
+  "post_feed.translate.language_auto": {
+    "th": "อัตโนมัติ"
+  },
+  "post_feed.translate.language_vn": {
+    "th": "เวียดนาม"
+  },
+  "post_feed.translate.language_en": {
+    "th": "อังกฤษ"
+  },
+  "post_feed.translate.language_fr": {
+    "th": "ฝรั่งเศส"
+  },
+  "post_feed.translate.language_ja": {
+    "th": "ญี่ปุ่น"
+  },
+  "post_feed.translate.language_ko": {
+    "th": "เกาหลี"
+  },
+  "post_feed.translate.language_zh": {
+    "th": "จีน"
+  },
+  "post_feed.translate.language_ru": {
+    "th": "รัสเซีย"
+  },
+  "post_feed.translate.language_de": {
+    "th": "เยอรมัน"
+  },
+  "post_feed.translate.select_language": {
+    "th": "เลือกภาษา"
+  },
+  "ask.personalize.title": {
+    "th": "การปรับแต่งส่วนตัว"
+  },
+  "ask.personalize.description": {
+    "th": "จากข้อมูลนี้ imely จะเข้าใจและให้บริการคุณได้ดีที่สุด คำตอบจะแม่นยำและน่าประทับใจยิ่งขึ้น ตรงกับสไตล์และความชอบของคุณ"
+  },
+  "ask.personalize.social.placeholder": {
+    "th": "กรอกลิงก์ LinkedIn, Facebook ..."
+  },
+  "ask.personalize.social.description": {
+    "th": "imely จะรวบรวมข้อมูลเกี่ยวกับคุณโดยอัตโนมัติ"
+  },
+  "ask.personalize.social.paste_button": {
+    "th": "วางลิงก์"
+  },
+  "ask.personalize.social.aggregate_button": {
+    "th": "รวบรวม"
+  },
+  "ask.personalize.name.label": {
+    "th": "ให้ imely เรียกคุณว่าอะไรดี?"
+  },
+  "ask.personalize.name.placeholder": {
+    "th": "กรอกชื่อสั้นๆ ของคุณ..."
+  },
+  "ask.personalize.profession.question": {
+    "th": "อาชีพของคุณ?"
+  },
+  "ask.personalize.profession.label": {
+    "th": "อาชีพของคุณ:"
+  },
+  "ask.personalize.profession.placeholder": {
+    "th": "นักบัญชี นักเรียน นักศึกษา ..."
+  },
+  "ask.personalize.description.label": {
+    "th": "คำอธิบายเกี่ยวกับคุณ"
+  },
+  "ask.personalize.description.placeholder": {
+    "th": "กรอกคำอธิบายสั้นๆ เกี่ยวกับคุณ..."
+  },
+  "ask.personalize.style.title": {
+    "th": "เลือกสไตล์การสื่อสารของ imely:"
+  },
+  "ask.personalize.style.suggestion": {
+    "th": "แนะนำ"
+  },
+  "ask.personalize.style.neutral": {
+    "th": "เป็นกลาง"
+  },
+  "ask.personalize.style.concise": {
+    "th": "กระชับ"
+  },
+  "ask.personalize.style.concise_clear": {
+    "th": "กระชับและตรงประเด็น"
+  },
+  "ask.personalize.style.formal": {
+    "th": "ทางการ"
+  },
+  "ask.personalize.style.sarcastic": {
+    "th": "เสียดสี"
+  },
+  "ask.personalize.style.genz": {
+    "th": "Gen Z"
+  },
+  "ask.personalize.style.literary": {
+    "th": "เชิงวรรณกรรม"
+  },
+  "ask.personalize.style.talkative": {
+    "th": "ช่างพูด"
+  },
+  "ask.personalize.style.positive": {
+    "th": "เชิงบวก"
+  },
+  "ask.personalize.content.placeholder": {
+    "th": "กรอกเนื้อหา..."
+  },
+  "ask.personalize.customization.title": {
+    "th": "คำสั่งพิเศษ:"
+  },
+  "ask.personalize.customization.placeholder": {
+    "th": "แนะนำให้ imely ตอบในแบบที่คุณต้องการ..."
+  },
+  "ask.personalize.button.cancel": {
+    "th": "ยกเลิก"
+  },
+  "ask.personalize.button.done": {
+    "th": "เสร็จสิ้น"
+  },
+  "ask.personalize.update.success": {
+    "th": "อัปเดตข้อมูลของคุณแล้ว"
+  },
+  "ask.personalize.update.failure": {
+    "th": "ไม่สามารถอัปเดตข้อมูลได้ กรุณาลองใหม่อีกครั้ง"
+  },
+  "ask.personalize.ask.caption": {
+    "th": "อัปเดตการปรับแต่งส่วนตัวแล้ว"
+  },
+  "ask.personalize.delete.confirmation.message": {
+    "th": "ลบข้อมูลการปรับแต่งส่วนตัวทั้งหมดของคุณ?"
+  },
+  "ask.personalize.delete.confirmation.positive": {
+    "th": "ลบทั้งหมด"
+  },
+  "ask.personalize.delete.confirmation.negative": {
+    "th": "ยกเลิก"
+  },
+  "ask.personalize.delete.success": {
+    "th": "ลบข้อมูลส่วนตัวสำเร็จ"
+  },
+  "ask.personalize.profession.student": {
+    "th": "นักเรียน"
+  },
+  "ask.personalize.profession.university": {
+    "th": "นักศึกษา"
+  },
+  "ask.personalize.profession.working": {
+    "th": "ทำงานแล้ว"
+  },
+  "ask.personalize.profession.student.question": {
+    "th": "คุณเรียนอยู่ชั้นอะไร?"
+  },
+  "ask.personalize.profession.university.question": {
+    "th": "คุณเรียนอยู่ปีอะไร?"
+  },
+  "ask.personalize.profession.working.question": {
+    "th": "งานของคุณคืออะไร?"
+  },
+  "ask.personalize.profession.student.placeholder": {
+    "th": "กรอกชั้นเรียนของคุณ..."
+  },
+  "ask.personalize.profession.university.placeholder": {
+    "th": "กรอกชั้นปีของคุณ..."
+  },
+  "ask.personalize.profession.working.placeholder": {
+    "th": "พนักงานออฟฟิศ ครู ..."
+  },
+  "ask.personalize.profession.communication_style_hint": {
+    "th": "สไตล์การสื่อสาร: เช่น เป็นกันเอง เข้าถึงง่าย ..."
+  },
+  "ask.personalize.profession.communication_style": {
+    "th": "สไตล์การสื่อสาร"
+  },
+  "ask.ppt_create.template_label": {
+    "th": "เทมเพลต"
+  },
+  "ask.ppt_create.language_label": {
+    "th": "ภาษา"
+  },
+  "ask.ppt_create.language_vi": {
+    "th": "เวียดนาม"
+  },
+  "ask.ppt_create.language_en": {
+    "th": "อังกฤษ"
+  },
+  "ask.ppt_create.option_label": {
+    "th": "ตัวเลือก"
+  },
+  "ask.ppt_create.length_default": {
+    "th": "ค่าเริ่มต้น"
+  },
+  "ask.ppt_create.template_selection_title": {
+    "th": "เลือกธีม"
+  },
+  "ask.ppt_create.template_details_title": {
+    "th": "รายละเอียด"
+  },
+  "ask.ppt_create.select_button": {
+    "th": "เลือก"
+  },
+  "ask.ppt_create.hint_vi": {
+    "th": "สร้าง PPT ภาษาเวียดนามเกี่ยวกับ:"
+  },
+  "ask.ppt_create.hint_en": {
+    "th": "สร้าง PPT ภาษาอังกฤษเกี่ยวกับ:"
+  },
+  "ask.ppt_create.blank_ppt": {
+    "th": "อัตโนมัติ"
+  },
+  "post_feed.hint": {
+    "th": "กรอกเนื้อหา..."
+  },
+  "setting_menu.name": {
+    "th": "การตั้งค่า"
+  },
+  "setting_menu.option": {
+    "th": "ตัวเลือก"
+  },
+  "setting_menu.noti": {
+    "th": "การแจ้งเตือน"
+  },
+  "setting_menu.phone_book": {
+    "th": "รายชื่อติดต่อ"
+  },
+  "setting_menu.phone_book.action_login_title": {
+    "th": "เข้าสู่ระบบ"
+  },
+  "setting_menu.phone_book.action_login_msg": {
+    "th": "กรุณาเข้าสู่ระบบเพื่อใช้ฟีเจอร์นี้"
+  },
+  "setting_menu.phone_book.action_login_negative_btn": {
+    "th": "ยกเลิก"
+  },
+  "setting_menu.phone_book.action_login_positive_btn": {
+    "th": "เข้าสู่ระบบ"
+  },
+  "setting_menu.video": {
+    "th": "วิดีโอ"
+  },
+  "setting_menu.font": {
+    "th": "อินเทอร์เฟซและภาษา"
+  },
+  "setting_menu.help": {
+    "th": "ช่วยเหลือ"
+  },
+  "setting_menu.chat_with_support": {
+    "th": "แชทกับฝ่ายช่วยเหลือของ imely"
+  },
+  "setting_menu.AIHay_support_name": {
+    "th": "ฝ่ายช่วยเหลือของ imely"
+  },
+  "setting_menu.feed_back_via_email": {
+    "th": "ส่งความคิดเห็นทางอีเมล"
+  },
+  "setting_menu.term_and_policy": {
+    "th": "ข้อกำหนดและนโยบาย"
+  },
+  "setting.noti_setting.title": {
+    "th": "การแจ้งเตือน"
+  },
+  "setting.noti_setting.setting_title": {
+    "th": "รับการแจ้งเตือน"
+  },
+  "setting.noti_setting.setting_msg": {
+    "th": "ติดตามข่าวสารและอีเวนต์ล่าสุดที่กำลังมาแรง"
+  },
+  "setting.video_setting.header": {
+    "th": "วิดีโอ"
+  },
+  "setting.video_setting.title": {
+    "th": "เล่นวิดีโออัตโนมัติ"
+  },
+  "setting.font_setting.header": {
+    "th": "อินเทอร์เฟซ"
+  },
+  "setting.font_setting.theme": {
+    "th": "อินเทอร์เฟซ"
+  },
+  "setting.font_setting.theme_light": {
+    "th": "☀️ สว่าง"
+  },
+  "setting.font_setting.theme_dark": {
+    "th": "🌙 มืด"
+  },
+  "setting.font_setting.theme_auto": {
+    "th": "อัตโนมัติ"
+  },
+  "setting.font_setting.language": {
+    "th": "ภาษา"
+  },
+  "setting.font_setting.language_vie": {
+    "th": "Tiếng Việt"
+  },
+  "setting.font_setting.language_eng": {
+    "th": "English"
+  },
+  "setting.font_setting.language_id": {
+    "th": "Bahasa Indonesia"
+  },
+  "setting.font_setting.language_zh": {
+    "th": "繁體中文"
+  },
+  "setting.font_setting.font_size": {
+    "th": "ขนาดตัวอักษรหน้าเว็บ"
+  },
+  "setting.font_setting.font_size_hint": {
+    "th": "ลากไปทางขวาเพื่อเพิ่มขนาดตัวอักษรบนเว็บ"
+  },
+  "setting.font_setting.language_current": {
+    "th": "English"
+  },
+  "setting.policy_setting.header": {
+    "th": "ข้อกำหนดและนโยบาย"
+  },
+  "setting.policy_setting.privacy_policy": {
+    "th": "นโยบายความเป็นส่วนตัว"
+  },
+  "setting.policy_setting.term_of_service": {
+    "th": "ข้อกำหนดการให้บริการ"
+  },
+  "setting.policy_setting.copyright_policy": {
+    "th": "นโยบายลิขสิทธิ์"
+  },
+  "setting.policy_setting.about_us": {
+    "th": "เกี่ยวกับเรา"
+  },
+  "setting.app_info.about_us": {
+    "th": "เกี่ยวกับเรา"
+  },
+  "setting.app_info.title_1": {
+    "th": "<h2 style=\"text-align: center;\">imely - v"
+  },
+  "setting.app_info.title_2": {
+    "th": "</h2>"
+  },
+  "setting.app_info.subtitle_1": {
+    "th": "<p style=\"text-align: center;\">บิลด์ - v"
+  },
+  "setting.app_info.subtitle_2": {
+    "th": "</p>"
+  },
+  "setting.app_info.description": {
+    "th": "แชทกับตัวละครเสมือนที่เข้าใจคุณอย่างแท้จริง <b>imely</b> สร้างสรรค์บุคลิกภาพ AI ให้มีชีวิต — แต่ละตัวมีเรื่องราว สไตล์ และน้ำเสียงเป็นของตัวเอง"
+  },
+  "setting.app_info.contact_info": {
+    "th": "ข้อมูลติดต่อ:"
+  },
+  "setting.app_info.contact_info_email": {
+    "th": "✉️ อีเมล: info@imely.ai"
+  },
+  "setting.app_info.join_community": {
+    "th": "เข้าร่วมคอมมูนิตี้:"
+  },
+  "setting.app_info.contact_info_phone": {
+    "th": "📞 โทร: (028) 36.401.689"
+  },
+  "menu.feed_social.header": {
+    "th": "ตัวเลือก"
+  },
+  "menu.feed_social.header_close": {
+    "th": "ปิด"
+  },
+  "menu.feed_social.censor_content": {
+    "th": "*** การตรวจสอบเนื้อหา ***"
+  },
+  "menu.feed_social.privacy_option": {
+    "th": "โหมดความเป็นส่วนตัว"
+  },
+  "menu.feed_social.edit_hashtag_option": {
+    "th": "แก้ไขแฮชแท็ก"
+  },
+  "menu.feed_social.ask_public": {
+    "th": "ถามคอมมูนิตี้"
+  },
+  "menu.feed_social.view_react_detail": {
+    "th": "ดูปฏิกิริยาตอบสนอง"
+  },
+  "menu.feed_social.share": {
+    "th": "แชร์"
+  },
+  "menu.feed_social.copy": {
+    "th": "คัดลอกเนื้อหา"
+  },
+  "menu.feed_social.delete_feed": {
+    "th": "ลบโพสต์"
+  },
+  "menu.feed_social.delete_feed_toast": {
+    "th": "ลบโพสต์แล้ว"
+  },
+  "menu.feed_social.report": {
+    "th": "รายงานการละเมิด"
+  },
+  "menu.feed_social.report_wrong_cate": {
+    "th": "หมวดหมู่ไม่ถูกต้อง"
+  },
+  "menu.feed_social.report_ads_spam": {
+    "th": "โฆษณา"
+  },
+  "menu.feed_social.report_clickbait": {
+    "th": "พาดหัวชวนคลิก"
+  },
+  "menu.feed_social.follow": {
+    "th": "ติดตาม"
+  },
+  "menu.feed_social.unfollow": {
+    "th": "เลิกติดตาม"
+  },
+  "menu.feed_social.not_interest_about": {
+    "th": "ไม่สนใจ:"
+  },
+  "menu.feed_social.not_interest_about_toast_1": {
+    "th": "ข่าว"
+  },
+  "menu.feed_social.not_interest_about_toast_2": {
+    "th": "จะแสดงน้อยลง"
+  },
+  "menu.feed_social.see_less_from_source": {
+    "th": "ดูโพสต์จากแหล่งนี้ให้น้อยลง:"
+  },
+  "menu.feed_social.see_less_from_source_toast": {
+    "th": "คุณจะเห็นโพสต์จาก"
+  },
+  "menu.feed_social.ask_topic": {
+    "th": "ถาม"
+  },
+  "menu.common.download": {
+    "th": "ดาวน์โหลด"
+  },
+  "menu.common.share": {
+    "th": "แชร์"
+  },
+  "menu.comment_option_menu.header": {
+    "th": "ตัวเลือก"
+  },
+  "menu.comment_option_menu.view_react_detail": {
+    "th": "ดูปฏิกิริยาตอบสนอง"
+  },
+  "menu.comment_option_menu.copy": {
+    "th": "คัดลอก"
+  },
+  "menu.comment_option_menu.delete_comment": {
+    "th": "ลบความคิดเห็น"
+  },
+  "menu.comment_option_menu.delete_comment_success_toast": {
+    "th": "ลบความคิดเห็นแล้ว"
+  },
+  "menu.comment_option_menu.report": {
+    "th": "รายงานการละเมิด"
+  },
+  "menu.comment_option_menu.report_wrong_cate": {
+    "th": "หมวดหมู่ไม่ถูกต้อง"
+  },
+  "menu.comment_option_menu.report_ads_spam": {
+    "th": "โฆษณา"
+  },
+  "menu.comment_option_menu.report_clickbait": {
+    "th": "พาดหัวชวนคลิก"
+  },
+  "aiview_article.summary_news": {
+    "th": "สรุป"
+  },
+  "aiview_article.toolbar.btn_related": {
+    "th": "👉 อ่านมากที่สุด"
+  },
+  "aiview_article.toolbar.text_box_hint": {
+    "th": "ถามคำถาม"
+  },
+  "aiview_article.toolbar.btn_ask_AI": {
+    "th": "ถาม AI"
+  },
+  "aiview_article.toolbar.btn_related_1": {
+    "th": "👇 ที่เกี่ยวข้อง"
+  },
+  "aiview_article.menu.header": {
+    "th": "ตัวเลือก"
+  },
+  "aiview_article.menu.refresh_page": {
+    "th": "โหลดหน้าใหม่"
+  },
+  "aiview_article.menu.share": {
+    "th": "แชร์"
+  },
+  "aiview_article.menu.copy_link": {
+    "th": "คัดลอกลิงก์"
+  },
+  "aiview_article.menu.report": {
+    "th": "รายงานการละเมิด"
+  },
+  "aiview_article.menu.font_size": {
+    "th": "ปรับขนาดตัวอักษรเว็บ"
+  },
+  "news_summary.menu.header": {
+    "th": "ตัวเลือก"
+  },
+  "news_summary.menu.share": {
+    "th": "แชร์"
+  },
+  "news_summary.menu.report": {
+    "th": "รายงานการละเมิด"
+  },
+  "users_react.header": {
+    "th": "ปฏิกิริยาตอบสนอง"
+  },
+  "users_react.my_react": {
+    "th": "อารมณ์"
+  },
+  "users_react.top_react": {
+    "th": "สมาชิกที่มีความเคลื่อนไหวสูงสุด:"
+  },
+  "report_news.header": {
+    "th": "รายงานการละเมิด"
+  },
+  "report_news.obscene_content": {
+    "th": "เนื้อหาลามกหรือน่ารังเกียจ"
+  },
+  "report_news.ads_content": {
+    "th": "บทความเกี่ยวกับโฆษณา การตลาด"
+  },
+  "report_news.illegal_content": {
+    "th": "ข้อมูลผิดกฎหมาย"
+  },
+  "report_news.bad_rumors_content": {
+    "th": "ข่าวลือเท็จ"
+  },
+  "report_news.dont_want_to_see_content": {
+    "th": "ไม่ต้องการเห็นโพสต์นี้"
+  },
+  "report_news.nonsense_content": {
+    "th": "เนื้อหาไร้สาระ"
+  },
+  "report_news.btn_cancel": {
+    "th": "ยกเลิก"
+  },
+  "report_news.btn_send": {
+    "th": "ส่ง"
+  },
+  "report_news.report_success_toast": {
+    "th": "ขอบคุณสำหรับความคิดเห็นของคุณ 🙇"
+  },
+  "report_news.report_error_toast": {
+    "th": "เกิดข้อผิดพลาด กรุณาลองใหม่ภายหลัง"
+  },
+  "report_news.report_issue": {
+    "th": "รายงานปัญหา"
+  },
+  "feed_privacy.header": {
+    "th": "ตัวเลือกความเป็นส่วนตัว"
+  },
+  "feed_privacy.mode.only_me": {
+    "th": "ฉันเท่านั้น"
+  },
+  "feed_privacy.mode.only_link": {
+    "th": "ทุกคนที่มีลิงก์"
+  },
+  "feed_privacy.mode.only_friend": {
+    "th": "เพื่อน"
+  },
+  "feed_privacy.mode.only_following": {
+    "th": "กำลังติดตาม"
+  },
+  "feed_privacy.mode.public": {
+    "th": "สาธารณะ"
+  },
+  "feed_privacy.mode.only_follower": {
+    "th": "ผู้ติดตาม"
+  },
+  "feed_privacy.mode.only_me_hint": {
+    "th": "มองเห็นได้เฉพาะคุณเท่านั้น แม้แต่ผู้ที่มีลิงก์ก็ไม่สามารถดูเนื้อหานี้ได้"
+  },
+  "feed_privacy.mode.only_link_hint": {
+    "th": "ทุกคนบนอินเทอร์เน็ตที่มีลิงก์สามารถดูได้"
+  },
+  "feed_privacy.mode.only_link_update_hint": {
+    "th": "ทุกคนที่มีลิงก์สามารถดูได้"
+  },
+  "feed_privacy.mode.only_friend_dev": {
+    "th": "เพื่อน (Dev เท่านั้น)"
+  },
+  "feed_privacy.mode.only_following_dev": {
+    "th": "กำลังติดตาม (Dev เท่านั้น)"
+  },
+  "feed_privacy.mode.public_hint": {
+    "th": "ผู้ใช้ imely ทุกคนจะเห็นเนื้อหานี้"
+  },
+  "read_history.header": {
+    "th": "ประวัติ"
+  },
+  "read_history.menu.delete_history_success_toast": {
+    "th": "ลบประวัติการอ่านแล้ว"
+  },
+  "read_history.menu.delete_history_error_toast": {
+    "th": "เกิดข้อผิดพลาด กรุณาลองใหม่ภายหลัง"
+  },
+  "list_content_liked.header": {
+    "th": "โพสต์ที่ถูกใจ"
+  },
+  "my_collection.header": {
+    "th": "คอลเลกชันของฉัน"
+  },
+  "list_interest.header": {
+    "th": "กำลังติดตาม"
+  },
+  "list_interest.follower_tab": {
+    "th": "ผู้ติดตาม"
+  },
+  "list_interest.following_tab": {
+    "th": "กำลังติดตาม"
+  },
+  "list_interest.identity_tab": {
+    "th": "หัวข้อ"
+  },
+  "list_interest.category_tab": {
+    "th": "หมวดหมู่"
+  },
+  "list_interest.collection_tab": {
+    "th": "คอลเลกชัน"
+  },
+  "list_interest.menu.header": {
+    "th": "ตัวเลือก"
+  },
+  "list_interest.menu.close": {
+    "th": "ปิด"
+  },
+  "list_interest.menu.add_more_cate": {
+    "th": "เพิ่มหมวดหมู่"
+  },
+  "list_interest.menu.add_more_identity": {
+    "th": "เพิ่มหัวข้อ"
+  },
+  "sz_550.empty_sport_match": {
+    "th": "กรุณากลับมาใหม่ภายหลัง! 🤗"
+  },
+  "sz_550.empty_search": {
+    "th": "ไม่พบผลลัพธ์"
+  },
+  "sz_550.empty_comment.disable_comment": {
+    "th": "โพสต์นี้ยังไม่มีความคิดเห็น"
+  },
+  "sz_550.empty_comment.general_1": {
+    "th": "เป็นคนแรก"
+  },
+  "sz_550.empty_comment.general_2": {
+    "th": "ที่แสดงความคิดเห็น"
+  },
+  "sz_550.empty_comment.common_title": {
+    "th": "คุณยังไม่ได้อ่านบทความใดๆ<br/>กลับไปที่ฟีดข่าวเพื่อเริ่มอ่านบทความ"
+  },
+  "sz_550.empty_comment.common_title_1": {
+    "th": "รายการว่างเปล่า"
+  },
+  "sz_550.empty_comment.btn_back_to_main": {
+    "th": "กลับไปที่ฟีดข่าว"
+  },
+  "sz_550.empty_comment.btn_retry": {
+    "th": "ลองใหม่"
+  },
+  "comment_bar.btn_share_community": {
+    "th": "ถามคอมมูนิตี้"
+  },
+  "comment_bar.cmt_replying": {
+    "th": "กำลังตอบ"
+  },
+  "comment_bar.cmt_replying_cancel": {
+    "th": "· ยกเลิก"
+  },
+  "comment_bar.media_privacy_dialog.title": {
+    "th": "อนุญาตให้เข้าถึงรูปภาพ"
+  },
+  "comment_bar.media_privacy_dialog.msg": {
+    "th": "คุณต้องทำตามขั้นตอนต่อไปนี้:\n1. แตะ เปิดการตั้งค่า\n2. ไปที่: สิทธิ์การเข้าถึงแอป ➡️ รูปภาพและวิดีโอ\n3. เลือก: อนุญาต"
+  },
+  "comment_bar.media_privacy_dialog.btn_cancel": {
+    "th": "ยกเลิก"
+  },
+  "comment_bar.media_privacy_dialog.btn_confirm": {
+    "th": "เปิดการตั้งค่า"
+  },
+  "comment_bar.btn_post_comment": {
+    "th": "โพสต์"
+  },
+  "comment_bar.post_comment.error_empty_ask": {
+    "th": "กรุณากรอกคำถามของคุณ"
+  },
+  "comment_bar.post_comment.error_empty_comment": {
+    "th": "กรุณากรอกความคิดเห็น"
+  },
+  "comment_bar.post_comment.error_empty_input": {
+    "th": "ความคิดเห็นว่างเปล่า กรุณากรอกใหม่อีกครั้ง"
+  },
+  "comment_bar.post_comment.require_login": {
+    "th": "คุณต้องเข้าสู่ระบบเพื่อแสดงความคิดเห็น"
+  },
+  "comment_bar.posting_detail.ask_followup_hint": {
+    "th": "เจาะลึกหัวข้อนี้เพิ่มเติม..."
+  },
+  "comment_bar.posting_detail.ask_quota_hint": {
+    "th": "ครั้ง"
+  },
+  "comment_bar.btn_share_topic": {
+    "th": "โพสต์สาธารณะ"
+  },
+  "comment_bar.ask_button.post_ask": {
+    "th": "โพสต์"
+  },
+  "comment_bar.ask_button.post_ask_followup": {
+    "th": "ถามต่อ"
+  },
+  "comment_bar.ask_button.ask_AI": {
+    "th": "ถาม AI"
+  },
+  "comment_bar.ask_button.ask_this_feed": {
+    "th": "ถามต่อ"
+  },
+  "comment_bar.ask_text_box.hint": {
+    "th": "💬 กรอกความคิดเห็น..."
+  },
+  "comment_bar.ask_text_box.ask_followup_hint": {
+    "th": "เจาะลึกหัวข้อนี้เพิ่มเติม..."
+  },
+  "comment_bar.ask_text_box.ask_hint": {
+    "th": "ถามคำถาม"
+  },
+  "comment_bar.ask_text_box.send_button": {
+    "th": "โพสต์"
+  },
+  "update_user_ask_quota.ask_quota": {
+    "th": "ครั้ง"
+  },
+  "anonymous_ask_quota.remain_quota_hint_1": {
+    "th": "คุณยังมีเหลืออีก"
+  },
+  "anonymous_ask_quota.remain_quota_hint_2": {
+    "th": "คำถามโดยไม่ต้องเข้าสู่ระบบ เมื่อใช้หมดแล้ว คุณต้องเข้าสู่ระบบเพื่อใช้ฟีเจอร์นี้ต่อ"
+  },
+  "anonymous_ask_quota.out_of_quota_hint_1": {
+    "th": "คุณใช้ครบแล้ว"
+  },
+  "anonymous_ask_quota.out_of_quota_hint_2": {
+    "th": "การใช้งานทดลองของวันนี้ กรุณาเข้าสู่ระบบเพื่อใช้ฟีเจอร์นี้ต่อ"
+  },
+  "member_wallet.quest": {
+    "th": "ภารกิจ"
+  },
+  "member_wallet.view_more": {
+    "th": "ดูเพิ่มเติม"
+  },
+  "member_wallet.header": {
+    "th": "กระเป๋าเงินของคุณ"
+  },
+  "member_wallet.tab_all": {
+    "th": "ทั้งหมด"
+  },
+  "member_wallet.tab_star": {
+    "th": "เพิ่มแล้ว"
+  },
+  "member_wallet.tab_used": {
+    "th": "ใช้ไปแล้ว"
+  },
+  "member_wallet.banner.your_star": {
+    "th": "ดาวของคุณ"
+  },
+  "member_wallet.banner.gold_rank": {
+    "th": "ระดับโกลด์"
+  },
+  "member_wallet.banner.silver_rank": {
+    "th": "ระดับซิลเวอร์"
+  },
+  "member_wallet.banner.bronze_rank": {
+    "th": "ระดับบรอนซ์"
+  },
+  "member_wallet.banner.balace_hint_1": {
+    "th": "ตอนนี้คุณเป็นสมาชิกระดับสูงสุดของ imely"
+  },
+  "member_wallet.banner.balace_hint_2_1": {
+    "th": "สะสมเพิ่มอีก <span style=\"color:common(TextColor6)dark(D_TextColor6);\">"
+  },
+  "member_wallet.banner.balace_hint_2_2": {
+    "th": "</span> 🌟 เพื่อขึ้นระดับโกลด์ก่อนวันที่ 31/12"
+  },
+  "member_wallet.banner.balace_hint_3_1": {
+    "th": "สะสมเพิ่มอีก <span style=\"color:common(TextColor6)dark(D_TextColor6);\">"
+  },
+  "member_wallet.banner.balace_hint_3_2": {
+    "th": "</span> 🌟 เพื่อขึ้นระดับซิลเวอร์ก่อนวันที่ 31/12"
+  },
+  "member_wallet.banner_ask_quota.remain_today": {
+    "th": "คำถามที่เหลือวันนี้"
+  },
+  "member_wallet.banner_ask_quota.ask_quota": {
+    "th": "ครั้ง"
+  },
+  "member_wallet.banner_ask_quota.quota_hint_1": {
+    "th": "คุณมี<b>คำถาม 999 ครั้ง</b>ต่อวัน คุณสามารถแลก 🌟 เพื่อรับคำถามเพิ่ม หรือรอจนถึงพรุ่งนี้"
+  },
+  "member_wallet.banner_ask_quota.quota_hint_2": {
+    "th": "คุณมี<b>คำถาม 30 ครั้ง</b>ต่อวัน คุณสามารถแลก 🌟 เพื่อรับคำถามเพิ่ม หรือรอจนถึงพรุ่งนี้"
+  },
+  "member_wallet.banner_ask_quota.more_quota": {
+    "th": "เพิ่มจำนวนคำถาม"
+  },
+  "member_wallet.banner_ask_quota.upgrade": {
+    "th": "อัปเกรด"
+  },
+  "member_wallet.banner_ask_quota.quota_hint_3": {
+    "th": "แลก 🌟 หรือรอจนถึงพรุ่งนี้"
+  },
+  "member_wallet.send_tip.header": {
+    "th": "ส่งทิป"
+  },
+  "member_wallet.send_tip.header_close": {
+    "th": "ปิด"
+  },
+  "member_wallet.send_tip.receiver": {
+    "th": "ผู้รับ:"
+  },
+  "member_wallet.send_tip.remain_star": {
+    "th": "คุณมี:"
+  },
+  "member_wallet.send_tip.number_star_will_be_tip": {
+    "th": "จำนวนทิป:"
+  },
+  "member_wallet.send_tip.btn_send_tip": {
+    "th": "ทิป"
+  },
+  "member_wallet.send_tip.send_tip_success_toast_1": {
+    "th": "มอบคะแนนให้กับ"
+  },
+  "member_wallet.send_tip.send_tip_success_toast_2": {
+    "th": "สำเร็จ 🎉"
+  },
+  "member_wallet.send_tip.error_not_enough_point": {
+    "th": "คะแนนของคุณไม่พอสำหรับการให้\nกรุณาตรวจสอบอีกครั้ง"
+  },
+  "member_wallet.send_tip.send_tip_fail_toast": {
+    "th": "เกิดข้อผิดพลาด กรุณาลองใหม่ภายหลัง"
+  },
+  "member_wallet.benefit.header": {
+    "th": "สิทธิประโยชน์สมาชิก"
+  },
+  "member_wallet.benefit.bronze_rank": {
+    "th": "บรอนซ์"
+  },
+  "member_wallet.benefit.silver_rank": {
+    "th": "ซิลเวอร์"
+  },
+  "member_wallet.benefit.gold_rank": {
+    "th": "โกลด์"
+  },
+  "member_wallet.benefit.title": {
+    "th": "สิทธิพิเศษ"
+  },
+  "member_wallet.benefit.sub_title": {
+    "th": "สิทธิพิเศษที่ออกแบบมาเพื่อคุณโดยเฉพาะ"
+  },
+  "member_wallet.benefit.ask_quota_benefit_lv3": {
+    "th": "ถามได้สูงสุด <b>70 คำถาม</b>/วัน"
+  },
+  "member_wallet.benefit.ask_quota_benefit_lv2": {
+    "th": "ถามได้สูงสุด <b>50 คำถาม</b>/วัน"
+  },
+  "member_wallet.benefit.ask_quota_benefit_lv1": {
+    "th": "ถามได้สูงสุด <b>30 คำถาม</b>/วัน"
+  },
+  "member_wallet.benefit.point_benefit_lv3": {
+    "th": "รับเพิ่มอีก <b>3 🌟 </b> ทุกๆ 100 🌟"
+  },
+  "member_wallet.benefit.point_benefit_lv2": {
+    "th": "รับเพิ่มอีก <b>2 🌟</b> ทุกๆ 100 🌟"
+  },
+  "member_wallet.benefit.point_benefit_lv1": {
+    "th": "รับเพิ่มอีก <b>1 🌟</b> ทุกๆ 100 🌟"
+  },
+  "member_wallet.benefit.birthday_benefit": {
+    "th": "ของขวัญวันเกิด\nของขวัญจะเปิดเผยในวันเกิดของคุณ"
+  },
+  "member_wallet.benefit.birthday_benefit_update_pattern": {
+    "th": "ของขวัญจะเปิดเผยในวันเกิดของคุณ"
+  },
+  "member_wallet.benefit.birthday_benefit_update_style": {
+    "th": "<span style=\"color:common(TextColor2)dark(D_TextColor2);\">ของขวัญจะเปิดเผยในวันเกิดของคุณ</span>"
+  },
+  "member_wallet.benefit.rankup_benefit_gold": {
+    "th": "รางวัลอัปเกรดระดับโกลด์"
+  },
+  "member_wallet.benefit.unlock_summary_benefit": {
+    "th": "ปลดล็อกฟีเจอร์สรุป"
+  },
+  "member_wallet.benefit.unlock_premium_video_benefit": {
+    "th": "ดูวิดีโอพรีเมียม"
+  },
+  "member_wallet.benefit_banner.gold_rank": {
+    "th": "ระดับโกลด์"
+  },
+  "member_wallet.benefit_banner.silver_rank": {
+    "th": "ระดับซิลเวอร์"
+  },
+  "member_wallet.benefit_banner.bronze_rank": {
+    "th": "ระดับบรอนซ์"
+  },
+  "member_wallet.benefit_banner.benefit_title_1": {
+    "th": "ตอนนี้คุณเป็นสมาชิกระดับสูงสุดของ imely"
+  },
+  "member_wallet.benefit_banner.benefit_title_2": {
+    "th": "สำเร็จแล้ว"
+  },
+  "member_wallet.benefit_banner.benefit_title_3": {
+    "th": "ตอนนี้คุณเป็นสมาชิกในระดับนี้"
+  },
+  "member_wallet.benefit_banner.benefit_title_4_1": {
+    "th": "สะสมเพิ่มอีก"
+  },
+  "member_wallet.benefit_banner.benefit_title_4_2": {
+    "th": "🌟 เพื่อขึ้นระดับ"
+  },
+  "member_wallet.benefit_banner.benefit_title_5_1": {
+    "th": "สะสมเพิ่มอีก <span style=\"color:common(TextColor6)dark(D_TextColor6);\">"
+  },
+  "member_wallet.benefit_banner.benefit_title_5_2": {
+    "th": "</span> 🌟 เพื่อขึ้นระดับโกลด์ก่อนวันที่ 31/12"
+  },
+  "member_wallet.benefit_banner.benefit_title_6_1": {
+    "th": "สะสมเพิ่มอีก <span style=\"color:common(TextColor6)dark(D_TextColor6);\">"
+  },
+  "member_wallet.benefit_banner.benefit_title_6_2": {
+    "th": "</span> 🌟 เพื่อขึ้นระดับซิลเวอร์ก่อนวันที่ 31/12"
+  },
+  "member_wallet.update.gold_rank": {
+    "th": "สมาชิกระดับโกลด์"
+  },
+  "member_wallet.update.silver_rank": {
+    "th": "สมาชิกระดับซิลเวอร์"
+  },
+  "member_wallet.update.bronze_rank": {
+    "th": "สมาชิกระดับบรอนซ์"
+  },
+  "member_wallet.invite.header": {
+    "th": "ทำภารกิจให้สำเร็จเพื่อรับรางวัล"
+  },
+  "member_wallet.invite.header_policy": {
+    "th": "ข้อกำหนดและนโยบาย"
+  },
+  "point_exchanged.header": {
+    "th": "เพิ่มจำนวนคำถาม"
+  },
+  "point_exchanged.header_close": {
+    "th": "ปิด"
+  },
+  "point_exchanged.choose_package_title": {
+    "th": "เลือกแพ็กเกจ:"
+  },
+  "point_exchanged.choose_package_msg": {
+    "th": "ใช้ได้ถึงวันนี้เวลา 23:59 น."
+  },
+  "point_exchanged.turn_count": {
+    "th": "ครั้ง"
+  },
+  "point_exchanged.remain_point": {
+    "th": "คุณมี:"
+  },
+  "point_exchanged.get_free_point": {
+    "th": "รับ 🌟 ฟรี"
+  },
+  "point_exchanged.get_free_point_hint": {
+    "th": "* สะสมดาวได้จากการทำภารกิจ"
+  },
+  "point_exchanged.btn_exchanged": {
+    "th": "เพิ่ม"
+  },
+  "point_exchanged.exchanged_success_toast_1": {
+    "th": "🌟 แลกสำเร็จ"
+  },
+  "point_exchanged.exchanged_success_toast_2": {
+    "th": "คำถาม 🎉"
+  },
+  "point_exchanged.error_point_not_enough": {
+    "th": "🌟 ของคุณไม่เพียงพอ\nกรุณาตรวจสอบอีกครั้ง"
+  },
+  "point_exchanged.error_time_not_sync": {
+    "th": "เกิดข้อผิดพลาดในการซิงค์เวลา\nกรุณาตรวจสอบการตั้งค่าเวลาของคุณแล้วลองใหม่อีกครั้ง"
+  },
+  "point_exchanged.exchanged_fail_toast": {
+    "th": "เกิดข้อผิดพลาด กรุณาลองใหม่ภายหลัง"
+  },
+  "point_exchanged.out_of_quota": {
+    "th": "คุณใช้คำถามของวันนี้หมดแล้ว ลองใหม่พรุ่งนี้!"
+  },
+  "point_exchanged.out_of_quota_btn": {
+    "th": "ปิด"
+  },
+  "profile_user.view_count": {
+    "th": "การดู"
+  },
+  "profile_user.following_count": {
+    "th": "ติดตาม"
+  },
+  "profile_user.post_count": {
+    "th": "โพสต์"
+  },
+  "profile_user.comment_count": {
+    "th": "ความคิดเห็น"
+  },
+  "profile_user.btn_chat": {
+    "th": "แชท"
+  },
+  "profile_user.btn_follow": {
+    "th": "ติดตาม"
+  },
+  "profile_user.btn_followed": {
+    "th": "ติดตามแล้ว"
+  },
+  "profile_user.btn_hot.4u": {
+    "th": "สำหรับคุณ"
+  },
+  "profile_user.btn_hot.trending": {
+    "th": "อ่านมากที่สุด"
+  },
+  "profile_user.btn_hot.hot_news": {
+    "th": "เทรนด์มาแรง!"
+  },
+  "profile_user.btn_hot.hot_identity": {
+    "th": "ใครกำลังมาแรง?"
+  },
+  "profile_user.btn_hot.top_5": {
+    "th": "5 ข่าวมาแรงสุด"
+  },
+  "profile_user.msg_count": {
+    "th": "ข้อความ"
+  },
+  "profile_bot.info.creator": {
+    "th": "ผู้สร้าง:"
+  },
+  "profile_bot.info.gender": {
+    "th": "เพศ:"
+  },
+  "profile_bot.info.public_info": {
+    "th": "ข้อมูลสาธารณะ:"
+  },
+  "profile_bot.info.gender_male": {
+    "th": "ชาย"
+  },
+  "profile_bot.info.gender_female": {
+    "th": "หญิง"
+  },
+  "profile_bot.info.gender_other": {
+    "th": "อื่นๆ"
+  },
+  "profile_bot.info.tagline": {
+    "th": "แท็กไลน์:"
+  },
+  "profile_bot.info.creator_note": {
+    "th": "หมายเหตุจากผู้สร้าง:"
+  },
+  "profile_bot.info.biography": {
+    "th": "ประวัติ:"
+  },
+  "profile_bot.info.first_message": {
+    "th": "ข้อความแรก: "
+  },
+  "profile_bot.badge.ai_character": {
+    "th": "ตัวละคร AI"
+  },
+  "profile_bot.badge.verified": {
+    "th": "ยืนยันแล้ว"
+  },
+  "profile_bot.btn.edit": {
+    "th": "แก้ไข"
+  },
+  "profile_user.tab.related": {
+    "th": "ภาพรวม"
+  },
+  "profile_user.tab.collection": {
+    "th": "คอลเลกชัน"
+  },
+  "profile_user.tab.comment": {
+    "th": "ความคิดเห็น"
+  },
+  "profile_user.tab.info": {
+    "th": "ข้อมูล"
+  },
+  "profile_menu.header": {
+    "th": "ตัวเลือก"
+  },
+  "profile_menu.header_close": {
+    "th": "ปิด"
+  },
+  "profile_menu.post_feed": {
+    "th": "โพสต์"
+  },
+  "profile_menu.un_block": {
+    "th": "เลิกบล็อก"
+  },
+  "profile_menu.block": {
+    "th": "บล็อก"
+  },
+  "profile_menu.block_dialog_title": {
+    "th": "บล็อก"
+  },
+  "profile_menu.block_dialog_msg": {
+    "th": "คุณจะไม่สามารถแชทกับ"
+  },
+  "profile_menu.block_dialog_btn_confirm": {
+    "th": "บล็อก"
+  },
+  "profile_menu.block_dialog_btn_cancel": {
+    "th": "ยกเลิก"
+  },
+  "profile_menu.report": {
+    "th": "รายงานการละเมิด"
+  },
+  "profile_menu.censor_content": {
+    "th": "*** การตรวจสอบเนื้อหา: บล็อกผู้ใช้ ***"
+  },
+  "profile_menu.censor_content_dialog_title": {
+    "th": "การตรวจสอบเนื้อหา: บล็อกผู้ใช้"
+  },
+  "profile_menu.censor_content_dialog_msg": {
+    "th": "บล็อกผู้ใช้ (ซ่อนฟีดจากผู้ใช้ที่คุณไม่ต้องการให้แสดง)\nหากเป็นการบล็อกภายในระบบ เนื้อหาทั้งหมดจากผู้ใช้นี้จะถูกซ่อนและไม่ถูกเผยแพร่"
+  },
+  "profile_menu.censor_content_dialog_btn_cancel": {
+    "th": "ยกเลิก"
+  },
+  "profile_menu.censor_content_dialog_btn_confirm": {
+    "th": "บล็อก"
+  },
+  "profile_menu.wallet_tip_point": {
+    "th": "มอบดาว"
+  },
+  "identity.tab.related": {
+    "th": "ยอดนิยม"
+  },
+  "identity.tab.collection": {
+    "th": "คอลเลกชัน"
+  },
+  "identity.tab.social": {
+    "th": "คอมมูนิตี้"
+  },
+  "identity.tab.media": {
+    "th": "รูปภาพและวิดีโอ"
+  },
+  "identity.detail.follower_count": {
+    "th": "ติดตาม"
+  },
+  "identity.detail.content_count": {
+    "th": "โพสต์"
+  },
+  "identity.detail.related_comment": {
+    "th": "ความคิดเห็น"
+  },
+  "identity.bottom_toolbar.btn_hot": {
+    "th": "ถาม AI"
+  },
+  "toolbar_menu.header": {
+    "th": "ตัวเลือก"
+  },
+  "toolbar_menu.header_close": {
+    "th": "ปิด"
+  },
+  "toolbar_menu.chat": {
+    "th": "ข้อความ"
+  },
+  "toolbar_menu.unfollow": {
+    "th": "เลิกติดตาม"
+  },
+  "toolbar_menu.follow": {
+    "th": "ติดตาม"
+  },
+  "toolbar_menu.unblock": {
+    "th": "เลิกบล็อก"
+  },
+  "toolbar_menu.block": {
+    "th": "บล็อก"
+  },
+  "toolbar_menu.report": {
+    "th": "รายงานการละเมิด"
+  },
+  "toolbar_menu.save_media": {
+    "th": "บันทึกลงอุปกรณ์"
+  },
+  "toolbar_menu.save_2_collection": {
+    "th": "บันทึกลงคอลเลกชัน"
+  },
+  "identity.follow.btn_follow": {
+    "th": "ติดตาม"
+  },
+  "identity.follow.btn_followed": {
+    "th": "ติดตามแล้ว"
+  },
+  "identity.follow.btn_follow_uppercase": {
+    "th": "ติดตาม"
+  },
+  "identity.follow.btn_following_uppercase": {
+    "th": "กำลังติดตาม"
+  },
+  "identity.follow.btn_followed_uppercase": {
+    "th": "ติดตามแล้ว"
+  },
+  "identity.follow.btn_share_uppercase": {
+    "th": "แชร์"
+  },
+  "identity.follow.follow_success_toast": {
+    "th": "คุณจะได้รับอัปเดตใหม่จาก"
+  },
+  "identity.follow.un_follow_success_toast": {
+    "th": "เลิกติดตามแล้ว"
+  },
+  "identity.follow.expand_title_toast": {
+    "th": "จัดการ"
+  },
+  "identity.follow.menu_un_follow": {
+    "th": "เลิกติดตาม"
+  },
+  "identity.follow.menu_follow": {
+    "th": "ติดตาม"
+  },
+  "feed_footer.btn_quickview": {
+    "th": "ดูด่วน"
+  },
+  "sz_30202.summary_audio": {
+    "th": "ฟังสรุป"
+  },
+  "sz_30202.updating_summary": {
+    "th": "กำลังอัปเดตสรุป..."
+  },
+  "sz_30202.btn_view_original_article": {
+    "th": "ดูโพสต์ต้นฉบับ"
+  },
+  "sz_30202.related_title": {
+    "th": "👉 อ่านมากที่สุด"
+  },
+  "feed_ask.source.with_prefix": {
+    "th": "กับ"
+  },
+  "feed_ask.source.ask_prefix": {
+    "th": "โพสต์"
+  },
+  "feed_ask.source.and_prefix": {
+    "th": "และ"
+  },
+  "feed_ask.source.people_prefix": {
+    "th": "ผู้ใช้"
+  },
+  "sz_500.update_location_title": {
+    "th": "อัปเดตตำแหน่งที่ตั้งของคุณ"
+  },
+  "sz_500.update_location_msg": {
+    "th": "รับข่าวสารท้องถิ่นที่แม่นยำยิ่งขึ้นตามตำแหน่งที่ตั้งของคุณ"
+  },
+  "sz_500.btn_update": {
+    "th": "อัปเดต"
+  },
+  "sz_500.btn_cancel": {
+    "th": "ยกเลิก"
+  },
+  "sz_501.AI_Hay_update_title": {
+    "th": "imely มีอัปเดตใหม่"
+  },
+  "sz_501.hay1_update_title": {
+    "th": "อัปเกรด imely"
+  },
+  "sz_501.update_msg": {
+    "th": "แก้การบ้าน วิเคราะห์รูปภาพและลิงก์ สรุปข่าว และอื่นๆ อีกมากมาย — ด้วย AI!"
+  },
+  "sz_501.btn_update": {
+    "th": "อัปเดตตอนนี้"
+  },
+  "sz_502.ai_hay_survey_title": {
+    "th": "imely อยากรับฟังความคิดเห็นของคุณจริงๆ!"
+  },
+  "sz_502.hay1_survey_title": {
+    "th": "imely อยากรับฟังความคิดเห็นของคุณจริงๆ!"
+  },
+  "sz_502.ai_hay_survey_msg": {
+    "th": "กรุณาสละเวลาสักครู่เพื่อช่วย imely พัฒนาคุณภาพให้ตอบโจทย์คุณยิ่งขึ้น"
+  },
+  "sz_502.hay1_survey_msg": {
+    "th": "กรุณาสละเวลาสักครู่เพื่อช่วย imely พัฒนาคุณภาพให้ตอบโจทย์คุณยิ่งขึ้น"
+  },
+  "sz_502.btn_join_survey": {
+    "th": "เข้าร่วม"
+  },
+  "sz_503.ai_hay_notification_setting_title": {
+    "th": "การแจ้งเตือนจาก imely ถูกปิดอยู่"
+  },
+  "sz_503.hay1_notification_setting_title": {
+    "th": "การแจ้งเตือนจาก imely ถูกปิดอยู่"
+  },
+  "sz_503.notification_setting_msg": {
+    "th": "เปิดการแจ้งเตือนเพื่อรับข่าวด่วนที่ตรงกับความสนใจของคุณ"
+  },
+  "sz_503.btn_turn_on_noti": {
+    "th": "เปิดการแจ้งเตือน"
+  },
+  "sz_503.turn_on_noti_success_toast": {
+    "th": "คุณเปิดการแจ้งเตือนแล้ว"
+  },
+  "sz_504.location_permission_title": {
+    "th": "เปิดการเข้าถึงตำแหน่งที่ตั้ง"
+  },
+  "sz_504.location_permission_msg": {
+    "th": "เพื่อค้นพบข่าวสารใกล้คุณมากขึ้น"
+  },
+  "sz_504.location_permission_msg_1_android": {
+    "th": "1. แตะ เปิดการตั้งค่า"
+  },
+  "sz_504.location_permission_msg_1_ios": {
+    "th": "1. แตะ เปิดการตั้งค่า ► ตำแหน่งที่ตั้ง"
+  },
+  "sz_504.location_permission_msg_2_android": {
+    "th": "2. สิทธิ์การเข้าถึงแอป ► ตำแหน่งที่ตั้ง"
+  },
+  "sz_504.location_permission_msg_2_ios": {
+    "th": "2. เลือก: ขณะใช้งาน"
+  },
+  "sz_504.location_permission_msg_3": {
+    "th": "3. เลือก: ขณะใช้งานแอป"
+  },
+  "sz_504.btn_open_setting": {
+    "th": "เปิดการตั้งค่า"
+  },
+  "sz_504.btn_cancel": {
+    "th": "ไว้ทีหลัง"
+  },
+  "sz_510.ai_hay_rating_title": {
+    "th": "imely หวังว่าจะได้รับ 5⭐ จากคุณ!"
+  },
+  "sz_510.hay1_rating_title": {
+    "th": "imely หวังว่าจะได้รับ 5⭐ จากคุณ!"
+  },
+  "sz_510.ai_hay_rating_msg": {
+    "th": "ให้กำลังใจ imely ด้วยรีวิว 5 ดาว เพื่อช่วยให้เราพัฒนาผลิตภัณฑ์ให้ดียิ่งขึ้น"
+  },
+  "sz_510.hay1_rating_msg": {
+    "th": "กรุณาให้กำลังใจ imely ด้วยรีวิว 5 ดาว เพื่อให้เรามุ่งมั่นพัฒนาผลิตภัณฑ์ให้ดียิ่งขึ้น ❤️"
+  },
+  "sz_510.ai_hay_btn_rating": {
+    "th": "รีวิว imely"
+  },
+  "sz_510.hay1_btn_rating": {
+    "th": "รีวิว imely"
+  },
+  "sz_518.type_2_title": {
+    "th": "โพสต์ TikTok ให้ imely รับ 💎"
+  },
+  "sz_518.type_2_subtitle": {
+    "th": "ลุ้นรับสูงสุด 3000 💎"
+  },
+  "sz_518.type_2_btn": {
+    "th": "ส่งคลิปตอนนี้"
+  },
+  "sz_518.type_3_title": {
+    "th": "สร้างตัวละครเพื่อรับ 💎"
+  },
+  "sz_518.type_3_subtitle": {
+    "th": "ลุ้นรับสูงสุด 5,000 💎"
+  },
+  "sz_518.type_3_btn": {
+    "th": "สร้างเลย!"
+  },
+  "sz_518.type_4_title": {
+    "th": "สำรวจตัวละคร BL / GL"
+  },
+  "sz_518.type_4_subtitle": {
+    "th": "เรื่องราวสนุกกว่า 2,000 เรื่อง"
+  },
+  "sz_518.type_4_btn": {
+    "th": "แชทเลย"
+  },
+  "account_info.user_name.hint": {
+    "th": "ข้อมูลนี้มองเห็นได้เฉพาะคุณเท่านั้น คุณสามารถใช้ชื่อผู้ใช้เพื่อเข้าสู่ระบบได้"
+  },
+  "account_info.user_name.input_box_title": {
+    "th": "ชื่อผู้ใช้:"
+  },
+  "account_info.user_name.input_box_empty_hint": {
+    "th": "คุณยังไม่ได้สร้างชื่อผู้ใช้"
+  },
+  "account_info.user_name.btn_update_username": {
+    "th": "เปลี่ยนชื่อผู้ใช้"
+  },
+  "account_info.user_name.btn_create_username": {
+    "th": "สร้างชื่อผู้ใช้"
+  },
+  "account_info.account_email_details.note": {
+    "th": "ข้อมูลนี้แสดงให้เห็นเฉพาะคุณเท่านั้น คุณสามารถใช้อีเมลเพื่อเข้าสู่ระบบได้"
+  },
+  "account_info.account_email_details.unlink_email": {
+    "th": "ลบอีเมล"
+  },
+  "account_info.account_email_details.change_email": {
+    "th": "เปลี่ยนอีเมล"
+  },
+  "account_info.account_email_details.cannot_unlink_email": {
+    "th": "คุณไม่สามารถลบอีเมลได้"
+  },
+  "account_info.account_email_details.cannot_unlink_email_desc": {
+    "th": "อีเมลนี้เป็นข้อมูลเข้าสู่ระบบเดียวของคุณ"
+  },
+  "account_info.change_user_name.cancel_dialog_title": {
+    "th": "ยกเลิกกระบวนการสร้างชื่อผู้ใช้?"
+  },
+  "account_info.change_user_name.cancel_dialog_msg": {
+    "th": "ข้อมูลที่คุณกรอกไว้จะถูกลบ"
+  },
+  "account_info.change_user_name.cancel_dialog_btn_confirm": {
+    "th": "ยกเลิก"
+  },
+  "account_info.change_user_name.cancel_dialog_btn_cancel": {
+    "th": "ย้อนกลับ"
+  },
+  "account_info.change_user_name.title": {
+    "th": "ชื่อผู้ใช้"
+  },
+  "account_info.change_user_name.hint": {
+    "th": "ข้อกำหนดชื่อผู้ใช้:\n• ตัวอักษรแรกต้องเป็นตัวอักษร\n• ไม่แยกตัวพิมพ์เล็ก-ใหญ่\n• ความยาวอย่างน้อย 4 ตัวอักษร สูงสุด 32 ตัวอักษร\n• ใช้ตัวอักษร ตัวเลข ขีดล่าง \"_\" หรือขีดกลาง \"-\" ได้"
+  },
+  "account_info.change_user_name.input_box_hint": {
+    "th": "กรอกชื่อผู้ใช้..."
+  },
+  "account_info.change_user_name.error_invalid_user_name": {
+    "th": "ชื่อผู้ใช้ไม่ตรงตามข้อกำหนด"
+  },
+  "account_info.change_user_name.btn_create_username": {
+    "th": "สร้าง"
+  },
+  "account_info.change_user_name.btn_update_username": {
+    "th": "เปลี่ยนชื่อผู้ใช้"
+  },
+  "account_info.create_username_success_toast": {
+    "th": "คุณสร้างชื่อผู้ใช้สำเร็จแล้ว"
+  },
+  "account_info.update_username_success_toast": {
+    "th": "คุณเปลี่ยนชื่อผู้ใช้สำเร็จแล้ว"
+  },
+  "account_info.username_already_exits": {
+    "th": "ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว"
+  },
+  "account_info.error_occurred_try_again": {
+    "th": "เกิดข้อผิดพลาด! กรุณาลองใหม่ภายหลัง (รหัสข้อผิดพลาด: ${LAZY_DATA(errorCode)})"
+  },
+  "acc_password_detail.title": {
+    "th": "รหัสผ่าน"
+  },
+  "acc_password_detail.hint": {
+    "th": "ข้อมูลนี้มองเห็นได้เฉพาะคุณเท่านั้น"
+  },
+  "acc_password_detail.input_box_title": {
+    "th": "รหัสผ่าน:"
+  },
+  "acc_password_detail.input_box_hint_1": {
+    "th": "***************"
+  },
+  "acc_password_detail.input_box_hint_2": {
+    "th": "คุณยังไม่ได้สร้างรหัสผ่าน"
+  },
+  "acc_password_detail.btn_update_password": {
+    "th": "เปลี่ยนรหัสผ่าน"
+  },
+  "acc_password_detail.btn_create_password": {
+    "th": "สร้างรหัสผ่าน"
+  },
+  "change_password.cancel_dialog.title": {
+    "th": "ยกเลิกกระบวนการเปลี่ยนรหัสผ่าน?"
+  },
+  "change_password.cancel_dialog.msg": {
+    "th": "รหัสผ่านเข้าสู่ระบบจะไม่ถูกเปลี่ยนแปลง"
+  },
+  "change_password.cancel_dialog.btn_confirm": {
+    "th": "ยกเลิก"
+  },
+  "change_password.cancel_dialog.btn_cancel": {
+    "th": "ย้อนกลับ"
+  },
+  "change_password.title": {
+    "th": "เปลี่ยนรหัสผ่าน"
+  },
+  "change_password.hint": {
+    "th": "ข้อกำหนดรหัสผ่าน:\n• ความยาว 8 - 20 ตัวอักษร\n• ผสมตัวเลขและตัวอักษร ทั้งพิมพ์เล็กและพิมพ์ใหญ่\n• มีอักขระพิเศษอย่างน้อย 1 ตัว เช่น ! @ # ? ]"
+  },
+  "change_password.current_pass_input_box_hint": {
+    "th": "กรอกรหัสผ่านปัจจุบัน..."
+  },
+  "change_password.error_password_not_match": {
+    "th": "รหัสผ่านไม่ตรงกัน"
+  },
+  "change_password.btn_forgot_password": {
+    "th": "ลืมรหัสผ่าน"
+  },
+  "change_password.new_pass_input_box_hint": {
+    "th": "กรอกรหัสผ่านใหม่..."
+  },
+  "change_password.correct_pass_input_box_hint": {
+    "th": "กรอกรหัสผ่านใหม่อีกครั้ง..."
+  },
+  "change_password.btn_change_password": {
+    "th": "เปลี่ยนรหัสผ่าน"
+  },
+  "change_password.error_occurred_try_again": {
+    "th": "เกิดข้อผิดพลาด! กรุณาลองใหม่ภายหลัง (รหัสข้อผิดพลาด: ${LAZY_DATA(errorCode)})"
+  },
+  "change_password.error_password_not_match_require": {
+    "th": "รหัสผ่านไม่ตรงตามข้อกำหนด"
+  },
+  "change_password.error_password_not_match_current": {
+    "th": "รหัสผ่านปัจจุบันไม่ถูกต้อง"
+  },
+  "change_password.change_password_success": {
+    "th": "เปลี่ยนรหัสผ่านของคุณสำเร็จแล้ว"
+  },
+  "create_password.cancel_dialog_title": {
+    "th": "ยกเลิกกระบวนการสร้างรหัสผ่าน?"
+  },
+  "create_password.cancel_dialog_msg": {
+    "th": "ข้อมูลที่คุณกรอกไว้จะถูกลบ"
+  },
+  "create_password.cancel_dialog_btn_confirm": {
+    "th": "ยกเลิก"
+  },
+  "create_password.cancel_dialog_btn_cancel": {
+    "th": "ย้อนกลับ"
+  },
+  "create_password.title": {
+    "th": "สร้างรหัสผ่าน"
+  },
+  "create_password.hint": {
+    "th": "ข้อกำหนดรหัสผ่าน:\n• ความยาว 8 - 20 ตัวอักษร\n• ผสมตัวเลขและตัวอักษร ทั้งพิมพ์เล็กและพิมพ์ใหญ่\n• มีอักขระพิเศษอย่างน้อย 1 ตัว เช่น ! @ # ? ]"
+  },
+  "create_password.input_box_hint": {
+    "th": "กรอกรหัสผ่าน..."
+  },
+  "create_password.error_invalid_password": {
+    "th": "รหัสผ่านไม่ถูกต้อง"
+  },
+  "create_password.btn_create": {
+    "th": "สร้าง"
+  },
+  "create_password.create_password_success_toast": {
+    "th": "คุณสร้างรหัสผ่านสำเร็จแล้ว"
+  },
+  "create_password.error_occurred_try_again": {
+    "th": "เกิดข้อผิดพลาด! กรุณาลองใหม่ภายหลัง (รหัสข้อผิดพลาด: ${LAZY_DATA(errorCode)})"
+  },
+  "forgot_pass.dialog_cancel.title": {
+    "th": "ยกเลิกกระบวนการกู้คืนรหัสผ่าน?"
+  },
+  "forgot_pass.dialog_cancel.msg": {
+    "th": "ข้อมูลที่คุณกรอกไว้จะถูกลบ"
+  },
+  "forgot_pass.dialog_cancel.btn_confirm": {
+    "th": "ยกเลิก"
+  },
+  "forgot_pass.dialog_cancel.btn_cancel": {
+    "th": "ย้อนกลับ"
+  },
+  "forgot_pass.search_account": {
+    "th": "ค้นหาบัญชี"
+  },
+  "forgot_pass.search_account_hint": {
+    "th": "กรอกอีเมลหรือหมายเลขโทรศัพท์ที่คุณใช้สร้างบัญชี imely"
+  },
+  "forgot_pass.search_account_hint_1": {
+    "th": "กรอกอีเมลหรือหมายเลขโทรศัพท์ที่คุณใช้สร้างบัญชี imely"
+  },
+  "forgot_pass.search.input_box_hint": {
+    "th": "อีเมล หมายเลขโทรศัพท์..."
+  },
+  "forgot_pass.search.error_account_not_found": {
+    "th": "ไม่พบบัญชี imely"
+  },
+  "forgot_pass.search.error_account_not_found_1": {
+    "th": "ไม่พบบัญชี imely"
+  },
+  "forgot_pass.search.btn_search": {
+    "th": "ค้นหาบัญชี"
+  },
+  "forgot_pass.search.error_occurred_try_again": {
+    "th": "เกิดข้อผิดพลาด! กรุณาลองใหม่ภายหลัง (รหัสข้อผิดพลาด: ${LAZY_DATA(errorCode)})"
+  },
+  "forgot_pass.dialog_error.msg": {
+    "th": "กรุณาตรวจสอบอีเมลหรือหมายเลขโทรศัพท์ที่เชื่อมกับบัญชีของคุณแล้วลองใหม่อีกครั้ง"
+  },
+  "forgot_pass.dialog_error.btn_confirm": {
+    "th": "ลองใหม่อีกครั้ง"
+  },
+  "forgot_pass.search.input_box_hint_email": {
+    "th": "อีเมล"
+  },
+  "forgot_pass.search_account_hint_email": {
+    "th": "กรอกอีเมลที่คุณใช้สร้างบัญชี imely"
+  },
+  "forgot_pass.dialog_error.msg_email": {
+    "th": "กรุณาตรวจสอบอีเมลที่เชื่อมกับบัญชีของคุณแล้วลองใหม่อีกครั้ง"
+  },
+  "forgot_pass.preview.btn_next": {
+    "th": "ดำเนินการต่อ"
+  },
+  "forgot_pass.update_pass.title": {
+    "th": "เปลี่ยนรหัสผ่าน"
+  },
+  "forgot_pass.update_pass.hint": {
+    "th": "ข้อกำหนดรหัสผ่าน:\n• ความยาว 8 - 20 ตัวอักษร\n• ผสมตัวเลขและตัวอักษร ทั้งพิมพ์เล็กและพิมพ์ใหญ่\n• มีอักขระพิเศษอย่างน้อย 1 ตัว เช่น ! @ # ? ]"
+  },
+  "forgot_pass.update_pass.new_pass_input_box_hint": {
+    "th": "กรอกรหัสผ่านใหม่..."
+  },
+  "forgot_pass.update_pass.error_invalid_password": {
+    "th": "รหัสผ่านไม่ถูกต้อง"
+  },
+  "forgot_pass.update_pass.corect_pass_input_box_hint": {
+    "th": "กรอกรหัสผ่านใหม่อีกครั้ง..."
+  },
+  "forgot_pass.update_pass.error_password_not_match": {
+    "th": "รหัสผ่านไม่ตรงกัน"
+  },
+  "forgot_pass.update_pass.btn_change_password": {
+    "th": "เปลี่ยนรหัสผ่าน"
+  },
+  "forgot_pass.update_pass.error_occurred_try_again": {
+    "th": "เกิดข้อผิดพลาด! กรุณาลองใหม่ภายหลัง (รหัสข้อผิดพลาด: ${LAZY_DATA(errorCode)})"
+  },
+  "forgot_pass.req_otp.title": {
+    "th": "ยืนยันว่านี่คือบัญชีของคุณ"
+  },
+  "forgot_pass.req_otp.btn_otp_by_email": {
+    "th": "รับรหัสยืนยันทางอีเมล"
+  },
+  "forgot_pass.req_otp.error_occurred_try_again": {
+    "th": "เกิดข้อผิดพลาด! กรุณาลองใหม่ภายหลัง (รหัสข้อผิดพลาด: ${LAZY_DATA(errorCode)})"
+  },
+  "forgot_pass.req_otp.btn_otp_by_sms": {
+    "th": "รับรหัสยืนยันทาง SMS"
+  },
+  "forgot_pass.success.title": {
+    "th": "คุณเปลี่ยนรหัสผ่านสำเร็จแล้ว"
+  },
+  "forgot_pass.success.msg": {
+    "th": "จากนี้ไป คุณสามารถใช้รหัสผ่านใหม่เพื่อเข้าสู่ระบบบัญชี imely ของคุณได้"
+  },
+  "forgot_pass.success.btn_back": {
+    "th": "กลับ"
+  },
+  "forgot_pass.success.btn_login": {
+    "th": "เข้าสู่ระบบ"
+  },
+  "forgot_pass.success.back_to_home": {
+    "th": "กลับไปยังหน้าแรก"
+  },
+  "profile_me.id_identifier.title_phone_number": {
+    "th": "หมายเลขโทรศัพท์"
+  },
+  "profile_me.id_identifier.title_cccd": {
+    "th": "หมายเลขบัตรประจำตัวประชาชน "
+  },
+  "profile_me.id_identifier.hint_phone_number": {
+    "th": "กรอกหมายเลขโทรศัพท์มือถือของคุณ"
+  },
+  "profile_me.id_identifier.hint_cccd": {
+    "th": "กรอกหมายเลขบัตรประจำตัวประชาชนของคุณ "
+  },
+  "profile_me.id_identifier.keyboard_finish_hint": {
+    "th": "เสร็จสิ้น"
+  },
+  "profile_me.id_identifier.btn_cancel": {
+    "th": "ยกเลิก"
+  },
+  "profile_me.id_identifier.btn_confirm": {
+    "th": "บันทึก"
+  },
+  "profile_me.id_identifier.update_success_toast": {
+    "th": "อัปเดตสำเร็จ"
+  },
+  "profile_me.gender_edit.title": {
+    "th": "เพศ"
+  },
+  "profile_me.gender_edit.male": {
+    "th": "ชาย"
+  },
+  "profile_me.gender_edit.female": {
+    "th": "หญิง"
+  },
+  "profile_me.gender_edit.update_success_toast": {
+    "th": "อัปเดตสำเร็จ"
+  },
+  "profile_me.bio_edit.title": {
+    "th": "แนะนำตัวเอง"
+  },
+  "profile_me.bio_edit.input_box_hint": {
+    "th": "เพิ่มคำอธิบายสั้นๆ ให้คนอื่นรู้จักคุณ..."
+  },
+  "profile_me.bio_edit.keyboard_finish_hint": {
+    "th": "เสร็จสิ้น"
+  },
+  "profile_me.bio_edit.btn_cancel": {
+    "th": "ยกเลิก"
+  },
+  "profile_me.bio_edit.btn_confirm": {
+    "th": "บันทึก"
+  },
+  "profile_me.bio_edit.update_success_toast": {
+    "th": "อัปเดตสำเร็จ"
+  },
+  "profile_me.deactivate.header": {
+    "th": "ลบบัญชี"
+  },
+  "profile_me.deactivate.warning_title": {
+    "th": "ข้อควรทราบสำคัญ"
+  },
+  "profile_me.deactivate.warning_sub_title_aihay": {
+    "th": "หลังจากที่คุณกดปุ่มลบบัญชี imely จะ:"
+  },
+  "profile_me.deactivate.warning_sub_title_hay1": {
+    "th": "หลังจากที่คุณกดปุ่มลบบัญชี imely จะ:"
+  },
+  "profile_me.deactivate.warning_msg_1": {
+    "th": "ลบข้อมูลบัญชี ชื่อ รูปโปรไฟล์ และข้อมูลส่วนตัวอื่นๆ ของคุณ"
+  },
+  "profile_me.deactivate.warning_msg_2": {
+    "th": "ลบความคิดเห็นทั้งหมดที่คุณโพสต์และข้อมูลที่เกี่ยวข้อง"
+  },
+  "profile_me.deactivate.warning_msg_3": {
+    "th": "ไม่สามารถกู้คืนข้อมูลได้หลังจากลบบัญชีแล้ว"
+  },
+  "profile_me.deactivate.confirm_title": {
+    "th": "คุณต้องการลบบัญชีของคุณหรือไม่?"
+  },
+  "profile_me.deactivate.btn_cancel": {
+    "th": "ไม่"
+  },
+  "profile_me.deactivate.btn_confirm": {
+    "th": "หลังจากที่คุณกดปุ่มลบบัญชี imely จะ:"
+  },
+  "profile_me.deactivate.confirm_dialog_aihay_title": {
+    "th": "ลบบัญชี imely"
+  },
+  "profile_me.deactivate.confirm_dialog_aihay_msg": {
+    "th": "เมื่อคุณลบบัญชี imely คุณจะไม่สามารถเข้าถึงเนื้อหาหรือความคิดเห็นที่คุณโพสต์ไว้บน imely ได้อีก"
+  },
+  "profile_me.deactivate.confirm_dialog_hay1_title": {
+    "th": "ลบบัญชี imely"
+  },
+  "profile_me.deactivate.confirm_dialog_hay1_msg": {
+    "th": "เมื่อคุณลบบัญชี imely คุณจะไม่สามารถเข้าถึงเนื้อหาหรือความคิดเห็นที่คุณโพสต์ไว้บน imely ได้อีก"
+  },
+  "profile_me.deactivate.confirm_dialog_hobi_title": {
+    "th": "ลบบัญชี Hobi"
+  },
+  "profile_me.deactivate.confirm_dialog_hobi_msg": {
+    "th": "เมื่อคุณลบบัญชี Hobi คุณจะไม่สามารถเข้าถึงเนื้อหาหรือความคิดเห็นที่คุณโพสต์ไว้บน Hobi ได้อีก"
+  },
+  "profile_me.deactivate.confirm_dialog_btn_cancel": {
+    "th": "ยกเลิก"
+  },
+  "profile_me.deactivate.confirm_dialog_btn_confirm": {
+    "th": "ลบบัญชี"
+  },
+  "profile_me.deactivate.deactivate_success_toast": {
+    "th": "ลบบัญชีแล้ว"
+  },
+  "profile_me.deactivate.deactivate_error_toast": {
+    "th": "ลบบัญชีไม่สำเร็จ\nกรุณาลองใหม่อีกครั้ง"
+  },
+  "answer_feedback.title": {
+    "th": "😭 imely ขออภัยสำหรับคำตอบที่ไม่ถูกต้อง"
+  },
+  "answer_feedback.msg": {
+    "th": "เหตุผลที่คุณไม่พอใจคือ:"
+  },
+  "answer_feedback.fabricated": {
+    "th": "ข้อมูลกุขึ้นเอง ไม่เป็นความจริง"
+  },
+  "answer_feedback.offensive": {
+    "th": "ไม่เหมาะสม"
+  },
+  "answer_feedback.better_answer": {
+    "th": "ฉันมีคำตอบที่ดีกว่านี้"
+  },
+  "answer_feedback.report_issue": {
+    "th": "รายงานปัญหา"
+  },
+  "answer_feedback.report_issue_hint": {
+    "th": "กรุณาให้รายละเอียดเพิ่มเติมเพื่อช่วยให้ imely เรียนรู้และตอบสนองคุณได้ดียิ่งขึ้น:"
+  },
+  "answer_feedback.issue_input_box_hint": {
+    "th": "กรอกความคิดเห็น ..."
+  },
+  "answer_feedback.btn_cancel": {
+    "th": "ยกเลิก"
+  },
+  "answer_feedback.btn_confirm": {
+    "th": "ส่ง"
+  },
+  "answer_feedback.error_empty_feedback": {
+    "th": "กรุณาเลือกเหตุผล!"
+  },
+  "answer_feedback.feedback_success_toast": {
+    "th": "ขอบคุณ! imely จะปรับปรุงและส่งคำตอบที่ดีขึ้นให้คุณเร็วๆ นี้!"
+  },
+  "answer_feedback.error_occurred_try_again": {
+    "th": "เกิดข้อผิดพลาด กรุณาลองใหม่ภายหลัง"
+  },
+  "sz_social_397.regen_hint": {
+    "th": "ข้อมูลที่สร้างโดย AI ใช้เพื่อการอ้างอิงเท่านั้น"
+  },
+  "sz_social_397.vote_hint": {
+    "th": "ช่วย imely เรียนรู้และตอบได้ดีขึ้นด้วยการให้คะแนนและข้อเสนอแนะ!"
+  },
+  "sz_social_397.btn_regen": {
+    "th": "ลองใหม่"
+  },
+  "sz_social_397.btn_copy": {
+    "th": "คัดลอก"
+  },
+  "sz_social_397.vote_success_toast": {
+    "th": "ขอบคุณสำหรับความคิดเห็นของคุณ!"
+  },
+  "sz_social_397.copy_text_success": {
+    "th": "คัดลอกคำตอบแล้ว"
+  },
+  "sz_social_397.copy_link_success": {
+    "th": "คัดลอกลิงก์แล้ว"
+  },
+  "sz_20036.roast": {
+    "th": "กวนโอ๊ย:"
+  },
+  "sz_20036.tu_vi": {
+    "th": "การตีความ:"
+  },
+  "sz_20036.answer": {
+    "th": "คำตอบ:"
+  },
+  "sz_20036.listen_audio": {
+    "th": "ฟัง"
+  },
+  "sz_20036.stop_audio": {
+    "th": "หยุด"
+  },
+  "sz_20036.ask_community": {
+    "th": "ถามติวเตอร์ +10"
+  },
+  "sz_hay1_20014.you_ask_followup": {
+    "th": "คำถามต่อเนื่อง"
+  },
+  "sz_hay1_20014.ask_followup": {
+    "th": "ถามต่อ"
+  },
+  "sz_hay1_20014.delete_ask_title": {
+    "th": "คุณต้องการลบคำถามนี้หรือไม่?"
+  },
+  "sz_hay1_20014.delete_ask_btn_cancel": {
+    "th": "ไม่"
+  },
+  "sz_hay1_20014.delete_ask_btn_confirm": {
+    "th": "ลบ"
+  },
+  "sz_hay1_20014.photo_has_been_lock": {
+    "th": "รูปภาพถูกล็อกแล้ว"
+  },
+  "sz_hay1_20014.location": {
+    "th": "ที่"
+  },
+  "sz_hay1_20014.answer": {
+    "th": "👉 คำตอบ:"
+  },
+  "sz_hay1_20014.wating_status": {
+    "th": "AI กำลังรวบรวมคำตอบ..."
+  },
+  "sz_hay1_20014.error_occurred_try_again": {
+    "th": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง"
+  },
+  "sz_hay1_20014.view_count": {
+    "th": "การดู"
+  },
+  "ask.reasoning_selection.title": {
+    "th": "ตัวเลือก"
+  },
+  "ask.reasoning_selection.pro_search.description": {
+    "th": "ผลการค้นหาที่มากขึ้น"
+  },
+  "ask.reasoning_selection.agentic.title": {
+    "th": "Agentic"
+  },
+  "ask.reasoning_selection.agentic.description": {
+    "th": "AI จะวิเคราะห์เชิงรุกและใช้เครื่องมือเพื่อให้คำตอบที่ครอบคลุมที่สุด"
+  },
+  "ask.reasoning_selection.reasoning.description": {
+    "th": "AI จะวิเคราะห์ข้อมูล ใช้หลักตรรกะ และสรุปผลอย่างมีเหตุผล"
+  },
+  "ask.reasoning_selection.deep_research.description": {
+    "th": "ค้นคว้าเชิงลึกจากแหล่งข้อมูลที่น่าเชื่อถือ ใช้เวลาประมาณ 3-5 นาที"
+  },
+  "ask.reasoning_selection.choose_search_type": {
+    "th": "เลือกประเภทการค้นหา"
+  },
+  "ask.reasoning_selection.pro_search.title": {
+    "th": "ค้นหาแบบ Pro"
+  },
+  "ask.reasoning_selection.reasoning.title": {
+    "th": "การให้เหตุผล"
+  },
+  "ask.reasoning_selection.deep_research.title": {
+    "th": "ค้นคว้าเชิงลึก"
+  },
+  "ask.reasoning_selection.turnoff": {
+    "th": "ปิดใช้งานแล้ว "
+  },
+  "media_picker.header.camera_title": {
+    "th": "กล้อง"
+  },
+  "media_picker.header.file_title": {
+    "th": "ไฟล์"
+  },
+  "media_picker.header.read_history_title": {
+    "th": "ประวัติการอ่าน"
+  },
+  "media_picker.gallery_title": {
+    "th": "แกลเลอรี"
+  },
+  "media_picker.uppercase_done_button": {
+    "th": "เสร็จสิ้น"
+  },
+  "media_picker.roast_intro_text": {
+    "th": "เลือกรูปภาพหรือแคปหน้าจอโปรไฟล์ โพสต์ Facebook, Insta... ให้ Roast แซวเล่น!"
+  },
+  "media_picker.permission.limited": {
+    "th": "คุณอนุญาตให้แอปเข้าถึงได้เฉพาะรูปภาพบางส่วนเท่านั้น [citation:1] หรือ [citation:2]"
+  },
+  "media_picker.permission.limited.select": {
+    "th": "เลือกรูปภาพเพิ่มเติม"
+  },
+  "media_picker.permission.limited.settings": {
+    "th": "เปลี่ยนสิทธิ์การเข้าถึง"
+  },
+  "media_picker.load.empty": {
+    "th": "ไม่สามารถโหลดรูปภาพหรือวิดีโอได้"
+  },
+  "media_picker.permission.denied": {
+    "th": "คุณยังไม่ได้อนุญาตให้เข้าถึงรูปภาพ"
+  },
+  "media_picker.permission.continue_btn": {
+    "th": "ดำเนินการต่อ"
+  },
+  "media_picker.permission.none.alert_title": {
+    "th": "อนุญาตให้เข้าถึงรูปภาพ"
+  },
+  "media_picker.permission.none.alert_msg": {
+    "th": "คุณต้องทำตามขั้นตอนต่อไปนี้:\n1. แตะ เปิดการตั้งค่า\n2. ไปที่: สิทธิ์การเข้าถึงแอป ➡️ รูปภาพและวิดีโอ\n3. เลือก: อนุญาต"
+  },
+  "media_picker.select_over_limit_msg": {
+    "th": "คุณเลือกรูปภาพครบจำนวนสูงสุดที่อนุญาตแล้ว"
+  },
+  "file_picker.select_over_size_limit_msg": {
+    "th": "ไฟล์มีขนาดเกินที่กำหนด กรุณาเลือกไฟล์อื่น"
+  },
+  "file_picker.select_over_limit_msg": {
+    "th": "คุณเลือกไฟล์ครบจำนวนสูงสุดที่อนุญาตแล้ว"
+  },
+  "camera.photo_mode": {
+    "th": "รูปภาพ"
+  },
+  "camera.document_mode": {
+    "th": "เอกสาร"
+  },
+  "camera.text_mode": {
+    "th": "ข้อความ"
+  },
+  "camera.solving_homework_mode": {
+    "th": "แก้การบ้าน"
+  },
+  "camera.new_homework": {
+    "th": "การบ้านใหม่"
+  },
+  "camera.grading_no_homework_to_grade": {
+    "th": "ไม่มีการบ้านให้ตรวจ"
+  },
+  "camera.solving_no_homework_to_solve": {
+    "th": "ไม่มีการบ้านให้แก้"
+  },
+  "camera.homework_disclaimer": {
+    "th": "ข้อมูลที่สร้างโดย AI ใช้เพื่อการอ้างอิงเท่านั้น"
+  },
+  "camera.grading_homework_mode": {
+    "th": "ตรวจการบ้าน"
+  },
+  "camera.new_grading": {
+    "th": "ตรวจใหม่"
+  },
+  "camera.scanning_document_mode": {
+    "th": "สแกนเอกสาร"
+  },
+  "camera.translation_mode": {
+    "th": "แปลภาษา"
+  },
+  "camera.text_tip_hint": {
+    "th": "จัดข้อความให้อยู่กึ่งกลางหน้าจอ"
+  },
+  "camera.grading_homework_tip_hint": {
+    "th": "จัดเอกสารให้อยู่กึ่งกลางหน้าจอ"
+  },
+  "camera.scanning_document_tip_hint": {
+    "th": "จัดเอกสารให้อยู่กึ่งกลางหน้าจอ"
+  },
+  "camera.text_homework_tip_hint": {
+    "th": "จัดคำถามให้อยู่กึ่งกลางหน้าจอ"
+  },
+  "camera.document_homework_tip_hint": {
+    "th": "ถ่ายภาพการบ้านของคุณ"
+  },
+  "camera.scanning_document_single_page": {
+    "th": "หน้าเดียว"
+  },
+  "camera.scanning_document_multi_page": {
+    "th": "หลายหน้า"
+  },
+  "camera.problem_label": {
+    "th": "คำถาม:"
+  },
+  "chat.input_box_hint": {
+    "th": "กรอกข้อความ..."
+  },
+  "chat.bot_disclaimer_banner.title": {
+    "th": "นี่คือตัวละครที่สร้างโดย AI ไม่ใช่บุคคลจริง"
+  },
+  "chat.bot_disclaimer_banner.subtitle": {
+    "th": "AI อาจให้ข้อมูลที่ไม่ถูกต้อง โปรดอย่าใช้ข้อมูลนี้เป็นแนวทางหรือเพื่อยืนยันข้อเท็จจริง"
+  },
+  "chat.missing_text_toast": {
+    "th": "กรุณากรอกข้อความที่จะส่ง"
+  },
+  "chat.toast.login_to_chat_with": {
+    "th": "กรุณาเข้าสู่ระบบเพื่อส่งข้อความถึง "
+  },
+  "chat.toast.login_required": {
+    "th": "คุณต้องเข้าสู่ระบบเพื่อส่งข้อความ"
+  },
+  "chat.toast.deleted_message": {
+    "th": "ลบข้อความแล้ว"
+  },
+  "chat.toast.unsupport_version": {
+    "th": "กรุณาอัปเดตแอปเป็นเวอร์ชันล่าสุดเพื่อดูข้อความนี้"
+  },
+  "chat.toast.left_group": {
+    "th": "ออกจากกลุ่มแล้ว"
+  },
+  "chat.toast.deleted_conversation": {
+    "th": "ลบการสนทนาแล้ว"
+  },
+  "chat.toast.saved_group_info": {
+    "th": "บันทึกข้อมูลสำเร็จ"
+  },
+  "chat.toast.missing_group_members": {
+    "th": "กรุณาเลือกสมาชิกเพื่อสร้างกลุ่ม"
+  },
+  "chat.toast.joined_group": {
+    "th": "เข้าร่วมกลุ่มสำเร็จ"
+  },
+  "chat.create_chat_group_button": {
+    "th": "สร้างกลุ่มแชท"
+  },
+  "chat.websocket_status.connected_title": {
+    "th": "เชื่อมต่อแล้ว"
+  },
+  "chat.websocket_status.connecting_title": {
+    "th": "กำลังเชื่อมต่อ..."
+  },
+  "chat.websocket_status.network_error_title": {
+    "th": "ไม่มีการเชื่อมต่อ"
+  },
+  "chat.websocket_status.error_title": {
+    "th": "เกิดข้อผิดพลาด"
+  },
+  "chat.menu.title": {
+    "th": "ตัวเลือก"
+  },
+  "chat.menu.group_info": {
+    "th": "ข้อมูลกลุ่ม"
+  },
+  "chat.menu.leave_group": {
+    "th": "ออกจากกลุ่ม"
+  },
+  "chat.menu.view_profile": {
+    "th": "ดูโปรไฟล์"
+  },
+  "chat.menu.view_profile_short": {
+    "th": "ดูโปรไฟล์"
+  },
+  "chat.menu.delete_conversation": {
+    "th": "ลบการสนทนา"
+  },
+  "chat.menu.unblock_user": {
+    "th": "เลิกบล็อก"
+  },
+  "chat.menu.block_user": {
+    "th": "บล็อก"
+  },
+  "chat.menu.report": {
+    "th": "รายงาน"
+  },
+  "chat.menu.bot_create_post": {
+    "th": "สร้างโพสต์โซเชียล"
+  },
+  "chat.menu.bot_edit": {
+    "th": "แก้ไขแชทบอท"
+  },
+  "chat.menu.change_background": {
+    "th": "เปลี่ยนพื้นหลัง"
+  },
+  "chat.menu.auto_play_tts": {
+    "th": "เล่นเสียงอัตโนมัติ"
+  },
+  "chat.menu.file_manager": {
+    "th": "จัดการไฟล์"
+  },
+  "chat.message_menu.title": {
+    "th": "ตัวเลือก"
+  },
+  "chat.message_menu.download": {
+    "th": "ดาวน์โหลด"
+  },
+  "chat.message_menu.copy_link": {
+    "th": "คัดลอกลิงก์"
+  },
+  "chat.message_menu.copy": {
+    "th": "คัดลอก"
+  },
+  "chat.message_menu.delete_message": {
+    "th": "ลบข้อความ"
+  },
+  "chat.message_menu.delete": {
+    "th": "ลบ"
+  },
+  "chat.message_menu.report": {
+    "th": "รายงาน"
+  },
+  "chat.message_menu.feedback": {
+    "th": "ความคิดเห็น"
+  },
+  "chat.message_menu.report_like": {
+    "th": "ถูกใจบทสนทนา"
+  },
+  "chat.message_menu.report_dislike": {
+    "th": "ไม่ถูกใจบทสนทนา"
+  },
+  "chat.message_menu.view_emotes": {
+    "th": "ดูอีโมท"
+  },
+  "chat.command_menu.title": {
+    "th": "คำสั่ง"
+  },
+  "chat.quick_action.default": {
+    "th": "การกระทำ"
+  },
+  "chat.personalize_menu.title": {
+    "th": "ปรับแต่งส่วนตัว"
+  },
+  "chat.conversation_menu.title": {
+    "th": "ตัวเลือก"
+  },
+  "chat.conversation_menu.leave_group": {
+    "th": "ออกจากกลุ่ม"
+  },
+  "chat.conversation_menu.delete": {
+    "th": "ลบการสนทนา"
+  },
+  "chat.conversation_menu.report": {
+    "th": "รายงาน"
+  },
+  "chat.conversation.draft_text": {
+    "th": "แบบร่าง"
+  },
+  "chat.group.info": {
+    "th": "ข้อมูลกลุ่ม"
+  },
+  "chat.group.group_name": {
+    "th": "ชื่อกลุ่ม"
+  },
+  "chat.group.add_member": {
+    "th": "เพิ่มสมาชิก"
+  },
+  "chat.group.view_members": {
+    "th": "ดูสมาชิก"
+  },
+  "chat.group.leave": {
+    "th": "ออกจากกลุ่ม"
+  },
+  "chat.create_group.title": {
+    "th": "สร้างกลุ่มแชท"
+  },
+  "chat.create_group.search_friend_hint": {
+    "th": "ค้นหาเพื่อน..."
+  },
+  "chat.create_group.with_label": {
+    "th": "กับ:"
+  },
+  "chat.create_group.user_follower": {
+    "th": "ผู้ติดตาม"
+  },
+  "chat.create_group.empty_chat_suggest": {
+    "th": "แชท"
+  },
+  "chat.attachment.photo": {
+    "th": "[รูปภาพ]"
+  },
+  "chat.attachment.link": {
+    "th": "[ลิงก์]"
+  },
+  "chat.attachment.file": {
+    "th": "[ไฟล์]"
+  },
+  "chat.attachment.sticker": {
+    "th": "[สติกเกอร์]"
+  },
+  "chat.noti.receive_photo_msg": {
+    "th": "ส่งรูปภาพให้คุณ"
+  },
+  "chat.noti.receive_link_msg": {
+    "th": "ส่งลิงก์ให้คุณ"
+  },
+  "chat.noti.receive_file_msg": {
+    "th": "ส่งไฟล์ให้คุณ"
+  },
+  "chat.noti.receive_sticker_msg": {
+    "th": "ส่งสติกเกอร์ให้คุณ"
+  },
+  "chat.noti.receive_group_photo_msg": {
+    "th": "ส่งรูปภาพในกลุ่ม"
+  },
+  "chat.noti.receive_group_link_msg": {
+    "th": "ส่งลิงก์ในกลุ่ม"
+  },
+  "chat.noti.receive_group_sticker_msg": {
+    "th": "ส่งสติกเกอร์ในกลุ่ม"
+  },
+  "chat.message_state.sending": {
+    "th": "กำลังส่ง"
+  },
+  "chat.message_state.uploading": {
+    "th": "กำลังอัปโหลด"
+  },
+  "chat.message_state.send_failed": {
+    "th": "ส่งไม่สำเร็จ"
+  },
+  "chat.bubble.unsupported": {
+    "th": "ข้อความนี้ไม่รองรับในเวอร์ชันปัจจุบันของแอป"
+  },
+  "chat.bubble.unsupported_attachment": {
+    "th": "ไฟล์แนบนี้ไม่รองรับในเวอร์ชันปัจจุบันของแอป"
+  },
+  "chat.bubble.create_bot_success": {
+    "th": "สร้างแชทบอทสำเร็จ"
+  },
+  "chat.bubble.update_bot_avatar": {
+    "th": "อัปเดตรูปโปรไฟล์แชทบอท"
+  },
+  "chat.mode.lite.title": {
+    "th": "สบายๆ"
+  },
+  "chat.mode.flash.title": {
+    "th": "ลึกซึ้ง"
+  },
+  "chat.mode.pro.title": {
+    "th": "จิตวิญญาณ"
+  },
+  "chat.mode.lite.description": {
+    "th": "บทสนทนาเบาๆ เป็นธรรมชาติ สำหรับช่วงเวลาทั่วไป"
+  },
+  "chat.mode.flash.description": {
+    "th": "บทสนทนาที่ลึกซึ้งยิ่งขึ้น เข้าใจความรู้สึกอย่างแท้จริง"
+  },
+  "chat.mode.pro.description": {
+    "th": "รับรู้สิ่งที่คุณไม่ได้พูดออกมา จดจำเรื่องราวของคุณ"
+  },
+  "chat.mode.changed.toast": {
+    "th": "เลือกโหมดแชทแล้ว: ${LAZY_DATA(chatModeTitle)}"
+  },
+  "chat.bot_info.note.title": {
+    "th": "หมายเหตุจากผู้สร้าง"
+  },
+  "chat.bot_info.tagline.title": {
+    "th": "แท็กไลน์"
+  },
+  "chat.bot_info.public-info.title": {
+    "th": "ข้อมูลสาธารณะ"
+  },
+  "chat.bot_info.back-story.title": {
+    "th": "ประวัติ"
+  },
+  "chat.bot_info.role.title": {
+    "th": "บุคลิกของคุณ"
+  },
+  "chat.footer_panel.camera.title": {
+    "th": "กล้อง"
+  },
+  "chat.footer_panel.media_picker.title": {
+    "th": "รูปภาพ"
+  },
+  "chat.footer_panel.file_picker.title": {
+    "th": "ไฟล์"
+  },
+  "chat.footer_panel.sticker.title": {
+    "th": "สติกเกอร์"
+  },
+  "chat.footer_panel.emotes.title": {
+    "th": "อีโมท"
+  },
+  "chat.footer_panel.command.title": {
+    "th": "คำสั่ง"
+  },
+  "chat.footer_panel.inner_thought.title": {
+    "th": "ความคิดในใจ"
+  },
+  "chat.disclaimer_banner": {
+    "th": "นี่คือตัวละครที่สร้างโดย AI ไม่ใช่บุคคลจริง"
+  },
+  "chat.emotes.title": {
+    "th": "อีโมท"
+  },
+  "chat.emote_unlock_dialog.title": {
+    "th": "ปลดล็อกอีโมท"
+  },
+  "chat.emote_unlock_dialog.msg": {
+    "th": "การปลดล็อกอีโมท [citation:1] มีค่าใช้จ่าย [citation:2] 💎"
+  },
+  "chat.emote_unlock_dialog.loading_msg": {
+    "th": "กำลังโหลดเนื้อหา...\nกรุณารอสักครู่"
+  },
+  "chat.emote_unlock_dialog.success_msg": {
+    "th": "🎉 ยินดีด้วย! คุณปลดล็อกอีโมท [citation:1] แล้ว:"
+  },
+  "chatbot.create_social_post.title": {
+    "th": "สร้างโพสต์"
+  },
+  "chatbot.create_social_post.description": {
+    "th": "สร้างโพสต์เพื่อให้ตัวละครของคุณน่าสนใจและมีชีวิตชีวายิ่งขึ้น ดึงดูดการมีส่วนร่วมและผู้ติดตามมากขึ้น"
+  },
+  "chatbot.create_social_post.section.description.label": {
+    "th": "คำอธิบาย:"
+  },
+  "chatbot.create_social_post.section.description.content": {
+    "th": "ภูมิหลัง เครื่องแต่งกาย และกิจกรรมของตัวละคร"
+  },
+  "chatbot.create_social_post.ai_edit.button": {
+    "th": "แก้ไขด้วย AI"
+  },
+  "chatbot.create_social_post.input.placeholder": {
+    "th": "สร้างเนื้อหาให้ตัวละครของคุณในแบบที่คุณต้องการ ตัวอย่าง: ในช่วงเวลาแดดใสแบบนี้ ฉันเดินอยู่ท่ามกลางทะเลและความสงบ 🌊.✨"
+  },
+  "chatbot.create_social_post.create_button": {
+    "th": "สร้างโพสต์"
+  },
+  "chatbot.create_social_post.create_success": {
+    "th": "สร้างโพสต์สำเร็จ!"
+  },
+  "chatbot.create_social_post.create_failure": {
+    "th": "ไม่สามารถสร้างโพสต์ได้ กรุณาลองใหม่อีกครั้ง"
+  },
+  "chatbot.create_social_post.button.cancel": {
+    "th": "ยกเลิก"
+  },
+  "chatbot.create_social_post.button.done": {
+    "th": "เสร็จสิ้น"
+  },
+  "chat.aidrive.select_file": {
+    "th": "เลือกไฟล์จาก AI Drive..."
+  },
+  "chat.speech_to_text.listening": {
+    "th": "กำลังฟัง..."
+  },
+  "chat.speech_to_text.short_error": {
+    "th": "ไม่สามารถจดจำเสียงได้ กรุณาลองใหม่อีกครั้ง"
+  },
+  "chat.speech_to_text.error": {
+    "th": "ไม่สามารถจดจำเสียงได้\nกรุณาลองใหม่อีกครั้ง"
+  },
+  "chat.speech_to_text.push_to_talk_button": {
+    "th": "กดค้างเพื่อพูด"
+  },
+  "chat.speech_to_text.release_to_send_button": {
+    "th": "ปล่อยเพื่อส่ง"
+  },
+  "chat.speech_to_text.release_to_cancel_button": {
+    "th": "ปล่อยเพื่อยกเลิก"
+  },
+  "chat.option.unblock_msg": {
+    "th": "คุณต้องเลิกบล็อก ${LAZY_DATA(name)} เพื่อส่งข้อความ"
+  },
+  "chat.option.block_msg": {
+    "th": "${LAZY_DATA(name)} จะไม่สามารถส่งข้อความหาคุณได้"
+  },
+  "relationship.banner_desc": {
+    "th": "นี่คือระดับความสัมพันธ์ระหว่างคุณกับตัวละคร <u>[citation:1]</u>"
+  },
+  "relationship.level.label": {
+    "th": "ระดับความสัมพันธ์"
+  },
+  "relationship.level.enemy": {
+    "th": "ศัตรู"
+  },
+  "relationship.level.distant": {
+    "th": "ห่างเหิน"
+  },
+  "relationship.level.close": {
+    "th": "สนิท"
+  },
+  "relationship.level.ambiguous": {
+    "th": "คลุมเครือ"
+  },
+  "relationship.level.crush": {
+    "th": "แอบชอบ"
+  },
+  "relationship.level.destined": {
+    "th": "พรหมลิขิต"
+  },
+  "relationship.level.new": {
+    "th": "เพื่อนใหม่"
+  },
+  "relationship.detail.levels": {
+    "th": "ระดับความสัมพันธ์"
+  },
+  "relationship.detail.your_score": {
+    "th": "คะแนนของคุณ"
+  },
+  "relationship.detail.you": {
+    "th": "คุณ"
+  },
+  "relationship.detail.acquainted_days": {
+    "th": "คุณและตัวละครนี้รู้จักกันมาแล้ว:"
+  },
+  "relationship.detail.sent_messages": {
+    "th": "คุณส่งไปแล้ว:"
+  },
+  "relationship.detail.acquainted_days_value": {
+    "th": "${LAZY_DATA(aDays)} วัน"
+  },
+  "relationship.detail.sent_messages_value": {
+    "th": "${LAZY_DATA(smCount)} ข้อความ"
+  },
+  "relationship.level.decreased": {
+    "th": "ระดับความสัมพันธ์ลดลง"
+  },
+  "relationship.level.increased": {
+    "th": "ระดับความสัมพันธ์เพิ่มขึ้น"
+  },
+  "relationship.interaction.decrease": {
+    "th": "${DATA_SRC(ds_convName)} จะมีปฏิสัมพันธ์กับคุณน้อยลง"
+  },
+  "relationship.interaction.increase": {
+    "th": "${DATA_SRC(ds_convName)} จะมีปฏิสัมพันธ์กับคุณใกล้ชิดยิ่งขึ้น"
+  },
+  "chat.edit_message.title": {
+    "th": "แก้ไข"
+  },
+  "chat.edit_message.msg": {
+    "th": "กรอกเนื้อหาที่ต้องการแก้ไข:"
+  },
+  "chat.edit_message.empty_input_toast": {
+    "th": "กรุณากรอกเนื้อหาที่ต้องการแก้ไข"
+  },
+  "chat.edit_message.success_toast": {
+    "th": "แก้ไขสำเร็จ"
+  },
+  "chat.report_message.msg": {
+    "th": "เลือกเหตุผล:"
+  },
+  "chat.report_message.incorrect_addressing": {
+    "th": "เรียกชื่อผิด"
+  },
+  "chat.report_message.memory_loss": {
+    "th": "ความจำเสื่อม"
+  },
+  "chat.report_message.poor_writing_style": {
+    "th": "สำนวนการเขียนไม่ดี"
+  },
+  "chat.report_message.context_misunderstanding": {
+    "th": "เข้าใจบริบทผิด"
+  },
+  "chat.report_message.out_of_character": {
+    "th": "ไม่ตรงบุคลิก"
+  },
+  "chat.report_message.spelling_or_grammar_errors": {
+    "th": "ผิดตัวสะกดหรือไวยากรณ์"
+  },
+  "chat.report_message.character_plagiarism": {
+    "th": "ลอกเลียนตัวละคร"
+  },
+  "chat.report_message.offensive_content": {
+    "th": "เนื้อหาไม่เหมาะสม"
+  },
+  "chat.report_message.other": {
+    "th": "เหตุผลอื่นๆ"
+  },
+  "chat.report_message.success_toast": {
+    "th": "ขอบคุณสำหรับการรายงาน"
+  },
+  "call.option.block_msg": {
+    "th": "${LAZY_DATA(name)} จะไม่สามารถโทรหาคุณได้"
+  },
+  "call.state.connecting": {
+    "th": "กำลังเชื่อมต่อ"
+  },
+  "call.state.connected": {
+    "th": "เชื่อมต่อแล้ว"
+  },
+  "call.state.disconnected": {
+    "th": "ตัดการเชื่อมต่อ"
+  },
+  "post_ask.speech_to_text.cancelled": {
+    "th": "ยกเลิกการจดจำเสียง"
+  },
+  "post_ask.speech_to_text.filled_text": {
+    "th": "กรอกข้อความจากเสียงแล้ว"
+  },
+  "media_player.playing": {
+    "th": "กำลังเล่น..."
+  },
+  "sz_70000.title_1_1": {
+    "th": "<b>imely</b> มอบให้คุณ"
+  },
+  "sz_70000.title_1_2": {
+    "th": "ดาว เพราะคุณเข้าสู่ระบบแล้ว"
+  },
+  "sz_70000.title_2": {
+    "th": "คุณได้รับ <b>30 ดาว</b> หลังจากแชร์ตำแหน่งที่ตั้งของคุณ"
+  },
+  "sz_70000.title_3": {
+    "th": "คุณแชร์สิทธิ์การแจ้งเตือนสำเร็จแล้ว"
+  },
+  "sz_70000.title_4": {
+    "th": "คุณอัปเดตอีเมลสำเร็จแล้ว"
+  },
+  "sz_70000.title_5": {
+    "th": "คุณอัปเดตหมายเลขโทรศัพท์สำเร็จแล้ว"
+  },
+  "sz_70000.title_6": {
+    "th": "คุณเพิ่มรูปโปรไฟล์สำเร็จแล้ว"
+  },
+  "sz_70000.title_7": {
+    "th": "คุณอัปเดตวันเกิดสำเร็จแล้ว"
+  },
+  "sz_70000.title_8": {
+    "th": "ยินดีด้วย คุณได้รับดาวรางวัลเช็คอินวันนี้"
+  },
+  "sz_70000.title_9": {
+    "th": "ขอบคุณที่ร่วมพูดคุยบน imely"
+  },
+  "sz_70000.title_10": {
+    "th": "ยินดีด้วย คุณได้รับดาวรางวัลจากการอ่านวันนี้"
+  },
+  "sz_70000.title_11_1": {
+    "th": "ยินดีด้วย คุณได้รับ"
+  },
+  "sz_70000.title_11_2": {
+    "th": "🌟 รางวัลจากการชวน <b>"
+  },
+  "sz_70000.title_11_3": {
+    "th": "</b> เข้าร่วม imely"
+  },
+  "sz_70000.title_12_1": {
+    "th": "ยินดีด้วย คุณได้รับ"
+  },
+  "sz_70000.title_12_2": {
+    "th": "🌟 รางวัลจากการกรอกรหัสเพื่อน"
+  },
+  "sz_70000.title_13": {
+    "th": "ระดับสมาชิกของคุณถูกรีเซ็ตเป็นบรอนซ์ตามรอบ 6 เดือน ทำภารกิจเพิ่มเติมเพื่อเลื่อนระดับ"
+  },
+  "sz_70000.title_14_1": {
+    "th": "เพื่อน 1 คนมอบให้คุณ"
+  },
+  "sz_70000.title_14_2": {
+    "th": "ดาว"
+  },
+  "sz_70000.title_15_1": {
+    "th": "มอบให้คุณ"
+  },
+  "sz_70000.title_15_2": {
+    "th": "ดาว"
+  },
+  "sz_70000.title_16": {
+    "th": "ขอบคุณที่แชร์คำถามของคุณให้คอมมูนิตี้ imely เห็นแบบสาธารณะ"
+  },
+  "ask_add_tag.header_title": {
+    "th": "โพสต์"
+  },
+  "ask_add_tag.header_title_edit": {
+    "th": "แก้ไขแฮชแท็ก"
+  },
+  "ask_add_tag.post_button_text": {
+    "th": "โพสต์"
+  },
+  "ask_add_tag.edit_button_text": {
+    "th": "บันทึก"
+  },
+  "ask_add_tag.edit_success_toast": {
+    "th": "แก้ไขแฮชแท็กสำเร็จ "
+  },
+  "ask_add_tag.edit_failed_toast": {
+    "th": "อัปเดตแฮชแท็กไม่สำเร็จ กรุณาลองใหม่อีกครั้ง"
+  },
+  "ask_add_tag.hint_text_1": {
+    "th": "เพิ่มแฮชแท็กเพื่อให้โพสต์ของคุณมีการมีส่วนร่วมมากขึ้น"
+  },
+  "ask_add_tag.hint_text_2": {
+    "th": "แฮชแท็กสามารถกดเพื่อดูรวมโพสต์ที่เกี่ยวข้องได้ ช่วยให้คนอื่นค้นหาและมีส่วนร่วมกับโพสต์ของคุณได้ง่ายขึ้น"
+  },
+  "ask_add_tag.hint_text_3": {
+    "th": "\"หมายเหตุ:\n• แฮชแท็กต้องขึ้นต้นด้วย #\n• เขียนติดกันโดยไม่เว้นวรรค\n• ใช้ได้เฉพาะตัวอักษรและตัวเลข\n• ห้ามใช้เครื่องหมายวรรคตอนหรืออักขระพิเศษ ($ % ^ & * ...)\""
+  },
+  "ask_add_tag.text_input_hint": {
+    "th": "กรอกข้อความพร้อม #แฮชแท็ก..."
+  },
+  "ask_add_tag.tag_search_title": {
+    "th": "ผลการค้นหา:"
+  },
+  "ask_add_tag.toast_success": {
+    "th": "โพสต์สำเร็จ"
+  },
+  "ask_add_tag.toast_fail": {
+    "th": "เกิดข้อผิดพลาดบางอย่าง กรุณาลองใหม่อีกครั้ง"
+  },
+  "ask_add_tag.search_title": {
+    "th": "ค้นหา:"
+  },
+  "ask_add_tag.search_post_count": {
+    "th": "โพสต์"
+  },
+  "ask_add_topic.add_button_text": {
+    "th": "เพิ่มคอมมูนิตี้"
+  },
+  "ask_add_topic.post_button_text": {
+    "th": "โพสต์"
+  },
+  "ask_add_topic.header_title": {
+    "th": "โพสต์"
+  },
+  "ask_add_topic.header_title_edit": {
+    "th": "แก้ไขคอมมูนิตี้"
+  },
+  "ask_add_topic.edit_button_text": {
+    "th": "บันทึก"
+  },
+  "ask_add_topic.hint": {
+    "th": "โพสต์เพื่อแชร์เนื้อหานี้กับทุกคน คุณสามารถโพสต์ในคอมมูนิตี้เพื่อให้คนอื่นค้นพบโพสต์ของคุณได้ง่ายขึ้นและเพิ่มการมีส่วนร่วม"
+  },
+  "sz_70001.replace_pattern": {
+    "th": "คนอื่นๆ"
+  },
+  "sz_70001.title_1_1": {
+    "th": "<b>คุณ</b> เปลี่ยน"
+  },
+  "sz_70001.title_1_2": {
+    "th": "ดาวสำเร็จแล้ว"
+  },
+  "sz_70001.title_2": {
+    "th": "ระดับสมาชิกของคุณถูกรีเซ็ตเป็นบรอนซ์ตามรอบ 6 เดือน ทำภารกิจเพิ่มเติมเพื่อเลื่อนระดับ"
+  },
+  "sz_70001.title_3_1": {
+    "th": "<b>คุณ</b> มอบ"
+  },
+  "sz_70001.title_3_2": {
+    "th": "ดาวให้ผู้ใช้อื่น"
+  },
+  "sz_70001.title_4_1": {
+    "th": "<b>คุณ</b> มอบ"
+  },
+  "sz_70001.title_4_2": {
+    "th": "ดาวให้"
+  },
+  "sz_70001.title_102": {
+    "th": "คุณแลกแพ็กเกจ imely Pro 30 วันสำเร็จแล้ว"
+  },
+  "sz_70003.title": {
+    "th": "คุณยังไม่มีกิจกรรมสะสมดาว"
+  },
+  "sz_70003.msg": {
+    "th": "ใช้งาน imely อย่างต่อเนื่องเพื่อสะสมดาวเพิ่มขึ้น!"
+  },
+  "sz_30047.title_1_1": {
+    "th": "เข้าร่วม"
+  },
+  "sz_30047.title_1_2": {
+    "th": "ตอนนี้"
+  },
+  "sz_30043.community": {
+    "th": "คอมมูนิตี้"
+  },
+  "sz_30043.topic": {
+    "th": "หัวข้อ"
+  },
+  "update_follow_com.followed_upper": {
+    "th": "กำลังติดตาม"
+  },
+  "update_follow_com.follow": {
+    "th": "ติดตาม"
+  },
+  "update_follow_com.welcome_msg": {
+    "th": "ยินดีต้อนรับสู่คอมมูนิตี้"
+  },
+  "update_follow_com.leave_comm_success": {
+    "th": "ออกจากคอมมูนิตี้แล้ว"
+  },
+  "update_follow_com.error_occurred": {
+    "th": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง!"
+  },
+  "update_follow_com.login_title": {
+    "th": "คุณต้องเข้าสู่ระบบเพื่อเข้าร่วมคอมมูนิตี้นี้"
+  },
+  "update_follow_com.welcome_msg2": {
+    "th": "คุณจะได้รับอัปเดตเกี่ยวกับหัวข้อนี้"
+  },
+  "update_follow_com.leave_comm_success2": {
+    "th": "เลิกติดตามหัวข้อแล้ว"
+  },
+  "profile_com.follower": {
+    "th": "ติดตาม"
+  },
+  "profile_com.post": {
+    "th": "โพสต์"
+  },
+  "profile_com.community": {
+    "th": "คอมมูนิตี้"
+  },
+  "profile_com.info": {
+    "th": "ข้อมูล"
+  },
+  "profile_com.topic": {
+    "th": "หัวข้อ"
+  },
+  "profile_com.related.title_1": {
+    "th": "คอมมูนิตี้จะ"
+  },
+  "profile_com.related.title_2": {
+    "th": "ตอบคำถามของคุณ"
+  },
+  "profile_com.related.title_1.1": {
+    "th": "สมาชิกที่สนใจจะช่วยตอบคำถามของคุณ"
+  },
+  "profile_com.footer.btn_chat": {
+    "th": "แชท"
+  },
+  "profile_com.footer.btn_ask_comm": {
+    "th": "ถามคอมมูนิตี้"
+  },
+  "profile_com.footer.btn_ask_hashtag": {
+    "th": "ถาม"
+  },
+  "profile_com.footer.btn_ask_topic": {
+    "th": "ถาม"
+  },
+  "profile_com.menu.header": {
+    "th": "ตัวเลือก"
+  },
+  "profile_com.menu.share": {
+    "th": "แชร์"
+  },
+  "profile_com.menu.chat": {
+    "th": "แชท"
+  },
+  "profile_com.menu.chat_bot": {
+    "th": "สร้างแชทบอท"
+  },
+  "profile_com.menu.ask_comm": {
+    "th": "ถามคอมมูนิตี้"
+  },
+  "profile_com.menu.update_info": {
+    "th": "อัปเดตข้อมูล"
+  },
+  "profile_com.menu.delete_comm": {
+    "th": "ลบคอมมูนิตี้"
+  },
+  "profile_com.menu.delete_comm_success": {
+    "th": "ลบคอมมูนิตี้แล้ว"
+  },
+  "profile_com.menu.error_occurred_try_again": {
+    "th": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง"
+  },
+  "profile_com.menu.follow": {
+    "th": "ติดตาม"
+  },
+  "profile_com.menu.un_follow": {
+    "th": "เลิกติดตาม"
+  },
+  "profile_com.menu.report": {
+    "th": "รายงาน"
+  },
+  "profile_com.menu.create_comm": {
+    "th": "สร้างคอมมูนิตี้"
+  },
+  "profile_com.menu.create_topic": {
+    "th": "สร้างหัวข้อ"
+  },
+  "profile_com.menu.ask_topic": {
+    "th": "ถาม"
+  },
+  "profile_com.menu.update_topic_avatar": {
+    "th": "อัปเดตรูปหัวข้อ"
+  },
+  "profile_com.menu.update_comm_avatar": {
+    "th": "อัปเดตรูปคอมมูนิตี้"
+  },
+  "profile_com.menu.share_empty_link": {
+    "th": "ไม่พบลิงก์สำหรับแชร์"
+  },
+  "profile_com.menu.share_text": {
+    "th": "เข้าร่วมคอมมูนิตี้"
+  },
+  "sz_card_30018.title_1": {
+    "th": "อันดับ"
+  },
+  "sz_card_30018.title_2": {
+    "th": "ความสนใจ:"
+  },
+  "sz_card_30018.btn_detail": {
+    "th": "รายละเอียด"
+  },
+  "sz_card_30018.title_2_1": {
+    "th": "หัวข้อ"
+  },
+  "sz_card_30018.title_2_2": {
+    "th": "ที่คุณสนใจสูงสุด:"
+  },
+  "sz_card_30018.title_3": {
+    "th": "ความสนใจสูงสุด:"
+  },
+  "sz_card_30018.title_4_1": {
+    "th": "คุณต้องอ่านอีก"
+  },
+  "sz_card_30018.title_4_2": {
+    "th": "/10 โพสต์ เพื่อปลดล็อกฟีเจอร์นี้"
+  },
+  "sz_card_30018.summary": {
+    "th": "สถิติ"
+  },
+  "sz_card_30018.title_5_1": {
+    "th": "หัวข้อ"
+  },
+  "sz_card_30018.title_5_2": {
+    "th": "ของคุณสูงสุด:"
+  },
+  "sz_card_30018.post": {
+    "th": "โพสต์"
+  },
+  "sz_card_30018.btn_detail_upper": {
+    "th": "รายละเอียด"
+  },
+  "sz_540.title": {
+    "th": "เข้าสู่ระบบ imely"
+  },
+  "sz_540.subtitle": {
+    "th": "ช่วยให้คุณทบทวนคำถามที่ถามไปและแชร์ความรู้ที่เป็นประโยชน์กับเพื่อน"
+  },
+  "sz_540.login_button_title": {
+    "th": "เข้าสู่ระบบ"
+  },
+  "sz_551.title": {
+    "th": "เข้าสู่ระบบ imely"
+  },
+  "sz_551.subtitle": {
+    "th": "เพื่อแชทกับ AI และเพื่อนๆ!"
+  },
+  "sz_551.login_button_title": {
+    "th": "เข้าสู่ระบบ"
+  },
+  "sz_551.empty_title": {
+    "th": "รายการว่างเปล่า"
+  },
+  "sz_551.empty_subtitle": {
+    "th": "คุณยังไม่มีข้อความ"
+  },
+  "sz_551.empty_button_title": {
+    "th": "แชทกับเพื่อน"
+  },
+  "feed_ask.answer_title": {
+    "th": "👉 คำตอบ:"
+  },
+  "feed_ask.answer_view_full": {
+    "th": "ดู"
+  },
+  "community.create.title": {
+    "th": "สร้างคอมมูนิตี้"
+  },
+  "community.create.title_edit": {
+    "th": "อัปเดตคอมมูนิตี้"
+  },
+  "community.create.name": {
+    "th": "กรอกชื่อคอมมูนิตี้..."
+  },
+  "community.create.desc": {
+    "th": "กรอกคำอธิบายคอมมูนิตี้..."
+  },
+  "community.create.create_button": {
+    "th": "สร้าง"
+  },
+  "community.create.name_empty": {
+    "th": "กรุณากรอกชื่อคอมมูนิตี้"
+  },
+  "community.create.unknown_error": {
+    "th": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง"
+  },
+  "community.create.update_success": {
+    "th": "อัปเดตสำเร็จ"
+  },
+  "community.create.create_success": {
+    "th": "สร้างคอมมูนิตี้แล้ว"
+  },
+  "community.create.update_button": {
+    "th": "อัปเดต"
+  },
+  "community_selection.title": {
+    "th": "เพิ่มคอมมูนิตี้"
+  },
+  "community_selection.search_hint": {
+    "th": "ค้นหาคอมมูนิตี้"
+  },
+  "sz_30054.page": {
+    "th": "หน้า"
+  },
+  "sz_30055.title": {
+    "th": "แหล่งอ้างอิง:"
+  },
+  "book_detail.title": {
+    "th": "สารบัญ"
+  },
+  "book_detail.page": {
+    "th": "หน้า"
+  },
+  "ask_history.menu.header": {
+    "th": "ตัวเลือก"
+  },
+  "ask_history.menu.public_post": {
+    "th": "โพสต์สาธารณะ"
+  },
+  "ask_history.menu.copy_link": {
+    "th": "คัดลอกลิงก์"
+  },
+  "ask_history.menu.share": {
+    "th": "แชร์"
+  },
+  "drive.enter_folder_name": {
+    "th": "กรอกชื่อโฟลเดอร์"
+  },
+  "drive.folder_name_max_length": {
+    "th": "สูงสุด 128 ตัวอักษร"
+  },
+  "drive.add_success": {
+    "th": "เพิ่มสำเร็จ"
+  },
+  "drive.owner_name": {
+    "th": "AI Drive"
+  },
+  "drive.edit_folder_name": {
+    "th": "แก้ไขชื่อโฟลเดอร์"
+  },
+  "drive.delete_success": {
+    "th": "ลบสำเร็จ"
+  },
+  "drive.file_upload_limit": {
+    "th": "แอปนี้รองรับเฉพาะไฟล์ขนาดไม่เกิน 10 MB \nกรุณาเลือกไฟล์อื่น"
+  },
+  "drive.read_link": {
+    "th": "ลิงก์อ่าน"
+  },
+  "drive.file_too_large": {
+    "th": "ไฟล์มีขนาดเกิน 10MB"
+  },
+  "drive.storage_exceeded_quota": {
+    "th": "พื้นที่จัดเก็บเกินโควตา"
+  },
+  "drive.need_upgrade_plan": {
+    "th": "กรุณาอัปเกรดแพ็กเกจของคุณ"
+  },
+  "drive.name_invalid": {
+    "th": "ชื่อไม่ถูกต้อง"
+  },
+  "drive.permission_denied": {
+    "th": "ไม่ได้รับอนุญาต"
+  },
+  "drive.folder_depth_exceeded_limit": {
+    "th": "ความลึกของโฟลเดอร์เกินกำหนด (สูงสุด 10)"
+  },
+  "drive.cannot_move_to_subfolder": {
+    "th": "ไม่สามารถย้ายเข้าโฟลเดอร์ย่อยได้"
+  },
+  "drive.child_exceeded_limit": {
+    "th": "มีรายการย่อยมากเกินไป (สูงสุด 5000)"
+  },
+  "drive.folder_name_exists": {
+    "th": "ชื่อโฟลเดอร์นี้มีอยู่แล้ว"
+  },
+  "drive.file_name_conflict_title": {
+    "th": "ชื่อไฟล์ซ้ำกัน"
+  },
+  "drive.file_name_conflict_message": {
+    "th": "มีอยู่แล้วในโฟลเดอร์นี้ คุณต้องการแทนที่หรือเก็บไว้ทั้งสองไฟล์?"
+  },
+  "drive.replace_file_option": {
+    "th": "แทนที่ไฟล์เดิม"
+  },
+  "drive.keep_both_files_option": {
+    "th": "เก็บไว้ทั้งสองไฟล์"
+  },
+  "drive.replace_success": {
+    "th": "แทนที่สำเร็จ"
+  },
+  "drive.file_too_large_message": {
+    "th": "ไฟล์มีขนาดเกินที่กำหนด"
+  },
+  "drive.file_size_limit_message": {
+    "th": "มีขนาด XXXMB\nขนาดไฟล์สูงสุดที่อนุญาตต่อไฟล์คือ YYYMB"
+  },
+  "drive.not_enough_storage": {
+    "th": "พื้นที่จัดเก็บไม่เพียงพอสำหรับดาวน์โหลดไฟล์"
+  },
+  "drive.available_space": {
+    "th": "พื้นที่ว่าง: "
+  },
+  "drive.used_storage": {
+    "th": "พื้นที่ที่ใช้ไป:"
+  },
+  "drive.upload_success_message": {
+    "th": "อัปโหลดไฟล์สำเร็จ"
+  },
+  "drive.error_characters": {
+    "th": "ต้องไม่เกิน 128 ตัวอักษร"
+  },
+  "drive.error_file": {
+    "th": "ไฟล์ไม่มีเนื้อหาที่ถูกต้อง"
+  },
+  "drive.error_download": {
+    "th": "การอัปโหลดไฟล์ล้มเหลว กรุณาลองใหม่ภายหลัง"
+  },
+  "drive.ask_file": {
+    "th": "ถามเกี่ยวกับไฟล์นี้"
+  },
+  "drive.save": {
+    "th": "บันทึกลง AI Drive"
+  },
+  "drive.save_success": {
+    "th": "บันทึกลง AI Drive สำเร็จ"
+  },
+  "drive.satus_analyzing": {
+    "th": "กำลังวิเคราะห์..."
+  },
+  "drive.status_retry": {
+    "th": "กรุณาลองใหม่อีกครั้ง"
+  },
+  "drive.status_ready": {
+    "th": "พร้อมใช้งาน"
+  },
+  "drive.status_analyzed": {
+    "th": "วิเคราะห์แล้ว"
+  },
+  "chatbot_list.cate_title": {
+    "th": "ตัวละคร AI ของฉัน"
+  },
+  "chatbot_list.btn_manage": {
+    "th": "จัดการ"
+  },
+  "chatbot_list.btn_create": {
+    "th": "สร้างตัวละคร"
+  },
+  "chatbot_list.empty_bot": {
+    "th": "คุณยังไม่ได้สร้างตัวละคร"
+  },
+  "edit_bot.create_title": {
+    "th": "สร้างตัวละคร AI"
+  },
+  "edit_bot.update_title": {
+    "th": "อัปเดตตัวละคร AI"
+  },
+  "edit_bot.prompt_title": {
+    "th": "รายละเอียดตัวละคร"
+  },
+  "edit_bot.prompt_subtitle": {
+    "th": "มองเห็นได้เฉพาะคุณเท่านั้น เนื้อหานี้จะกำหนดบุคลิกและคุณภาพบทสนทนาของตัวละคร AI\n(*) จำเป็นต้องกรอก"
+  },
+  "edit_bot.prompt_desc_1": {
+    "th": "ภูมิหลังและเรื่องราว"
+  },
+  "edit_bot.prompt_desc_2": {
+    "th": "รูปลักษณ์และบุคลิกภาพ"
+  },
+  "edit_bot.prompt_desc_3": {
+    "th": "สไตล์การสื่อสาร"
+  },
+  "edit_bot.prompt_desc_4": {
+    "th": "กฎพฤติกรรมและข้อจำกัด"
+  },
+  "edit_bot.prompt_desc_5": {
+    "th": "คำอธิบายเพิ่มเติม:"
+  },
+  "edit_bot.prompt_hint_1": {
+    "th": "เช่น นี่คือคนที่คุณแอบชอบที่โรงเรียน..."
+  },
+  "edit_bot.prompt_hint_2": {
+    "th": "เช่น น่ารัก มีเสน่ห์ รับฟังเก่ง..."
+  },
+  "edit_bot.prompt_hint_3": {
+    "th": "เช่น เป็นกันเอง สนิทสนม ใช้คำพูดไม่เป็นทางการ..."
+  },
+  "edit_bot.prompt_hint_4": {
+    "th": "เช่น ปฏิเสธเรื่องความรักอย่างสุภาพ..."
+  },
+  "edit_bot.prompt_hint_5": {
+    "th": "กรอกเนื้อหา..."
+  },
+  "edit_bot.prompt_desc_bio": {
+    "th": "แนะนำตัว"
+  },
+  "edit_bot.prompt_hint_bio": {
+    "th": "กรอกเนื้อหา..."
+  },
+  "edit_bot.prompt_suggest_title": {
+    "th": "สร้างโดย AI"
+  },
+  "edit_bot.prompt_suggest_loading": {
+    "th": "กำลังโหลด"
+  },
+  "edit_bot.btn_create": {
+    "th": "สร้างตัวละคร"
+  },
+  "edit_bot.btn_update": {
+    "th": "อัปเดต"
+  },
+  "edit_bot.name_hint": {
+    "th": "ชื่อตัวละคร..."
+  },
+  "edit_bot.kb_enter_title": {
+    "th": "เสร็จสิ้น"
+  },
+  "edit_bot.dob_title": {
+    "th": "อายุ"
+  },
+  "edit_bot.gender_title": {
+    "th": "เพศ"
+  },
+  "edit_bot.option_title": {
+    "th": "ตัวเลือก"
+  },
+  "edit_bot.privacy_title": {
+    "th": "ความเป็นส่วนตัว"
+  },
+  "edit_bot.privacy_public_title": {
+    "th": "สาธารณะ"
+  },
+  "edit_bot.privacy_private_title": {
+    "th": "ฉันเท่านั้น"
+  },
+  "edit_bot.gender_1": {
+    "th": "ชาย"
+  },
+  "edit_bot.gender_2": {
+    "th": "หญิง"
+  },
+  "edit_bot.prompt_hashtag": {
+    "th": "แฮชแท็ก"
+  },
+  "edit_bot.prompt_hashtag_title": {
+    "th": "แฮชแท็ก:"
+  },
+  "edit_bot.prompt_hashtag_subtitle": {
+    "th": "ช่วยให้ทุกคนค้นหาตัวละครได้ง่ายขึ้น"
+  },
+  "edit_bot.prompt_hashtag_hint": {
+    "th": "พิมพ์ #แฮชแท็ก…"
+  },
+  "edit_bot.prompt_tagline": {
+    "th": "แท็กไลน์"
+  },
+  "edit_bot.prompt_tagline_title": {
+    "th": "แท็กไลน์: *"
+  },
+  "edit_bot.prompt_tagline_hint": {
+    "th": "กรอกเนื้อหา…"
+  },
+  "edit_bot.prompt_character": {
+    "th": "บุคลิกภาพ"
+  },
+  "edit_bot.prompt_character_title": {
+    "th": "บุคลิกภาพ: *"
+  },
+  "edit_bot.prompt_character_subtitle": {
+    "th": "ลักษณะนิสัยและบุคลิกภาพของตัวละคร"
+  },
+  "edit_bot.prompt_character_hint": {
+    "th": "เช่น น่ารัก มีเสน่ห์ รับฟังเก่ง…"
+  },
+  "edit_bot.prompt_public_info": {
+    "th": "ข้อมูลสาธารณะ"
+  },
+  "edit_bot.prompt_public_info_title": {
+    "th": "ข้อมูลสาธารณะ: *"
+  },
+  "edit_bot.prompt_public_info_subtitle": {
+    "th": "แสดงบนโปรไฟล์ตัวละคร"
+  },
+  "edit_bot.prompt_public_info_hint": {
+    "th": "กรอกเนื้อหา…"
+  },
+  "edit_bot.prompt_backstory": {
+    "th": "ประวัติ"
+  },
+  "edit_bot.prompt_backstory_title": {
+    "th": "ประวัติ: *"
+  },
+  "edit_bot.prompt_backstory_hint": {
+    "th": "กรอกเนื้อหา…"
+  },
+  "edit_bot.prompt_first_msg": {
+    "th": "ข้อความแรก"
+  },
+  "edit_bot.prompt_first_msg_title": {
+    "th": "ข้อความแรก: *"
+  },
+  "edit_bot.prompt_first_msg_hint": {
+    "th": "กรอกเนื้อหา…"
+  },
+  "edit_bot.prompt_npc": {
+    "th": "NPC"
+  },
+  "edit_bot.prompt_npc_title": {
+    "th": "NPC:"
+  },
+  "edit_bot.prompt_npc_hint": {
+    "th": "กรอกเนื้อหา…"
+  },
+  "edit_bot.prompt_style": {
+    "th": "สไตล์การสื่อสาร"
+  },
+  "edit_bot.prompt_style_title": {
+    "th": "สไตล์การสื่อสาร:"
+  },
+  "edit_bot.prompt_style_hint": {
+    "th": "กรอกเนื้อหา…"
+  },
+  "edit_bot.prompt_rule": {
+    "th": "แนวทางพฤติกรรมและขอบเขต"
+  },
+  "edit_bot.prompt_rule_title": {
+    "th": "แนวทางพฤติกรรมและขอบเขต:"
+  },
+  "edit_bot.prompt_rule_hint": {
+    "th": "เช่น ปฏิเสธเรื่องความรักอย่างสุภาพ…"
+  },
+  "edit_bot.prompt_note": {
+    "th": "หมายเหตุจากผู้สร้าง"
+  },
+  "edit_bot.prompt_note_title": {
+    "th": "หมายเหตุจากผู้สร้าง:"
+  },
+  "edit_bot.prompt_note_subtitle": {
+    "th": "บริบทและข้อความเริ่มต้นที่ตัวละครของคุณจะสื่อสารเมื่อเริ่มแชท"
+  },
+  "edit_bot.prompt_note_hint": {
+    "th": "กรอกเนื้อหา…"
+  },
+  "edit_bot.chat_setting.title": {
+    "th": "ข้อความเปิดบทสนทนา:*"
+  },
+  "edit_bot.chat_setting.subtitle": {
+    "th": "บริบทและข้อความแรกเมื่อผู้ใช้เข้าสู่แชท"
+  },
+  "edit_bot.text_character": {
+    "th": "ตัวละคร"
+  },
+  "edit_bot.text_created_bot": {
+    "th": "สร้างตัวละครแล้ว"
+  },
+  "edit_bot.text_success": {
+    "th": "สำเร็จ"
+  },
+  "edit_bot.text_updated_bot": {
+    "th": "อัปเดตตัวละครแล้ว"
+  },
+  "edit_bot.error_create_bot_quota": {
+    "th": "คุณไม่สามารถสร้างตัวละครเพิ่มได้แล้ว!"
+  },
+  "edit_bot.error_exceed_prompt_length": {
+    "th": "คำอธิบายยาวเกินไป กรุณาแก้ไข"
+  },
+  "edit_bot.error_exceed_bio_length": {
+    "th": "คำแนะนำตัวละครยาวเกินไป กรุณาแก้ไข"
+  },
+  "edit_bot.error_exceed_name_length": {
+    "th": "ชื่อตัวละครยาวเกินไป กรุณาแก้ไข"
+  },
+  "edit_bot.error_create_bot": {
+    "th": "เกิดข้อผิดพลาดขณะสร้างตัวละคร กรุณาลองใหม่ภายหลัง"
+  },
+  "edit_bot.error_update_bot": {
+    "th": "เกิดข้อผิดพลาดขณะอัปเดตตัวละคร กรุณาลองใหม่ภายหลัง"
+  },
+  "edit_bot.hashtag_hint": {
+    "th": "กรอก 1 แฮชแท็ก..."
+  },
+  "edit_bot.hashtag_add_more": {
+    "th": "เพิ่มแฮชแท็ก"
+  },
+  "edit_bot.avatar_update_waiting_toast": {
+    "th": "กำลังอัปเดตรูปภาพ กรุณารอสักครู่"
+  },
+  "edit_bot.avatar_exit_confirm_title": {
+    "th": "ออกจากหน้านี้?"
+  },
+  "edit_bot.avatar_exit_confirm_msg": {
+    "th": "รูปภาพกำลังอัปเดตอยู่ คุณแน่ใจหรือไม่ว่าต้องการออก?"
+  },
+  "edit_bot.avatar_exit_confirm_stay": {
+    "th": "อยู่ต่อ"
+  },
+  "edit_bot.avatar_exit_confirm_leave": {
+    "th": "ออก"
+  },
+  "edit_bot.avatar_exit_confirm_msg_1": {
+    "th": "ข้อมูลที่คุณกรอกจะหายไป"
+  },
+  "edit_bot.exit_create_title": {
+    "th": "บันทึกแบบร่างตัวละคร?"
+  },
+  "edit_bot.exit_create_subtitle": {
+    "th": "บันทึกไว้เพื่อสร้างต่อภายหลัง"
+  },
+  "edit_bot.exit_create_btn1": {
+    "th": "ไม่บันทึก"
+  },
+  "edit_bot.exit_create_btn2": {
+    "th": "บันทึก"
+  },
+  "list_bot.title": {
+    "th": "ตัวละคร AI ของฉัน"
+  },
+  "list_bot.btn_create": {
+    "th": "สร้างตัวละคร AI"
+  },
+  "list_bot.empty_bot": {
+    "th": "ยังไม่มีแชทบอท"
+  },
+  "bot_menu.opt_avatar": {
+    "th": "เลือกจากแกลเลอรี"
+  },
+  "bot_menu.opt_camera": {
+    "th": "กล้อง"
+  },
+  "bot_menu.opt_camera_request_title": {
+    "th": "อนุญาตให้เข้าถึงกล้อง"
+  },
+  "bot_menu.opt_camera_request_subtitle": {
+    "th": "กรุณาทำตามขั้นตอนต่อไปนี้:\n1. แตะ เปิดการตั้งค่า\n2. ไปที่: สิทธิ์การเข้าถึงแอป ➡️ กล้อง\n3. เลือก: อนุญาต"
+  },
+  "bot_menu.opt_camera_request_cancel": {
+    "th": "ยกเลิก"
+  },
+  "bot_menu.opt_camera_request_ok": {
+    "th": "เปิดการตั้งค่า"
+  },
+  "bot_menu.opt_gen_avatar_ai": {
+    "th": "สร้างรูปโปรไฟล์ด้วย AI"
+  },
+  "bot_menu.opt_edit_bot": {
+    "th": "แก้ไขตัวละคร"
+  },
+  "bot_menu.opt_open_profile": {
+    "th": "เปิดโปรไฟล์"
+  },
+  "bot_menu.opt_chat": {
+    "th": "แชท"
+  },
+  "bot_menu.opt_delete": {
+    "th": "ลบตัวละคร"
+  },
+  "bot_menu.opt_delete_title": {
+    "th": "คุณต้องการลบตัวละครนี้หรือไม่"
+  },
+  "bot_menu.opt_delete_title2": {
+    "th": "?"
+  },
+  "bot_menu.opt_delete_cancel": {
+    "th": "ยกเลิก"
+  },
+  "bot_menu.opt_delete_ok": {
+    "th": "ยืนยัน"
+  },
+  "bot_menu.opt_delete_success": {
+    "th": "ลบตัวละครแล้ว"
+  },
+  "bot_menu.opt_delete_error": {
+    "th": "เกิดข้อผิดพลาดขณะลบ กรุณาลองใหม่อีกครั้ง"
+  },
+  "bot_avatar_ai.title": {
+    "th": "สร้างรูปภาพด้วย AI"
+  },
+  "bot_avatar_ai.prompt_title": {
+    "th": "คำอธิบายรูปภาพ"
+  },
+  "bot_avatar_ai.prompt_title_required": {
+    "th": "คำอธิบายรูปภาพ: *"
+  },
+  "bot_avatar_ai.prompt_desc": {
+    "th": "อธิบายรูปโปรไฟล์และรูปลักษณ์ของตัวละคร"
+  },
+  "bot_avatar_ai.prompt_hint": {
+    "th": "เช่น อายุประมาณ 18 ปี หน้าใส ใส่แว่น ผมยาวเรียบร้อย จมูกโด่ง สวมชุดนักเรียน..."
+  },
+  "bot_avatar_ai.style_title": {
+    "th": "สไตล์รูปภาพ"
+  },
+  "bot_avatar_ai.btn_next": {
+    "th": "ดำเนินการต่อ"
+  },
+  "bot_avatar_ai.empty_prompt": {
+    "th": "กรุณากรอกคำอธิบายเพื่อดำเนินการต่อ"
+  },
+  "bot_avatar_ai.empty_style": {
+    "th": "กรุณาเลือกสไตล์เพื่อดำเนินการต่อ"
+  },
+  "bot_avatar_suggestion.title": {
+    "th": "สร้างรูปภาพด้วย AI"
+  },
+  "bot_avatar_suggestion.rewrite_prompt": {
+    "th": "แก้ไขคำอธิบาย"
+  },
+  "bot_avatar_suggestion.btn_done": {
+    "th": "เสร็จสิ้น"
+  },
+  "bot_avatar_suggestion.empty_pick": {
+    "th": "กรุณาเลือกรูปภาพเพื่อดำเนินการต่อ"
+  },
+  "bot_review.title": {
+    "th": "ตัวละครอยู่ระหว่างตรวจสอบ"
+  },
+  "bot_review.desc": {
+    "th": "ทีมงาน imely จะตรวจสอบเพื่อให้เป็นไปตามนโยบาย คุณจะได้รับแจ้งเมื่อมีผลการตรวจสอบ"
+  },
+  "bot_review.suggest": {
+    "th": "ระหว่างรอการตรวจสอบ คุณสามารถ:"
+  },
+  "bot_review.update_avatar": {
+    "th": "อัปเดตรูปโปรไฟล์"
+  },
+  "bot_review.chat": {
+    "th": "แชทกับ AI"
+  },
+  "bot.state.waitingforreview": {
+    "th": "รอการตรวจสอบ"
+  },
+  "bot.state.rejected": {
+    "th": "ถูกปฏิเสธ"
+  },
+  "bot.tag.hashtag": {
+    "th": "#ตัวละคร AI:"
+  },
+  "bot.avatar": {
+    "th": "รูปโปรไฟล์"
+  },
+  "bot.required_content": {
+    "th": "เนื้อหาที่จำเป็น"
+  },
+  "bot.character_name": {
+    "th": "ชื่อตัวละคร"
+  },
+  "bot.age": {
+    "th": "อายุ"
+  },
+  "bot.role_setup": {
+    "th": "ตั้งค่าบทบาท"
+  },
+  "bot.role_setup_required": {
+    "th": "ตั้งค่าบทบาท: *"
+  },
+  "bot.role_setup_description": {
+    "th": "เนื้อหานี้มองเห็นได้เฉพาะคุณและจะส่งผลต่อบทสนทนา กรุณาให้ข้อมูลตัวละครโดยละเอียด และกำหนดกฎเกณฑ์และเป้าหมายภารกิจ (ถ้ามี)"
+  },
+  "bot.character_traits_bio": {
+    "th": "ลักษณะนิสัย บุคลิกภาพ และภูมิหลังของตัวละคร"
+  },
+  "bot.character_introduction": {
+    "th": "คำแนะนำตัวละคร"
+  },
+  "bot.character_introduction_required": {
+    "th": "คำแนะนำตัวละคร: *"
+  },
+  "bot.public_description": {
+    "th": "เนื้อหานี้ทุกคนมองเห็นได้แต่ไม่ส่งผลต่อบทสนทนา กรุณากรอกข้อมูลที่คุณต้องการให้คนอื่นรู้เกี่ยวกับตัวละครนี้"
+  },
+  "bot.display_in_chat": {
+    "th": "แสดงในแชท"
+  },
+  "bot.greeting_message": {
+    "th": "คำทักทาย"
+  },
+  "bot.greeting_message_required": {
+    "th": "คำทักทาย: *"
+  },
+  "bot.greeting_description": {
+    "th": "ตัวละครจะส่งข้อความนี้เมื่อเริ่มแชท"
+  },
+  "bot.first_message": {
+    "th": "ข้อความแรกของตัวละคร"
+  },
+  "bot.advanced_settings": {
+    "th": "การตั้งค่าขั้นสูง"
+  },
+  "bot.appearance_personality": {
+    "th": "รูปลักษณ์และบุคลิกภาพ"
+  },
+  "bot.appearance_personality_title": {
+    "th": "รูปลักษณ์และบุคลิกภาพ"
+  },
+  "bot.appearance_personality_hint": {
+    "th": "เช่น น่ารัก มีเสน่ห์ รับฟังเก่ง..."
+  },
+  "bot.behavior_rules_limits": {
+    "th": "กฎพฤติกรรมและข้อจำกัด"
+  },
+  "bot.behavior_rules_limits_title": {
+    "th": "กฎพฤติกรรมและข้อจำกัด"
+  },
+  "bot.behavior_rules_limits_hint": {
+    "th": "เช่น ปฏิเสธเรื่องความรักอย่างสุภาพ..."
+  },
+  "bot.character_age": {
+    "th": "อายุตัวละคร"
+  },
+  "bot.character_gender": {
+    "th": "เพศตัวละคร"
+  },
+  "bot.character_background_story": {
+    "th": "ภูมิหลังและเรื่องราว"
+  },
+  "bot.character_opening": {
+    "th": "ข้อความเปิด"
+  },
+  "bot.character_avatar": {
+    "th": "รูปโปรไฟล์ตัวละคร"
+  },
+  "bot.enter": {
+    "th": "กรุณากรอก"
+  },
+  "bot.continue": {
+    "th": "เพื่อดำเนินการต่อ!"
+  },
+  "bot.get_image_failed": {
+    "th": "ไม่สามารถโหลดรูปภาพได้ กรุณาลองใหม่อีกครั้ง!"
+  },
+  "bot.avatar_prompt_morning_scene": {
+    "th": "ฉากยามเช้าท่ามกลางแสงแดดอ่อนๆ เด็กสาวใบหน้าสง่างาม เปล่งประกายด้วยรอยยิ้มอบอุ่น ท่วงท่าสง่างามและประณีตแม้สวมชุดเรียบง่าย ..."
+  },
+  "bot.prompt_not_available": {
+    "th": "ไม่สามารถสร้างให้คุณได้ในตอนนี้ กรุณากรอกเนื้อหาด้วยตัวเอง"
+  },
+  "bot.character_image_not_found": {
+    "th": "ไม่พบรูปภาพตัวละคร กรุณาลองใหม่อีกครั้ง!"
+  },
+  "bot.character_created_success_with_name": {
+    "th": "สร้างตัวละคร XXX สำเร็จแล้ว"
+  },
+  "bot.upload_image_failed": {
+    "th": "อัปโหลดรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง!"
+  },
+  "bot.creating_avatar_for_character": {
+    "th": "คุณกำลังสร้างรูปโปรไฟล์ให้ตัวละคร:"
+  },
+  "bot.name": {
+    "th": "ชื่อ"
+  },
+  "chat.wallpaper.selection.title": {
+    "th": "เลือกวอลเปเปอร์"
+  },
+  "chat.wallpaper.selection.gallery": {
+    "th": "เลือกจากแกลเลอรี"
+  },
+  "chat.wallpaper.selection.camera": {
+    "th": "กล้อง"
+  },
+  "chat.wallpaper.selection.ai_create": {
+    "th": "สร้างด้วย AI"
+  },
+  "chat.wallpaper.upload.title": {
+    "th": "วอลเปเปอร์แชท"
+  },
+  "chat.wallpaper.upload.uploading": {
+    "th": "กำลังอัปโหลดวอลเปเปอร์..."
+  },
+  "chat.wallpaper.upload.error": {
+    "th": "เกิดข้อผิดพลาด แตะเพื่อลองใหม่"
+  },
+  "chat.wallpaper.upload.success": {
+    "th": "อัปโหลดวอลเปเปอร์สำเร็จ"
+  },
+  "chat.wallpaper.upload.retry": {
+    "th": "ลองใหม่"
+  },
+  "scan_doc.uploading.status_1": {
+    "th": "กำลังสแกน"
+  },
+  "scan_doc.uploading.status_1_1": {
+    "th": "รูปภาพ..."
+  },
+  "scan_doc.uploading.error_unkown": {
+    "th": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง"
+  },
+  "scan_doc.uploading.btn_retry": {
+    "th": "ลองใหม่"
+  },
+  "scan_doc.uploading.error_request_multi_upload": {
+    "th": "คำขออัปโหลดหลายรูปภาพล้มเหลว"
+  },
+  "scan_doc.uploading.error_request_upload": {
+    "th": "คำขออัปโหลดรูปภาพล้มเหลว"
+  },
+  "scan_doc.uploading.error_no_upload_item": {
+    "th": "ไม่พบรูปภาพสำหรับอัปโหลด"
+  },
+  "scan_doc.uploading.error_no_upload_file": {
+    "th": "ไม่พบไฟล์รูปภาพสำหรับอัปโหลด"
+  },
+  "scan_doc.uploading.error_upload_failed": {
+    "th": "อัปโหลดรูปภาพล้มเหลว"
+  },
+  "scan_doc.uploading.error_ocr_failed": {
+    "th": "ตรวจจับเอกสารล้มเหลว"
+  },
+  "scan_doc.uploading.error_request_ocr_failed": {
+    "th": "คำขอสแกนเอกสารล้มเหลว"
+  },
+  "scan_doc.uploading.error_ocr_bounds_failed": {
+    "th": "ตรวจจับขอบเขตเอกสารล้มเหลว"
+  },
+  "scan_doc.preview.header_title": {
+    "th": "เอกสาร"
+  },
+  "scan_doc.preview.btn_edit": {
+    "th": "แก้ไข"
+  },
+  "scan_doc.preview.btn_delete": {
+    "th": "ลบ"
+  },
+  "scan_doc.preview.empty_text": {
+    "th": "ไม่มีข้อความให้ประมวลผล"
+  },
+  "scan_doc.preview.no_text_copy": {
+    "th": "ไม่มีข้อความให้คัดลอก"
+  },
+  "scan_doc.preview.no_text_translate": {
+    "th": "ไม่มีข้อความให้แปล"
+  },
+  "scan_doc.preview.no_text_edit": {
+    "th": "ไม่มีข้อความให้แก้ไข"
+  },
+  "scan_doc.preview.delete_confirm_msg": {
+    "th": "คุณต้องการลบหรือไม่?"
+  },
+  "scan_doc.preview.delete_confirm_yes": {
+    "th": "ลบ"
+  },
+  "scan_doc.preview.delete_confirm_no": {
+    "th": "ไม่"
+  },
+  "scan_doc.preview.btn_view_thumb": {
+    "th": "ดูรูปภาพ"
+  },
+  "scan_doc.preview.btn_scan_more": {
+    "th": "สแกนเพิ่ม"
+  },
+  "scan_doc.preview.btn_copy": {
+    "th": "คัดลอก"
+  },
+  "scan_doc.preview.btn_copy_success": {
+    "th": "คัดลอกแล้ว"
+  },
+  "scan_doc.preview.btn_translate": {
+    "th": "แปลภาษา"
+  },
+  "scan_doc.preview.btn_export": {
+    "th": "บันทึก"
+  },
+  "scan_doc.preview.empty_text_preview": {
+    "th": "ไม่มีข้อความตัวอย่าง"
+  },
+  "scan_doc.preview.selection_ask": {
+    "th": "ถาม imely"
+  },
+  "scan_doc.preview.selection_copy": {
+    "th": "คัดลอก"
+  },
+  "scan_doc.editor.header_title": {
+    "th": "แก้ไข"
+  },
+  "scan_doc.editor.keyboard_done": {
+    "th": "เสร็จสิ้น"
+  },
+  "scan_doc.editor.btn_close": {
+    "th": "ยกเลิก"
+  },
+  "scan_doc.editor.btn_done": {
+    "th": "บันทึก"
+  },
+  "scan_doc.export.header_title": {
+    "th": "บันทึก"
+  },
+  "scan_doc.export.header_title2": {
+    "th": "ส่งออกไฟล์"
+  },
+  "scan_doc.export.file_name": {
+    "th": "ชื่อไฟล์"
+  },
+  "scan_doc.export.file_name_hint": {
+    "th": "กรอกชื่อไฟล์"
+  },
+  "scan_doc.export.export_into_aihay_drive": {
+    "th": "บันทึกลง imely Drive"
+  },
+  "scan_doc.export.format_title": {
+    "th": "บันทึกลงอุปกรณ์"
+  },
+  "scan_doc.export.format_title2": {
+    "th": "ส่งออกไฟล์"
+  },
+  "scan_doc.export.status_save": {
+    "th": "บันทึกแล้ว"
+  },
+  "scan_doc.export.require_file_name": {
+    "th": "คุณต้องกรอกชื่อไฟล์"
+  },
+  "scan_doc.export.save_file_success": {
+    "th": "บันทึกไฟล์แล้ว"
+  },
+  "scan_doc.export.btn_done": {
+    "th": "เสร็จสิ้น"
+  },
+  "scan_doc.export.export_file": {
+    "th": "ส่งออกไฟล์"
+  },
+  "scan_doc.translate.processing": {
+    "th": "กำลังแปล"
+  },
+  "scan_doc.translate.empty_text": {
+    "th": "ไม่พบข้อความให้แปล"
+  },
+  "scan_doc.translate.request_failed": {
+    "th": "คำขอแปลล้มเหลว"
+  },
+  "scan_doc.translate.empty_result": {
+    "th": "แปลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง"
+  },
+  "scan_doc.preview_image.btn_change": {
+    "th": "เปลี่ยนรูปภาพ"
+  },
+  "scan_doc.preview_image.btn_edit": {
+    "th": "แก้ไขรูปภาพ"
+  },
+  "scan_doc.preview_image.header_title": {
+    "th": "รูปภาพต้นฉบับ"
+  },
+  "scan_doc.preview_image.btn_done": {
+    "th": "เสร็จสิ้น"
+  },
+  "agentic_search.steps_to_perform": {
+    "th": "ขั้นตอนการวิเคราะห์"
+  },
+  "agentic_search.you_ask": {
+    "th": "คุณถาม:"
+  },
+  "agentic_search.ai_suggest_intro": {
+    "th": "นี่คือขั้นตอนที่ imely แนะนำ คุณสามารถแก้ไขหรือเพิ่มขั้นตอนใหม่ได้ตามต้องการ"
+  },
+  "agentic_search.add_step": {
+    "th": "เพิ่มขั้นตอน"
+  },
+  "agentic_search.enter_content": {
+    "th": "กรอกเนื้อหา"
+  },
+  "agentic_search.analysis": {
+    "th": "การวิเคราะห์"
+  },
+  "wallet_v2.storage_detail.header_title": {
+    "th": "ดาวของฉัน"
+  },
+  "wallet_v2.storage_detail.subtab_1": {
+    "th": "กิจกรรมยอดคงเหลือ"
+  },
+  "wallet_v2.storage_detail.subtab_2": {
+    "th": "ยอดที่ใช้ไป"
+  },
+  "wallet_v2.storage_detail.card_title": {
+    "th": "คุณมี"
+  },
+  "wallet_v2.storage_detail.card_buy_more": {
+    "th": "ซื้อดาวเพิ่ม"
+  },
+  "wallet_v2.storage_detail.card_usage_fee": {
+    "th": "ค่าใช้บริการ"
+  },
+  "wallet_v2.storage_detail.card_task_list": {
+    "th": "ทำภารกิจให้สำเร็จเพื่อรับดาว"
+  },
+  "wallet_v2.storage_detail.subtab.info": {
+    "th": "เนื้อหา"
+  },
+  "wallet_v2.storage_detail.subtab.receive_date": {
+    "th": "วันที่ได้รับ"
+  },
+  "wallet_v2.storage_detail.subtab.use_date": {
+    "th": "วันที่ใช้"
+  },
+  "wallet_v2.storage_detail.subtab.expire_date": {
+    "th": "วันหมดอายุ"
+  },
+  "wallet_v2.storage_detail.subtab.change": {
+    "th": "การเปลี่ยนแปลง"
+  },
+  "wallet_v2.storage_detail.subtab.feature": {
+    "th": "ฟีเจอร์"
+  },
+  "wallet_v2.empty_activity": {
+    "th": "ยังไม่มีกิจกรรม"
+  },
+  "wallet_v2.usage_cost.header_title": {
+    "th": "ข้อมูล"
+  },
+  "wallet_v2.usage_cost.tab1.title": {
+    "th": "คำถามที่พบบ่อย"
+  },
+  "wallet_v2.usage_cost.tab1.section1_title": {
+    "th": "1. เปรียบเทียบแพ็กเกจ imely"
+  },
+  "wallet_v2.usage_cost.tab1.section1_desc": {
+    "th": "* ด้วย 90K 🌟️ คุณสามารถ: ถามคำถามกว่า 7K ครั้งในโหมด Pro Search แก้โจทย์ได้ประมาณ 10K ข้อ สรุปเอกสารได้ 10K ครั้ง... [ดูค่าใช้บริการ](usage_cost_tab)"
+  },
+  "wallet_v2.usage_cost.tab1.section1_disclaimer": {
+    "th": "* แพ็กเกจจะชำระเงินอัตโนมัติตามรอบ คุณสามารถยกเลิกแพ็กเกจได้ทุกเมื่อ"
+  },
+  "wallet_v2.usage_cost.tab1.section2_title": {
+    "th": "2. ทำไมคำว่า \"จำนวนคำถาม\" ถึงเปลี่ยนเป็น \"ดาว 🌟\"?"
+  },
+  "wallet_v2.usage_cost.tab1.section2_desc": {
+    "th": "imely กำลังเปลี่ยน \"จำนวนคำถาม\" เป็น \"ดาว🌟\" เพื่อให้ใช้งานง่ายและสะดวกยิ่งขึ้น\n\nเดิมที:\n* เมื่อคุณถามคำถาม แก้โจทย์ แปลภาษา ฯลฯ จะถูกนับตามการใช้งาน แสดงแยกกัน และจัดการยาก\n\nตอนนี้:\n* ทุกฟีเจอร์ใช้ \"ดาว 🌟\" ในการคำนวณ ทำให้คุณจัดการและใช้งานได้ง่ายขึ้นตามต้องการ\n* ดาวทั้งหมดจะแสดงแบบเรียลไทม์ที่มุมขวาบน\n* หากดาวของคุณใกล้หมดอายุ ระบบจะใช้ดาวเหล่านั้นก่อนเป็นลำดับแรก\n* คุณสามารถ[ดูค่าใช้บริการ](usage_cost_tab)ได้"
+  },
+  "wallet_v2.usage_cost.tab1.section3_title": {
+    "th": "3. ประเภทของดาวใน imely"
+  },
+  "wallet_v2.usage_cost.tab1.section3_desc": {
+    "th": "1. ดาวที่ไม่มีวันหมดอายุ:\n* เมื่อทำภารกิจสำเร็จ\n* รางวัลจากการมีปฏิสัมพันธ์บน iMessage\n* รางวัลจากอีเวนต์และโปรแกรมส่งเสริมการขาย\n* ได้รับเป็นของขวัญจากผู้อื่น\n\n2. ดาวที่มีวันหมดอายุ:\n* เพิ่มมาพร้อมแพ็กเกจบัญชี\n* ประเภทอื่นๆ"
+  },
+  "wallet_v2.usage_cost.tab1.section4_title": {
+    "th": "4. แปลง \"จำนวนคำถาม\" เป็น \"ดาว 🌟\" อย่างไร?"
+  },
+  "wallet_v2.usage_cost.tab1.section4_desc": {
+    "th": "imely จะแปลงคำขอคำถามของคุณเป็นดาวโดยอัตโนมัติตามแพ็กเกจที่คุณใช้อยู่:"
+  },
+  "wallet_v2.usage_cost.tab1.section4.table_header1": {
+    "th": "แพ็กเกจ"
+  },
+  "wallet_v2.usage_cost.tab1.section4.table_header2": {
+    "th": "ก่อน"
+  },
+  "wallet_v2.usage_cost.tab1.section4.table_header3": {
+    "th": "ตอนนี้"
+  },
+  "wallet_v2.usage_cost.tab1.section4.table_item1": {
+    "th": "ฟรี"
+  },
+  "wallet_v2.usage_cost.tab1.section4.table_item2": {
+    "th": "30 ครั้ง/วัน"
+  },
+  "wallet_v2.usage_cost.tab1.section4.table_item3": {
+    "th": "300🌟/วัน วันหมดอายุ: 24 ชั่วโมง"
+  },
+  "wallet_v2.usage_cost.tab1.section4.table_item4": {
+    "th": "Pro"
+  },
+  "wallet_v2.usage_cost.tab1.section4.table_item5": {
+    "th": "999 ครั้ง/วัน"
+  },
+  "wallet_v2.usage_cost.tab1.section4.table_item6": {
+    "th": "3K🌟/วัน วันหมดอายุ: 24 ชั่วโมง"
+  },
+  "wallet_v2.usage_cost.tab2.title": {
+    "th": "ค่าใช้บริการ"
+  },
+  "wallet_v2.usage_cost.tab2.cost_title": {
+    "th": "ค่าใช้บริการฟีเจอร์"
+  },
+  "wallet_v2.usage_cost.tab2.cost_desc": {
+    "th": "ด้านล่างนี้คือรายการฟีเจอร์ของ imely"
+  },
+  "wallet_v2.usage_cost.tab2.table1.header": {
+    "th": "ตัวเลือกถาม AI"
+  },
+  "wallet_v2.usage_cost.tab2.table1.item1": {
+    "th": "ประเภท"
+  },
+  "wallet_v2.usage_cost.tab2.table1.item1_desc": {
+    "th": "ค่าใช้จ่าย 🌟"
+  },
+  "wallet_v2.usage_cost.tab2.table1.item2": {
+    "th": "อัตโนมัติ"
+  },
+  "wallet_v2.usage_cost.tab2.table1.item2_desc": {
+    "th": "10"
+  },
+  "wallet_v2.usage_cost.tab2.table1.item3": {
+    "th": "ค้นหาแบบ Pro"
+  },
+  "wallet_v2.usage_cost.tab2.table1.item3_desc": {
+    "th": "24"
+  },
+  "wallet_v2.usage_cost.tab2.table1.item4": {
+    "th": "ค้นคว้าเชิงลึก"
+  },
+  "wallet_v2.usage_cost.tab2.table1.item4_desc": {
+    "th": "แต่"
+  },
+  "wallet_v2.usage_cost.tab2.table2.header": {
+    "th": "ปลั๊กอิน"
+  },
+  "wallet_v2.usage_cost.tab2.table2.item1": {
+    "th": "ประเภท"
+  },
+  "wallet_v2.usage_cost.tab2.table2.item1_desc": {
+    "th": "ค่าใช้จ่าย 🌟"
+  },
+  "wallet_v2.usage_cost.tab2.table2.item2": {
+    "th": "แก้แบบฝึกหัด"
+  },
+  "wallet_v2.usage_cost.tab2.table2.item2_desc": {
+    "th": "5"
+  },
+  "wallet_v2.usage_cost.tab2.table2.item3": {
+    "th": "การเขียน"
+  },
+  "wallet_v2.usage_cost.tab2.table2.item3_desc": {
+    "th": "15"
+  },
+  "wallet_v2.usage_cost.tab2.table2.item4": {
+    "th": "โรคระบาด"
+  },
+  "wallet_v2.usage_cost.tab2.table2.item4_desc": {
+    "th": "3"
+  },
+  "wallet_v2.usage_cost.tab2.table2.item5": {
+    "th": "สรุป"
+  },
+  "wallet_v2.usage_cost.tab2.table2.item5_desc": {
+    "th": "5"
+  },
+  "wallet_v2.usage_cost.tab2.table2.item6": {
+    "th": "เอกสารมหาวิทยาลัย"
+  },
+  "wallet_v2.usage_cost.tab2.table2.item6_desc": {
+    "th": "7"
+  },
+  "wallet_v2.usage_cost.tab2.table2.item7": {
+    "th": "ตำแหน่งที่ตั้ง"
+  },
+  "wallet_v2.usage_cost.tab2.table2.item7_desc": {
+    "th": "25"
+  },
+  "wallet_v2.usage_cost.tab2.table2.item8": {
+    "th": "แผนผังความคิด"
+  },
+  "wallet_v2.usage_cost.tab2.table2.item8_desc": {
+    "th": "10"
+  },
+  "wallet_v2.usage_cost.tab2.table3.header": {
+    "th": "ฟีเจอร์"
+  },
+  "wallet_v2.usage_cost.tab2.table3.item1": {
+    "th": "ประเภท"
+  },
+  "wallet_v2.usage_cost.tab2.table3.item1_desc": {
+    "th": "ค่าใช้จ่าย 🌟"
+  },
+  "wallet_v2.usage_cost.tab2.table3.item2": {
+    "th": "การปรับแต่งส่วนตัว"
+  },
+  "wallet_v2.usage_cost.tab2.table3.item2_desc": {
+    "th": "1"
+  },
+  "wallet_v2.usage_cost.tab2.table3.item3": {
+    "th": "ไฟล์แนบ"
+  },
+  "wallet_v2.usage_cost.tab2.table3.item3_desc": {
+    "th": "7"
+  },
+  "wallet_v2.usage_cost.tab2.table3.item4": {
+    "th": "รูปภาพแนบ"
+  },
+  "wallet_v2.usage_cost.tab2.table3.item4_desc": {
+    "th": "3"
+  },
+  "wallet_v2.usage_cost.tab2.table3.item5": {
+    "th": "ส่งออกไฟล์"
+  },
+  "wallet_v2.usage_cost.tab2.table3.item5_desc": {
+    "th": "แต่"
+  },
+  "wallet_v2.usage_cost.tab2.table3.item6": {
+    "th": "สร้างรูปภาพ"
+  },
+  "wallet_v2.usage_cost.tab2.table3.item6_desc": {
+    "th": "แต่"
+  },
+  "product_purchase.btn_restore": {
+    "th": "กู้คืนการซื้อ"
+  },
+  "product_purchase.btn_buy_subs": {
+    "th": "ซื้อ MêLy Club"
+  },
+  "product_purchase.btn_buy_gem": {
+    "th": "ซื้อเพชร"
+  },
+  "product_purchase.btn_buy": {
+    "th": "ซื้อ"
+  },
+  "product_purchase.tab1": {
+    "th": "MêLy Club"
+  },
+  "product_purchase.tab2": {
+    "th": "เพชร"
+  },
+  "product_purchase.subs_monthly": {
+    "th": "แพ็กเกจ 1 เดือน"
+  },
+  "product_purchase.subs_yearly": {
+    "th": "แพ็กเกจ 1 ปี"
+  },
+  "product_purchase.subs_note": {
+    "th": "* ต่ออายุอัตโนมัติ ยกเลิกได้ทุกเมื่อ"
+  },
+  "product_purchase.gem_note": {
+    "th": "* เพชรที่ซื้อไม่มีวันหมดอายุ"
+  },
+  "product_purchase.term_of_use": {
+    "th": "การดำเนินการต่อถือว่าคุณยอมรับ <b><a href=\"https://imely.ai/page/terms\">ข้อกำหนดการให้บริการ</a>, <a href=\"https://imely.ai/page/privacy\">นโยบายความเป็นส่วนตัว</a></b> และ <b><a href=\"https://imely.ai/page/copyright\">นโยบายลิขสิทธิ์</a></b>"
+  },
+  "product_purchase.benefit_title": {
+    "th": "สิทธิประโยชน์ MêLy Club"
+  },
+  "product_purchase.benefit_1": {
+    "th": "เพชรรายวัน"
+  },
+  "product_purchase.benefit_2": {
+    "th": "เพชรรายเดือนไม่มีวันหมดอายุ"
+  },
+  "product_purchase.benefit_3": {
+    "th": "รูปตัวละครเคลื่อนไหวไม่จำกัด"
+  },
+  "product_purchase.benefit_4": {
+    "th": "อีเวนต์พิเศษและรางวัลสมาชิก"
+  },
+  "product_purchase.subs_price_desc_1_1": {
+    "th": "แพ็กเกจรายเดือน"
+  },
+  "product_purchase.subs_price_desc_1_2": {
+    "th": "แพ็กเกจรายปี"
+  },
+  "product_purchase.subs_price_desc_2": {
+    "th": "ยกเลิกได้ทุกเมื่อ"
+  },
+  "product_purchase.subs_discount": {
+    "th": "ประหยัด"
+  },
+  "product_purchase.no_selected_product": {
+    "th": "เลือกแพ็กเกจเพื่อดำเนินการต่อ"
+  },
+  "product_purchase.toast_pro_already": {
+    "th": "คุณกำลังใช้แพ็กเกจ 1 เดือนอยู่"
+  },
+  "product_purchase.pro_using_already": {
+    "th": "แพ็กเกจปัจจุบัน"
+  },
+  "sz_70003.purchased_star": {
+    "th": "คุณซื้อเพิ่ม"
+  },
+  "sz_70003.expired": {
+    "th": "หมดอายุ"
+  },
+  "sz_70004.expired_star": {
+    "th": "เพิกถอนรางวัลที่หมดอายุแล้ว"
+  },
+  "sz_70004.feature1": {
+    "th": "ค้นหา"
+  },
+  "sz_70004.feature2": {
+    "th": "ค้นหาแบบ Pro"
+  },
+  "sz_70004.feature3": {
+    "th": "Agentic"
+  },
+  "sz_70004.feature4": {
+    "th": "การให้เหตุผล"
+  },
+  "sz_70004.feature5": {
+    "th": "ค้นคว้า"
+  },
+  "sz_70004.feature6": {
+    "th": "แก้โจทย์"
+  },
+  "sz_70004.feature7": {
+    "th": "เขียนเรียงความ"
+  },
+  "sz_70004.feature8": {
+    "th": "แปลภาษา"
+  },
+  "sz_70004.feature9": {
+    "th": "สรุป"
+  },
+  "sz_70004.feature10": {
+    "th": "เอกสารมหาวิทยาลัย"
+  },
+  "sz_70004.feature11": {
+    "th": "ตำแหน่งที่ตั้ง"
+  },
+  "sz_70004.feature12": {
+    "th": "แผนผังความคิด"
+  },
+  "sz_70004.feature13": {
+    "th": "การปรับแต่งส่วนตัว"
+  },
+  "sz_70004.feature14": {
+    "th": "แนบไฟล์"
+  },
+  "sz_70004.feature15": {
+    "th": "แนบรูปภาพ"
+  },
+  "sz_70004.feature16": {
+    "th": "ส่งออกไฟล์"
+  },
+  "sz_70004.feature17": {
+    "th": "สร้างสไลด์"
+  },
+  "sz_70004.feature18": {
+    "th": "สร้างรูปภาพ"
+  },
+  "sz_70004.feature19": {
+    "th": "สร้าง PPT"
+  },
+  "sz_70004.feature20": {
+    "th": "แชท"
+  },
+  "sz_30070.title": {
+    "th": "คุณต้องการ"
+  },
+  "sz_30070.hint_box": {
+    "th": "กรอกคำถามของคุณ..."
+  },
+  "richtag.upgrade_pro_message": {
+    "th": "อัปเกรดเป็น imely Pro เพื่อรับ 3000 🌟 ทุกวัน และใช้ฟีเจอร์ทั้งหมดของ imely ได้ไม่จำกัด"
+  },
+  "richtag.upgrade_aihay_pro": {
+    "th": "อัปเกรดเป็น imely Pro"
+  },
+  "richtag.error_not_enough_stars": {
+    "th": "ดาวของคุณไม่เพียงพอสำหรับคำขอนี้"
+  },
+  "active_session.warning_limit_login": {
+    "th": "หมายเหตุ: imely อนุญาตให้เข้าสู่ระบบบัญชีเดียวกันได้สูงสุด 4 อุปกรณ์เท่านั้น"
+  },
+  "active_session.text_account": {
+    "th": "บัญชี"
+  },
+  "active_session.text_logging_in": {
+    "th": "กำลังเข้าสู่ระบบอยู่บน"
+  },
+  "active_session.text_device": {
+    "th": "อุปกรณ์"
+  },
+  "active_session.text_logged_in": {
+    "th": "เข้าสู่ระบบแล้ว"
+  },
+  "active_session.text_when_hour": {
+    "th": "เมื่อ"
+  },
+  "active_session.text_using": {
+    "th": "อุปกรณ์นี้"
+  },
+  "active_session.text_remove_logout": {
+    "th": "ลบและออกจากระบบ"
+  },
+  "active_session.will_be_deleted": {
+    "th": "จะถูกลบและออกจากระบบบัญชี"
+  },
+  "user_avatar_menu.container_title": {
+    "th": "เปลี่ยนรูปโปรไฟล์"
+  },
+  "user_avatar_menu.take_photo": {
+    "th": "ถ่ายภาพ"
+  },
+  "user_avatar_menu.pick_from_gallery": {
+    "th": "เลือกรูปภาพจากแกลเลอรี"
+  },
+  "user_avatar_menu.view_photo": {
+    "th": "ดูรูปโปรไฟล์"
+  },
+  "companion_discover.tab_name_1": {
+    "th": "กำลังนิยม"
+  },
+  "companion_discover.tag_filter_1": {
+    "th": "หวาน"
+  },
+  "companion_discover.tag_filter_2": {
+    "th": "ศัตรู"
+  },
+  "companion_discover.tag_filter_3": {
+    "th": "ความลับ"
+  },
+  "companion_discover.tag_filter_4": {
+    "th": "ย้อนยุค"
+  },
+  "companion_discover.tag_filter_5": {
+    "th": "ดาร์ก"
+  },
+  "companion_discover.tag_filter_6": {
+    "th": "แยนเดเระ"
+  },
+  "companion_discover.tag_filter_7": {
+    "th": "ราชวงศ์"
+  },
+  "companion_discover.tag_filter_8": {
+    "th": "ครอบครอง"
+  },
+  "companion_discover.tag_filter_9": {
+    "th": "ทอกซิก"
+  },
+  "companion_discover.tag_filter_10": {
+    "th": "นอกใจ"
+  },
+  "companion_discover.tag_filter_11": {
+    "th": "โรงเรียน"
+  },
+  "companion_discover.tag_filter_12": {
+    "th": "ชนชั้นสูง"
+  },
+  "companion_discover.tag_filter_13": {
+    "th": "แฟนปลอม"
+  },
+  "companion_discover.tag_filter_14": {
+    "th": "เยียวยา"
+  },
+  "companion_discover.tag_filter_15": {
+    "th": "เพื่อนวัยเด็ก"
+  },
+  "companion_discover.tag_filter_16": {
+    "th": "แฟนตาซี"
+  },
+  "companion_header.banners.retry": {
+    "th": "เกิดข้อผิดพลาด แตะเพื่อลองใหม่"
+  },
+  "companion_header.banners.lucky_draw_title": {
+    "th": "วงล้อนำโชค"
+  },
+  "companion_header.banners.lucky_draw_subtitle": {
+    "th": "ลุ้นรับสูงสุด 200💎 ทุกวัน"
+  },
+  "companion_header.banners.lucky_draw_btn": {
+    "th": "เล่นเลย"
+  },
+  "companion_header.banners.top_creator": {
+    "th": "ผู้สร้างยอดนิยมประจำสัปดาห์"
+  },
+  "onboard.title": {
+    "th": "ยินดีต้อนรับสู่ imely"
+  },
+  "onboard.subtitle": {
+    "th": "ขอถามคำถามสั้นๆ เพื่อแนะนำตัวละครที่เหมาะกับคุณ"
+  },
+  "onboard.lang_title": {
+    "th": "ภาษาของคุณคืออะไร?"
+  },
+  "onboard.gender_title": {
+    "th": "เพศของคุณคืออะไร?"
+  },
+  "onboard.gender_male": {
+    "th": "ชาย"
+  },
+  "onboard.gender_female": {
+    "th": "หญิง"
+  },
+  "onboard.gender_other": {
+    "th": "อื่นๆ"
+  },
+  "onboard.age_title": {
+    "th": "คุณอายุเท่าไหร่?"
+  },
+  "onboard.age_upper": {
+    "th": "มากกว่า"
+  },
+  "onboard.age_lower": {
+    "th": "น้อยกว่า"
+  },
+  "onboard.btn_done": {
+    "th": "เริ่มสำรวจ"
+  },
+  "onboard.toast_msg": {
+    "th": "imely จะแนะนำตัวละครที่เหมาะกับคุณ"
+  },
+  "onboard.encourage_login_title": {
+    "th": "🎉 ยินดีต้อนรับกลับสู่ imely"
+  },
+  "onboard.encourage_login_subtitle": {
+    "th": "เข้าสู่ระบบเพื่อกู้คืนประวัติแชทและข้อมูลของคุณ"
+  },
+  "onboard.gem_guide.title": {
+    "th": "ยินดีด้วย! คุณเพิ่งได้รับ"
+  },
+  "onboard.gem_guide.desc1": {
+    "th": "เมื่อแชทกับตัวละคร เพชรเหล่านี้จะถูกใช้ตามโหมดแชทที่คุณเลือก"
+  },
+  "onboard.gem_guide.desc2": {
+    "th": "เข้าสู่ระบบตอนนี้เพื่อรับ:"
+  },
+  "onboard.gem_guide.login_gift": {
+    "th": "ใช้ imely ครั้งแรก"
+  },
+  "onboard.gem_guide.daily_gift": {
+    "th": "ใช้งานทุกวัน"
+  },
+  "onboard.gem_guide.btn_login": {
+    "th": "เข้าสู่ระบบ"
+  },
+  "onboard.gem_guide.btn_close": {
+    "th": "ไว้ทีหลัง"
+  },
+  "onboard.gem_guide.toast_logged_in": {
+    "th": "เข้าสู่ระบบแล้ว!"
+  },
+  "onboard.gem_remind.title": {
+    "th": "ยินดีด้วย! วันนี้คุณได้รับ\n300 💎"
+  },
+  "onboard.gem_remind.title_1": {
+    "th": "ยินดีด้วย! คุณได้รับ"
+  },
+  "onboard.gem_remind.title_2": {
+    "th": "วันนี้"
+  },
+  "onboard.gem_remind.subtitle": {
+    "th": "หมดอายุวันนี้เวลา 23:59 น. และจะรีเซ็ตใหม่ในวันถัดไป"
+  },
+  "onboard.gem_remind.btn1": {
+    "th": "กระเป๋าเงินของฉัน"
+  },
+  "onboard.gem_remind.btn2": {
+    "th": "เสร็จสิ้น"
+  },
+  "onboard.logged.title": {
+    "th": "ยินดีด้วย"
+  },
+  "onboard.logged.subtitle": {
+    "th": "คุณได้รับ"
+  },
+  "onboard.logged.benefit1": {
+    "th": "ใช้ได้ 7 วัน หมดอายุวันที่"
+  },
+  "onboard.logged.benefit2": {
+    "th": "ใช้ได้วันนี้เท่านั้น หมดอายุเวลา"
+  },
+  "onboard.logged.benefit2_suffix": {
+    "th": "จะได้รับโควตาใหม่ในวันถัดไป"
+  },
+  "user_task.empty_list": {
+    "th": "ยังไม่มีภารกิจ"
+  },
+  "user_task.title": {
+    "th": "ทำภารกิจให้สำเร็จ"
+  },
+  "user_task.invite_code_title": {
+    "th": "คัดลอกรหัสเชิญของคุณ:"
+  },
+  "user_task.btn_do_task": {
+    "th": "ทำภารกิจ"
+  },
+  "user_task.btn_do_task_22": {
+    "th": "ชวนเพื่อน"
+  },
+  "user_task.txt_limit": {
+    "th": "สูงสุด"
+  },
+  "user_task.txt_day": {
+    "th": "วัน"
+  },
+  "user_task.txt_count": {
+    "th": "ครั้ง"
+  },
+  "user_task.txt_counts": {
+    "th": "ครั้ง"
+  },
+  "user_task.invite_code_share_content": {
+    "th": "ชวนคุณใช้ imely"
+  },
+  "user_task.txt_22_input_title": {
+    "th": "กรอกรหัสเชิญเพื่อรับ 100💎"
+  },
+  "user_task.txt_22_input_subtitle": {
+    "th": "รหัสเชิญใช้ได้ 3 วัน"
+  },
+  "user_task.txt_22_input_hint": {
+    "th": "กรอกรหัสเชิญ…"
+  },
+  "user_task.desc_22": {
+    "th": " • เชิญได้สูงสุด 5 คน/วัน เพื่อนแต่ละคนเชิญได้ครั้งเดียว\n• เชิญสำเร็จ: ทั้งสองฝ่ายได้รับ"
+  },
+  "user_task.ads_reward_prefix": {
+    "th": "ยินดีด้วย! คุณได้รับ"
+  },
+  "user_task.ads_reward_suffix": {
+    "th": "จากการดูโฆษณา"
+  },
+  "task_reward.out_quota": {
+    "th": "หมุนวงล้อครบแล้ววันนี้ กรุณาลองใหม่พรุ่งนี้"
+  },
+  "task_reward.out_quota_inviter_code": {
+    "th": "ผู้ใช้นี้เชิญครบโควตาวันนี้แล้ว"
+  },
+  "task_reward.out_quota_input_invite_code": {
+    "th": "ผู้ใช้กรอกรหัสแนะนำได้เพียงครั้งเดียว"
+  },
+  "task_reward.invalid_param": {
+    "th": "เกิดข้อผิดพลาดขณะทำภารกิจ กรุณาลองใหม่ภายหลัง"
+  },
+  "task_reward.invalid_invite_code": {
+    "th": "รหัสแนะนำไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง"
+  },
+  "task_reward.invite_code_title": {
+    "th": "คุณได้รับ"
+  },
+  "task_reward.err_txt_7032": {
+    "th": "คุณไม่มีสิทธิ์เข้าร่วมโปรแกรมนี้!"
+  },
+  "input_invite_code.title": {
+    "th": "กรอกรหัสเชิญ"
+  },
+  "input_invite_code.subtitle": {
+    "th": "รหัสเชิญใช้ได้ 3 วัน"
+  },
+  "input_invite_code.hint": {
+    "th": "กรอกรหัส…"
+  },
+  "input_invite_code.btn_close": {
+    "th": "ข้าม"
+  },
+  "input_invite_code.btn_done": {
+    "th": "เสร็จสิ้น"
+  },
+  "input_invite_code.error_empty_input": {
+    "th": "กรุณากรอกรหัสแนะนำ"
+  },
+  "lucky_draw.title_time1": {
+    "th": "ยินดีต้อนรับสู่วงล้อนำโชค"
+  },
+  "lucky_draw.title_time2": {
+    "th": "👋 คุณมีสิทธิ์หมุนวงล้อนำโชค 1 ครั้ง"
+  },
+  "lucky_draw.subtitle_time1": {
+    "th": "คุณเพิ่งได้รับ:"
+  },
+  "lucky_draw.subtitle_time2": {
+    "th": "คุณสามารถเล่นอีกครั้งได้โดย:\nแตะ เพชร > ภารกิจ > วงล้อนำโชค"
+  },
+  "lucky_draw.desc_time1": {
+    "th": "• เพชร 1000 เม็ดเมื่อเข้าสู่ระบบครั้งแรก\n• หมุนวงล้อนำโชค 1 ครั้ง ลุ้นรับเพชรสูงสุด 200 เม็ด"
+  },
+  "lucky_draw.btn_close": {
+    "th": "ไว้ทีหลัง"
+  },
+  "lucky_draw.btn_draw": {
+    "th": "หมุนเลย"
+  },
+  "lucky_draw.congrats_title1": {
+    "th": "🎉 ยินดีด้วย!"
+  },
+  "lucky_draw.congrats_title2": {
+    "th": "😢 น่าเสียดาย!"
+  },
+  "lucky_draw.congrats_subtitle1": {
+    "th": "คุณได้รับ"
+  },
+  "lucky_draw.congrats_subtitle2": {
+    "th": "คุณได้รับ: หมุน 1 ครั้ง"
+  },
+  "lucky_draw.congrats_subtitle3": {
+    "th": "โชคดีครั้งหน้านะ!"
+  },
+  "lucky_draw.btn_done": {
+    "th": "เสร็จสิ้น"
+  },
+  "gem_product.empty_list": {
+    "th": "ยังไม่มีสินค้า"
+  },
+  "gem_product.coming_soon": {
+    "th": "เร็วๆ นี้"
+  },
+  "gem_product.finish_title": {
+    "th": "ซื้อสำเร็จ"
+  },
+  "gem_product.finish_subtitle": {
+    "th": "* การดำเนินการอาจใช้เวลาสักครู่\nimely จะแจ้งเตือนคุณทันทีที่เสร็จสิ้น"
+  },
+  "gem_product.finish_btn_done": {
+    "th": "เสร็จสิ้น"
+  },
+  "gem_product.explain_expire": {
+    "th": "หมายเหตุ: เพชรที่ซื้อไม่มีวันหมดอายุ"
+  },
+  "gem_product.finish_pro_monthly": {
+    "th": "ซื้อสำเร็จ\nMêLy Club แบบ 1 เดือน"
+  },
+  "gem_product.finish_pro_yearly": {
+    "th": "ซื้อสำเร็จ\nMêLy Club แบบ 1 ปี"
+  },
+  "gem_product.finish_pro_subtitle": {
+    "th": "ใช้ได้ถึง"
+  },
+  "gem_product.buy_success": {
+    "th": "ซื้อเพชรสำเร็จ"
+  },
+  "gem_product.buy_complete": {
+    "th": "ทำธุรกรรมสำเร็จ"
+  },
+  "gem_product.buy_fail_by_server": {
+    "th": "ทำธุรกรรมไม่สำเร็จ"
+  },
+  "gem_product.error_code": {
+    "th": "รหัสข้อผิดพลาด"
+  },
+  "gem_product.buy_fail_by_store": {
+    "th": "ซื้อไม่สำเร็จ"
+  },
+  "purchase_transaction.miss_param_toast": {
+    "th": "ไม่พบข้อมูลสินค้า กรุณาลองใหม่อีกครั้ง"
+  },
+  "purchase_feedback.header": {
+    "th": "ข้อเสนอแนะ - รายงานปัญหา"
+  },
+  "purchase_feedback.title_0": {
+    "th": "คุณพบปัญหาอะไร?"
+  },
+  "purchase_feedback.title_1": {
+    "th": "คุณต้องการชำระเงินด้วยวิธีใด?"
+  },
+  "purchase_feedback.item_0_0": {
+    "th": "ชำระเงินผ่าน ZaloPay ไม่สำเร็จ"
+  },
+  "purchase_feedback.item_0_1": {
+    "th": "ชำระเงินผ่าน MoMo ไม่สำเร็จ"
+  },
+  "purchase_feedback.item_0_2": {
+    "th": "ปัญหาบัญชีธนาคาร"
+  },
+  "purchase_feedback.item_0_3": {
+    "th": "ปัญหา Google Play / App Store"
+  },
+  "purchase_feedback.item_0_4": {
+    "th": "ฉันไม่มีบัญชีธนาคาร"
+  },
+  "purchase_feedback.item_0_5": {
+    "th": "บัตรถูกปฏิเสธ / หมดอายุ"
+  },
+  "purchase_feedback.item_0_6": {
+    "th": "ปัญหาอื่นๆ"
+  },
+  "purchase_feedback.item_1_0": {
+    "th": "บัตรเติมเงินมือถือ"
+  },
+  "purchase_feedback.item_1_1": {
+    "th": "QR / VietQR"
+  },
+  "purchase_feedback.item_1_2": {
+    "th": "MoMo"
+  },
+  "purchase_feedback.item_1_3": {
+    "th": "Shopee Pay"
+  },
+  "purchase_feedback.item_1_4": {
+    "th": "Viettel Money"
+  },
+  "purchase_feedback.item_1_5": {
+    "th": "บัตร ATM ในประเทศ"
+  },
+  "purchase_feedback.item_1_6": {
+    "th": "Visa / Mastercard"
+  },
+  "purchase_feedback.item_1_7": {
+    "th": "วิธีชำระเงินอื่นๆ"
+  },
+  "purchase_feedback.btn_done": {
+    "th": "ส่งข้อเสนอแนะ"
+  },
+  "purchase_feedback.toast_msg": {
+    "th": "❤️ ขอบคุณสำหรับข้อเสนอแนะของคุณ"
+  },
+  "purchase_feedback.input_hint": {
+    "th": "อธิบายปัญหา…"
+  },
+  "purchase_feedback.input_done": {
+    "th": "เสร็จสิ้น"
+  },
+  "gem_detail.headline": {
+    "th": "เพชรของคุณ:"
+  },
+  "gem_detail.btn_task": {
+    "th": "ภารกิจ"
+  },
+  "gem_detail.btn_gem": {
+    "th": "ซื้อเพชร"
+  },
+  "gem_detail.btn_history": {
+    "th": "ประวัติเพชรของคุณ"
+  },
+  "gem_detail.loading_overview": {
+    "th": "กำลังโหลด..."
+  },
+  "gem_history.title": {
+    "th": "ประวัติเพชร"
+  },
+  "gem_history.tab1": {
+    "th": "กิจกรรมยอดคงเหลือ"
+  },
+  "gem_history.tab2": {
+    "th": "ยอดที่ใช้ไป"
+  },
+  "gem_history.receive_title_col1": {
+    "th": "เนื้อหา"
+  },
+  "gem_history.receive_title_col2": {
+    "th": "วันที่ได้รับ"
+  },
+  "gem_history.receive_title_col3": {
+    "th": "วันหมดอายุ"
+  },
+  "gem_history.receive_title_col4": {
+    "th": "การเปลี่ยนแปลง"
+  },
+  "gem_history.send_title_col1": {
+    "th": "เนื้อหา"
+  },
+  "gem_history.send_title_col2": {
+    "th": "วันที่ใช้"
+  },
+  "gem_history.send_title_col3": {
+    "th": "ฟีเจอร์"
+  },
+  "gem_history.send_title_col4": {
+    "th": "การเปลี่ยนแปลง"
+  },
+  "user_gem_overview.title": {
+    "th": "เพชรของฉัน"
+  },
+  "user_gem_overview.total": {
+    "th": "เพชรทั้งหมด"
+  },
+  "user_gem_overview.daily": {
+    "th": "เพชรฟรีรายวัน"
+  },
+  "user_gem_overview.persist": {
+    "th": "เพชรไม่มีวันหมดอายุ"
+  },
+  "user_gem_overview.expirable": {
+    "th": "เพชรที่มีวันหมดอายุ"
+  },
+  "user_gem_overview.txt_expire": {
+    "th": "วันหมดอายุ"
+  },
+  "user_gem_overview.expire_at": {
+    "th": "หมดอายุวันที่"
+  },
+  "user_gem_overview.view_ads": {
+    "th": "ดูโฆษณา"
+  },
+  "user_gem_overview.txt_today": {
+    "th": "วันนี้"
+  },
+  "gem_chat.not_enough_gems": {
+    "th": "คุณมีเพชรไม่พอสำหรับแชท"
+  },
+  "gem_chat.tap_to": {
+    "th": "แตะเพื่อ"
+  },
+  "gem_chat.login": {
+    "th": "เข้าสู่ระบบ"
+  },
+  "gem_chat.and_get_instantly": {
+    "th": "และรับทันที"
+  },
+  "gem_chat.gems_amount": {
+    "th": "เพชรฟรี 500 เม็ด"
+  },
+  "gem_chat.insufficient_gems": {
+    "th": "คุณมีเพชรไม่เพียงพอ"
+  },
+  "gem_chat.current_gems": {
+    "th": "เพชรคงเหลือ:"
+  },
+  "gem_chat.login_required": {
+    "th": "เข้าสู่ระบบเพื่อรับทันที:"
+  },
+  "gem_chat.login_rewards": {
+    "th": "- เพชรฟรี 500 เม็ด \n- หมุนวงล้อนำโชค 1 ครั้ง ลุ้นรับเพชรสูงสุด 200 เม็ด \n- ทำภารกิจประจำวันเพื่อรับเพชรและสิทธิประโยชน์อื่นๆ"
+  },
+  "gem_chat.login_rewards_newProfile_false": {
+    "th": "- หมุนวงล้อนำโชค 1 ครั้ง ลุ้นรับเพชรสูงสุด 200 เม็ด \n- ทำภารกิจทุกวันเพื่อรับเพชรและสิทธิประโยชน์อื่นๆ อีกมากมาย"
+  },
+  "gem_chat.get_more_gems": {
+    "th": "คุณสามารถซื้อเพชรเพิ่มเพื่อดำเนินการต่อ หรือทำภารกิจเพื่อรับเพชร"
+  },
+  "gem_chat.do_tasks": {
+    "th": "ทำภารกิจ"
+  },
+  "menu.noti_option_menu.header": {
+    "th": "ตัวเลือก"
+  },
+  "menu.noti_option_menu.mark_as_read": {
+    "th": "ทำเครื่องหมายว่าอ่านแล้ว"
+  },
+  "menu.noti_option_menu.see_less": {
+    "th": "รับการแจ้งเตือนแบบนี้ให้น้อยลง"
+  },
+  "menu.noti_option_menu.see_less_toast": {
+    "th": "คุณจะได้รับการแจ้งเตือนแบบนี้น้อยลง"
+  },
+  "menu.noti_option_menu.delete_noti": {
+    "th": "ลบการแจ้งเตือน"
+  },
+  "noti_list.empty_list": {
+    "th": "ยังไม่มีการแจ้งเตือน"
+  },
+  "ranking.header_title": {
+    "th": "อันดับ"
+  },
+  "ranking.top_creator": {
+    "th": "ผู้สร้างยอดนิยม"
+  },
+  "ranking.top_character": {
+    "th": "ตัวละครยอดนิยม"
+  },
+  "trending.header": {
+    "th": "กำลังนิยม"
+  },
+  "trending.subtab1": {
+    "th": "กำลังนิยม"
+  },
+  "trending.subtab2": {
+    "th": "ใหม่"
+  },
+  "trending.subtab3": {
+    "th": "ยอดนิยม"
+  },
+  "sz_30014.title": {
+    "th": "กำลังนิยม"
+  },
+  "sz_30014.btn_more": {
+    "th": "ดูเพิ่มเติม"
+  },
+  "sz_30078.weekly_msg": {
+    "th": "แชทสัปดาห์นี้"
+  },
+  "sz_30078.btn_more": {
+    "th": "ดูเพิ่มเติม"
+  },
+  "sz_30079.created_by": {
+    "th": "สร้างโดย"
+  },
+  "sz_30079.weekly_msg": {
+    "th": "แชทสัปดาห์นี้"
+  },
+  "sz_30079.btn_chat": {
+    "th": "แชท"
+  },
+  "role.summary.title": {
+    "th": "สลับบทบาท"
+  },
+  "role.edit.name.label": {
+    "th": "ชื่อของคุณ:"
+  },
+  "role.edit.name.hint": {
+    "th": "ชื่อบทบาท"
+  },
+  "role.edit.character_limit": {
+    "th": "ตัวอักษร"
+  },
+  "role.edit.description.label": {
+    "th": "อธิบายบทบาทนี้:"
+  },
+  "role.edit.description.hint": {
+    "th": "คำอธิบายบทบาท"
+  },
+  "role.edit.refresh_notice": {
+    "th": "* การแก้ไขบทบาทจะรีเฟรชบทสนทนา"
+  },
+  "role.edit.success": {
+    "th": "เปลี่ยนบทบาทสำเร็จ บทสนทนาจะถูกรีเฟรช"
+  },
+  "role.edit.content_unchanged": {
+    "th": "เนื้อหาไม่มีการเปลี่ยนแปลง"
+  },
+  "role.edit.confirm.title": {
+    "th": "แก้ไขบทบาทนี้?"
+  },
+  "role.edit.confirm.message": {
+    "th": "การแก้ไขบทบาทนี้จะ:\n• รีเฟรชบทสนทนา\n• ลบข้อความทั้งหมดในบทสนทนา\n• รีเซ็ตความสนิทสนมกับตัวละครกลับสู่ระดับเริ่มต้น"
+  },
+  "badge.creator_exclusive": {
+    "th": "i-Original"
+  },
+  "badge.creator_rookie": {
+    "th": "มือใหม่"
+  },
+  "badge.creator_top1": {
+    "th": "อันดับ 1"
+  },
+  "badge.creator_top2": {
+    "th": "อันดับ 2"
+  },
+  "badge.creator_top3": {
+    "th": "อันดับ 3"
+  },
+  "badge.patron_baby_shark": {
+    "th": "Baby Shark"
+  },
+  "badge.patron_shark": {
+    "th": "Shark"
+  },
+  "badge.patron_whale": {
+    "th": "Whale"
+  },
+  "badge.character_exclusive": {
+    "th": "i-Original"
+  },
+  "badge.character_top1": {
+    "th": "อันดับ 1"
+  },
+  "badge.character_top2": {
+    "th": "อันดับ 2"
+  },
+  "badge.character_top3": {
+    "th": "อันดับ 3"
+  },
+  "badge.screen.title": {
+    "th": "เหรียญตรา"
+  },
+  "badge.section.patron": {
+    "th": "ผู้อุปถัมภ์"
+  },
+  "badge.section.status": {
+    "th": "หอเกียรติยศ"
+  },
+  "badge.section.creator_identity": {
+    "th": "ผู้สร้าง"
+  },
+  "badge.detail.cta_ok": {
+    "th": "เข้าใจแล้ว"
+  },
+  "badge.detail.cta_close": {
+    "th": "ปิด"
+  },
+  "badge.detail.cta_buy_gem": {
+    "th": "ซื้อเพชร"
+  },
+  "badge.creator_exclusive.preview": {
+    "th": "ผู้สร้างเอกสิทธิ์ของ imely"
+  },
+  "badge.creator_rookie.preview": {
+    "th": "ผู้สร้างหน้าใหม่"
+  },
+  "badge.creator_top1.preview": {
+    "th": "แชทอันดับ 1 เดือนนี้"
+  },
+  "badge.creator_top2.preview": {
+    "th": "แชทอันดับ 2 เดือนนี้"
+  },
+  "badge.creator_top3.preview": {
+    "th": "แชทอันดับ 3 เดือนนี้"
+  },
+  "badge.patron_baby_shark.preview": {
+    "th": "ซื้อแพ็กเกจเพชร 300"
+  },
+  "badge.patron_shark.preview": {
+    "th": "ซื้อแพ็กเกจเพชร 1,500"
+  },
+  "badge.patron_whale.preview": {
+    "th": "ซื้อแพ็กเกจเพชร 15,000"
+  },
+  "badge.character_top1.preview": {
+    "th": "แชทอันดับ 1 เดือนนี้"
+  },
+  "badge.character_top2.preview": {
+    "th": "แชทอันดับ 2 เดือนนี้"
+  },
+  "badge.character_top3.preview": {
+    "th": "แชทอันดับ 3 เดือนนี้"
+  },
+  "badge.creator_exclusive.body_earned": {
+    "th": "คุณคือผู้สร้างเอกสิทธิ์ของ imely ✨"
+  },
+  "badge.creator_rookie.body_earned": {
+    "th": "ผู้สร้างหน้าใหม่ ยินดีต้อนรับสู่ imely! 🎉"
+  },
+  "badge.creator_top1.body_earned_prefix": {
+    "th": "ผู้สร้างประจำเดือน – คุณคืออันดับ 1 ในจำนวนแชททั้งหมดของ"
+  },
+  "badge.creator_top1.body_earned_suffix": {
+    "th": "🥇"
+  },
+  "badge.creator_top2.body_earned_prefix": {
+    "th": "ผู้สร้างประจำเดือน – คุณคืออันดับ 2 ในจำนวนแชททั้งหมดของ"
+  },
+  "badge.creator_top2.body_earned_suffix": {
+    "th": "🥈"
+  },
+  "badge.creator_top3.body_earned_prefix": {
+    "th": "ผู้สร้างประจำเดือน – คุณคืออันดับ 3 ในจำนวนแชททั้งหมดของ"
+  },
+  "badge.creator_top3.body_earned_suffix": {
+    "th": "🥉"
+  },
+  "badge.patron_baby_shark.body_earned": {
+    "th": "คุณได้รับเหรียญตรา Baby Shark จากการซื้อแพ็กเกจเพชร ขอบคุณที่อยู่กับ imely! 🦈"
+  },
+  "badge.patron_shark.body_earned": {
+    "th": "เหรียญตรา Shark ของคุณเปิดใช้งานแล้ว สมกับเป็น Shark ตัวจริง! 🦈"
+  },
+  "badge.patron_whale.body_earned": {
+    "th": "เหรียญตรา Whale ของคุณเปิดใช้งานแล้ว สมกับเป็น Whale ตัวจริง! 🐳"
+  },
+  "badge.character_top1.body_earned_prefix": {
+    "th": "ตัวละครนี้คืออันดับ 1 ในการแชทของ"
+  },
+  "badge.character_top1.body_earned_suffix": {
+    "th": "🥇"
+  },
+  "badge.character_top2.body_earned_prefix": {
+    "th": "ตัวละครนี้คืออันดับ 2 ในการแชทของ"
+  },
+  "badge.character_top2.body_earned_suffix": {
+    "th": "🥈"
+  },
+  "badge.character_top3.body_earned_prefix": {
+    "th": "ตัวละครนี้คืออันดับ 3 ในการแชทของ"
+  },
+  "badge.character_top3.body_earned_suffix": {
+    "th": "🥉"
+  },
+  "badge.creator_rookie.body_not_earned": {
+    "th": "สร้างตัวละครแรกของคุณเพื่อรับเหรียญตรานี้"
+  },
+  "badge.creator_exclusive.body_not_earned": {
+    "th": "ผู้สร้างที่เผยแพร่ผลงานบน imely แบบเอกสิทธิ์"
+  },
+  "badge.creator_top1.body_not_earned": {
+    "th": "อันดับ 1 ในจำนวนแชททั้งหมดเดือนนี้"
+  },
+  "badge.creator_top2.body_not_earned": {
+    "th": "อันดับ 2 ในจำนวนแชททั้งหมดเดือนนี้"
+  },
+  "badge.creator_top3.body_not_earned": {
+    "th": "อันดับ 3 ในจำนวนแชททั้งหมดเดือนนี้"
+  },
+  "badge.patron_baby_shark.body_not_earned": {
+    "th": "ซื้อแพ็กเกจเพชร 300 หรือ 600 เพื่อรับเหรียญตรานี้ (มีอายุ 30 วัน)"
+  },
+  "badge.patron_shark.body_not_earned": {
+    "th": "ซื้อแพ็กเกจเพชร 1,500–8,000 เพื่อรับเหรียญตรานี้ (มีอายุ 30 วัน)"
+  },
+  "badge.patron_whale.body_not_earned": {
+    "th": "ซื้อแพ็กเกจเพชร 15,000 เพื่อรับเหรียญตรา Whale (มีอายุ 30 วัน)"
+  },
+  "badge.character_top1.body_not_earned": {
+    "th": "อันดับ 1 ในการแชทเดือนนี้"
+  },
+  "badge.character_top2.body_not_earned": {
+    "th": "อันดับ 2 ในการแชทเดือนนี้"
+  },
+  "badge.character_top3.body_not_earned": {
+    "th": "อันดับ 3 ในการแชทเดือนนี้"
+  },
+  "badge.detail.achieved_on": {
+    "th": "ได้รับเมื่อ:"
+  },
+  "badge.creator_top1.meta_line_prefix": {
+    "th": "🥇 อันดับ 1"
+  },
+  "badge.creator_top2.meta_line_prefix": {
+    "th": "🥈 อันดับ 2"
+  },
+  "badge.creator_top3.meta_line_prefix": {
+    "th": "🥉 อันดับ 3"
+  },
+  "badge.character_top1.meta_line_prefix": {
+    "th": "🥇 อันดับ 1"
+  },
+  "badge.character_top2.meta_line_prefix": {
+    "th": "🥈 อันดับ 2"
+  },
+  "badge.character_top3.meta_line_prefix": {
+    "th": "🥉 อันดับ 3"
+  },
+  "badge.empty.cta": {
+    "th": "ดูเหรียญตรา"
+  },
+  "thought.empty_title": {
+    "th": "ยังไม่มีความคิดในใจ"
+  },
+  "thought.empty_body": {
+    "th": "ความคิดในใจของตัวละคร - ความรู้สึกและความตั้งใจที่แท้จริงที่ไม่ได้พูดออกมา"
+  },
+  "thought.see_inner_thought_cta": {
+    "th": "ดูความคิดในใจ"
+  },
+  "thought.loading": {
+    "th": "กำลังโหลด... กรุณารอสักครู่"
+  },
+  "thought.unlock_success": {
+    "th": "ปลดล็อกความคิดในใจแล้ว!"
+  },
+  "thought.general_error": {
+    "th": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง"
+  },
+  "thought.see_char_inner_thought": {
+    "th": "ดูความคิดในใจของตัวละคร"
+  },
+  "thought.inline_cta": {
+    "th": "ดู"
+  },
+  "thought.inline_tag": {
+    "th": " ความคิดในใจของ"
+  },
+  "thought.title": {
+    "th": "ความคิดในใจ"
+  },
+  "thought.unlock_cost_title": {
+    "th": "ปลดล็อกเนื้อหานี้มีค่าใช้จ่าย"
+  }
+}

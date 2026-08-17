@@ -1,30 +1,29 @@
 import * as XLSX from 'xlsx'
-import { ALL_STRINGS, LOCALE_LABEL, SOURCE_LOCALES, TARGET_LOCALES, type Locale } from './strings'
+import { ALL_STRINGS, isTargetLocale, LOCALE_LABEL, type Locale, type TargetLocale } from './strings'
 
-// One-sheet handoff: every key from the source spreadsheet, its original
-// id/en/vi columns untouched, plus a zh-TW and th column filled from
-// whatever's been translated in this tool so far (blank where still
-// untranslated). Re-exportable any time — always a full, current snapshot
-// rather than a diff — so a translator (or us) can just grab the latest
-// file instead of reconciling partial exports.
-export function exportStringsToXlsx(overrides: Record<string, Partial<Record<Locale, string>>>) {
-  const localeCols = [...SOURCE_LOCALES, ...TARGET_LOCALES]
-  const header = ['Key', 'Category', 'Subcategory', ...localeCols.map((l) => LOCALE_LABEL[l])]
+// One language per export — Key/Category/Subcategory plus a single
+// translation column, rather than every locale bundled into one wide sheet.
+// A translator handing off just the TH (or just the EN) column doesn't want
+// 4 other languages' worth of noise in the file.
+export function exportStringsToXlsx(
+  overrides: Record<string, Partial<Record<TargetLocale, string>>>,
+  locale: Locale
+) {
+  const header = ['Key', 'Category', 'Subcategory', LOCALE_LABEL[locale]]
 
   const body = ALL_STRINGS.map((entry) => [
     entry.key,
     entry.category,
     entry.subcategory ?? '',
-    ...SOURCE_LOCALES.map((l) => entry.locales[l] ?? ''),
-    ...TARGET_LOCALES.map((l) => overrides[entry.key]?.[l] ?? ''),
+    isTargetLocale(locale) ? overrides[entry.key]?.[locale] ?? '' : entry.locales[locale] ?? '',
   ])
 
   const worksheet = XLSX.utils.aoa_to_sheet([header, ...body])
-  worksheet['!cols'] = [{ wch: 44 }, { wch: 20 }, { wch: 18 }, ...localeCols.map(() => ({ wch: 36 }))]
+  worksheet['!cols'] = [{ wch: 44 }, { wch: 20 }, { wch: 18 }, { wch: 44 }]
 
   const workbook = XLSX.utils.book_new()
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Strings')
 
   const date = new Date().toISOString().slice(0, 10)
-  XLSX.writeFile(workbook, `imely-strings-${date}.xlsx`)
+  XLSX.writeFile(workbook, `imely-strings-${locale}-${date}.xlsx`)
 }

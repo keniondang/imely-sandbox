@@ -1,5 +1,5 @@
 import { ChevronRight, MoreHorizontal, Camera, Grid2x2, UserCheck, Languages, Settings } from 'lucide-react'
-import { Str } from '../components/Str'
+import { Str, RichStr } from '../components/Str'
 import { MOCK_USER } from '../data/mockContent'
 import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
@@ -49,7 +49,7 @@ export function ProfileScreen() {
             onClick={openAccount}
             className="mt-1 text-[12px] font-semibold border border-imely-line rounded-full px-3 py-1 active:scale-95 active:bg-gray-50 transition-transform"
           >
-            Kelola akun
+            <Str k="profile_me_v4.menu.account_management" />
           </button>
         </div>
         <button onClick={openProfileMenu} className="active:scale-90 transition-transform">
@@ -74,21 +74,25 @@ export function ProfileScreen() {
       {/* MeLy Club upgrade card */}
       <div className="mx-4 mt-4 rounded-2xl border border-imely-line p-4">
         <div className="font-extrabold text-[17px] text-imely-ink leading-snug">
-          Gabung <span className="text-imely-primary">MêLy Club</span>
+          <RichStr k="profile_me_v4.banner_upgrade.title" />
         </div>
         <div className="text-[13px] text-gray-500 mt-0.5">
           <Str k="profile_me_v4.buy_gem_desc" />
         </div>
 
         <div className="mt-3 grid grid-cols-3 text-[13px] items-center">
-          <div className="text-gray-400 font-medium">Fitur</div>
-          <div className="text-gray-400 font-medium text-center">Gratis</div>
+          <div className="text-gray-400 font-medium">
+            <Str k="profile_me_v4.banner_upgrade.feature_header" />
+          </div>
+          <div className="text-gray-400 font-medium text-center">
+            <Str k="profile_me_v4.banner_upgrade.free_header" />
+          </div>
           <div className="text-imely-primaryDark font-bold text-center bg-imely-mint rounded-t-lg py-1">
-            MêLy Club
+            <Str k="product_purchase.tab1" />
           </div>
 
-          <FeatureRow labelKey={null} label="Gem harian" free="100 💎" club="400 💎" />
-          <FeatureRow labelKey={null} label="Gem permanen" free="X" club="800 💎" />
+          <FeatureRow labelKey="profile_me_v4.banner_upgrade.feature_daily_gem" free="100 💎" club="400 💎" />
+          <FeatureRow labelKey="profile_me_v4.banner_upgrade.feature_unlimited_gem" free="X" club="800 💎" />
           <FeatureRow labelKey={null} label="Model AI canggih" free="X" club="Ya" />
           <FeatureRow labelKey={null} label="Jangan tampilkan iklan" free="X" club="Ya" />
           <FeatureRow labelKey="profile_me_v4.banner_upgrade.feature_avatar" free="X" club="Ya" last />
@@ -105,7 +109,9 @@ export function ProfileScreen() {
       {/* gem balance */}
       <div className="mx-4 mt-3 rounded-2xl bg-gray-50 px-4 py-3 flex items-center justify-between">
         <div>
-          <div className="text-[12px] text-gray-400">Total gem:</div>
+          <div className="text-[12px] text-gray-400">
+            <Str k="user_gem_overview.total" />:
+          </div>
           <div className="font-bold text-imely-ink flex items-center gap-1">
             {MOCK_USER.gems.toLocaleString('id-ID')} 💎
           </div>
@@ -114,7 +120,7 @@ export function ProfileScreen() {
           onClick={() => openPurchase('gem')}
           className="bg-imely-primary text-white text-[13px] font-bold rounded-full px-5 py-2 active:scale-95 active:bg-imely-primaryDark transition-transform"
         >
-          Beli
+          <Str k="product_purchase.btn_buy" />
         </button>
       </div>
 

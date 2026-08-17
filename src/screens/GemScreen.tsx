@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ArrowLeft, ChevronRight, Plus, Copy, Pencil, Check, X } from 'lucide-react'
-import { Str } from '../components/Str'
+import { Str, RichStr, useRegisterKeys } from '../components/Str'
 import { useApp } from '../context/AppContext'
 import { ZoneScope } from '../context/ScreenScope'
 import { usePopupRequest } from '../hooks/usePopupRequest'
@@ -17,7 +17,8 @@ const DAILY_GEM_LOTS = [
 ]
 
 export function GemScreen() {
-  const { locale, closeGems, openGemHistory, openPurchase, showToast } = useApp()
+  const { baseLocale, closeGems, openGemHistory, openPurchase, showToast } = useApp()
+  useRegisterKeys(['input_invite_code.hint'])
 
   // Balances/mission progress are local session state, not fixed mock
   // constants — the lucky wheel actually pays out into them (see spinWheel).
@@ -115,7 +116,7 @@ export function GemScreen() {
               onClick={() => setDailyDetailOpen(true)}
               className="text-[12.5px] font-semibold border border-imely-line rounded-full px-3.5 py-1.5 active:scale-95 active:bg-gray-50 transition-transform"
             >
-              Detail
+              <Str k="common.details" />
             </button>
           </div>
 
@@ -133,7 +134,7 @@ export function GemScreen() {
         {/* MeLy Club upgrade card */}
         <div className="rounded-2xl border border-imely-line p-4">
           <div className="font-extrabold text-[17px] text-imely-ink leading-snug">
-            Gabung <span className="text-imely-primary">MêLy Club</span>
+            <RichStr k="profile_me_v4.banner_upgrade.title" />
           </div>
           <div className="text-[13px] text-gray-500 mt-0.5">Buka hak istimewa – Chat MêLy seru!</div>
 
@@ -315,7 +316,7 @@ export function GemScreen() {
                   setInviteInputValue(e.target.value)
                   setInviteInputError(false)
                 }}
-                placeholder={resolveString('input_invite_code.hint', locale)}
+                placeholder={resolveString('input_invite_code.hint', baseLocale)}
                 className="mt-4 w-full bg-gray-100 rounded-full px-4 py-2.5 text-[13.5px] outline-none"
               />
               {inviteInputError && (

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
-import { Str } from '../components/Str'
+import { Str, useRegisterKeys } from '../components/Str'
 import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
@@ -13,7 +13,8 @@ import { resolveString } from '../lib/strings'
 // it truncated here is exactly the kind of thing this tool exists to surface
 // to a translator/QA pass.
 export function DeleteAccountScreen() {
-  const { closeDeleteAccount, locale, showToast } = useApp()
+  const { closeDeleteAccount, baseLocale, showToast } = useApp()
+  useRegisterKeys(['profile_me.deactivate.deactivate_success_toast'])
   const [confirmOpen, setConfirmOpen] = useState(false)
   usePopupRequest('deleteaccount', 'delete_account_confirm', setConfirmOpen)
 
@@ -106,7 +107,7 @@ export function DeleteAccountScreen() {
                   onClick={() => {
                     setConfirmOpen(false)
                     closeDeleteAccount()
-                    showToast(resolveString('profile_me.deactivate.deactivate_success_toast', locale))
+                    showToast(resolveString('profile_me.deactivate.deactivate_success_toast', baseLocale))
                   }}
                   className="font-semibold text-[14px] text-red-500 active:opacity-70 transition-opacity"
                 >

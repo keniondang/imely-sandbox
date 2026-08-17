@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ArrowLeft, Camera, ChevronDown, X, Plus, Maximize2, Lock, Globe, Check } from 'lucide-react'
-import { Str } from '../components/Str'
+import { Str, useRegisterKeys } from '../components/Str'
 import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
@@ -19,9 +19,16 @@ const STYLE_SUGGESTIONS = [
 ]
 
 export function CharacterFormScreen() {
-  const { characterFormEditId, closeCharacterForm, locale, showToast } = useApp()
+  const { characterFormEditId, closeCharacterForm, baseLocale, showToast } = useApp()
   const editing = characterFormEditId ? MOCK_FEED_CHARACTERS.find((c) => c.id === characterFormEditId) : undefined
   const isEdit = Boolean(editing)
+
+  useRegisterKeys([
+    'edit_bot.text_updated_bot',
+    'bot.character_created_success_with_name',
+    'edit_bot.name_hint',
+    'edit_bot.hashtag_hint',
+  ])
 
   const [name, setName] = useState('')
   const [gender, setGender] = useState<Gender | null>(null)
@@ -88,11 +95,11 @@ export function CharacterFormScreen() {
 
   function submit() {
     if (isEdit) {
-      const msg = resolveString('edit_bot.text_updated_bot', locale)
+      const msg = resolveString('edit_bot.text_updated_bot', baseLocale)
       closeCharacterForm()
       showToast(msg)
     } else {
-      const msg = resolveString('bot.character_created_success_with_name', locale).replace('XXX', name || '')
+      const msg = resolveString('bot.character_created_success_with_name', baseLocale).replace('XXX', name || '')
       closeCharacterForm()
       showToast(msg)
     }
@@ -134,7 +141,7 @@ export function CharacterFormScreen() {
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder={resolveString('edit_bot.name_hint', locale)}
+            placeholder={resolveString('edit_bot.name_hint', baseLocale)}
             className="w-full bg-gray-100 rounded-xl px-3.5 py-3 text-[14px] text-imely-ink outline-none placeholder:text-gray-400"
           />
         </Field>
@@ -165,7 +172,7 @@ export function CharacterFormScreen() {
                 <input
                   value={h}
                   onChange={(e) => updateHashtag(i, e.target.value)}
-                  placeholder={resolveString('edit_bot.hashtag_hint', locale)}
+                  placeholder={resolveString('edit_bot.hashtag_hint', baseLocale)}
                   className="flex-1 bg-transparent text-[14px] text-imely-ink outline-none placeholder:text-gray-400 min-w-0"
                 />
                 <button onClick={() => removeHashtag(i)} className="text-imely-ink shrink-0 active:scale-90 transition-transform">
@@ -231,7 +238,9 @@ export function CharacterFormScreen() {
               <div className="font-bold text-[14px] text-imely-ink">
                 <Str k="edit_bot.prompt_style_title" />
               </div>
-              <div className="mt-2 text-[12.5px] text-gray-500">Saran:</div>
+              <div className="mt-2 text-[12.5px] text-gray-500">
+                <Str k="ask.personalize.style.suggestion" />:
+              </div>
               <div className="mt-1.5 flex flex-wrap gap-1.5">
                 {STYLE_SUGGESTIONS.map((s) => (
                   <button
@@ -404,19 +413,22 @@ function TextArea({
   placeholderKey: string
   showCount?: boolean
 }) {
-  const { locale } = useApp()
+  const { baseLocale } = useApp()
+  useRegisterKeys([placeholderKey])
   return (
     <div className="relative bg-gray-100 rounded-xl">
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder={resolveString(placeholderKey, locale)}
+        placeholder={resolveString(placeholderKey, baseLocale)}
         rows={4}
         className="w-full bg-transparent px-3.5 py-3 text-[14px] text-imely-ink outline-none resize-none placeholder:text-gray-400"
       />
       <Maximize2 size={14} className="absolute top-3 right-3 text-gray-400 pointer-events-none" />
       {showCount && (
-        <div className="absolute bottom-2 left-3.5 text-[11px] text-gray-400">{value.length} karakter</div>
+        <div className="absolute bottom-2 left-3.5 text-[11px] text-gray-400">
+          {value.length} <Str k="role.edit.character_limit" />
+        </div>
       )}
     </div>
   )

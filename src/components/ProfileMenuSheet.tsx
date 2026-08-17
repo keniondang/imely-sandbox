@@ -34,14 +34,18 @@ export function ProfileMenuSheet({ open, onClose, onKelolaAkun, onPerangkatMasuk
               className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors text-left"
             >
               <UserCircle size={18} className="text-imely-ink" />
-              <span className="text-[14px] text-imely-ink">Kelola akun</span>
+              <span className="text-[14px] text-imely-ink">
+                <Str k="profile_me_v4.menu.account_management" />
+              </span>
             </button>
             <button
               onClick={onPerangkatMasuk}
               className="w-full flex items-center gap-3 px-4 py-3.5 active:bg-gray-50 transition-colors text-left"
             >
               <Smartphone size={18} className="text-imely-ink" />
-              <span className="text-[14px] text-imely-ink">Perangkat Masuk</span>
+              <span className="text-[14px] text-imely-ink">
+                <Str k="profile_me_v4.menu.login_managment" />
+              </span>
             </button>
             <div className="h-2" />
           </div>

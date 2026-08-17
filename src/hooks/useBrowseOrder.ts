@@ -46,19 +46,18 @@ export function useBrowseOrder(): {
   pageSections: BrowseSection[]
   overlaySections: BrowseOverlaySection[]
 } {
-  const { usage, overrides, filterMode, locale } = useApp()
+  const { usage, overrides, filterMode, targetLocale } = useApp()
 
   const wiredKeys = useMemo(() => new Set(usage.map((u) => u.key)), [usage])
 
   return useMemo(() => {
-    // Must mirror the Inspector's own matchesFilter exactly (same locale
-    // scoping, same 'untranslated' branch) — the panel's Prev/Next walks
-    // THESE rows, so any divergence means it could land on a string the
-    // Inspector's filtered list doesn't show, or skip over one it does.
+    // Must mirror the Inspector's own matchesFilter exactly — the panel's
+    // Prev/Next walks THESE rows, so any divergence means it could land on
+    // a string the Inspector's filtered list doesn't show, or skip one it does.
     function matchesFilter(key: string): boolean {
       if (filterMode === 'unwired') return !wiredKeys.has(key)
-      if (filterMode === 'overridden') return Boolean(overrides[key]?.[locale])
-      if (filterMode === 'untranslated') return !overrides[key]?.[locale]
+      if (filterMode === 'translated') return Boolean(overrides[key]?.[targetLocale])
+      if (filterMode === 'untranslated') return !overrides[key]?.[targetLocale]
       return true
     }
 
@@ -163,5 +162,5 @@ export function useBrowseOrder(): {
     }
 
     return { rows, pageSections, overlaySections }
-  }, [usage, overrides, filterMode, wiredKeys, locale])
+  }, [usage, overrides, filterMode, wiredKeys, targetLocale])
 }

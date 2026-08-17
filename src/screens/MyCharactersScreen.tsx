@@ -156,7 +156,7 @@ export function MyCharactersScreen() {
                   onClick={() => setDeleteConfirmFor(null)}
                   className="font-semibold text-[14px] text-imely-ink active:opacity-70 transition-opacity"
                 >
-                  Batal
+                  <Str k="common.cancel" />
                 </button>
                 <button
                   onClick={() => {

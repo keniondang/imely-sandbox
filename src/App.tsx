@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { PanelLeftOpen, PanelLeftClose, X, Download } from 'lucide-react'
 import { AppProvider, useApp } from './context/AppContext'
 import { ScreenScope } from './context/ScreenScope'
@@ -6,6 +6,7 @@ import { useStringHighlighter } from './hooks/useStringHighlighter'
 import { useOpenScreen } from './hooks/useNavigateToString'
 import { WARM_UP_SCREENS, WARM_UP_ZONES } from './sandbox/browseConfig'
 import { exportStringsToXlsx } from './lib/exportXlsx'
+import { LOCALE_LABEL, SOURCE_LOCALES, TARGET_LOCALES, type Locale } from './lib/strings'
 import { PhoneFrame } from './components/shell/PhoneFrame'
 import { Header } from './components/shell/Header'
 import { BottomNav } from './components/shell/BottomNav'
@@ -116,6 +117,25 @@ function Shell() {
     closeFilter()
   }
 
+  const [exportMenuOpen, setExportMenuOpen] = useState(false)
+  const exportMenuRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!exportMenuOpen) return
+    function onClickOutside(e: MouseEvent) {
+      if (exportMenuRef.current && !exportMenuRef.current.contains(e.target as Node)) {
+        setExportMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', onClickOutside)
+    return () => document.removeEventListener('mousedown', onClickOutside)
+  }, [exportMenuOpen])
+
+  function handleExport(locale: Locale) {
+    exportStringsToXlsx(overrides, locale)
+    setExportMenuOpen(false)
+  }
+
   return (
     <div className="h-screen w-screen flex flex-col bg-[#F4F5F7] overflow-hidden">
       {/* one shared title bar spanning the full window, split into
@@ -127,7 +147,7 @@ function Shell() {
             <div className="w-[360px] shrink-0 bg-imely-ink border-b border-white/10 flex items-center px-3">
               <span className="text-[13px] font-semibold text-white">String Inspector</span>
             </div>
-            <div className="w-[300px] shrink-0 bg-white border-b border-imely-line flex items-center justify-between px-3">
+            <div className="w-[360px] shrink-0 bg-white border-b border-imely-line flex items-center justify-between px-3">
               <span className="text-[13px] font-semibold text-imely-ink">Translation</span>
               {selectedKey && (
                 <button
@@ -150,13 +170,41 @@ function Shell() {
           </button>
           <span className="text-[13px] font-semibold text-imely-ink truncate">imely localization sandbox</span>
           <span className="text-[11px] text-gray-400 truncate">— live UI preview, not the real app</span>
-          <button
-            onClick={() => exportStringsToXlsx(overrides)}
-            title="Download every string as .xlsx — id/en/vi as in the sheet, zh-TW/th filled in from translations saved here"
-            className="ml-auto flex items-center gap-1.5 text-[12px] font-semibold text-white bg-imely-primary rounded-full pl-3 pr-3.5 py-1.5 shrink-0 active:scale-[0.97] transition-transform"
-          >
-            <Download size={13} /> Export .xlsx
-          </button>
+          <div className="ml-auto relative shrink-0" ref={exportMenuRef}>
+            <button
+              onClick={() => setExportMenuOpen((v) => !v)}
+              title="Download strings as .xlsx — pick a language"
+              className="flex items-center gap-1.5 text-[12px] font-semibold text-white bg-imely-primary rounded-full pl-3 pr-3.5 py-1.5 active:scale-[0.97] transition-transform"
+            >
+              <Download size={13} /> Export .xlsx
+            </button>
+            {exportMenuOpen && (
+              <div className="absolute right-0 top-full mt-1.5 w-40 bg-white rounded-lg shadow-lg border border-imely-line py-1 z-50">
+                <div className="px-3 py-1 text-[10px] font-semibold text-gray-400 uppercase">Source</div>
+                {SOURCE_LOCALES.map((l) => (
+                  <button
+                    key={l}
+                    onClick={() => handleExport(l)}
+                    className="w-full text-left px-3 py-1.5 text-[12.5px] text-imely-ink hover:bg-gray-50"
+                  >
+                    {LOCALE_LABEL[l]}
+                  </button>
+                ))}
+                <div className="px-3 py-1 mt-1 text-[10px] font-semibold text-gray-400 uppercase border-t border-imely-line pt-1.5">
+                  Target
+                </div>
+                {TARGET_LOCALES.map((l) => (
+                  <button
+                    key={l}
+                    onClick={() => handleExport(l)}
+                    className="w-full text-left px-3 py-1.5 text-[12.5px] text-imely-ink hover:bg-gray-50"
+                  >
+                    {LOCALE_LABEL[l]}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
