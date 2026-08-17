@@ -1,16 +1,19 @@
 import { useState } from 'react'
 import { ArrowLeft, User, Phone, Share2, Play, UserCog, Trash2, Ban, Flag, MessageCircle } from 'lucide-react'
 import { Str } from '../components/Str'
+import { NoSheet } from '../components/NoSheet'
 import { BlockConfirmDialog, ReportReasonsSheet } from '../components/ProfileOptionsSheets'
 import { useApp } from '../context/AppContext'
 import { useProfileOptions } from '../hooks/useProfileOptions'
-import { MOCK_FEED_CHARACTERS } from '../data/mockContent'
+import { MOCK_FEED_CHARACTERS, ph } from '../data/mockContent'
 
 export function ChatOptionsScreen() {
-  const { activeChat, closeChat, closeChatOptions, openCharacterProfile, requestPopup, showToast } = useApp()
+  const { activeChat, closeChat, closeChatOptions, openCharacterProfile, requestPopup, showToast, baseLocale } =
+    useApp()
   const [autoPlayVoice, setAutoPlayVoice] = useState(false)
 
-  const opts = useProfileOptions('chatoptions', activeChat?.name ?? '', closeChat)
+  const activeChatName = activeChat ? ph(activeChat.name, baseLocale) : ''
+  const opts = useProfileOptions('chatoptions', activeChatName, closeChat)
 
   if (!activeChat) return null
 
@@ -44,7 +47,7 @@ export function ChatOptionsScreen() {
       <div className="flex-1 overflow-y-auto pb-4">
         <div className="flex flex-col items-center pt-5 pb-4">
           <div className="w-16 h-16 rounded-full" style={{ backgroundColor: activeChat.color }} />
-          <div className="mt-2 font-bold text-[16px] text-imely-ink">{activeChat.name}</div>
+          <div className="mt-2 font-bold text-[16px] text-imely-ink">{activeChatName}</div>
         </div>
 
         <div className="px-4 grid grid-cols-3 gap-2">
@@ -114,7 +117,9 @@ export function ChatOptionsScreen() {
             className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors text-left"
           >
             <Flag size={17} className="text-imely-ink" />
-            <span className="text-[14px] text-imely-ink">[Test] Top-up Gem</span>
+            <span className="text-[14px] text-imely-ink">
+              <NoSheet>[Test] Top-up Gem</NoSheet>
+            </span>
           </button>
 
           <button
@@ -129,7 +134,9 @@ export function ChatOptionsScreen() {
         </div>
 
         <div className="mt-5">
-          <div className="px-4 font-extrabold text-[16px] text-imely-ink mb-2">Karakter Serupa</div>
+          <div className="px-4 font-extrabold text-[16px] text-imely-ink mb-2">
+            <NoSheet>Karakter Serupa</NoSheet>
+          </div>
           <div className="flex gap-3 px-4 overflow-x-auto">
             {similar.map((c) => (
               <button
@@ -144,8 +151,8 @@ export function ChatOptionsScreen() {
                   </div>
                 </div>
                 <div className="p-2">
-                  <div className="font-bold text-[12.5px] text-imely-ink truncate">{c.name}</div>
-                  <div className="text-[10.5px] text-gray-500 line-clamp-2 mt-0.5">{c.tagline}</div>
+                  <div className="font-bold text-[12.5px] text-imely-ink truncate">{ph(c.name, baseLocale)}</div>
+                  <div className="text-[10.5px] text-gray-500 line-clamp-2 mt-0.5">{ph(c.tagline, baseLocale)}</div>
                 </div>
               </button>
             ))}
@@ -154,7 +161,7 @@ export function ChatOptionsScreen() {
       </div>
 
       <BlockConfirmDialog
-        targetName={activeChat.name}
+        targetName={activeChatName}
         open={opts.blockConfirmOpen}
         onClose={() => opts.setBlockConfirmOpen(false)}
         onConfirm={opts.confirmBlock}
@@ -188,7 +195,7 @@ function IconAction({
     >
       <span className="text-imely-ink">{icon}</span>
       <span className="text-[11.5px] text-imely-ink text-center leading-tight">
-        {labelKey ? <Str k={labelKey} /> : label}
+        {labelKey ? <Str k={labelKey} /> : <NoSheet>{label}</NoSheet>}
       </span>
     </button>
   )

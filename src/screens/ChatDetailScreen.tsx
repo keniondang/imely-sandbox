@@ -1,11 +1,18 @@
 import { useState } from 'react'
 import { ArrowLeft, MoreVertical, Send, Info, ChevronDown, ChevronRight, Play, Mic, Plus, Gem, Hand, X, Pencil } from 'lucide-react'
 import { Str, useRegisterKeys } from '../components/Str'
+import { NoSheet } from '../components/NoSheet'
 import { useApp } from '../context/AppContext'
 import { ZoneScope } from '../context/ScreenScope'
 import { usePopupRequest } from '../hooks/usePopupRequest'
 import { resolveString } from '../lib/strings'
-import { MOCK_FEED_CHARACTERS, MOCK_USER } from '../data/mockContent'
+import { MOCK_FEED_CHARACTERS, MOCK_USER, ph, type LocalizedText } from '../data/mockContent'
+
+const FIRST_MESSAGE_FALLBACK: LocalizedText = {
+  id: '[Pesan pembuka placeholder]',
+  en: '[Placeholder opening message]',
+  vi: '[Tin nhắn mở đầu giữ chỗ]',
+}
 
 // Score bands are game-economy config, not xlsx content — level names/labels are real.
 const RELATIONSHIP_LEVELS = [
@@ -51,7 +58,7 @@ export function ChatDetailScreen() {
 
   const [input, setInput] = useState('')
   const [bubbles, setBubbles] = useState<Bubble[]>(() => [
-    { id: 'b0', from: 'bot', text: character?.firstMessage ?? '[Pesan pembuka placeholder]' },
+    { id: 'b0', from: 'bot', text: ph(character?.firstMessage ?? FIRST_MESSAGE_FALLBACK, baseLocale) },
   ])
   const [typing, setTyping] = useState(false)
   const [expandedInfo, setExpandedInfo] = useState<Set<string>>(new Set())
@@ -66,7 +73,7 @@ export function ChatDetailScreen() {
   const [voiceBarOpen, setVoiceBarOpen] = useState(false)
   const [listening, setListening] = useState(false)
 
-  const [personaName, setPersonaName] = useState(MOCK_USER.name)
+  const [personaName, setPersonaName] = useState(ph(MOCK_USER.name, baseLocale))
   const [personaDescription, setPersonaDescription] = useState('')
   const [personaDraftName, setPersonaDraftName] = useState(personaName)
   const [personaDraftDescription, setPersonaDraftDescription] = useState(personaDescription)
@@ -145,8 +152,10 @@ export function ChatDetailScreen() {
         </button>
         <div className="w-9 h-9 rounded-full shrink-0" style={{ backgroundColor: activeChat.color }} />
         <div className="flex-1 min-w-0">
-          <div className="font-bold text-[14.5px] text-imely-ink truncate">{activeChat.name}</div>
-          <div className="text-[11px] text-imely-primary">Online</div>
+          <div className="font-bold text-[14.5px] text-imely-ink truncate">{ph(activeChat.name, baseLocale)}</div>
+          <div className="text-[11px] text-imely-primary">
+            <NoSheet>Online</NoSheet>
+          </div>
         </div>
         <button
           onClick={openGems}
@@ -185,19 +194,19 @@ export function ChatDetailScreen() {
             <div className="mt-2 rounded-2xl bg-black/45 px-3 pt-2 pb-1">
               <InfoRow
                 labelKey="profile_bot.info.tagline"
-                value={`"${character.tagline}"`}
+                value={`"${ph(character.tagline, baseLocale)}"`}
                 expanded={expandedInfo.has('tagline')}
                 onToggle={() => toggleInfoRow('tagline')}
               />
               <InfoRow
                 labelKey="profile_bot.info.public_info"
-                value={character.publicInfo}
+                value={ph(character.publicInfo, baseLocale)}
                 expanded={expandedInfo.has('public_info')}
                 onToggle={() => toggleInfoRow('public_info')}
               />
               <InfoRow
                 labelKey="profile_bot.info.biography"
-                value={character.biography}
+                value={ph(character.biography, baseLocale)}
                 expanded={expandedInfo.has('biography')}
                 onToggle={() => toggleInfoRow('biography')}
               />
@@ -370,7 +379,9 @@ export function ChatDetailScreen() {
               className="absolute inset-0 bg-black/40"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl p-4">
-              <div className="text-center font-bold text-[16px] text-imely-ink mb-3">Mode Obrolan</div>
+              <div className="text-center font-bold text-[16px] text-imely-ink mb-3">
+                <NoSheet>Mode Obrolan</NoSheet>
+              </div>
               {CHAT_MODES.map((mode) => (
                 <button
                   key={mode.id}
@@ -424,7 +435,9 @@ export function ChatDetailScreen() {
                   </div>
                   <div className="flex flex-col items-center gap-1 w-16">
                     <div className="w-11 h-11 rounded-full" style={{ backgroundColor: activeChat.color }} />
-                    <span className="text-[11px] text-imely-ink truncate w-full text-center">{activeChat.name}</span>
+                    <span className="text-[11px] text-imely-ink truncate w-full text-center">
+                      {ph(activeChat.name, baseLocale)}
+                    </span>
                   </div>
                 </div>
 

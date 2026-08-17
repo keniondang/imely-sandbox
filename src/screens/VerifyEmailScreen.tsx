@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
-import { Str, RichStr } from '../components/Str'
+import { Str, RichStr, useRegisterKeys } from '../components/Str'
 import { useApp } from '../context/AppContext'
+import { resolveString } from '../lib/strings'
 
 export function VerifyEmailScreen() {
-  const { closeVerifyEmail, showToast } = useApp()
+  const { closeVerifyEmail, showToast, baseLocale } = useApp()
+  useRegisterKeys(['login.update_email.tb_input_email_hint'])
   const [email, setEmail] = useState('')
   const [agreed, setAgreed] = useState(false)
 
@@ -36,7 +38,7 @@ export function VerifyEmailScreen() {
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Masukkan email..."
+          placeholder={resolveString('login.update_email.tb_input_email_hint', baseLocale)}
           className="w-full mt-6 border-b border-imely-line pb-2 text-[14px] text-imely-ink outline-none focus:border-imely-primary placeholder:text-gray-400"
         />
 

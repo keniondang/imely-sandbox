@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ArrowLeft, ChevronRight, Plus, Copy, Pencil, Check, X } from 'lucide-react'
 import { Str, RichStr, useRegisterKeys } from '../components/Str'
+import { NoSheet } from '../components/NoSheet'
 import { useApp } from '../context/AppContext'
 import { ZoneScope } from '../context/ScreenScope'
 import { usePopupRequest } from '../hooks/usePopupRequest'
@@ -136,7 +137,9 @@ export function GemScreen() {
           <div className="font-extrabold text-[17px] text-imely-ink leading-snug">
             <RichStr k="profile_me_v4.banner_upgrade.title" />
           </div>
-          <div className="text-[13px] text-gray-500 mt-0.5">Buka hak istimewa – Chat MêLy seru!</div>
+          <div className="text-[13px] text-gray-500 mt-0.5">
+            <NoSheet>Buka hak istimewa – Chat MêLy seru!</NoSheet>
+          </div>
 
           <div className="mt-3 grid grid-cols-3 text-[13px] items-center">
             <div className="text-gray-400 font-medium">
@@ -424,7 +427,9 @@ function FeatureRow({
 }) {
   return (
     <>
-      <div className="py-2 text-imely-ink text-[13px]">{labelKey ? <Str k={labelKey} /> : label}</div>
+      <div className="py-2 text-imely-ink text-[13px]">
+        {labelKey ? <Str k={labelKey} /> : <NoSheet>{label}</NoSheet>}
+      </div>
       <div className="py-2 text-center text-gray-400">{free}</div>
       <div
         className={`py-2 text-center font-semibold text-imely-primaryDark bg-imely-mint ${last ? 'rounded-b-lg' : ''}`}

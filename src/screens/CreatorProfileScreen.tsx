@@ -4,18 +4,20 @@ import { Str } from '../components/Str'
 import { OpsiMenuSheet, BlockConfirmDialog, ReportReasonsSheet } from '../components/ProfileOptionsSheets'
 import { useApp } from '../context/AppContext'
 import { useProfileOptions } from '../hooks/useProfileOptions'
-import { MOCK_FEED_CHARACTERS } from '../data/mockContent'
+import { MOCK_FEED_CHARACTERS, ph } from '../data/mockContent'
 
 export function CreatorProfileScreen() {
-  const { activeCreatorName, closeCreatorProfile, closeCharacterProfile, openCharacterProfile, showToast } = useApp()
+  const { activeCreatorId, closeCreatorProfile, closeCharacterProfile, openCharacterProfile, showToast, baseLocale } =
+    useApp()
   const [tab, setTab] = useState<'characters' | 'info'>('characters')
 
-  const characters = MOCK_FEED_CHARACTERS.filter((c) => c.creatorName === activeCreatorName)
+  const characters = MOCK_FEED_CHARACTERS.filter((c) => c.creatorId === activeCreatorId)
   const rep = characters[0]
+  const creatorName = rep ? ph(rep.creatorName, baseLocale) : ''
 
-  const opts = useProfileOptions('creatorprofile', activeCreatorName ?? '', closeCharacterProfile)
+  const opts = useProfileOptions('creatorprofile', creatorName, closeCharacterProfile)
 
-  if (!activeCreatorName || !rep) return null
+  if (!activeCreatorId || !rep) return null
 
   function viewCharacter(id: string) {
     openCharacterProfile(id)
@@ -50,7 +52,7 @@ export function CreatorProfileScreen() {
         <div className="px-4 pt-4 flex items-center gap-3">
           <div className="w-14 h-14 rounded-full bg-gray-200 shrink-0" />
           <div className="flex-1 min-w-0">
-            <div className="font-bold text-[17px] text-imely-ink truncate">{activeCreatorName}</div>
+            <div className="font-bold text-[17px] text-imely-ink truncate">{creatorName}</div>
             <div className="flex gap-4 mt-1.5">
               <MiniStat value={rep.creatorFollowers} labelKey="profile_creator.stat.followers" />
               <MiniStat value={String(characters.length)} labelKey="profile_creator.stat.characters" />
@@ -89,12 +91,12 @@ export function CreatorProfileScreen() {
                   </div>
                 </div>
                 <div className="p-2.5">
-                  <div className="font-bold text-[14px] text-imely-ink">{c.name}</div>
-                  <div className="text-[12px] text-gray-500 line-clamp-2 mt-0.5">{c.tagline}</div>
+                  <div className="font-bold text-[14px] text-imely-ink">{ph(c.name, baseLocale)}</div>
+                  <div className="text-[12px] text-gray-500 line-clamp-2 mt-0.5">{ph(c.tagline, baseLocale)}</div>
                   <div className="flex gap-1 mt-1.5 flex-wrap">
-                    {c.tags.map((tag) => (
-                      <span key={tag} className="text-[10px] bg-gray-100 text-gray-500 rounded-full px-2 py-0.5">
-                        {tag}
+                    {c.tags.map((tag, i) => (
+                      <span key={i} className="text-[10px] bg-gray-100 text-gray-500 rounded-full px-2 py-0.5">
+                        {ph(tag, baseLocale)}
                       </span>
                     ))}
                   </div>
@@ -139,7 +141,7 @@ export function CreatorProfileScreen() {
         onModerate={() => showToast('Moderasi — khusus internal')}
       />
       <BlockConfirmDialog
-        targetName={activeCreatorName}
+        targetName={creatorName}
         open={opts.blockConfirmOpen}
         onClose={() => opts.setBlockConfirmOpen(false)}
         onConfirm={opts.confirmBlock}

@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { SlidersHorizontal, ChevronDown, ChevronUp, MessageCircle } from 'lucide-react'
 import { Str } from '../components/Str'
-import { MOCK_FEED_CHARACTERS, FILTER_CATEGORIES } from '../data/mockContent'
+import { NoSheet } from '../components/NoSheet'
+import { MOCK_FEED_CHARACTERS, FILTER_CATEGORIES, ph } from '../data/mockContent'
 import { useApp } from '../context/AppContext'
 
 const SUBTABS = [
@@ -11,7 +12,7 @@ const SUBTABS = [
 ]
 
 export function FeedScreen() {
-  const { openCharacterProfile, openFilter } = useApp()
+  const { openCharacterProfile, openFilter, baseLocale } = useApp()
   const [activeTab, setActiveTab] = useState('s1')
   const [tagsExpanded, setTagsExpanded] = useState(false)
 
@@ -70,7 +71,7 @@ export function FeedScreen() {
 
       {/* section title */}
       <div className="px-4 mt-1 mb-2 font-extrabold text-[16px] text-imely-ink flex items-center gap-1">
-        ✨ Gebetan Baru!
+        ✨ <NoSheet>Gebetan Baru!</NoSheet>
       </div>
 
       {/* card grid — tappable, opens the character's profile page */}
@@ -88,12 +89,12 @@ export function FeedScreen() {
               </div>
             </div>
             <div className="p-2.5">
-              <div className="font-bold text-[14px] text-imely-ink">{c.name}</div>
-              <div className="text-[12px] text-gray-500 line-clamp-2 mt-0.5">{c.tagline}</div>
+              <div className="font-bold text-[14px] text-imely-ink">{ph(c.name, baseLocale)}</div>
+              <div className="text-[12px] text-gray-500 line-clamp-2 mt-0.5">{ph(c.tagline, baseLocale)}</div>
               <div className="flex gap-1 mt-1.5 flex-wrap">
-                {c.tags.map((tag) => (
-                  <span key={tag} className="text-[10px] bg-gray-100 text-gray-500 rounded-full px-2 py-0.5">
-                    {tag}
+                {c.tags.map((tag, i) => (
+                  <span key={i} className="text-[10px] bg-gray-100 text-gray-500 rounded-full px-2 py-0.5">
+                    {ph(tag, baseLocale)}
                   </span>
                 ))}
               </div>

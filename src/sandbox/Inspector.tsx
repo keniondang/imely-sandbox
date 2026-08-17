@@ -47,7 +47,7 @@ export function Inspector() {
     activeChat,
     chatOptionsOpen,
     activeCharacterId,
-    activeCreatorName,
+    activeCreatorId,
     notifOpen,
     gemsOpen,
     gemHistoryOpen,
@@ -84,7 +84,7 @@ export function Inspector() {
   const activeScreenId: ScreenId = useMemo(() => {
     if (activeChat && chatOptionsOpen) return 'chatoptions'
     if (activeChat) return 'chatdetail'
-    if (activeCharacterId && activeCreatorName) return 'creatorprofile'
+    if (activeCharacterId && activeCreatorId) return 'creatorprofile'
     if (activeCharacterId) return 'characterprofile'
     if (notifOpen) return 'notification'
     if (purchaseOpen) return 'purchase'
@@ -109,7 +109,7 @@ export function Inspector() {
     activeChat,
     chatOptionsOpen,
     activeCharacterId,
-    activeCreatorName,
+    activeCreatorId,
     notifOpen,
     purchaseOpen,
     gemHistoryOpen,

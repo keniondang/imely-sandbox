@@ -1,4 +1,4 @@
-import { MOCK_FEED_CHARACTERS } from '../data/mockContent'
+import { MOCK_FEED_CHARACTERS, ph } from '../data/mockContent'
 import { useApp } from '../context/AppContext'
 
 // Same character line-up as Beranda's grid — a chat thread here is just that
@@ -7,7 +7,7 @@ import { useApp } from '../context/AppContext'
 const PLACEHOLDER_DATES = ['07/08/2026', '06/08/2026', '05/08/2026', '04/08/2026']
 
 export function ChatListScreen() {
-  const { openChat } = useApp()
+  const { openChat, baseLocale } = useApp()
 
   return (
     <div className="pb-6">
@@ -21,8 +21,8 @@ export function ChatListScreen() {
         >
           <div className="w-12 h-12 rounded-full shrink-0" style={{ backgroundColor: c.color }} />
           <div className="flex-1 min-w-0">
-            <div className="font-bold text-[14.5px] text-imely-ink truncate">{c.name}</div>
-            <div className="text-[13px] text-gray-500 truncate">{c.firstMessage.replace(/\n/g, ' ')}</div>
+            <div className="font-bold text-[14.5px] text-imely-ink truncate">{ph(c.name, baseLocale)}</div>
+            <div className="text-[13px] text-gray-500 truncate">{ph(c.firstMessage, baseLocale).replace(/\n/g, ' ')}</div>
           </div>
           <div className="flex flex-col items-end gap-1.5 shrink-0">
             <div className="text-[11px] text-gray-400">{PLACEHOLDER_DATES[i] ?? PLACEHOLDER_DATES[0]}</div>

@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import type { SourceLocale, TargetLocale } from '../lib/strings'
+import type { LocalizedText } from '../data/mockContent'
 import zhTwBaselineRaw from '../data/zhTwBaseline.json'
 
 const ZH_TW_BASELINE = zhTwBaselineRaw as Record<string, string>
@@ -88,7 +89,7 @@ interface PopupRequest {
 
 export interface ChatTarget {
   id: string
-  name: string
+  name: LocalizedText
   color: string
 }
 
@@ -178,9 +179,11 @@ interface AppState {
   closeCharacterProfile: () => void
 
   // creator profile — pushed on top of a character profile from its "Kreator"
-  // row; name looks up the creator's characters in MOCK_FEED_CHARACTERS
-  activeCreatorName: string | null
-  openCreatorProfile: (name: string) => void
+  // row; id looks up the creator's characters in MOCK_FEED_CHARACTERS via
+  // creatorId (a stable identity, unlike the creator's display name, which
+  // is now locale-varying LocalizedText and can't double as a lookup key)
+  activeCreatorId: string | null
+  openCreatorProfile: (id: string) => void
   closeCreatorProfile: () => void
 
   // Beranda filter bottom-sheet
@@ -339,7 +342,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [activeChat, setActiveChat] = useState<ChatTarget | null>(null)
   const [chatOptionsOpen, setChatOptionsOpen] = useState(false)
   const [activeCharacterId, setActiveCharacterId] = useState<string | null>(null)
-  const [activeCreatorName, setActiveCreatorName] = useState<string | null>(null)
+  const [activeCreatorId, setActiveCreatorId] = useState<string | null>(null)
   const [filterOpen, setFilterOpen] = useState(false)
   const [notifOpen, setNotifOpen] = useState(false)
   const [gemsOpen, setGemsOpen] = useState(false)
@@ -412,11 +415,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const openCharacterProfile = (id: string) => setActiveCharacterId(id)
   const closeCharacterProfile = () => {
     setActiveCharacterId(null)
-    setActiveCreatorName(null)
+    setActiveCreatorId(null)
   }
 
-  const openCreatorProfile = (name: string) => setActiveCreatorName(name)
-  const closeCreatorProfile = () => setActiveCreatorName(null)
+  const openCreatorProfile = (id: string) => setActiveCreatorId(id)
+  const closeCreatorProfile = () => setActiveCreatorId(null)
 
   const openFilter = () => setFilterOpen(true)
   const closeFilter = () => setFilterOpen(false)
@@ -533,7 +536,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       activeCharacterId,
       openCharacterProfile,
       closeCharacterProfile,
-      activeCreatorName,
+      activeCreatorId,
       openCreatorProfile,
       closeCreatorProfile,
       filterOpen,
@@ -621,7 +624,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       activeChat,
       chatOptionsOpen,
       activeCharacterId,
-      activeCreatorName,
+      activeCreatorId,
       filterOpen,
       notifOpen,
       gemsOpen,

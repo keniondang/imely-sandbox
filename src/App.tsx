@@ -48,7 +48,7 @@ function Shell() {
     activeChat,
     chatOptionsOpen,
     activeCharacterId,
-    activeCreatorName,
+    activeCreatorId,
     filterOpen,
     closeFilter,
     notifOpen,
@@ -275,7 +275,7 @@ function Shell() {
 
             {/* creator profile — pushed on top of a character profile from its "Kreator" row, or
                 reachable directly (e.g. Mengikuti's "Pencipta" tab) without a character underneath */}
-            {activeCreatorName && (
+            {activeCreatorId && (
               <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
                 <ScreenScope id="creatorprofile">
                   <CreatorProfileScreen />

@@ -1,6 +1,7 @@
 import { ChevronRight, MoreHorizontal, Camera, Grid2x2, UserCheck, Languages, Settings } from 'lucide-react'
 import { Str, RichStr } from '../components/Str'
-import { MOCK_USER } from '../data/mockContent'
+import { NoSheet } from '../components/NoSheet'
+import { MOCK_USER, ph } from '../data/mockContent'
 import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
 
@@ -17,6 +18,7 @@ export function ProfileScreen() {
     openAppearance,
     openSettings,
     openAbout,
+    baseLocale,
   } = useApp()
   // ProfileMenuSheet is rendered at the App.tsx level (see App.tsx), not
   // nested here — but it still needs to open when the Inspector jumps to a
@@ -41,7 +43,7 @@ export function ProfileScreen() {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1 font-bold text-imely-ink text-[17px]">
-            <span className="truncate">{MOCK_USER.name}</span>
+            <span className="truncate">{ph(MOCK_USER.name, baseLocale)}</span>
             <ChevronRight size={16} className="text-gray-400 shrink-0" />
           </div>
           <div className="text-gray-400 text-[13px] truncate">{MOCK_USER.handle}</div>
@@ -187,7 +189,7 @@ function FeatureRow({
   return (
     <>
       <div className="py-2 text-imely-ink text-[13px]">
-        {labelKey ? <Str k={labelKey} /> : label}
+        {labelKey ? <Str k={labelKey} /> : <NoSheet>{label}</NoSheet>}
       </div>
       <div className="py-2 text-center text-gray-400">{free}</div>
       <div className={`py-2 text-center font-semibold text-imely-primaryDark bg-imely-mint ${last ? 'rounded-b-lg' : ''}`}>

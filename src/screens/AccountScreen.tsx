@@ -19,11 +19,13 @@ import {
   Link2,
   Check,
 } from 'lucide-react'
-import { Str } from '../components/Str'
+import { Str, RichStr, useRegisterKeys } from '../components/Str'
+import { NoSheet } from '../components/NoSheet'
 import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
-import { MOCK_USER } from '../data/mockContent'
+import { resolveString } from '../lib/strings'
+import { MOCK_USER, ph } from '../data/mockContent'
 
 type PrivacyMode = 'only_me' | 'only_link' | 'public'
 type GenderMode = 'male' | 'female' | 'other'
@@ -68,8 +70,17 @@ function shiftYear(d: Date, delta: number): Date {
 }
 
 export function AccountScreen() {
-  const { closeAccount, openPurchase, openVerifyEmail, openUsername, openDeleteAccount, accountUsername, showToast } =
-    useApp()
+  const {
+    closeAccount,
+    openPurchase,
+    openVerifyEmail,
+    openUsername,
+    openDeleteAccount,
+    accountUsername,
+    showToast,
+    baseLocale,
+  } = useApp()
+  useRegisterKeys(['profile_me.id_identifier.hint_cccd', 'profile_me.bio_edit.input_box_hint'])
   const [verifyOpen, setVerifyOpen] = useState(false)
   const [modal, setModal] = useState<ModalKind>(null)
 
@@ -141,7 +152,7 @@ export function AccountScreen() {
                 onClick={() => showToast('Ubah nama — segera hadir')}
                 className="flex items-center gap-1.5 active:opacity-70 transition-opacity"
               >
-                <span className="font-bold text-[17px] text-imely-ink truncate">{MOCK_USER.name}</span>
+                <span className="font-bold text-[17px] text-imely-ink truncate">{ph(MOCK_USER.name, baseLocale)}</span>
                 <Pencil size={13} className="text-gray-400 shrink-0" />
               </button>
               <div className="text-[13px] text-gray-400">{MOCK_USER.handle.replace(' (internal)', '')}</div>
@@ -208,12 +219,7 @@ export function AccountScreen() {
             <AccountRow
               icon={<KeyRound size={18} />}
               titleKey="user_profile_v2.identifer.password"
-              subtitle={
-                <>
-                  Buat kata sandi setelah akunmu{' '}
-                  <span className="text-imely-primaryDark font-semibold">diverifikasi</span>...
-                </>
-              }
+              subtitle={<RichStr k="user_profile_v2.identifer.create_password_hint" />}
               onTap={() => setVerifyOpen(true)}
             />
             <AccountRow
@@ -233,14 +239,14 @@ export function AccountScreen() {
             <Str k="user_profile_v2.identifer.link_account" />
           </div>
           <LinkedAccountRow
-            label="Facebook"
+            labelKey="user_profile_v2.identifer.link_account_fb"
             badge="f"
             badgeColor="#1877F2"
             actionKey="user_profile_v2.identifer.link_account_button"
             onTap={() => showToast('Hubungkan Facebook — segera hadir')}
           />
           <LinkedAccountRow
-            label="Google"
+            labelKey="user_profile_v2.identifer.link_account_google"
             badge="G"
             badgeColor="#EA4335"
             actionKey="user_profile_v2.identifer.un_link_account_button"
@@ -277,7 +283,9 @@ export function AccountScreen() {
                   🔗 <Str k="feed_privacy.mode.only_link" />
                 </>
               ) : (
-                <>🌐 Publik</>
+                <>
+                  🌐 <NoSheet>Publik</NoSheet>
+                </>
               )}
               <ChevronDown size={13} className="text-gray-400" />
             </button>
@@ -376,9 +384,7 @@ export function AccountScreen() {
                 <Str k="login.opt_verify_acc.btn_verify_by_email" />
               </button>
               <div className="mt-4 text-center text-[11.5px] text-gray-400 leading-relaxed">
-                Dengan melanjutkan, Anda menyetujui <strong><Str k="profile_me_v4.term_of_service" /></strong>,{' '}
-                <strong><Str k="profile_me_v4.privacy_policy" /></strong> dan{' '}
-                <strong><Str k="profile_me_v4.copyright" /></strong> kami.
+                <RichStr k="login.option_login.policy_agreement" />
               </div>
             </div>
           </div>
@@ -403,7 +409,7 @@ export function AccountScreen() {
                 <input
                   value={identityCardDraft}
                   onChange={(e) => setIdentityCardDraft(e.target.value)}
-                  placeholder="Masukkan Nomor Identifikasi Pribadi-mu"
+                  placeholder={resolveString('profile_me.id_identifier.hint_cccd', baseLocale)}
                   className="w-full text-[14px] text-imely-ink outline-none placeholder:text-gray-400"
                 />
               </div>
@@ -479,7 +485,7 @@ export function AccountScreen() {
               <PrivacyOption
                 icon={<Lock size={18} />}
                 titleKey="feed_privacy.mode.only_me"
-                hint="Hanya kamu yang bisa melihat. Orang yang punya tautannya pun nggak bisa buka."
+                hintKey="feed_privacy.mode.only_me_hint"
                 selected={privacy === 'only_me'}
                 onSelect={() => {
                   setPrivacy('only_me')
@@ -498,8 +504,8 @@ export function AccountScreen() {
               />
               <PrivacyOption
                 icon={<Globe size={18} />}
-                title="Publik"
-                hint="Semua pengguna bisa lihat."
+                titleKey="feed_privacy.mode.public"
+                hintKey="feed_privacy.mode.public_hint"
                 selected={privacy === 'public'}
                 onSelect={() => {
                   setPrivacy('public')
@@ -646,7 +652,7 @@ export function AccountScreen() {
                   onChange={(e) => setBioDraft(e.target.value)}
                   rows={4}
                   className="w-full text-[14px] text-imely-ink outline-none resize-none placeholder:text-gray-400"
-                  placeholder="Tambahkan deskripsi singkat agar orang mengenalmu..."
+                  placeholder={resolveString('profile_me.bio_edit.input_box_hint', baseLocale)}
                 />
               </div>
               <div className="flex justify-end gap-4 px-4 pb-4">
@@ -728,7 +734,9 @@ function AccountRow({
     >
       <div className="text-imely-ink shrink-0">{icon}</div>
       <div className="flex-1 min-w-0">
-        <div className="font-semibold text-[14px] text-imely-ink">{titleKey ? <Str k={titleKey} /> : title}</div>
+        <div className="font-semibold text-[14px] text-imely-ink">
+          {titleKey ? <Str k={titleKey} /> : <NoSheet>{title}</NoSheet>}
+        </div>
         <div className="text-[12.5px] text-gray-400 truncate">
           {subtitleKey ? <Str k={subtitleKey} /> : subtitle}
         </div>
@@ -739,14 +747,14 @@ function AccountRow({
 }
 
 function LinkedAccountRow({
-  label,
+  labelKey,
   badge,
   badgeColor,
   actionKey,
   onTap,
   outlined,
 }: {
-  label: string
+  labelKey: string
   badge: string
   badgeColor: string
   actionKey: string
@@ -762,7 +770,9 @@ function LinkedAccountRow({
         >
           {badge}
         </div>
-        <div className="text-[14px] text-imely-ink">{label}</div>
+        <div className="text-[14px] text-imely-ink">
+          <Str k={labelKey} />
+        </div>
       </div>
       <button
         onClick={onTap}
@@ -802,8 +812,12 @@ function PrivacyOption({
     >
       <div className="text-imely-ink shrink-0 mt-0.5">{icon}</div>
       <div className="flex-1 min-w-0">
-        <div className="font-bold text-[14.5px] text-imely-ink">{titleKey ? <Str k={titleKey} /> : title}</div>
-        <div className="text-[12.5px] text-gray-500 mt-0.5">{hintKey ? <Str k={hintKey} /> : hint}</div>
+        <div className="font-bold text-[14.5px] text-imely-ink">
+          {titleKey ? <Str k={titleKey} /> : <NoSheet>{title}</NoSheet>}
+        </div>
+        <div className="text-[12.5px] text-gray-500 mt-0.5">
+          {hintKey ? <Str k={hintKey} /> : <NoSheet>{hint}</NoSheet>}
+        </div>
       </div>
       {selected && <Check size={18} className="text-imely-primary shrink-0 mt-0.5" />}
     </button>

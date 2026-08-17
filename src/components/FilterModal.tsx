@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { FILTER_CATEGORIES, GENDER_OPTIONS } from '../data/mockContent'
+import { NoSheet } from './NoSheet'
 
 interface FilterModalProps {
   onClose: () => void
@@ -29,12 +30,18 @@ export function FilterModal({ onClose, onApply }: FilterModalProps) {
       <div className="absolute bottom-0 left-0 right-0 max-h-[85%] bg-white rounded-t-3xl flex flex-col">
         <div className="flex-1 overflow-y-auto px-5 pt-6 pb-4">
           <div className="text-center">
-            <div className="font-extrabold text-[19px] text-imely-ink">Filter</div>
-            <div className="text-[13px] text-gray-400 mt-0.5">Opsi Tampilan</div>
+            <div className="font-extrabold text-[19px] text-imely-ink">
+              <NoSheet>Filter</NoSheet>
+            </div>
+            <div className="text-[13px] text-gray-400 mt-0.5">
+              <NoSheet>Opsi Tampilan</NoSheet>
+            </div>
           </div>
 
           <div className="mt-6">
-            <div className="font-bold text-[14px] text-imely-ink mb-2.5">Preferensi Gender:</div>
+            <div className="font-bold text-[14px] text-imely-ink mb-2.5">
+              <NoSheet>Preferensi Gender:</NoSheet>
+            </div>
             <div className="flex flex-wrap gap-2">
               {GENDER_OPTIONS.map((g) => {
                 const active = gender === g
@@ -56,8 +63,12 @@ export function FilterModal({ onClose, onApply }: FilterModalProps) {
           </div>
 
           <div className="mt-6">
-            <div className="font-bold text-[14px] text-imely-ink">Kategori:</div>
-            <div className="text-[12.5px] text-gray-400 mb-2.5">Pilih beberapa kategori:</div>
+            <div className="font-bold text-[14px] text-imely-ink">
+              <NoSheet>Kategori:</NoSheet>
+            </div>
+            <div className="text-[12.5px] text-gray-400 mb-2.5">
+              <NoSheet>Pilih beberapa kategori:</NoSheet>
+            </div>
             <div className="flex flex-wrap gap-2">
               {FILTER_CATEGORIES.map((c) => {
                 const active = categories.includes(c)
@@ -82,7 +93,7 @@ export function FilterModal({ onClose, onApply }: FilterModalProps) {
             onClick={() => onApply(gender, categories)}
             className="w-full bg-imely-primary text-white font-bold rounded-full py-3.5 active:scale-[0.97] active:bg-imely-primaryDark transition-transform"
           >
-            Terapkan
+            <NoSheet>Terapkan</NoSheet>
           </button>
         </div>
       </div>

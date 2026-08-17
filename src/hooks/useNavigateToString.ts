@@ -91,7 +91,7 @@ function useOpenOverlayChain() {
       openCharacterProfile(MOCK_FEED_CHARACTERS[0].id)
     } else if (screenId === 'creatorprofile') {
       openCharacterProfile(MOCK_FEED_CHARACTERS[0].id)
-      openCreatorProfile(MOCK_FEED_CHARACTERS[0].creatorName)
+      openCreatorProfile(MOCK_FEED_CHARACTERS[0].creatorId)
     } else if (screenId === 'notification') {
       openNotif()
     } else if (screenId === 'gems') {

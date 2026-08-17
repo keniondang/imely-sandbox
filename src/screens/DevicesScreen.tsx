@@ -1,10 +1,10 @@
 import { ArrowLeft, Smartphone, Info } from 'lucide-react'
 import { Str } from '../components/Str'
 import { useApp } from '../context/AppContext'
-import { MOCK_USER, MOCK_DEVICES } from '../data/mockContent'
+import { MOCK_USER, MOCK_DEVICES, ph } from '../data/mockContent'
 
 export function DevicesScreen() {
-  const { closeDevices, showToast } = useApp()
+  const { closeDevices, showToast, baseLocale } = useApp()
 
   return (
     <div className="h-full flex flex-col bg-white">
@@ -27,7 +27,7 @@ export function DevicesScreen() {
         </div>
 
         <div className="mt-4 text-[13.5px] text-imely-ink">
-          <Str k="active_session.text_account" /> <span className="font-bold">{MOCK_USER.name}</span>{' '}
+          <Str k="active_session.text_account" /> <span className="font-bold">{ph(MOCK_USER.name, baseLocale)}</span>{' '}
           <Str k="active_session.text_logging_in" /> {MOCK_DEVICES.length} <Str k="active_session.text_device" />
         </div>
 

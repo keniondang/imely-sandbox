@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { X, ArrowRight, CircleCheck } from 'lucide-react'
-import { Str } from '../components/Str'
+import { Str, RichStr } from '../components/Str'
+import { NoSheet } from '../components/NoSheet'
 import { useApp, type PurchaseTab } from '../context/AppContext'
 import { ZoneScope } from '../context/ScreenScope'
 import { usePopupRequest } from '../hooks/usePopupRequest'
@@ -61,11 +62,15 @@ export function PurchaseScreen() {
                 <li>
                   • <Str k="product_purchase.benefit_2" />: 800💎
                 </li>
-                <li>• Model AI canggih</li>
+                <li>
+                  • <NoSheet>Model AI canggih</NoSheet>
+                </li>
                 <li>
                   • <Str k="product_purchase.benefit_3" />
                 </li>
-                <li>• Jangan tampilkan iklan</li>
+                <li>
+                  • <NoSheet>Jangan tampilkan iklan</NoSheet>
+                </li>
                 <li>
                   • <Str k="product_purchase.benefit_4" />
                 </li>
@@ -106,19 +111,7 @@ export function PurchaseScreen() {
             </div>
 
             <div className="text-[10.5px] text-gray-400 leading-relaxed">
-              Dengan melanjutkan ini, Anda menyetujui{' '}
-              <span className="font-semibold text-gray-500">
-                <Str k="profile_me_v4.term_of_service" />
-              </span>
-              ,{' '}
-              <span className="font-semibold text-gray-500">
-                <Str k="profile_me_v4.privacy_policy" />
-              </span>{' '}
-              dan{' '}
-              <span className="font-semibold text-gray-500">
-                <Str k="profile_me_v4.copyright" />
-              </span>{' '}
-              kami
+              <RichStr k="product_purchase.term_of_use" />
             </div>
           </div>
         ) : (

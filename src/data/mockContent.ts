@@ -1,96 +1,200 @@
+import type { SourceLocale } from '../lib/strings'
+
 // Placeholder UGC — character cards, chat threads, avatars.
 // This is NOT real product content, just enough shape to preview layout.
 // Swap/extend per Keni's guidance per component.
 
+// Every placeholder field a translator would actually see on screen is
+// authored in all 3 source languages (not just one) so it follows the
+// Inspector's Base-locale selector like real sheet content does — read it
+// with `ph(field, baseLocale)`. Identity/matching fields (ids, colors,
+// counts) stay plain since they aren't displayed language.
+export type LocalizedText = Record<SourceLocale, string>
+
+export function ph(text: LocalizedText, locale: SourceLocale): string {
+  return text[locale]
+}
+
 export interface MockCharacter {
   id: string
-  name: string
-  tagline: string
-  tags: string[]
+  name: LocalizedText
+  tagline: LocalizedText
+  tags: LocalizedText[]
   chatCount: string
   color: string // avatar bg fallback
   // Character profile page fields — draft/placeholder, not xlsx content.
   followers: string
-  creatorName: string
+  creatorId: string
+  creatorName: LocalizedText
   creatorFollowers: string
   creatorBadgeKey: string
-  creatorNote: string
-  publicInfo: string
-  biography: string
-  firstMessage: string
+  creatorNote: LocalizedText
+  publicInfo: LocalizedText
+  biography: LocalizedText
+  firstMessage: LocalizedText
 }
 
 export const MOCK_FEED_CHARACTERS: MockCharacter[] = [
   {
     id: 'c1',
-    name: '[Karakter 1]',
-    tagline: '[Tagline placeholder karakter]',
-    tags: ['[Sifat]'],
+    name: { id: '[Karakter 1]', en: '[Character 1]', vi: '[Nhân vật 1]' },
+    tagline: {
+      id: '[Tagline placeholder karakter 1]',
+      en: '[Placeholder character tagline 1]',
+      vi: '[Khẩu hiệu giữ chỗ của nhân vật 1]',
+    },
+    tags: [{ id: '[Sifat]', en: '[Trait]', vi: '[Đặc điểm]' }],
     chatCount: '314',
     color: '#FDE68A',
     followers: '24',
-    creatorName: '[kreator_1]',
+    creatorId: 'creator_1',
+    creatorName: { id: '[kreator_1]', en: '[creator_1]', vi: '[nguoi_tao_1]' },
     creatorFollowers: '5',
     creatorBadgeKey: 'badge.creator_rookie',
-    creatorNote: '[Catatan placeholder dari kreator]',
-    publicInfo: '[Informasi publik placeholder untuk karakter ini, teks generik untuk pratinjau tata letak]',
-    biography: '[Biografi placeholder karakter ini, teks generik untuk pratinjau tata letak]',
-    firstMessage: '*[aksi placeholder]*\n"[Dialog pembuka placeholder]"',
+    creatorNote: {
+      id: '[Catatan placeholder dari kreator]',
+      en: '[Placeholder note from creator]',
+      vi: '[Ghi chú giữ chỗ từ người tạo]',
+    },
+    publicInfo: {
+      id: '[Informasi publik placeholder untuk karakter ini, teks generik untuk pratinjau tata letak]',
+      en: '[Placeholder public info for this character, generic filler for layout preview]',
+      vi: '[Thông tin công khai giữ chỗ cho nhân vật này, văn bản chung để xem trước bố cục]',
+    },
+    biography: {
+      id: '[Biografi placeholder karakter ini, teks generik untuk pratinjau tata letak]',
+      en: '[Placeholder biography text for this character, generic filler for layout preview]',
+      vi: '[Tiểu sử giữ chỗ của nhân vật, văn bản chung để xem trước bố cục]',
+    },
+    firstMessage: {
+      id: '*[aksi placeholder]*\n"[Dialog pembuka placeholder]"',
+      en: '*[placeholder action]*\n"[Placeholder opening dialogue]"',
+      vi: '*[hành động giữ chỗ]*\n"[Lời thoại mở đầu giữ chỗ]"',
+    },
   },
   {
     id: 'c2',
-    name: '[Character 2]',
-    tagline: '[Placeholder character tagline]',
-    tags: ['[Trait 1]', '[Trait 2]'],
+    name: { id: '[Karakter 2]', en: '[Character 2]', vi: '[Nhân vật 2]' },
+    tagline: {
+      id: '[Tagline placeholder karakter 2]',
+      en: '[Placeholder character tagline 2]',
+      vi: '[Khẩu hiệu giữ chỗ của nhân vật 2]',
+    },
+    tags: [
+      { id: '[Sifat 1]', en: '[Trait 1]', vi: '[Đặc điểm 1]' },
+      { id: '[Sifat 2]', en: '[Trait 2]', vi: '[Đặc điểm 2]' },
+    ],
     chatCount: '1.6K',
     color: '#C7D2FE',
     followers: '312',
-    creatorName: '[creator_2]',
+    creatorId: 'creator_2',
+    creatorName: { id: '[kreator_2]', en: '[creator_2]', vi: '[nguoi_tao_2]' },
     creatorFollowers: '47',
     creatorBadgeKey: 'badge.creator_rookie',
-    creatorNote: '[Placeholder note from creator]',
-    publicInfo: '[Placeholder public info for this character, generic filler for layout preview]',
-    biography: '[Placeholder biography text for this character, generic filler for layout preview]',
-    firstMessage: '*[placeholder action]*\n"[Placeholder opening dialogue]"',
+    creatorNote: {
+      id: '[Catatan placeholder dari kreator]',
+      en: '[Placeholder note from creator]',
+      vi: '[Ghi chú giữ chỗ từ người tạo]',
+    },
+    publicInfo: {
+      id: '[Informasi publik placeholder untuk karakter ini, teks generik untuk pratinjau tata letak]',
+      en: '[Placeholder public info for this character, generic filler for layout preview]',
+      vi: '[Thông tin công khai giữ chỗ cho nhân vật này, văn bản chung để xem trước bố cục]',
+    },
+    biography: {
+      id: '[Biografi placeholder karakter ini, teks generik untuk pratinjau tata letak]',
+      en: '[Placeholder biography text for this character, generic filler for layout preview]',
+      vi: '[Tiểu sử giữ chỗ của nhân vật, văn bản chung để xem trước bố cục]',
+    },
+    firstMessage: {
+      id: '*[aksi placeholder]*\n"[Dialog pembuka placeholder]"',
+      en: '*[placeholder action]*\n"[Placeholder opening dialogue]"',
+      vi: '*[hành động giữ chỗ]*\n"[Lời thoại mở đầu giữ chỗ]"',
+    },
   },
   {
     id: 'c3',
-    name: '[Nhân vật 3]',
-    tagline: '[Khẩu hiệu giữ chỗ của nhân vật]',
-    tags: ['[Đặc điểm 1]', '[Đặc điểm 2]'],
+    name: { id: '[Karakter 3]', en: '[Character 3]', vi: '[Nhân vật 3]' },
+    tagline: {
+      id: '[Tagline placeholder karakter 3]',
+      en: '[Placeholder character tagline 3]',
+      vi: '[Khẩu hiệu giữ chỗ của nhân vật 3]',
+    },
+    tags: [
+      { id: '[Sifat 1]', en: '[Trait 1]', vi: '[Đặc điểm 1]' },
+      { id: '[Sifat 2]', en: '[Trait 2]', vi: '[Đặc điểm 2]' },
+    ],
     chatCount: '892',
     color: '#FBCFE8',
     followers: '8',
-    creatorName: '[nguoi_tao_3]',
+    creatorId: 'creator_3',
+    creatorName: { id: '[kreator_3]', en: '[creator_3]', vi: '[nguoi_tao_3]' },
     creatorFollowers: '2',
     creatorBadgeKey: 'badge.creator_rookie',
-    creatorNote: '[Ghi chú giữ chỗ từ người tạo]',
-    publicInfo: '[Thông tin công khai giữ chỗ cho nhân vật này, văn bản chung để xem trước bố cục]',
-    biography: '[Tiểu sử giữ chỗ của nhân vật, văn bản chung để xem trước bố cục]',
-    firstMessage: '*[hành động giữ chỗ]*\n"[Lời thoại mở đầu giữ chỗ]"',
+    creatorNote: {
+      id: '[Catatan placeholder dari kreator]',
+      en: '[Placeholder note from creator]',
+      vi: '[Ghi chú giữ chỗ từ người tạo]',
+    },
+    publicInfo: {
+      id: '[Informasi publik placeholder untuk karakter ini, teks generik untuk pratinjau tata letak]',
+      en: '[Placeholder public info for this character, generic filler for layout preview]',
+      vi: '[Thông tin công khai giữ chỗ cho nhân vật này, văn bản chung để xem trước bố cục]',
+    },
+    biography: {
+      id: '[Biografi placeholder karakter ini, teks generik untuk pratinjau tata letak]',
+      en: '[Placeholder biography text for this character, generic filler for layout preview]',
+      vi: '[Tiểu sử giữ chỗ của nhân vật, văn bản chung để xem trước bố cục]',
+    },
+    firstMessage: {
+      id: '*[aksi placeholder]*\n"[Dialog pembuka placeholder]"',
+      en: '*[placeholder action]*\n"[Placeholder opening dialogue]"',
+      vi: '*[hành động giữ chỗ]*\n"[Lời thoại mở đầu giữ chỗ]"',
+    },
   },
   {
     id: 'c4',
-    name: '[Karakter 4]',
-    tagline: '[Tagline placeholder karakter]',
-    tags: ['[Sifat]'],
+    name: { id: '[Karakter 4]', en: '[Character 4]', vi: '[Nhân vật 4]' },
+    tagline: {
+      id: '[Tagline placeholder karakter 4]',
+      en: '[Placeholder character tagline 4]',
+      vi: '[Khẩu hiệu giữ chỗ của nhân vật 4]',
+    },
+    tags: [{ id: '[Sifat]', en: '[Trait]', vi: '[Đặc điểm]' }],
     chatCount: '2.1K',
     color: '#BBF7D0',
     followers: '156',
-    creatorName: '[kreator_4]',
+    creatorId: 'creator_4',
+    creatorName: { id: '[kreator_4]', en: '[creator_4]', vi: '[nguoi_tao_4]' },
     creatorFollowers: '19',
     creatorBadgeKey: 'badge.creator_rookie',
-    creatorNote: '[Catatan placeholder dari kreator]',
-    publicInfo: '[Informasi publik placeholder untuk karakter ini, teks generik untuk pratinjau tata letak]',
-    biography: '[Biografi placeholder karakter ini, teks generik untuk pratinjau tata letak]',
-    firstMessage: '*[aksi placeholder]*\n"[Dialog pembuka placeholder]"',
+    creatorNote: {
+      id: '[Catatan placeholder dari kreator]',
+      en: '[Placeholder note from creator]',
+      vi: '[Ghi chú giữ chỗ từ người tạo]',
+    },
+    publicInfo: {
+      id: '[Informasi publik placeholder untuk karakter ini, teks generik untuk pratinjau tata letak]',
+      en: '[Placeholder public info for this character, generic filler for layout preview]',
+      vi: '[Thông tin công khai giữ chỗ cho nhân vật này, văn bản chung để xem trước bố cục]',
+    },
+    biography: {
+      id: '[Biografi placeholder karakter ini, teks generik untuk pratinjau tata letak]',
+      en: '[Placeholder biography text for this character, generic filler for layout preview]',
+      vi: '[Tiểu sử giữ chỗ của nhân vật, văn bản chung để xem trước bố cục]',
+    },
+    firstMessage: {
+      id: '*[aksi placeholder]*\n"[Dialog pembuka placeholder]"',
+      en: '*[placeholder action]*\n"[Placeholder opening dialogue]"',
+      vi: '*[hành động giữ chỗ]*\n"[Lời thoại mở đầu giữ chỗ]"',
+    },
   },
 ]
 
 export interface MockChatThread {
   id: string
-  name: string
-  preview: string
+  name: LocalizedText
+  preview: LocalizedText
   date: string
   unread?: number
   color: string
@@ -98,16 +202,62 @@ export interface MockChatThread {
 }
 
 export const MOCK_CHAT_THREADS: MockChatThread[] = [
-  { id: 't1', name: '[Kontak 1]', preview: '[Stiker]', date: '07/08/2026', color: '#111827', isSticker: true },
-  { id: 't2', name: '[Contact 2]', preview: '[Sticker]', date: '06/08/2026', color: '#93C5FD', isSticker: true },
-  { id: 't3', name: '[Liên hệ 3]', preview: '[Tin nhắn placeholder]', date: '05/08/2026', color: '#1F2937' },
-  { id: 't4', name: '[Contact 4]', preview: '[Placeholder message preview, long enough to test text wrapping behavior in this layout]', date: '04/08/2026', color: '#D6D3D1' },
-  { id: 't5', name: '[Kontak 5]', preview: '[Pesan sistem placeholder]', date: '03/08/2026', unread: 1, color: '#334155' },
-  { id: 't6', name: '[Liên hệ 6]', preview: '[Tin nhắn placeholder]', date: '03/08/2026', color: '#FBCFE8' },
+  {
+    id: 't1',
+    name: { id: '[Kontak 1]', en: '[Contact 1]', vi: '[Liên hệ 1]' },
+    preview: { id: '[Stiker]', en: '[Sticker]', vi: '[Nhãn dán]' },
+    date: '07/08/2026',
+    color: '#111827',
+    isSticker: true,
+  },
+  {
+    id: 't2',
+    name: { id: '[Kontak 2]', en: '[Contact 2]', vi: '[Liên hệ 2]' },
+    preview: { id: '[Stiker]', en: '[Sticker]', vi: '[Nhãn dán]' },
+    date: '06/08/2026',
+    color: '#93C5FD',
+    isSticker: true,
+  },
+  {
+    id: 't3',
+    name: { id: '[Kontak 3]', en: '[Contact 3]', vi: '[Liên hệ 3]' },
+    preview: { id: '[Pesan placeholder]', en: '[Placeholder message]', vi: '[Tin nhắn giữ chỗ]' },
+    date: '05/08/2026',
+    color: '#1F2937',
+  },
+  {
+    id: 't4',
+    name: { id: '[Kontak 4]', en: '[Contact 4]', vi: '[Liên hệ 4]' },
+    preview: {
+      id: '[Pratinjau pesan placeholder, cukup panjang untuk menguji perilaku pembungkusan teks pada tata letak ini]',
+      en: '[Placeholder message preview, long enough to test text wrapping behavior in this layout]',
+      vi: '[Xem trước tin nhắn giữ chỗ, đủ dài để kiểm tra hành vi ngắt dòng văn bản trong bố cục này]',
+    },
+    date: '04/08/2026',
+    color: '#D6D3D1',
+  },
+  {
+    id: 't5',
+    name: { id: '[Kontak 5]', en: '[Contact 5]', vi: '[Liên hệ 5]' },
+    preview: { id: '[Pesan sistem placeholder]', en: '[Placeholder system message]', vi: '[Tin nhắn hệ thống giữ chỗ]' },
+    date: '03/08/2026',
+    unread: 1,
+    color: '#334155',
+  },
+  {
+    id: 't6',
+    name: { id: '[Kontak 6]', en: '[Contact 6]', vi: '[Liên hệ 6]' },
+    preview: { id: '[Pesan placeholder]', en: '[Placeholder message]', vi: '[Tin nhắn giữ chỗ]' },
+    date: '03/08/2026',
+    color: '#FBCFE8',
+  },
 ]
 
 export const MOCK_USER = {
-  name: '[Nama Pengguna]',
+  name: { id: '[Nama Pengguna]', en: '[Username]', vi: '[Tên người dùng]' } as LocalizedText,
+  // Handles stay as a single technical-identifier-style placeholder rather
+  // than translating per locale — same reasoning as a real @handle never
+  // changing translation.
   handle: '[user_handle]',
   gems: 2250,
   permanentGems: 4,
@@ -244,13 +394,13 @@ export interface MockGemUsage {
 // Placeholder — reuses MOCK_CHAT_THREADS names for the "chat" rows so this
 // stays consistent with the rest of the sandbox rather than inventing new ones.
 export const MOCK_GEM_USAGE: MockGemUsage[] = [
-  { id: 'u1', content: `Mengobrol dengan ${MOCK_CHAT_THREADS[0].name}`, date: '12/08/2026', feature: 'Chat', amount: '-5', expired: false },
+  { id: 'u1', content: `Mengobrol dengan ${MOCK_CHAT_THREADS[0].name.id}`, date: '12/08/2026', feature: 'Chat', amount: '-5', expired: false },
   { id: 'u2', content: 'Penarikan Gem kedaluwarsa', date: '11/08/2026', feature: null, amount: '-100', expired: true },
   { id: 'u3', content: 'Penarikan Gem kedaluwarsa', date: '10/08/2026', feature: null, amount: '-100', expired: true },
-  { id: 'u4', content: `Mengobrol dengan ${MOCK_CHAT_THREADS[1].name}`, date: '06/08/2026', feature: 'Chat', amount: '-5', expired: false },
+  { id: 'u4', content: `Mengobrol dengan ${MOCK_CHAT_THREADS[1].name.id}`, date: '06/08/2026', feature: 'Chat', amount: '-5', expired: false },
   { id: 'u5', content: 'Penarikan Gem kedaluwarsa', date: '05/08/2026', feature: null, amount: '-95', expired: true },
-  { id: 'u6', content: `Mengobrol dengan ${MOCK_CHAT_THREADS[3].name}`, date: '04/08/2026', feature: 'Chat', amount: '-15', expired: false },
-  { id: 'u7', content: `Mengobrol dengan ${MOCK_CHAT_THREADS[5].name}`, date: '03/08/2026', feature: 'Chat', amount: '-5', expired: false },
+  { id: 'u6', content: `Mengobrol dengan ${MOCK_CHAT_THREADS[3].name.id}`, date: '04/08/2026', feature: 'Chat', amount: '-15', expired: false },
+  { id: 'u7', content: `Mengobrol dengan ${MOCK_CHAT_THREADS[5].name.id}`, date: '03/08/2026', feature: 'Chat', amount: '-5', expired: false },
   { id: 'u8', content: 'Penarikan Gem kedaluwarsa', date: '02/08/2026', feature: null, amount: '-100', expired: true },
 ]
 

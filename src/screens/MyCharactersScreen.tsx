@@ -4,13 +4,13 @@ import { Str } from '../components/Str'
 import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
-import { MOCK_FEED_CHARACTERS, type MockCharacter } from '../data/mockContent'
+import { MOCK_FEED_CHARACTERS, ph, type MockCharacter } from '../data/mockContent'
 
 // Same character line-up as Beranda/Obrolan — these are the characters this
 // user has created, kept in sync with the rest of the sandbox rather than
 // inventing a separate placeholder set.
 export function MyCharactersScreen() {
-  const { closeMyCharacters, openChat, openCharacterProfile, openCharacterForm, showToast } = useApp()
+  const { closeMyCharacters, openChat, openCharacterProfile, openCharacterForm, showToast, baseLocale } = useApp()
   const [menuFor, setMenuFor] = useState<MockCharacter | null>(null)
   const [deleteConfirmFor, setDeleteConfirmFor] = useState<MockCharacter | null>(null)
 
@@ -52,8 +52,8 @@ export function MyCharactersScreen() {
             <button onClick={() => startChat(c)} className="flex-1 flex gap-3 text-left active:opacity-70 transition-opacity">
               <div className="w-11 h-11 rounded-full shrink-0" style={{ backgroundColor: c.color }} />
               <div className="min-w-0">
-                <div className="font-bold text-[15px] text-imely-ink">{c.name}</div>
-                <div className="text-[12.5px] text-gray-500 line-clamp-2 mt-0.5">{c.biography}</div>
+                <div className="font-bold text-[15px] text-imely-ink">{ph(c.name, baseLocale)}</div>
+                <div className="text-[12.5px] text-gray-500 line-clamp-2 mt-0.5">{ph(c.biography, baseLocale)}</div>
               </div>
             </button>
             <button
@@ -150,7 +150,7 @@ export function MyCharactersScreen() {
               <div className="font-bold text-[16px] text-imely-ink">
                 <Str k="bot_menu.opt_delete_title" />
               </div>
-              <div className="mt-1 text-[13px] text-gray-500">{deleteConfirmFor.name}?</div>
+              <div className="mt-1 text-[13px] text-gray-500">{ph(deleteConfirmFor.name, baseLocale)}?</div>
               <div className="mt-4 flex justify-end gap-4">
                 <button
                   onClick={() => setDeleteConfirmFor(null)}

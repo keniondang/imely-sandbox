@@ -1,16 +1,17 @@
 import { useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
 import { Str } from '../components/Str'
+import { NoSheet } from '../components/NoSheet'
 import { useApp } from '../context/AppContext'
-import { MOCK_FEED_CHARACTERS } from '../data/mockContent'
+import { MOCK_FEED_CHARACTERS, ph } from '../data/mockContent'
 
 // Same character/creator counts as Beranda — derived from the same data
 // rather than a separate placeholder list, so the numbers stay consistent
 // across the sandbox.
-const CREATORS = Array.from(new Map(MOCK_FEED_CHARACTERS.map((c) => [c.creatorName, c])).values())
+const CREATORS = Array.from(new Map(MOCK_FEED_CHARACTERS.map((c) => [c.creatorId, c])).values())
 
 export function FollowingScreen() {
-  const { closeFollowing, openCharacterProfile, openCreatorProfile, showToast } = useApp()
+  const { closeFollowing, openCharacterProfile, openCreatorProfile, showToast, baseLocale } = useApp()
   const [tab, setTab] = useState<'characters' | 'creators'>('characters')
 
   function viewCharacter(id: string) {
@@ -18,9 +19,9 @@ export function FollowingScreen() {
     openCharacterProfile(id)
   }
 
-  function viewCreator(name: string) {
+  function viewCreator(id: string) {
     closeFollowing()
-    openCreatorProfile(name)
+    openCreatorProfile(id)
   }
 
   return (
@@ -42,7 +43,7 @@ export function FollowingScreen() {
           <Str k="profile_creator.stat.characters" />
         </TabButton>
         <TabButton active={tab === 'creators'} onClick={() => setTab('creators')}>
-          Pencipta
+          <NoSheet>Pencipta</NoSheet>
         </TabButton>
       </div>
 
@@ -53,7 +54,7 @@ export function FollowingScreen() {
                 <button onClick={() => viewCharacter(c.id)} className="flex-1 flex items-center gap-3 text-left active:opacity-70 transition-opacity">
                   <div className="w-10 h-10 rounded-full shrink-0" style={{ backgroundColor: c.color }} />
                   <div className="min-w-0">
-                    <div className="font-bold text-[14.5px] text-imely-ink truncate">{c.name}</div>
+                    <div className="font-bold text-[14.5px] text-imely-ink truncate">{ph(c.name, baseLocale)}</div>
                     <div className="text-[12px] text-gray-400">
                       {c.followers} <Str k="profile_creator.stat.followers" />
                     </div>
@@ -68,14 +69,14 @@ export function FollowingScreen() {
               </div>
             ))
           : CREATORS.map((c) => (
-              <div key={c.creatorName} className="flex items-center gap-3 px-4 py-3">
+              <div key={c.creatorId} className="flex items-center gap-3 px-4 py-3">
                 <button
-                  onClick={() => viewCreator(c.creatorName)}
+                  onClick={() => viewCreator(c.creatorId)}
                   className="flex-1 flex items-center gap-3 text-left active:opacity-70 transition-opacity"
                 >
                   <div className="w-10 h-10 rounded-full bg-gray-200 shrink-0" />
                   <div className="min-w-0">
-                    <div className="font-bold text-[14.5px] text-imely-ink truncate">{c.creatorName}</div>
+                    <div className="font-bold text-[14.5px] text-imely-ink truncate">{ph(c.creatorName, baseLocale)}</div>
                     <div className="text-[12px] text-gray-400">
                       {c.creatorFollowers} <Str k="profile_creator.stat.followers" />
                     </div>

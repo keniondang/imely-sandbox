@@ -5,17 +5,23 @@ import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
 import { resolveString } from '../lib/strings'
-import { MOCK_FEED_CHARACTERS } from '../data/mockContent'
+import { MOCK_FEED_CHARACTERS, ph } from '../data/mockContent'
+import { NoSheet } from '../components/NoSheet'
 
 type Gender = 'male' | 'female'
 type Privacy = 'private' | 'public'
 
-// Suggestion chips for "Gaya Komunikasi" — not xlsx content (no matching key
-// exists for any of these), most likely AI-suggested tags in the real app
-// rather than fixed localized copy.
+// Suggestion chips for "Gaya Komunikasi" — real xlsx content after all
+// (ask.personalize.style.*), despite what an earlier pass here assumed.
 const STYLE_SUGGESTIONS = [
-  'Netral', 'Ringkas dan langsung ke intinya', 'Formal', 'Sarkastik',
-  'Gen Z', 'Sastrawi', 'Banyak bicara', 'Positif',
+  'ask.personalize.style.neutral',
+  'ask.personalize.style.concise_clear',
+  'ask.personalize.style.formal',
+  'ask.personalize.style.sarcastic',
+  'ask.personalize.style.genz',
+  'ask.personalize.style.literary',
+  'ask.personalize.style.talkative',
+  'ask.personalize.style.positive',
 ]
 
 export function CharacterFormScreen() {
@@ -55,11 +61,11 @@ export function CharacterFormScreen() {
   // so they just start blank even in edit mode.
   useEffect(() => {
     if (editing) {
-      setName(editing.name)
-      setTagline(editing.tagline)
-      setPublicInfo(editing.publicInfo)
-      setBiography(editing.biography)
-      setFirstMessage(editing.firstMessage)
+      setName(ph(editing.name, baseLocale))
+      setTagline(ph(editing.tagline, baseLocale))
+      setPublicInfo(ph(editing.publicInfo, baseLocale))
+      setBiography(ph(editing.biography, baseLocale))
+      setFirstMessage(ph(editing.firstMessage, baseLocale))
     } else {
       setName('')
       setTagline('')
@@ -154,7 +160,11 @@ export function CharacterFormScreen() {
             onClick={() => setGenderMenuOpen(true)}
             className="flex items-center gap-1 bg-gray-100 rounded-xl px-3 py-1.5 text-[13px] text-imely-ink active:scale-95 transition-transform"
           >
-            {gender ? <Str k={gender === 'male' ? 'edit_bot.gender_1' : 'edit_bot.gender_2'} /> : 'Pilih...'}
+            {gender ? (
+              <Str k={gender === 'male' ? 'edit_bot.gender_1' : 'edit_bot.gender_2'} />
+            ) : (
+              <NoSheet>Pilih...</NoSheet>
+            )}
             <ChevronDown size={13} className="text-gray-400" />
           </button>
         </div>
@@ -242,13 +252,13 @@ export function CharacterFormScreen() {
                 <Str k="ask.personalize.style.suggestion" />:
               </div>
               <div className="mt-1.5 flex flex-wrap gap-1.5">
-                {STYLE_SUGGESTIONS.map((s) => (
+                {STYLE_SUGGESTIONS.map((key) => (
                   <button
-                    key={s}
-                    onClick={() => addStyleSuggestion(s)}
+                    key={key}
+                    onClick={() => addStyleSuggestion(resolveString(key, baseLocale))}
                     className="border border-imely-line rounded-full px-3 py-1 text-[12px] text-imely-ink active:scale-95 transition-transform"
                   >
-                    {s}
+                    <Str k={key} />
                   </button>
                 ))}
               </div>
@@ -459,7 +469,9 @@ function PrivacyOption({
         <div className="font-bold text-[14.5px] text-imely-ink">
           <Str k={titleKey} />
         </div>
-        <div className="text-[12.5px] text-gray-500 mt-0.5">{hint}</div>
+        <div className="text-[12.5px] text-gray-500 mt-0.5">
+          <NoSheet>{hint}</NoSheet>
+        </div>
       </div>
       {selected && <Check size={18} className="text-imely-primary shrink-0 mt-0.5" />}
     </button>
