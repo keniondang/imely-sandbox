@@ -79,6 +79,22 @@ export function useBrowseOrder(): {
       )
     }
 
+    // Translating is a per-KEY action — overrides are stored by key alone,
+    // so saving one occurrence already updates every other place that same
+    // key renders (badge.creator_rookie alone shows up on 4 different
+    // screens). Walking the queue by occurrence would make a translator
+    // re-visit an already-done string over and over for no reason, so once
+    // a key has been added to the queue once, every later occurrence is
+    // skipped. Doesn't affect the Inspector's own tree — that still lists
+    // every occurrence separately, since jumping to a SPECIFIC one to check
+    // how it actually renders there is still a real, distinct use case.
+    const seenKeys = new Set<string>()
+    function matchesDedupe(key: string): boolean {
+      if (seenKeys.has(key)) return false
+      seenKeys.add(key)
+      return true
+    }
+
     const rows: BrowseRow[] = []
     const pageSections: BrowseSection[] = []
     const overlaySections: BrowseOverlaySection[] = []
@@ -101,7 +117,7 @@ export function useBrowseOrder(): {
 
       for (const zone of sortedZones(plainZones)) {
         for (const key of zoneMap[zone]) {
-          if (!matchesFilter(key) || !matchesQuery(key)) continue
+          if (!matchesFilter(key) || !matchesQuery(key) || !matchesDedupe(key)) continue
           rows.push({ key, screenId, zone })
         }
       }
@@ -122,7 +138,7 @@ export function useBrowseOrder(): {
       const menuStart = rows.length
       for (const zone of sortedZones(menuZones)) {
         for (const key of zoneMap[zone]) {
-          if (!matchesFilter(key) || !matchesQuery(key)) continue
+          if (!matchesFilter(key) || !matchesQuery(key) || !matchesDedupe(key)) continue
           rows.push({ key, screenId, zone })
         }
       }
@@ -139,7 +155,7 @@ export function useBrowseOrder(): {
       const popupStart = rows.length
       for (const zone of sortedZones(popupZones)) {
         for (const key of zoneMap[zone]) {
-          if (!matchesFilter(key) || !matchesQuery(key)) continue
+          if (!matchesFilter(key) || !matchesQuery(key) || !matchesDedupe(key)) continue
           rows.push({ key, screenId, zone })
         }
       }

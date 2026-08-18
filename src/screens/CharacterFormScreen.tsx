@@ -51,6 +51,9 @@ export function CharacterFormScreen() {
   usePopupRequest('characterform', 'gender_menu', setGenderMenuOpen)
   usePopupRequest('characterform', 'privacy_menu', setPrivacyMenuOpen)
 
+  const [exitConfirmOpen, setExitConfirmOpen] = useState(false)
+  usePopupRequest('characterform', 'exit_confirm', setExitConfirmOpen)
+
   // Seed from the character being edited — only the fields that actually
   // have a source in MockCharacter; the rest (gender, hashtag, kepribadian,
   // karakter pendukung, gaya komunikasi, ...) have no mock equivalent yet,
@@ -95,6 +98,20 @@ export function CharacterFormScreen() {
     setStyle((prev) => (prev ? `${prev}, ${word}` : word))
   }
 
+  // Anything worth not losing silently — mirrors how UsernameScreen decides
+  // whether leaving needs a confirmation at all.
+  const hasDraftContent = [name, tagline, personality, publicInfo, biography, firstMessage].some((v) =>
+    v.trim()
+  )
+
+  function handleBack() {
+    if (hasDraftContent) {
+      setExitConfirmOpen(true)
+      return
+    }
+    closeCharacterForm()
+  }
+
   function submit() {
     if (isEdit) {
       const msg = resolveString('edit_bot.text_updated_bot', baseLocale)
@@ -111,7 +128,7 @@ export function CharacterFormScreen() {
     <div className="h-full flex flex-col bg-white relative">
       <div className="relative flex items-center justify-center px-3 py-2.5 border-b border-imely-line shrink-0">
         <button
-          onClick={closeCharacterForm}
+          onClick={handleBack}
           className="absolute left-3 w-8 h-8 rounded-full flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-100 transition-transform"
         >
           <ArrowLeft size={18} />
@@ -373,6 +390,49 @@ export function CharacterFormScreen() {
                   setPrivacyMenuOpen(false)
                 }}
               />
+            </div>
+          </div>
+        </ZoneScope>
+      )}
+
+      {/* leave-without-saving confirmation — the back arrow goes straight
+          through once nothing's been filled in, same as UsernameScreen's
+          own discard check */}
+      {exitConfirmOpen && (
+        <ZoneScope zone="exit_confirm">
+          <div className="absolute inset-0 z-20">
+            <button
+              onClick={() => setExitConfirmOpen(false)}
+              aria-label="Close exit confirmation"
+              className="absolute inset-0 bg-black/50"
+            />
+            <div className="absolute left-6 right-6 top-1/2 -translate-y-1/2 bg-[#1C1C1E] rounded-2xl p-5 text-center">
+              <div className="font-bold text-[15.5px] text-white">
+                <Str k="edit_bot.exit_create_title" />
+              </div>
+              <div className="mt-1.5 text-[13px] text-gray-400">
+                <Str k="edit_bot.exit_create_subtitle" />
+              </div>
+              <div className="mt-4 flex gap-2.5">
+                <button
+                  onClick={() => {
+                    setExitConfirmOpen(false)
+                    closeCharacterForm()
+                  }}
+                  className="flex-1 bg-white/10 text-white rounded-full py-2.5 text-[13.5px] font-semibold active:scale-95 transition-transform"
+                >
+                  <Str k="edit_bot.exit_create_btn1" />
+                </button>
+                <button
+                  onClick={() => {
+                    setExitConfirmOpen(false)
+                    closeCharacterForm()
+                  }}
+                  className="flex-1 bg-white text-imely-ink rounded-full py-2.5 text-[13.5px] font-semibold active:scale-95 transition-transform"
+                >
+                  <Str k="edit_bot.exit_create_btn2" />
+                </button>
+              </div>
             </div>
           </div>
         </ZoneScope>

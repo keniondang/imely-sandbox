@@ -226,7 +226,7 @@ export const WARM_UP_ZONES: Partial<Record<ScreenId, string[]>> = {
   mycharacters: ['menu', 'delete_confirm'],
   deleteaccount: ['delete_account_confirm'],
   username: ['discard_confirm'],
-  characterform: ['gender_menu', 'privacy_menu'],
+  characterform: ['gender_menu', 'privacy_menu', 'exit_confirm'],
   gems: ['gem_detail', 'invite_input', 'lucky_wheel', 'lucky_result'],
   chatdetail: ['mode_picker', 'relationship', 'role_summary', 'role_edit'],
   notification: ['menu'],
@@ -302,6 +302,7 @@ export const ZONE_LABEL: Record<string, string> = {
 export type ZoneKind = 'menu' | 'popup' | 'tab'
 export const ZONE_TYPE: Record<string, ZoneKind> = {
   menu: 'menu',
+  avatar_menu: 'menu',
   verify_menu: 'menu',
   privacy_menu: 'menu',
   gender_menu: 'menu',
@@ -314,6 +315,7 @@ export const ZONE_TYPE: Record<string, ZoneKind> = {
   block_confirm: 'popup',
   delete_confirm: 'popup',
   discard_confirm: 'popup',
+  exit_confirm: 'popup',
   identity_card_edit: 'popup',
   unlink_blocked: 'popup',
   birthdate_edit: 'popup',

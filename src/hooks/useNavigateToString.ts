@@ -152,13 +152,23 @@ function useOpenOverlayChain() {
 // — used when clicking an actual string row (Inspector list, search, or the
 // TranslationPanel's prev/next buttons).
 export function useNavigateToString() {
-  const { usage, selectKey, requestPopup } = useApp()
+  const { usage, selectedOccurrence, selectKey, requestPopup } = useApp()
   const openOverlayChain = useOpenOverlayChain()
 
   return function navigateTo(key: string, screenId?: ScreenId, zone?: Zone) {
     const rec = screenId ? { screenId, zone: zone ?? 'page' } : usage.find((u) => u.key === key)
+    // Stepping to another key already inside the SAME open screen/zone (e.g.
+    // Next-ing between two strings in the same popup) needs nothing torn
+    // down — openOverlayChain's blanket "close everything" sweep would
+    // unmount that popup and reopen it a tick later via requestPopup, and
+    // that brief unmount/remount fires the live-preview auto-follow effect
+    // (see useLivePreviewFollow.ts), which resets the selection back to the
+    // zone's first key — silently undoing the very navigation that
+    // triggered it. Skipping the sweep when we're already there avoids that
+    // churn entirely.
+    const alreadyThere = rec && selectedOccurrence?.screenId === rec.screenId && selectedOccurrence?.zone === rec.zone
     selectKey(key, rec ? { screenId: rec.screenId, zone: rec.zone } : null)
-    if (!rec) return
+    if (!rec || alreadyThere) return
     openOverlayChain(rec.screenId, rec.zone)
     requestPopup(rec.screenId, rec.zone)
   }
