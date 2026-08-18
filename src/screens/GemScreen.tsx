@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ArrowLeft, ChevronRight, Plus, Copy, Pencil, Check, X } from 'lucide-react'
-import { Str, RichStr, useRegisterKeys } from '../components/Str'
+import { Str, RichStr, useStrAttrs } from '../components/Str'
 import { NoSheet } from '../components/NoSheet'
 import { useApp } from '../context/AppContext'
 import { ZoneScope } from '../context/ScreenScope'
@@ -19,7 +19,7 @@ const DAILY_GEM_LOTS = [
 
 export function GemScreen() {
   const { baseLocale, closeGems, openGemHistory, openPurchase, showToast } = useApp()
-  useRegisterKeys(['input_invite_code.hint'])
+  const inviteHintAttrs = useStrAttrs('input_invite_code.hint', 'invite_input')
 
   // Balances/mission progress are local session state, not fixed mock
   // constants — the lucky wheel actually pays out into them (see spinWheel).
@@ -230,7 +230,7 @@ export function GemScreen() {
             <MissionCard
               titleNode={
                 <>
-                  <Str k="companion_header.banners.lucky_draw_title" /> Harian ({missions[1].progress})
+                  <Str k="companion_header.banners.lucky_draw_title" /> ({missions[1].progress})
                 </>
               }
               limit={1}
@@ -239,9 +239,13 @@ export function GemScreen() {
               onDo={() => setLuckyWheelOpen(true)}
             />
 
-            {/* daily gift — fully placeholder, not in the xlsx */}
+            {/* daily gift */}
             <MissionCard
-              titleNode={<>Hadiah Harian ({missions[2].progress})</>}
+              titleNode={
+                <>
+                  <Str k="user_gem_overview.daily" /> ({missions[2].progress})
+                </>
+              }
               limit={1}
               reward={missions[2].reward}
               done={missions[2].done}
@@ -321,6 +325,7 @@ export function GemScreen() {
                 }}
                 placeholder={resolveString('input_invite_code.hint', baseLocale)}
                 className="mt-4 w-full bg-gray-100 rounded-full px-4 py-2.5 text-[13.5px] outline-none"
+                {...inviteHintAttrs}
               />
               {inviteInputError && (
                 <div className="mt-1.5 text-[12px] text-red-500">

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { PanelLeftOpen, PanelLeftClose, X, Download } from 'lucide-react'
+import { PanelLeftOpen, PanelLeftClose, X, Download, Focus } from 'lucide-react'
 import { AppProvider, useApp } from './context/AppContext'
 import { ScreenScope } from './context/ScreenScope'
 import { useStringHighlighter } from './hooks/useStringHighlighter'
@@ -21,6 +21,7 @@ import { GemHistoryScreen } from './screens/GemHistoryScreen'
 import { PurchaseScreen } from './screens/PurchaseScreen'
 import { CharacterProfileScreen } from './screens/CharacterProfileScreen'
 import { CreatorProfileScreen } from './screens/CreatorProfileScreen'
+import { QrCodeScreen } from './screens/QrCodeScreen'
 import { ChatOptionsScreen } from './screens/ChatOptionsScreen'
 import { DevicesScreen } from './screens/DevicesScreen'
 import { AccountScreen } from './screens/AccountScreen'
@@ -37,8 +38,11 @@ import { UsernameScreen } from './screens/UsernameScreen'
 import { DeleteAccountScreen } from './screens/DeleteAccountScreen'
 import { CharacterFormScreen } from './screens/CharacterFormScreen'
 import { ProfileMenuSheet } from './components/ProfileMenuSheet'
+import { AvatarMenuSheet } from './components/AvatarMenuSheet'
 import { Inspector } from './sandbox/Inspector'
+import { useLivePreviewFollow } from './hooks/useLivePreviewFollow'
 import { TranslationPanel } from './sandbox/TranslationPanel'
+import { FocusPanel } from './sandbox/FocusPanel'
 
 function Shell() {
   const {
@@ -57,6 +61,9 @@ function Shell() {
     purchaseOpen,
     profileMenuOpen,
     closeProfileMenu,
+    avatarMenuOpen,
+    closeAvatarMenu,
+    showToast,
     devicesOpen,
     openDevices,
     accountOpen,
@@ -64,6 +71,7 @@ function Shell() {
     myCharactersOpen,
     followingOpen,
     badgesOpen,
+    qrCodeOpen,
     appearanceOpen,
     settingsOpen,
     notificationSettingsOpen,
@@ -78,8 +86,12 @@ function Shell() {
     requestPopup,
     toast,
     overrides,
+    priming,
+    setPriming,
+    focusMode,
   } = useApp()
   useStringHighlighter()
+  const activeScreenId = useLivePreviewFollow()
   const openScreen = useOpenScreen()
 
   // Visit every screen once behind a brief cover so the Inspector's key
@@ -88,7 +100,6 @@ function Shell() {
   // opens each screen's own local popups/menus (WARM_UP_ZONES) the same
   // way — those live behind a button click inside the screen itself, so
   // mounting the screen alone never registers their strings.
-  const [priming, setPriming] = useState(true)
   useEffect(() => {
     let cancelled = false
     async function warmUp() {
@@ -142,32 +153,41 @@ function Shell() {
           color-matched segments so all three columns' content starts at the
           same y-offset instead of each panel carrying its own header height */}
       <div className="h-12 flex items-stretch shrink-0">
-        {inspectorOpen && (
-          <>
-            <div className="w-[360px] shrink-0 bg-imely-ink border-b border-white/10 flex items-center px-3">
-              <span className="text-[13px] font-semibold text-white">String Inspector</span>
-            </div>
-            <div className="w-[360px] shrink-0 bg-white border-b border-imely-line flex items-center justify-between px-3">
-              <span className="text-[13px] font-semibold text-imely-ink">Translation</span>
-              {selectedKey && (
-                <button
-                  onClick={() => selectKey(null, null)}
-                  title="Close translation panel"
-                  className="text-gray-400 active:scale-90 transition-transform"
-                >
-                  <X size={16} />
-                </button>
-              )}
-            </div>
-          </>
+        {focusMode ? (
+          <div className="w-[300px] shrink-0 bg-imely-primary border-b border-imely-primaryDark flex items-center px-3">
+            <Focus size={14} className="text-white mr-1.5" />
+            <span className="text-[13px] font-semibold text-white">Focus Mode</span>
+          </div>
+        ) : (
+          inspectorOpen && (
+            <>
+              <div className="w-[360px] shrink-0 bg-imely-ink border-b border-white/10 flex items-center px-3">
+                <span className="text-[13px] font-semibold text-white">String Inspector</span>
+              </div>
+              <div className="w-[360px] shrink-0 bg-white border-b border-imely-line flex items-center justify-between px-3">
+                <span className="text-[13px] font-semibold text-imely-ink">Translation</span>
+                {selectedKey && (
+                  <button
+                    onClick={() => selectKey(null, null)}
+                    title="Close translation panel"
+                    className="text-gray-400 active:scale-90 transition-transform"
+                  >
+                    <X size={16} />
+                  </button>
+                )}
+              </div>
+            </>
+          )
         )}
         <div className="flex-1 flex items-center gap-3 px-4 border-b border-imely-line bg-white min-w-0">
-          <button
-            onClick={() => setInspectorOpen(!inspectorOpen)}
-            className="w-7 h-7 rounded-md flex items-center justify-center text-gray-500 hover:bg-gray-100 shrink-0"
-          >
-            {inspectorOpen ? <PanelLeftClose size={16} /> : <PanelLeftOpen size={16} />}
-          </button>
+          {!focusMode && (
+            <button
+              onClick={() => setInspectorOpen(!inspectorOpen)}
+              className="w-7 h-7 rounded-md flex items-center justify-center text-gray-500 hover:bg-gray-100 shrink-0"
+            >
+              {inspectorOpen ? <PanelLeftClose size={16} /> : <PanelLeftOpen size={16} />}
+            </button>
+          )}
           <span className="text-[13px] font-semibold text-imely-ink truncate">imely localization sandbox</span>
           <span className="text-[11px] text-gray-400 truncate">— live UI preview, not the real app</span>
           <div className="ml-auto relative shrink-0" ref={exportMenuRef}>
@@ -209,11 +229,15 @@ function Shell() {
       </div>
 
       <div className="flex-1 flex overflow-hidden">
-        {inspectorOpen && (
-          <>
-            <Inspector />
-            <TranslationPanel />
-          </>
+        {focusMode ? (
+          <FocusPanel />
+        ) : (
+          inspectorOpen && (
+            <>
+              <Inspector activeScreenId={activeScreenId} />
+              <TranslationPanel />
+            </>
+          )
         )}
 
         <div className="flex-1 flex flex-col overflow-hidden">
@@ -279,6 +303,15 @@ function Shell() {
               <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
                 <ScreenScope id="creatorprofile">
                   <CreatorProfileScreen />
+                </ScreenScope>
+              </div>
+            )}
+
+            {/* QR code — pushed on top of Creator Profile from its share icon */}
+            {qrCodeOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-40 bg-white">
+                <ScreenScope id="qrcode">
+                  <QrCodeScreen />
                 </ScreenScope>
               </div>
             )}
@@ -468,6 +501,33 @@ function Shell() {
                   onPerangkatMasuk={() => {
                     closeProfileMenu()
                     openDevices()
+                  }}
+                />
+              </div>
+            )}
+
+            {/* avatar "change photo" sheet — opened from the camera badge on the
+                avatar, on either the Profile tab or your own Creator Profile */}
+            {avatarMenuOpen && (
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-40">
+                <AvatarMenuSheet
+                  open={avatarMenuOpen}
+                  onClose={closeAvatarMenu}
+                  onTakePhoto={() => {
+                    closeAvatarMenu()
+                    showToast('Ambil foto — segera hadir')
+                  }}
+                  onChooseGallery={() => {
+                    closeAvatarMenu()
+                    showToast('Pilih foto dari galeri — segera hadir')
+                  }}
+                  onViewPhoto={() => {
+                    closeAvatarMenu()
+                    showToast('Lihat avatar — segera hadir')
+                  }}
+                  onManageAccount={() => {
+                    closeAvatarMenu()
+                    openAccount()
                   }}
                 />
               </div>

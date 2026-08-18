@@ -26,6 +26,13 @@ export function buildStrSelector(key: string, screenId?: ScreenId | null, zone?:
 // Inspector's "wired" tracking (driven entirely by Str/RichStr's own mount
 // effect) would otherwise never see them and misreport them as unused.
 // Call with the fixed list of keys a component resolves this way.
+//
+// Use this for keys with no single, stable DOM element to point at (toast
+// messages fired from a handler — nothing persists to attach data-str-key
+// to). For a placeholder attribute, which DOES have a stable element (the
+// input/textarea itself), prefer useStrAttrs below instead — it also
+// registers usage, but additionally makes that element jump-to-highlight-able
+// from the Inspector the same way a <Str> child would be.
 export function useRegisterKeys(keys: string[]) {
   const { registerUsage } = useApp()
   const screenId = useScreenScope()
@@ -35,6 +42,36 @@ export function useRegisterKeys(keys: string[]) {
     for (const key of keys) registerUsage({ key, screenId, zone })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keys.join('|'), screenId, zone])
+}
+
+// Companion to useRegisterKeys for the specific case of a single key that
+// DOES have one stable rendering element — most commonly an <input>/
+// <textarea> whose placeholder is resolveString(key, ...) rather than a
+// <Str> child (which isn't possible for a placeholder attribute). Spread the
+// result onto that element so useStringHighlighter's data-str-key lookup
+// (see hooks/useStringHighlighter.ts) can find and highlight it, exactly
+// like it would for a normal <Str>-rendered element.
+//
+// `zoneOverride` is required when the element lives inside its own local
+// <ZoneScope> (a popup/modal zone) — useZoneScope() reflects the *ambient*
+// zone at the component's own top level, which is where this hook normally
+// runs, not the zone a later, conditionally-rendered part of the JSX tree
+// opts into. Pass the same zone string that wraps the element (e.g.
+// zoneOverride="invite_input" to match <ZoneScope zone="invite_input">) so
+// the two agree; omit it only when the element is NOT inside a nested
+// ZoneScope of its own.
+export function useStrAttrs(key: string, zoneOverride?: Zone) {
+  const { registerUsage } = useApp()
+  const screenId = useScreenScope()
+  const ambientZone = useZoneScope()
+  const zone = zoneOverride ?? ambientZone
+
+  useEffect(() => {
+    registerUsage({ key, screenId, zone })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key, screenId, zone])
+
+  return { 'data-str-key': key, 'data-str-screen': screenId, 'data-str-zone': zone } as const
 }
 
 // Renders a localized string by key AND registers where it lives so the

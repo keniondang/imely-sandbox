@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
 import { Str } from '../components/Str'
-import { NoSheet } from '../components/NoSheet'
 import { useApp } from '../context/AppContext'
 import { MOCK_FEED_CHARACTERS, ph } from '../data/mockContent'
 
@@ -43,7 +42,7 @@ export function FollowingScreen() {
           <Str k="profile_creator.stat.characters" />
         </TabButton>
         <TabButton active={tab === 'creators'} onClick={() => setTab('creators')}>
-          <NoSheet>Pencipta</NoSheet>
+          <Str k="profile_creator.badge.creator" />
         </TabButton>
       </div>
 

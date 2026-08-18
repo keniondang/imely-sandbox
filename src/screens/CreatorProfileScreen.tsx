@@ -1,19 +1,53 @@
 import { useState } from 'react'
-import { ArrowLeft, Share2, MoreVertical, MessageCircle, FileText } from 'lucide-react'
+import { ArrowLeft, Share2, MoreVertical, MessageCircle, FileText, Camera } from 'lucide-react'
 import { Str } from '../components/Str'
 import { OpsiMenuSheet, BlockConfirmDialog, ReportReasonsSheet } from '../components/ProfileOptionsSheets'
 import { useApp } from '../context/AppContext'
 import { useProfileOptions } from '../hooks/useProfileOptions'
-import { MOCK_FEED_CHARACTERS, ph } from '../data/mockContent'
+import { MOCK_FEED_CHARACTERS, MOCK_USER, ph } from '../data/mockContent'
+
+// Reachable two ways: from a character's "Kreator" row (viewing SOMEONE
+// ELSE'S creator profile, activeCreatorId = a real creatorId), or by tapping
+// your own name on the Profile screen (activeCreatorId = the 'self'
+// sentinel) — the latter shows all of MOCK_FEED_CHARACTERS as "your"
+// characters and drops the follow/block/report actions, since those don't
+// apply to your own profile.
+const SELF_CREATOR_ID = 'self'
+
+// Placeholder — follower count isn't tracked as real state anywhere in the
+// sandbox (there's no "who follows you" list), so it's a fixed mock number
+// rather than derived from data, same spirit as the other per-user stats
+// throughout mockContent.ts.
+const SELF_FOLLOWERS = '14'
+
+function formatChatTotal(characters: { chatCount: string }[]): string {
+  const total = characters.reduce((sum, c) => {
+    const n = parseFloat(c.chatCount)
+    const multiplier = c.chatCount.toUpperCase().includes('K') ? 1000 : 1
+    return sum + n * multiplier
+  }, 0)
+  return total >= 1000 ? `${(total / 1000).toFixed(1)}K` : String(total)
+}
 
 export function CreatorProfileScreen() {
-  const { activeCreatorId, closeCreatorProfile, closeCharacterProfile, openCharacterProfile, showToast, baseLocale } =
-    useApp()
+  const {
+    activeCreatorId,
+    closeCreatorProfile,
+    closeCharacterProfile,
+    openCharacterProfile,
+    openQrCode,
+    openAvatarMenu,
+    showToast,
+    baseLocale,
+  } = useApp()
   const [tab, setTab] = useState<'characters' | 'info'>('characters')
+  const isSelf = activeCreatorId === SELF_CREATOR_ID
 
-  const characters = MOCK_FEED_CHARACTERS.filter((c) => c.creatorId === activeCreatorId)
+  const characters = isSelf
+    ? MOCK_FEED_CHARACTERS
+    : MOCK_FEED_CHARACTERS.filter((c) => c.creatorId === activeCreatorId)
   const rep = characters[0]
-  const creatorName = rep ? ph(rep.creatorName, baseLocale) : ''
+  const creatorName = isSelf ? ph(MOCK_USER.name, baseLocale) : rep ? ph(rep.creatorName, baseLocale) : ''
 
   const opts = useProfileOptions('creatorprofile', creatorName, closeCharacterProfile)
 
@@ -34,36 +68,54 @@ export function CreatorProfileScreen() {
         </button>
         <div className="flex items-center gap-1">
           <button
-            onClick={() => showToast('Bagikan — segera hadir')}
+            onClick={isSelf ? openQrCode : () => showToast('Bagikan — segera hadir')}
             className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-100 transition-transform"
           >
             <Share2 size={16} />
           </button>
-          <button
-            onClick={() => opts.setOptionsOpen(true)}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-100 transition-transform"
-          >
-            <MoreVertical size={18} />
-          </button>
+          {!isSelf && (
+            <button
+              onClick={() => opts.setOptionsOpen(true)}
+              className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-100 transition-transform"
+            >
+              <MoreVertical size={18} />
+            </button>
+          )}
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto pb-4">
         <div className="px-4 pt-4 flex items-center gap-3">
-          <div className="w-14 h-14 rounded-full bg-gray-200 shrink-0" />
+          <div className="relative shrink-0">
+            <div
+              className="w-14 h-14 rounded-full bg-gray-200 bg-cover bg-center"
+              style={isSelf ? { backgroundColor: MOCK_USER.avatarColor } : undefined}
+            />
+            {isSelf && (
+              <button
+                onClick={openAvatarMenu}
+                className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full bg-white border border-imely-line flex items-center justify-center active:scale-90 transition-transform"
+              >
+                <Camera size={10} className="text-imely-ink" />
+              </button>
+            )}
+          </div>
           <div className="flex-1 min-w-0">
             <div className="font-bold text-[17px] text-imely-ink truncate">{creatorName}</div>
             <div className="flex gap-4 mt-1.5">
-              <MiniStat value={rep.creatorFollowers} labelKey="profile_creator.stat.followers" />
+              <MiniStat value={isSelf ? SELF_FOLLOWERS : rep.creatorFollowers} labelKey="profile_creator.stat.followers" />
               <MiniStat value={String(characters.length)} labelKey="profile_creator.stat.characters" />
-              <MiniStat value={rep.chatCount} labelKey="profile_creator.stat.chats" />
+              <MiniStat
+                value={isSelf ? formatChatTotal(characters) : rep.chatCount}
+                labelKey="profile_creator.stat.chats"
+              />
             </div>
           </div>
         </div>
 
         <div className="px-4 mt-3">
           <span className="inline-flex items-center gap-1 text-[11px] text-pink-500 bg-pink-50 rounded-full px-2.5 py-1">
-            🐣 <Str k={rep.creatorBadgeKey} />
+            {isSelf ? '🥉' : '🐣'} <Str k={isSelf ? MOCK_USER.tierBadgeKey : rep.creatorBadgeKey} />
           </span>
         </div>
 
@@ -116,43 +168,49 @@ export function CreatorProfileScreen() {
         )}
       </div>
 
-      <div className="shrink-0 p-4 border-t border-imely-line flex gap-2">
-        <button
-          onClick={opts.toggleFollow}
-          className="flex-1 border border-imely-primary text-imely-primaryDark bg-imely-mint/30 font-bold rounded-full py-3 active:scale-[0.97] transition-transform"
-        >
-          <Str k={opts.following ? 'identity.follow.btn_followed' : 'identity.follow.btn_follow'} />
-        </button>
-        <button
-          onClick={() => showToast('Pesan — segera hadir')}
-          className="flex-1 bg-imely-primary text-white font-bold rounded-full py-3 active:scale-[0.97] active:bg-imely-primaryDark transition-transform"
-        >
-          <Str k="toolbar_menu.chat" />
-        </button>
-      </div>
+      {!isSelf && (
+        <div className="shrink-0 p-4 border-t border-imely-line flex gap-2">
+          <button
+            onClick={opts.toggleFollow}
+            className="flex-1 border border-imely-primary text-imely-primaryDark bg-imely-mint/30 font-bold rounded-full py-3 active:scale-[0.97] transition-transform"
+          >
+            <Str k={opts.following ? 'identity.follow.btn_followed' : 'identity.follow.btn_follow'} />
+          </button>
+          <button
+            onClick={() => showToast('Pesan — segera hadir')}
+            className="flex-1 bg-imely-primary text-white font-bold rounded-full py-3 active:scale-[0.97] active:bg-imely-primaryDark transition-transform"
+          >
+            <Str k="toolbar_menu.chat" />
+          </button>
+        </div>
+      )}
 
-      <OpsiMenuSheet
-        optionsOpen={opts.optionsOpen}
-        onClose={() => opts.setOptionsOpen(false)}
-        following={opts.following}
-        onToggleFollow={opts.toggleFollow}
-        onOpenBlockConfirm={opts.openBlockConfirm}
-        onOpenReport={opts.openReport}
-        onModerate={() => showToast('Moderasi — khusus internal')}
-      />
-      <BlockConfirmDialog
-        targetName={creatorName}
-        open={opts.blockConfirmOpen}
-        onClose={() => opts.setBlockConfirmOpen(false)}
-        onConfirm={opts.confirmBlock}
-      />
-      <ReportReasonsSheet
-        open={opts.reportOpen}
-        onClose={() => opts.setReportOpen(false)}
-        reason={opts.reportReason}
-        onSelectReason={opts.setReportReason}
-        onSend={opts.sendReport}
-      />
+      {!isSelf && (
+        <>
+          <OpsiMenuSheet
+            optionsOpen={opts.optionsOpen}
+            onClose={() => opts.setOptionsOpen(false)}
+            following={opts.following}
+            onToggleFollow={opts.toggleFollow}
+            onOpenBlockConfirm={opts.openBlockConfirm}
+            onOpenReport={opts.openReport}
+            onModerate={() => showToast('Moderasi — khusus internal')}
+          />
+          <BlockConfirmDialog
+            targetName={creatorName}
+            open={opts.blockConfirmOpen}
+            onClose={() => opts.setBlockConfirmOpen(false)}
+            onConfirm={opts.confirmBlock}
+          />
+          <ReportReasonsSheet
+            open={opts.reportOpen}
+            onClose={() => opts.setReportOpen(false)}
+            reason={opts.reportReason}
+            onSelectReason={opts.setReportReason}
+            onSend={opts.sendReport}
+          />
+        </>
+      )}
     </div>
   )
 }

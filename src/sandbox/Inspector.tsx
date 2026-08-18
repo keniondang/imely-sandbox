@@ -29,14 +29,13 @@ interface SearchHit {
   zone: Zone | null
 }
 
-export function Inspector() {
+export function Inspector({ activeScreenId }: { activeScreenId: ScreenId }) {
   const {
     targetLocale,
     setTargetLocale,
     baseLocale,
     setBaseLocale,
     usage,
-    currentScreen,
     overrides,
     selectedKey,
     selectedOccurrence,
@@ -44,32 +43,11 @@ export function Inspector() {
     setFilterMode,
     focusPath,
     setFocusPath,
-    activeChat,
-    chatOptionsOpen,
-    activeCharacterId,
-    activeCreatorId,
-    notifOpen,
-    gemsOpen,
-    gemHistoryOpen,
-    purchaseOpen,
-    devicesOpen,
-    accountOpen,
-    myCharactersOpen,
-    followingOpen,
-    badgesOpen,
-    appearanceOpen,
-    settingsOpen,
-    notificationSettingsOpen,
-    videoSettingsOpen,
-    aboutOpen,
-    verifyEmailOpen,
-    usernameOpen,
-    deleteAccountOpen,
-    characterFormOpen,
+    query,
+    setQuery,
   } = useApp()
   const navigateTo = useNavigateToString()
   const openScreen = useOpenScreen()
-  const [query, setQuery] = useState('')
   // Composite `key::screenId::zone` strings currently overflowing their
   // container, re-scanned on an interval — see the bulk-scan effect below.
   const [overflowingKeys, setOverflowingKeys] = useState<Set<string>>(new Set())
@@ -77,59 +55,6 @@ export function Inspector() {
   const [categoryProgressOpen, setCategoryProgressOpen] = useState(false)
   const searchInputRef = useRef<HTMLInputElement>(null)
   const rowRefs = useRef(new Map<number, HTMLButtonElement>())
-
-  // Whichever screen is actually visible in the live preview right now —
-  // base screens track currentScreen, but overlays (chat detail, notification,
-  // gems) render independently of it, so check those booleans first.
-  const activeScreenId: ScreenId = useMemo(() => {
-    if (activeChat && chatOptionsOpen) return 'chatoptions'
-    if (activeChat) return 'chatdetail'
-    if (activeCharacterId && activeCreatorId) return 'creatorprofile'
-    if (activeCharacterId) return 'characterprofile'
-    if (notifOpen) return 'notification'
-    if (purchaseOpen) return 'purchase'
-    if (gemHistoryOpen) return 'gemhistory'
-    if (gemsOpen) return 'gems'
-    if (verifyEmailOpen) return 'verifyemail'
-    if (usernameOpen) return 'username'
-    if (deleteAccountOpen) return 'deleteaccount'
-    if (accountOpen) return 'account'
-    if (devicesOpen) return 'devices'
-    if (myCharactersOpen) return 'mycharacters'
-    if (followingOpen) return 'following'
-    if (badgesOpen) return 'badges'
-    if (appearanceOpen) return 'appearance'
-    if (notificationSettingsOpen) return 'notificationsettings'
-    if (videoSettingsOpen) return 'videosettings'
-    if (settingsOpen) return 'settings'
-    if (aboutOpen) return 'about'
-    if (characterFormOpen) return 'characterform'
-    return currentScreen
-  }, [
-    activeChat,
-    chatOptionsOpen,
-    activeCharacterId,
-    activeCreatorId,
-    notifOpen,
-    purchaseOpen,
-    gemHistoryOpen,
-    gemsOpen,
-    verifyEmailOpen,
-    usernameOpen,
-    deleteAccountOpen,
-    accountOpen,
-    devicesOpen,
-    myCharactersOpen,
-    followingOpen,
-    badgesOpen,
-    appearanceOpen,
-    notificationSettingsOpen,
-    videoSettingsOpen,
-    settingsOpen,
-    aboutOpen,
-    characterFormOpen,
-    currentScreen,
-  ])
 
   // A section header both opens its screen in the live preview AND expands
   // the tree to it. If it's already the one showing, clicking it again
@@ -178,6 +103,7 @@ export function Inspector() {
       chatoptions: {},
       characterprofile: {},
       creatorprofile: {},
+      qrcode: {},
       notification: {},
       gems: {},
       gemhistory: {},

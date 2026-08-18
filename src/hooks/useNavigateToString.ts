@@ -19,11 +19,13 @@ function useOpenOverlayChain() {
     closePurchase,
     closeFilter,
     closeProfileMenu,
+    closeAvatarMenu,
     closeDevices,
     closeAccount,
     closeMyCharacters,
     closeFollowing,
     closeBadges,
+    closeQrCode,
     closeAppearance,
     closeSettings,
     closeAbout,
@@ -44,6 +46,7 @@ function useOpenOverlayChain() {
     openMyCharacters,
     openFollowing,
     openBadges,
+    openQrCode,
     openAppearance,
     openSettings,
     openNotificationSettings,
@@ -67,11 +70,13 @@ function useOpenOverlayChain() {
     closePurchase()
     closeFilter()
     closeProfileMenu()
+    closeAvatarMenu()
     closeDevices()
     closeAccount()
     closeMyCharacters()
     closeFollowing()
     closeBadges()
+    closeQrCode()
     closeAppearance()
     closeSettings()
     closeAbout()
@@ -92,6 +97,9 @@ function useOpenOverlayChain() {
     } else if (screenId === 'creatorprofile') {
       openCharacterProfile(MOCK_FEED_CHARACTERS[0].id)
       openCreatorProfile(MOCK_FEED_CHARACTERS[0].creatorId)
+    } else if (screenId === 'qrcode') {
+      openCreatorProfile('self')
+      openQrCode()
     } else if (screenId === 'notification') {
       openNotif()
     } else if (screenId === 'gems') {

@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useApp, type ScreenId, type Zone } from '../context/AppContext'
-import { ALL_STRINGS } from '../lib/strings'
+import { ALL_STRINGS, getEntry } from '../lib/strings'
 import { SCREEN_ORDER, SCREEN_LABEL, ZONE_TYPE, sortedZones } from '../sandbox/browseConfig'
 
 export interface BrowseRow {
@@ -46,7 +46,7 @@ export function useBrowseOrder(): {
   pageSections: BrowseSection[]
   overlaySections: BrowseOverlaySection[]
 } {
-  const { usage, overrides, filterMode, targetLocale } = useApp()
+  const { usage, overrides, filterMode, targetLocale, query } = useApp()
 
   const wiredKeys = useMemo(() => new Set(usage.map((u) => u.key)), [usage])
 
@@ -59,6 +59,24 @@ export function useBrowseOrder(): {
       if (filterMode === 'translated') return Boolean(overrides[key]?.[targetLocale])
       if (filterMode === 'untranslated') return !overrides[key]?.[targetLocale]
       return true
+    }
+
+    // Mirrors the Inspector's own search matching (key/category/id/en/vi
+    // substring) so Prev/Next in the panel walks the exact same set of
+    // strings the sidebar's search results show — a search query narrows
+    // the queue the same way a filter does.
+    const q = query.trim().toLowerCase()
+    function matchesQuery(key: string): boolean {
+      if (!q) return true
+      const entry = getEntry(key)
+      if (!entry) return key.toLowerCase().includes(q)
+      return (
+        entry.key.toLowerCase().includes(q) ||
+        String(entry.category).toLowerCase().includes(q) ||
+        Boolean(entry.locales.id?.toLowerCase().includes(q)) ||
+        Boolean(entry.locales.en?.toLowerCase().includes(q)) ||
+        Boolean(entry.locales.vi?.toLowerCase().includes(q))
+      )
     }
 
     const rows: BrowseRow[] = []
@@ -83,7 +101,7 @@ export function useBrowseOrder(): {
 
       for (const zone of sortedZones(plainZones)) {
         for (const key of zoneMap[zone]) {
-          if (!matchesFilter(key)) continue
+          if (!matchesFilter(key) || !matchesQuery(key)) continue
           rows.push({ key, screenId, zone })
         }
       }
@@ -104,7 +122,7 @@ export function useBrowseOrder(): {
       const menuStart = rows.length
       for (const zone of sortedZones(menuZones)) {
         for (const key of zoneMap[zone]) {
-          if (!matchesFilter(key)) continue
+          if (!matchesFilter(key) || !matchesQuery(key)) continue
           rows.push({ key, screenId, zone })
         }
       }
@@ -121,7 +139,7 @@ export function useBrowseOrder(): {
       const popupStart = rows.length
       for (const zone of sortedZones(popupZones)) {
         for (const key of zoneMap[zone]) {
-          if (!matchesFilter(key)) continue
+          if (!matchesFilter(key) || !matchesQuery(key)) continue
           rows.push({ key, screenId, zone })
         }
       }
@@ -154,7 +172,7 @@ export function useBrowseOrder(): {
     for (const cat of catNames) {
       const start = rows.length
       for (const entry of byCategory.get(cat)!) {
-        if (!matchesFilter(entry.key)) continue
+        if (!matchesFilter(entry.key) || !matchesQuery(entry.key)) continue
         rows.push({ key: entry.key, screenId: null, zone: null })
       }
       if (rows.length === start) continue
@@ -162,5 +180,5 @@ export function useBrowseOrder(): {
     }
 
     return { rows, pageSections, overlaySections }
-  }, [usage, overrides, filterMode, wiredKeys, targetLocale])
+  }, [usage, overrides, filterMode, wiredKeys, targetLocale, query])
 }

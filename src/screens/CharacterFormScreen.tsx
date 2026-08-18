@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
 import { ArrowLeft, Camera, ChevronDown, X, Plus, Maximize2, Lock, Globe, Check } from 'lucide-react'
-import { Str, useRegisterKeys } from '../components/Str'
+import { Str, useRegisterKeys, useStrAttrs } from '../components/Str'
 import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
 import { resolveString } from '../lib/strings'
 import { MOCK_FEED_CHARACTERS, ph } from '../data/mockContent'
-import { NoSheet } from '../components/NoSheet'
 
 type Gender = 'male' | 'female'
 type Privacy = 'private' | 'public'
@@ -29,12 +28,9 @@ export function CharacterFormScreen() {
   const editing = characterFormEditId ? MOCK_FEED_CHARACTERS.find((c) => c.id === characterFormEditId) : undefined
   const isEdit = Boolean(editing)
 
-  useRegisterKeys([
-    'edit_bot.text_updated_bot',
-    'bot.character_created_success_with_name',
-    'edit_bot.name_hint',
-    'edit_bot.hashtag_hint',
-  ])
+  useRegisterKeys(['edit_bot.text_updated_bot', 'bot.character_created_success_with_name'])
+  const nameHintAttrs = useStrAttrs('edit_bot.name_hint')
+  const hashtagHintAttrs = useStrAttrs('edit_bot.hashtag_hint')
 
   const [name, setName] = useState('')
   const [gender, setGender] = useState<Gender | null>(null)
@@ -149,6 +145,7 @@ export function CharacterFormScreen() {
             onChange={(e) => setName(e.target.value)}
             placeholder={resolveString('edit_bot.name_hint', baseLocale)}
             className="w-full bg-gray-100 rounded-xl px-3.5 py-3 text-[14px] text-imely-ink outline-none placeholder:text-gray-400"
+            {...nameHintAttrs}
           />
         </Field>
 
@@ -163,7 +160,7 @@ export function CharacterFormScreen() {
             {gender ? (
               <Str k={gender === 'male' ? 'edit_bot.gender_1' : 'edit_bot.gender_2'} />
             ) : (
-              <NoSheet>Pilih...</NoSheet>
+              <Str k="user_profile_v2.profile_info.gender_picker_none" />
             )}
             <ChevronDown size={13} className="text-gray-400" />
           </button>
@@ -184,6 +181,7 @@ export function CharacterFormScreen() {
                   onChange={(e) => updateHashtag(i, e.target.value)}
                   placeholder={resolveString('edit_bot.hashtag_hint', baseLocale)}
                   className="flex-1 bg-transparent text-[14px] text-imely-ink outline-none placeholder:text-gray-400 min-w-0"
+                  {...hashtagHintAttrs}
                 />
                 <button onClick={() => removeHashtag(i)} className="text-imely-ink shrink-0 active:scale-90 transition-transform">
                   <X size={16} />
@@ -358,7 +356,7 @@ export function CharacterFormScreen() {
               <PrivacyOption
                 icon={<Lock size={18} />}
                 titleKey="edit_bot.privacy_private_title"
-                hint="Hanya kamu yang bisa melihat. Orang yang punya tautannya pun nggak bisa buka."
+                hintKey="feed_privacy.mode.only_me_hint"
                 selected={privacy === 'private'}
                 onSelect={() => {
                   setPrivacy('private')
@@ -368,7 +366,7 @@ export function CharacterFormScreen() {
               <PrivacyOption
                 icon={<Globe size={18} />}
                 titleKey="edit_bot.privacy_public_title"
-                hint="Semua pengguna bisa lihat."
+                hintKey="feed_privacy.mode.public_hint"
                 selected={privacy === 'public'}
                 onSelect={() => {
                   setPrivacy('public')
@@ -424,7 +422,7 @@ function TextArea({
   showCount?: boolean
 }) {
   const { baseLocale } = useApp()
-  useRegisterKeys([placeholderKey])
+  const strAttrs = useStrAttrs(placeholderKey)
   return (
     <div className="relative bg-gray-100 rounded-xl">
       <textarea
@@ -433,6 +431,7 @@ function TextArea({
         placeholder={resolveString(placeholderKey, baseLocale)}
         rows={4}
         className="w-full bg-transparent px-3.5 py-3 text-[14px] text-imely-ink outline-none resize-none placeholder:text-gray-400"
+        {...strAttrs}
       />
       <Maximize2 size={14} className="absolute top-3 right-3 text-gray-400 pointer-events-none" />
       {showCount && (
@@ -447,13 +446,13 @@ function TextArea({
 function PrivacyOption({
   icon,
   titleKey,
-  hint,
+  hintKey,
   selected,
   onSelect,
 }: {
   icon: React.ReactNode
   titleKey: string
-  hint: string
+  hintKey: string
   selected: boolean
   onSelect: () => void
 }) {
@@ -470,7 +469,7 @@ function PrivacyOption({
           <Str k={titleKey} />
         </div>
         <div className="text-[12.5px] text-gray-500 mt-0.5">
-          <NoSheet>{hint}</NoSheet>
+          <Str k={hintKey} />
         </div>
       </div>
       {selected && <Check size={18} className="text-imely-primary shrink-0 mt-0.5" />}

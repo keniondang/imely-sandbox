@@ -18,12 +18,17 @@ export function ProfileScreen() {
     openAppearance,
     openSettings,
     openAbout,
+    openCreatorProfile,
+    openAvatarMenu,
+    closeAvatarMenu,
     baseLocale,
   } = useApp()
-  // ProfileMenuSheet is rendered at the App.tsx level (see App.tsx), not
-  // nested here — but it still needs to open when the Inspector jumps to a
-  // string inside it, same as any other screen's local popup.
+  // ProfileMenuSheet/AvatarMenuSheet are rendered at the App.tsx level (see
+  // App.tsx), not nested here — but they still need to open when the
+  // Inspector jumps to a string inside them, same as any other screen's
+  // local popup.
   usePopupRequest('profile', 'menu', (open) => (open ? openProfileMenu() : closeProfileMenu()))
+  usePopupRequest('profile', 'avatar_menu', (open) => (open ? openAvatarMenu() : closeAvatarMenu()))
 
   return (
     <div className="pb-6">
@@ -35,17 +40,20 @@ export function ProfileScreen() {
             style={{ backgroundColor: MOCK_USER.avatarColor }}
           />
           <button
-            onClick={() => showToast('Ganti foto profil — segera hadir')}
+            onClick={openAvatarMenu}
             className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-white border border-imely-line flex items-center justify-center active:scale-90 transition-transform"
           >
             <Camera size={12} className="text-imely-ink" />
           </button>
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-1 font-bold text-imely-ink text-[17px]">
+          <button
+            onClick={() => openCreatorProfile('self')}
+            className="flex items-center gap-1 font-bold text-imely-ink text-[17px] max-w-full active:opacity-70 transition-opacity"
+          >
             <span className="truncate">{ph(MOCK_USER.name, baseLocale)}</span>
             <ChevronRight size={16} className="text-gray-400 shrink-0" />
-          </div>
+          </button>
           <div className="text-gray-400 text-[13px] truncate">{MOCK_USER.handle}</div>
           <button
             onClick={openAccount}

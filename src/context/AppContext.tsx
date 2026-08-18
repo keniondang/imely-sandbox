@@ -45,6 +45,7 @@ export type ScreenId =
   | 'purchase'
   | 'characterprofile'
   | 'creatorprofile'
+  | 'qrcode'
   | 'chatoptions'
   | 'devices'
   | 'account'
@@ -149,6 +150,26 @@ interface AppState {
   focusPath: string[]
   setFocusPath: (v: string[]) => void
 
+  // true while the startup warm-up pass (see App.tsx's Shell) is rapidly
+  // visiting every screen/zone to register their strings — Inspector.tsx's
+  // liveZone auto-follow effect skips while this is true, or the sidebar
+  // would flicker through every screen during that ~1-2s sequence.
+  priming: boolean
+  setPriming: (v: boolean) => void
+
+  // one-string-at-a-time review mode — hides the Inspector's browse tree
+  // (keeping its search/filter/locale controls) and shrinks the live
+  // preview, so the Translation panel's already-complete single-string view
+  // (source + AI suggestion + translation + prev/next) is the whole focus.
+  focusMode: boolean
+  setFocusMode: (v: boolean) => void
+
+  // sidebar search text — lives here (not local Inspector state) so
+  // useBrowseOrder can factor it into the Translation panel's prev/next
+  // queue too, matching what's actually shown/searched in the sidebar.
+  query: string
+  setQuery: (v: string) => void
+
   // registry of which screen (and zone within it — page/menu/popup/…) renders
   // which string key, built as screens mount
   usage: UsageRecord[]
@@ -159,6 +180,15 @@ interface AppState {
   popupRequest: PopupRequest | null
   popupRequestToken: number
   requestPopup: (screenId: ScreenId, zone: Zone) => void
+
+  // the reverse direction of requestPopup — whichever non-'page' ZoneScope is
+  // actually mounted in the live preview right now (a translator opened a
+  // menu/popup by tapping it directly, not via the Inspector), so the
+  // Inspector can auto-follow. null when only a screen's default page
+  // content is showing. See ZoneScope in context/ScreenScope.tsx.
+  liveZone: { screenId: ScreenId; zone: Zone } | null
+  registerLiveZone: (screenId: ScreenId, zone: Zone) => void
+  unregisterLiveZone: (screenId: ScreenId, zone: Zone) => void
 
   // full-screen chat overlay, opened by tapping a thread or from a character
   // profile's "Pesan" button
@@ -223,6 +253,12 @@ interface AppState {
   openProfileMenu: () => void
   closeProfileMenu: () => void
 
+  // avatar "change photo" sheet — opened from the camera badge on the
+  // avatar, shared between the Profile tab and your own Creator Profile
+  avatarMenuOpen: boolean
+  openAvatarMenu: () => void
+  closeAvatarMenu: () => void
+
   // "Perangkat Masuk" (active sessions) — pushed on top of Profile from the
   // account Opsi sheet's "Perangkat Masuk" row
   devicesOpen: boolean
@@ -250,6 +286,11 @@ interface AppState {
   badgesOpen: boolean
   openBadges: () => void
   closeBadges: () => void
+
+  // "Mã QR" — pushed on top of Creator Profile from its share icon
+  qrCodeOpen: boolean
+  openQrCode: () => void
+  closeQrCode: () => void
 
   // "Tampilan" — pushed on top of Profile from its "Tampilan & bahasa" row
   appearanceOpen: boolean
@@ -336,9 +377,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [inspectorOpen, setInspectorOpen] = useState(true)
   const [filterMode, setFilterMode] = useState<FilterMode>('all')
   const [focusPath, setFocusPath] = useState<string[]>([])
+  const [priming, setPriming] = useState(true)
+  const [focusMode, setFocusMode] = useState(false)
+  const [query, setQuery] = useState('')
   const [usage, setUsage] = useState<UsageRecord[]>([])
   const [popupRequest, setPopupRequest] = useState<PopupRequest | null>(null)
   const [popupRequestToken, setPopupRequestToken] = useState(0)
+  const [zoneStack, setZoneStack] = useState<{ screenId: ScreenId; zone: Zone }[]>([])
   const [activeChat, setActiveChat] = useState<ChatTarget | null>(null)
   const [chatOptionsOpen, setChatOptionsOpen] = useState(false)
   const [activeCharacterId, setActiveCharacterId] = useState<string | null>(null)
@@ -350,11 +395,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [purchaseOpen, setPurchaseOpen] = useState(false)
   const [purchaseTab, setPurchaseTab] = useState<PurchaseTab>('club')
   const [profileMenuOpen, setProfileMenuOpen] = useState(false)
+  const [avatarMenuOpen, setAvatarMenuOpen] = useState(false)
   const [devicesOpen, setDevicesOpen] = useState(false)
   const [accountOpen, setAccountOpen] = useState(false)
   const [myCharactersOpen, setMyCharactersOpen] = useState(false)
   const [followingOpen, setFollowingOpen] = useState(false)
   const [badgesOpen, setBadgesOpen] = useState(false)
+  const [qrCodeOpen, setQrCodeOpen] = useState(false)
   const [appearanceOpen, setAppearanceOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [notificationSettingsOpen, setNotificationSettingsOpen] = useState(false)
@@ -403,6 +450,21 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setPopupRequestToken((t) => t + 1)
   }
 
+  // Stack rather than a single slot — harmless if a mount/unmount race ever
+  // briefly overlaps two zones; the most recently mounted (last pushed) one
+  // always wins as the "live" one below.
+  const registerLiveZone = (screenId: ScreenId, zone: Zone) => {
+    setZoneStack((prev) => [...prev, { screenId, zone }])
+  }
+  const unregisterLiveZone = (screenId: ScreenId, zone: Zone) => {
+    setZoneStack((prev) => {
+      const idx = prev.map((_, i) => i).findLast((i) => prev[i].screenId === screenId && prev[i].zone === zone)
+      if (idx === undefined) return prev
+      return [...prev.slice(0, idx), ...prev.slice(idx + 1)]
+    })
+  }
+  const liveZone = zoneStack.length > 0 ? zoneStack[zoneStack.length - 1] : null
+
   const openChat = (target: ChatTarget) => setActiveChat(target)
   const closeChat = () => {
     setActiveChat(null)
@@ -445,6 +507,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const openProfileMenu = () => setProfileMenuOpen(true)
   const closeProfileMenu = () => setProfileMenuOpen(false)
 
+  const openAvatarMenu = () => setAvatarMenuOpen(true)
+  const closeAvatarMenu = () => setAvatarMenuOpen(false)
+
   const openDevices = () => setDevicesOpen(true)
   const closeDevices = () => setDevicesOpen(false)
 
@@ -459,6 +524,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const openBadges = () => setBadgesOpen(true)
   const closeBadges = () => setBadgesOpen(false)
+
+  const openQrCode = () => setQrCodeOpen(true)
+  const closeQrCode = () => setQrCodeOpen(false)
 
   const openAppearance = () => setAppearanceOpen(true)
   const closeAppearance = () => setAppearanceOpen(false)
@@ -522,11 +590,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setFilterMode,
       focusPath,
       setFocusPath,
+      priming,
+      setPriming,
+      focusMode,
+      setFocusMode,
+      query,
+      setQuery,
       usage,
       registerUsage,
       popupRequest,
       popupRequestToken,
       requestPopup,
+      liveZone,
+      registerLiveZone,
+      unregisterLiveZone,
       activeChat,
       openChat,
       closeChat,
@@ -558,6 +635,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       profileMenuOpen,
       openProfileMenu,
       closeProfileMenu,
+      avatarMenuOpen,
+      openAvatarMenu,
+      closeAvatarMenu,
       devicesOpen,
       openDevices,
       closeDevices,
@@ -573,6 +653,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       badgesOpen,
       openBadges,
       closeBadges,
+      qrCodeOpen,
+      openQrCode,
+      closeQrCode,
       appearanceOpen,
       openAppearance,
       closeAppearance,
@@ -614,6 +697,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       inspectorOpen,
       filterMode,
       focusPath,
+      priming,
+      focusMode,
+      query,
       usage,
       overrides,
       livePreview,
@@ -621,6 +707,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       selectedOccurrence,
       popupRequest,
       popupRequestToken,
+      liveZone,
       activeChat,
       chatOptionsOpen,
       activeCharacterId,
@@ -632,11 +719,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
       purchaseOpen,
       purchaseTab,
       profileMenuOpen,
+      avatarMenuOpen,
       devicesOpen,
       accountOpen,
       myCharactersOpen,
       followingOpen,
       badgesOpen,
+      qrCodeOpen,
       appearanceOpen,
       settingsOpen,
       notificationSettingsOpen,

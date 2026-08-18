@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ArrowLeft, MoreVertical, Send, Info, ChevronDown, ChevronRight, Play, Mic, Plus, Gem, Hand, X, Pencil } from 'lucide-react'
-import { Str, useRegisterKeys } from '../components/Str'
+import { Str, useRegisterKeys, useStrAttrs } from '../components/Str'
 import { NoSheet } from '../components/NoSheet'
 import { useApp } from '../context/AppContext'
 import { ZoneScope } from '../context/ScreenScope'
@@ -47,13 +47,10 @@ const CHAT_MODES = [
 
 export function ChatDetailScreen() {
   const { activeChat, closeChat, openChatOptions, openGems, baseLocale, showToast } = useApp()
-  useRegisterKeys([
-    'chat.mode.changed.toast',
-    'role.edit.success',
-    'chat.input_box_hint',
-    'role.edit.name.hint',
-    'role.edit.description.hint',
-  ])
+  useRegisterKeys(['chat.mode.changed.toast', 'role.edit.success'])
+  const inputHintAttrs = useStrAttrs('chat.input_box_hint')
+  const roleNameHintAttrs = useStrAttrs('role.edit.name.hint', 'role_edit')
+  const roleDescHintAttrs = useStrAttrs('role.edit.description.hint', 'role_edit')
   const character = activeChat ? MOCK_FEED_CHARACTERS.find((c) => c.id === activeChat.id) : undefined
 
   const [input, setInput] = useState('')
@@ -350,6 +347,7 @@ export function ChatDetailScreen() {
             onKeyDown={(e) => e.key === 'Enter' && send()}
             placeholder={resolveString('chat.input_box_hint', baseLocale)}
             className="flex-1 bg-gray-100 rounded-full px-4 py-2.5 text-[13.5px] outline-none"
+            {...inputHintAttrs}
           />
           {input.trim() ? (
             <button
@@ -555,6 +553,7 @@ export function ChatDetailScreen() {
                   onChange={(e) => setPersonaDraftName(e.target.value)}
                   placeholder={resolveString('role.edit.name.hint', baseLocale)}
                   className="w-full bg-gray-100 rounded-xl px-3 py-2.5 text-[13.5px] outline-none"
+                  {...roleNameHintAttrs}
                 />
                 <div className="text-[11px] text-gray-400 mt-1">
                   20 <Str k="role.edit.character_limit" />
@@ -569,6 +568,7 @@ export function ChatDetailScreen() {
                   placeholder={resolveString('role.edit.description.hint', baseLocale)}
                   rows={3}
                   className="w-full bg-gray-100 rounded-xl px-3 py-2.5 text-[13.5px] outline-none resize-none"
+                  {...roleDescHintAttrs}
                 />
                 <div className="text-[11px] text-gray-400 mt-1">
                   1000 <Str k="role.edit.character_limit" />

@@ -15,6 +15,7 @@ import {
   Grid2x2,
   UserCheck,
   Award,
+  QrCode,
   Palette,
   Settings as SettingsIcon,
   Video,
@@ -42,6 +43,7 @@ export const SCREEN_LABEL: Record<ScreenId, string> = {
   chatoptions: 'Chat Options',
   characterprofile: 'Character Profile',
   creatorprofile: 'Creator Profile',
+  qrcode: 'QR Code (Mã QR)',
   notification: 'Notifications',
   gems: 'Gems',
   gemhistory: 'Gem History',
@@ -70,6 +72,7 @@ export const SCREEN_ICON: Record<ScreenId, typeof Home> = {
   chatoptions: SlidersHorizontal,
   characterprofile: UserCircle,
   creatorprofile: UserCircle2,
+  qrcode: QrCode,
   notification: Bell,
   gems: Gem,
   gemhistory: History,
@@ -101,6 +104,7 @@ export const PAGE_ORDER: ScreenId[] = ['feed', 'chatlist', 'profile']
 export const SCREEN_PARENT: Partial<Record<ScreenId, ScreenId>> = {
   chatoptions: 'chatdetail',
   creatorprofile: 'characterprofile',
+  qrcode: 'creatorprofile',
   gemhistory: 'gems',
   purchase: 'gems',
   notificationsettings: 'settings',
@@ -113,6 +117,7 @@ export const SCREEN_PARENT: Partial<Record<ScreenId, ScreenId>> = {
 export const CHILD_SCREENS: Partial<Record<ScreenId, ScreenId[]>> = {
   chatdetail: ['chatoptions'],
   characterprofile: ['creatorprofile'],
+  creatorprofile: ['qrcode'],
   gems: ['gemhistory', 'purchase'],
   settings: ['notificationsettings', 'videosettings'],
   account: ['verifyemail', 'username', 'deleteaccount'],
@@ -132,14 +137,22 @@ export const PAGE_CHILDREN: Record<string, ScreenId[]> = {
 // chatdetail -> chatlist, gemhistory -> gems -> feed, ...) — a page's own
 // zones plus every one of its descendants, computed once so both the
 // Inspector's tree and useBrowseOrder's flat row list can bucket by it.
+// Recurses through CHILD_SCREENS to any depth (creatorprofile -> qrcode is
+// a 3rd level under feed via characterprofile) rather than assuming overlays
+// only ever nest one level deep.
+function descendantsOf(screenId: ScreenId): ScreenId[] {
+  const kids = CHILD_SCREENS[screenId] ?? []
+  return kids.flatMap((child) => [child, ...descendantsOf(child)])
+}
+
 const BASE_PAGE_OF: Record<string, ScreenId> = (() => {
   const map: Record<string, ScreenId> = {}
   for (const page of PAGE_ORDER) {
     map[page] = page
     for (const child of PAGE_CHILDREN[page] ?? []) {
       map[child] = page
-      for (const grandchild of CHILD_SCREENS[child] ?? []) {
-        map[grandchild] = page
+      for (const descendant of descendantsOf(child)) {
+        map[descendant] = page
       }
     }
   }
@@ -151,7 +164,7 @@ const BASE_PAGE_OF: Record<string, ScreenId> = (() => {
 // so a page's rows are always one contiguous run for prev/next purposes.
 export const SCREEN_ORDER: ScreenId[] = PAGE_ORDER.flatMap((page) => [
   page,
-  ...(PAGE_CHILDREN[page] ?? []).flatMap((child) => [child, ...(CHILD_SCREENS[child] ?? [])]),
+  ...(PAGE_CHILDREN[page] ?? []).flatMap((child) => [child, ...descendantsOf(child)]),
 ])
 
 export function pageIdFor(screenId: ScreenId): ScreenId {
@@ -181,6 +194,7 @@ export const WARM_UP_SCREENS: ScreenId[] = [
   'deleteaccount',
   'characterprofile',
   'creatorprofile',
+  'qrcode',
   'notification',
   'gems',
   'gemhistory',
@@ -198,7 +212,7 @@ export const WARM_UP_SCREENS: ScreenId[] = [
 // every popup/menu's content from the first render instead of only after a
 // translator has happened to open each one by hand at least once.
 export const WARM_UP_ZONES: Partial<Record<ScreenId, string[]>> = {
-  profile: ['menu'],
+  profile: ['menu', 'avatar_menu'],
   account: [
     'verify_menu',
     'identity_card_edit',

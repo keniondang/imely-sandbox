@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
-import { Str, useRegisterKeys } from '../components/Str'
+import { Str, useStrAttrs } from '../components/Str'
 import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
@@ -10,7 +10,7 @@ const USERNAME_RE = /^[A-Za-z][A-Za-z0-9_-]{3,31}$/
 
 export function UsernameScreen() {
   const { closeUsername, setAccountUsername, showToast, baseLocale } = useApp()
-  useRegisterKeys(['account_info.change_user_name.input_box_hint'])
+  const usernameHintAttrs = useStrAttrs('account_info.change_user_name.input_box_hint')
   const [username, setUsername] = useState('')
   const [error, setError] = useState(false)
   const [confirmDiscard, setConfirmDiscard] = useState(false)
@@ -64,6 +64,7 @@ export function UsernameScreen() {
           }}
           placeholder={resolveString('account_info.change_user_name.input_box_hint', baseLocale)}
           className="w-full mt-5 border-b border-imely-line pb-2 text-[14px] text-imely-ink outline-none focus:border-imely-primary placeholder:text-gray-400"
+          {...usernameHintAttrs}
         />
         {error && (
           <div className="mt-1.5 text-[12px] text-red-500">

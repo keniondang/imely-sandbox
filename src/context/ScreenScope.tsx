@@ -1,5 +1,5 @@
-import { createContext, useContext, type ReactNode } from 'react'
-import type { ScreenId, Zone } from './AppContext'
+import { createContext, useContext, useEffect, type ReactNode } from 'react'
+import { useApp, type ScreenId, type Zone } from './AppContext'
 
 const ScreenScopeCtx = createContext<ScreenId | null>(null)
 const ZoneScopeCtx = createContext<Zone>('page')
@@ -20,8 +20,21 @@ export function useScreenScope(): ScreenId {
 
 // Marks a sub-surface within a screen — a bottom sheet, a modal — as its own
 // zone, so the Inspector can list it separately from the screen's main page
-// content and jump straight to it (see hooks/usePopupRequest.ts).
+// content and jump straight to it (see hooks/usePopupRequest.ts). Also
+// reports its own mount/unmount to AppContext's liveZone — the reverse of
+// requestPopup: a translator opening this menu/popup by tapping it directly
+// in the live preview (not via the Inspector) is exactly the signal the
+// Inspector needs to auto-follow along (see Inspector.tsx's liveZone effect).
 export function ZoneScope({ zone, children }: { zone: Zone; children: ReactNode }) {
+  const screenId = useScreenScope()
+  const { registerLiveZone, unregisterLiveZone } = useApp()
+
+  useEffect(() => {
+    registerLiveZone(screenId, zone)
+    return () => unregisterLiveZone(screenId, zone)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [screenId, zone])
+
   return <ZoneScopeCtx.Provider value={zone}>{children}</ZoneScopeCtx.Provider>
 }
 

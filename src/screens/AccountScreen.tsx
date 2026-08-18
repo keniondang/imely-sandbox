@@ -19,7 +19,7 @@ import {
   Link2,
   Check,
 } from 'lucide-react'
-import { Str, RichStr, useRegisterKeys } from '../components/Str'
+import { Str, RichStr, useStrAttrs } from '../components/Str'
 import { NoSheet } from '../components/NoSheet'
 import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
@@ -80,7 +80,8 @@ export function AccountScreen() {
     showToast,
     baseLocale,
   } = useApp()
-  useRegisterKeys(['profile_me.id_identifier.hint_cccd', 'profile_me.bio_edit.input_box_hint'])
+  const cccdHintAttrs = useStrAttrs('profile_me.id_identifier.hint_cccd', 'identity_card_edit')
+  const bioHintAttrs = useStrAttrs('profile_me.bio_edit.input_box_hint', 'bio_edit')
   const [verifyOpen, setVerifyOpen] = useState(false)
   const [modal, setModal] = useState<ModalKind>(null)
 
@@ -411,6 +412,7 @@ export function AccountScreen() {
                   onChange={(e) => setIdentityCardDraft(e.target.value)}
                   placeholder={resolveString('profile_me.id_identifier.hint_cccd', baseLocale)}
                   className="w-full text-[14px] text-imely-ink outline-none placeholder:text-gray-400"
+                  {...cccdHintAttrs}
                 />
               </div>
               <div className="flex justify-end gap-4 px-4 pb-4">
@@ -653,6 +655,7 @@ export function AccountScreen() {
                   rows={4}
                   className="w-full text-[14px] text-imely-ink outline-none resize-none placeholder:text-gray-400"
                   placeholder={resolveString('profile_me.bio_edit.input_box_hint', baseLocale)}
+                  {...bioHintAttrs}
                 />
               </div>
               <div className="flex justify-end gap-4 px-4 pb-4">
