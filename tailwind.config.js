@@ -22,15 +22,6 @@ export default {
       boxShadow: {
         card: '0 1px 2px rgba(16,24,40,0.06), 0 1px 3px rgba(16,24,40,0.08)',
       },
-      keyframes: {
-        pulseHighlight: {
-          '0%, 100%': { boxShadow: '0 0 0 0 rgba(255,92,135,0.55)' },
-          '50%': { boxShadow: '0 0 0 6px rgba(255,92,135,0)' },
-        },
-      },
-      animation: {
-        pulseHighlight: 'pulseHighlight 1s ease-out 2',
-      },
     },
   },
   plugins: [],

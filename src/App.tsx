@@ -7,9 +7,12 @@ import { useOpenScreen } from './hooks/useNavigateToString'
 import { WARM_UP_SCREENS, WARM_UP_ZONES } from './sandbox/browseConfig'
 import { exportStringsToXlsx } from './lib/exportXlsx'
 import { LOCALE_LABEL, SOURCE_LOCALES, TARGET_LOCALES, type Locale } from './lib/strings'
-import { PhoneFrame } from './components/shell/PhoneFrame'
+import { PhoneFrame, FRAME_WIDTH, FRAME_HEIGHT } from './components/shell/PhoneFrame'
+import { useFitScale } from './hooks/useFitScale'
 import { Header } from './components/shell/Header'
 import { BottomNav } from './components/shell/BottomNav'
+import { ToastBubble } from './components/shell/ToastBubble'
+import { resolveToastPreview } from './lib/toastPreview'
 import { FilterModal } from './components/FilterModal'
 import { FeedScreen } from './screens/FeedScreen'
 import { ChatListScreen } from './screens/ChatListScreen'
@@ -88,11 +91,18 @@ function Shell() {
     overrides,
     priming,
     setPriming,
+    baseLocale,
+    targetLocale,
+    livePreview,
+    toastPreview,
     focusMode,
   } = useApp()
   useStringHighlighter()
   const activeScreenId = useLivePreviewFollow()
   const openScreen = useOpenScreen()
+  // The live preview fills whatever space it has (down to the bottom of the
+  // window) instead of rendering at a fixed size and leaving a gap below it.
+  const { containerRef: previewRef, scale: previewScale } = useFitScale(FRAME_WIDTH, FRAME_HEIGHT, 24, 1.5)
 
   // Visit every screen once behind a brief cover so the Inspector's key
   // counts are accurate from the start, instead of showing 0 until a
@@ -146,6 +156,25 @@ function Shell() {
     exportStringsToXlsx(overrides, locale)
     setExportMenuOpen(false)
   }
+
+  // Chat detail has its own input bar hugging the bottom of the frame — the
+  // usual bottom-anchored toast spot would sit right on top of it, so
+  // anything shown while actually inside the message thread (not its Opsi
+  // page, which has no such bar) floats higher, over the conversation
+  // itself instead.
+  const inChatThread = Boolean(activeChat) && !chatOptionsOpen
+  const toastAreaStyle = inChatThread ? { top: 230 } : { bottom: 80 }
+
+  const toastPreviewText =
+    toastPreview && toastPreview.screenId === activeScreenId
+      ? resolveToastPreview(
+          toastPreview.key,
+          baseLocale,
+          livePreview && livePreview.key === toastPreview.key && livePreview.locale === targetLocale
+            ? livePreview.text
+            : overrides[toastPreview.key]?.[targetLocale]
+        )
+      : null
 
   return (
     <div className="h-screen w-screen flex flex-col bg-[#F4F5F7] overflow-hidden">
@@ -242,8 +271,8 @@ function Shell() {
 
         <div className="flex-1 flex flex-col overflow-hidden">
 
-        <div className="flex-1 overflow-y-auto">
-          <PhoneFrame>
+        <div ref={previewRef} className="flex-1 flex items-center justify-center overflow-hidden">
+          <PhoneFrame scale={previewScale}>
             <div className="shrink-0">
               <Header />
             </div>
@@ -534,11 +563,13 @@ function Shell() {
             )}
 
             {/* stub-action toast, anchored to the phone frame not the browser viewport */}
-            {toast && (!activeChat || chatOptionsOpen) && (
-              <div className="absolute left-1/2 -translate-x-1/2 bottom-20 z-40 bg-imely-ink text-white text-[12.5px] font-medium px-4 py-2 rounded-full shadow-lg pointer-events-none whitespace-nowrap">
-                {toast}
-              </div>
-            )}
+            {toast && <ToastBubble text={toast} style={toastAreaStyle} />}
+
+            {/* toast-only string preview — shown when the selected key has no
+                persistent DOM element to outline (see useStringHighlighter's
+                toastPreview), so a translator can still see it rendered in
+                context instead of nothing happening on selection */}
+            {!toast && toastPreviewText && <ToastBubble text={toastPreviewText} style={toastAreaStyle} />}
 
             {/* one-time warm-up pass so the Inspector's counts are accurate
                 immediately — covers the brief flicker through every screen */}

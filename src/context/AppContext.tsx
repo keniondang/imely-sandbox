@@ -133,6 +133,14 @@ interface AppState {
   selectedOccurrence: { screenId: ScreenId; zone: Zone } | null
   selectKey: (key: string | null, occurrence: { screenId: ScreenId; zone: Zone } | null) => void
 
+  // Set by useStringHighlighter when the selected key has no persistent DOM
+  // element to outline — a toast-only string (registered via
+  // useRegisterKeys, see Str.tsx) rather than something a <Str>/<RichStr>
+  // renders. App.tsx shows a toast bubble for it instead of an outline,
+  // whenever the live preview is actually on that key's screen.
+  toastPreview: { key: string; screenId: ScreenId; zone: Zone } | null
+  setToastPreview: (v: { key: string; screenId: ScreenId; zone: Zone } | null) => void
+
   inspectorOpen: boolean
   setInspectorOpen: (v: boolean) => void
 
@@ -374,6 +382,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [livePreview, setLivePreview] = useState<{ key: string; locale: TargetLocale; text: string } | null>(null)
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
   const [selectedOccurrence, setSelectedOccurrence] = useState<{ screenId: ScreenId; zone: Zone } | null>(null)
+  const [toastPreview, setToastPreview] = useState<{ key: string; screenId: ScreenId; zone: Zone } | null>(null)
   const [inspectorOpen, setInspectorOpen] = useState(true)
   const [filterMode, setFilterMode] = useState<FilterMode>('all')
   const [focusPath, setFocusPath] = useState<string[]>([])
@@ -584,6 +593,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       selectedKey,
       selectedOccurrence,
       selectKey,
+      toastPreview,
+      setToastPreview,
       inspectorOpen,
       setInspectorOpen,
       filterMode,
@@ -705,6 +716,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       livePreview,
       selectedKey,
       selectedOccurrence,
+      toastPreview,
       popupRequest,
       popupRequestToken,
       liveZone,

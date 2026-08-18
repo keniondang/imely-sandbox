@@ -9,12 +9,13 @@ import { buildStrSelector } from '../components/Str'
 // switching locale, etc. — and only clears when a different key is picked or
 // the panel is closed.
 export function useStringHighlighter() {
-  const { selectedKey, selectedOccurrence } = useApp()
+  const { selectedKey, selectedOccurrence, setToastPreview } = useApp()
 
   useEffect(() => {
     document
       .querySelectorAll('[data-str-highlighted="true"]')
       .forEach((el) => el.removeAttribute('data-str-highlighted'))
+    setToastPreview(null)
 
     if (!selectedKey) return
 
@@ -30,12 +31,23 @@ export function useStringHighlighter() {
       const el = document.querySelector<HTMLElement>(
         buildStrSelector(selectedKey, selectedOccurrence?.screenId, selectedOccurrence?.zone)
       )
-      if (!el) return
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        el.setAttribute('data-str-highlighted', 'true')
+        return
+      }
 
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      el.setAttribute('data-str-highlighted', 'true')
+      // No DOM element anywhere for this key — it's a toast-only string
+      // (registered via useRegisterKeys, see Str.tsx) rather than something
+      // a <Str>/<RichStr> renders, so there's nothing to outline. Surface it
+      // as a toast bubble instead (see App.tsx), as long as it's actually
+      // known to live somewhere (selectedOccurrence set) — a genuinely
+      // unused key has no occurrence and gets neither.
+      if (selectedOccurrence) {
+        setToastPreview({ key: selectedKey, screenId: selectedOccurrence.screenId, zone: selectedOccurrence.zone })
+      }
     }, 60)
 
     return () => clearTimeout(find)
-  }, [selectedKey, selectedOccurrence])
+  }, [selectedKey, selectedOccurrence, setToastPreview])
 }

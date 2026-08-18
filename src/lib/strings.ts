@@ -47,6 +47,18 @@ export function getEntry(key: string): StringEntry | undefined {
 // nothing for this key. Target-locale text never goes through here — it's
 // either an applied override (checked by the caller first) or it doesn't
 // exist yet, in which case this base-language fallback is what shows.
+// Swaps ${LAZY_DATA(x)} tokens for mock values. Split out from resolveString
+// so callers holding already-resolved text (a translator's own override, or
+// a live draft) can run the same substitution without re-resolving from the
+// base language — see resolveToastPreview in lib/toastPreview.ts.
+export function applyVars(text: string, vars?: Record<string, string | number>): string {
+  if (!vars) return text
+  return text.replace(/\$\{LAZY_DATA\(([^)]+)\)\}/g, (_, varName) => {
+    const v = vars[varName]
+    return v !== undefined ? String(v) : `{${varName}}`
+  })
+}
+
 export function resolveString(
   key: string,
   locale: SourceLocale,
@@ -55,15 +67,8 @@ export function resolveString(
   const entry = BY_KEY.get(key)
   if (!entry) return `⚠ missing:${key}`
 
-  let text = entry.locales[locale] || entry.locales.en || entry.locales.id || ''
-
-  if (vars) {
-    text = text.replace(/\$\{LAZY_DATA\(([^)]+)\)\}/g, (_, varName) => {
-      const v = vars[varName]
-      return v !== undefined ? String(v) : `{${varName}}`
-    })
-  }
-  return text
+  const text = entry.locales[locale] || entry.locales.en || entry.locales.id || ''
+  return applyVars(text, vars)
 }
 
 export const CATEGORIES = Array.from(

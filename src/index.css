@@ -13,12 +13,27 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* string inspector highlight target */
+/* string inspector highlight target — @keyframes defined here (not via
+   Tailwind's theme.extend.keyframes) because that config path only emits
+   CSS for classes Tailwind's content scan actually finds (e.g.
+   `animate-pulseHighlight`); referencing the animation by name in a plain
+   CSS rule like this one never registers as "used", so the keyframes were
+   silently dropped from the build and the glow never played — only the
+   static outline below ever rendered. */
 [data-str-highlighted="true"] {
   outline: 2px solid #FF5C87;
   outline-offset: 2px;
   border-radius: 6px;
-  animation: pulseHighlight 1s ease-out 2;
+  animation: pulseHighlight 1s ease-out 3;
+}
+
+@keyframes pulseHighlight {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 92, 135, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(255, 92, 135, 0);
+  }
 }
 
 ::-webkit-scrollbar {
