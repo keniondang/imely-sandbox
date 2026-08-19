@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { PanelLeftOpen, PanelLeftClose, X, Download, Languages, Sun, Moon } from 'lucide-react'
+import { PanelLeftOpen, PanelLeftClose, X, Download, Languages, Sun, Moon, HelpCircle } from 'lucide-react'
 import { AppProvider, useApp } from './context/AppContext'
 import { ScreenScope } from './context/ScreenScope'
 import { useStringHighlighter } from './hooks/useStringHighlighter'
@@ -45,6 +45,7 @@ import { AvatarMenuSheet } from './components/AvatarMenuSheet'
 import { Inspector } from './sandbox/Inspector'
 import { useLivePreviewFollow } from './hooks/useLivePreviewFollow'
 import { FocusPanel } from './sandbox/FocusPanel'
+import { HelpPanel } from './components/shell/HelpPanel'
 
 function Shell() {
   const {
@@ -139,6 +140,7 @@ function Shell() {
   }
 
   const [exportMenuOpen, setExportMenuOpen] = useState(false)
+  const [helpOpen, setHelpOpen] = useState(false)
   const exportMenuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -191,6 +193,13 @@ function Shell() {
             <Languages size={14} className="text-white shrink-0" />
             <span className="text-[13px] font-semibold text-white">Translation Mode</span>
             <div className="ml-auto flex items-center gap-2.5 shrink-0">
+              <button
+                onClick={() => setHelpOpen(true)}
+                title="How this works"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-white hover:bg-white/10 active:scale-90 transition-transform shrink-0"
+              >
+                <HelpCircle size={16} />
+              </button>
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
@@ -259,6 +268,13 @@ function Shell() {
               <span className="text-[13px] font-semibold text-ink truncate">imely localization sandbox</span>
               <span className="text-[11px] text-muted truncate">— live UI preview, not the real app</span>
               <div className="ml-auto flex items-center gap-2.5 shrink-0">
+                <button
+                  onClick={() => setHelpOpen(true)}
+                  title="How this works"
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-muted hover:bg-subtle active:scale-90 transition-transform shrink-0"
+                >
+                  <HelpCircle size={17} />
+                </button>
                 <button
                   onClick={() => setDarkMode(!darkMode)}
                   title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
@@ -634,6 +650,8 @@ function Shell() {
         </div>
       </div>
       </div>
+
+      {helpOpen && <HelpPanel onClose={() => setHelpOpen(false)} />}
     </div>
   )
 }
