@@ -506,6 +506,7 @@ export function Inspector({ activeScreenId }: { activeScreenId: ScreenId }) {
           )}
         </div>
         <div className="flex items-center gap-1.5 mt-2 flex-wrap">
+          <span className="text-[10px] text-gray-500">Target:</span>
           {TARGET_LOCALES.map((id) => (
             <button
               key={id}
