@@ -183,9 +183,13 @@ export function TranslationPanel() {
               <div className="text-[10px] font-semibold text-muted uppercase mb-1">
                 {LOCALE_LABEL[baseLocale]} · source
               </div>
-              <div className="text-[13.5px] text-ink leading-snug">
-                {entry.locales[baseLocale] || entry.locales.en || entry.locales.id}
-              </div>
+              {entry.locales[baseLocale] || entry.locales.en || entry.locales.id ? (
+                <div className="text-[13.5px] text-ink leading-snug">
+                  {entry.locales[baseLocale] || entry.locales.en || entry.locales.id}
+                </div>
+              ) : (
+                <div className="text-[11.5px] text-amber-600 italic">No source text in the sheet</div>
+              )}
             </div>
             <div className="p-2.5">
               <div className="flex items-center justify-between mb-1">
@@ -232,7 +236,9 @@ export function TranslationPanel() {
           {SOURCE_LOCALES.filter((l) => l !== baseLocale).map((l) => (
             <div key={l} className="flex items-baseline gap-1.5 text-[10.5px] text-muted">
               <span className="font-semibold text-muted shrink-0">{LOCALE_LABEL[l]}:</span>
-              <span className="truncate">{entry.locales[l]}</span>
+              <span className={`truncate ${entry.locales[l] ? '' : 'text-faint italic'}`}>
+                {entry.locales[l] || '—'}
+              </span>
             </div>
           ))}
         </div>

@@ -17,6 +17,12 @@ import { LOCALE_LABEL, SOURCE_LOCALES, TARGET_LOCALES } from '../lib/strings'
 import { useTranslationEditor } from '../hooks/useTranslationEditor'
 import type { BrowseRow, BrowseSection } from '../hooks/useBrowseOrder'
 
+const FILTER_TITLE = {
+  wired: 'Only strings actually used in a screen',
+  unwired: 'Only strings not yet used anywhere',
+  untranslated: 'Only strings with no saved translation yet',
+} as const
+
 // The one-string-at-a-time counterpart to Inspector + TranslationPanel —
 // swapped in for both of them (see App.tsx) rather than just hiding parts
 // of the sidebar, so this reads as its own purpose-built screen: a full
@@ -188,11 +194,11 @@ export function FocusPanel() {
         </div>
 
         <div className="flex items-center gap-1 shrink-0">
-          {(['wired', 'unwired'] as const).map((mode) => (
+          {(['wired', 'unwired', 'untranslated'] as const).map((mode) => (
             <button
               key={mode}
               onClick={() => setFilterMode(filterMode === mode ? 'all' : mode)}
-              title={mode === 'wired' ? 'Only strings actually used in a screen' : 'Only strings not yet used anywhere'}
+              title={FILTER_TITLE[mode]}
               className={`text-[10px] font-semibold px-2 py-1 rounded-full border capitalize ${
                 filterMode === mode
                   ? 'bg-imely-ink text-white border-imely-ink'
@@ -455,9 +461,16 @@ export function FocusPanel() {
             <div className="text-[12.5px] font-semibold text-muted uppercase mb-2">
               {LOCALE_LABEL[baseLocale]} · source
             </div>
-            <div className="text-[23px] text-ink leading-snug mb-8">
-              {entry.locales[baseLocale] || entry.locales.en || entry.locales.id}
-            </div>
+            {entry.locales[baseLocale] || entry.locales.en || entry.locales.id ? (
+              <div className="text-[23px] text-ink leading-snug mb-8">
+                {entry.locales[baseLocale] || entry.locales.en || entry.locales.id}
+              </div>
+            ) : (
+              <div className="mb-8 flex items-center gap-1.5 text-[13px] text-amber-600 bg-amber-50 rounded-lg px-3 py-2">
+                <AlertTriangle size={14} className="shrink-0" /> No source text in the sheet for this key — it's
+                blank in id/en/vi too, not just {LOCALE_LABEL[baseLocale]}.
+              </div>
+            )}
 
             <div className="flex items-center justify-between mb-2">
               <span className="text-[12.5px] font-semibold text-imely-primary uppercase">
@@ -498,7 +511,9 @@ export function FocusPanel() {
               {SOURCE_LOCALES.filter((l) => l !== baseLocale).map((l) => (
                 <div key={l} className="flex items-baseline gap-1.5 text-[12px] text-muted">
                   <span className="font-semibold text-muted shrink-0">{LOCALE_LABEL[l]}:</span>
-                  <span>{entry.locales[l]}</span>
+                  <span className={entry.locales[l] ? undefined : 'text-faint italic'}>
+                    {entry.locales[l] || '—'}
+                  </span>
                 </div>
               ))}
             </div>
