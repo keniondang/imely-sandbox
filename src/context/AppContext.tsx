@@ -11,6 +11,15 @@ const ZH_TW_BASELINE = zhTwBaselineRaw as Record<string, string>
 // blob (small enough even fully filled in — well under localStorage's
 // ~5-10MB limit) rather than one key per string, to keep load/save trivial.
 const OVERRIDES_STORAGE_KEY = 'imely-sandbox:overrides'
+const DARK_MODE_STORAGE_KEY = 'imely-sandbox:dark-mode'
+
+function loadStoredDarkMode(): boolean {
+  try {
+    return localStorage.getItem(DARK_MODE_STORAGE_KEY) === 'true'
+  } catch {
+    return false
+  }
+}
 
 function loadStoredOverrides(): Record<string, Partial<Record<TargetLocale, string>>> {
   let stored: Record<string, Partial<Record<TargetLocale, string>>> = {}
@@ -171,6 +180,11 @@ interface AppState {
   // (source + AI suggestion + translation + prev/next) is the whole focus.
   focusMode: boolean
   setFocusMode: (v: boolean) => void
+
+  // Theme for both the tool chrome and the live preview — persisted so it
+  // survives a reload, same reasoning as overrides below.
+  darkMode: boolean
+  setDarkMode: (v: boolean) => void
 
   // sidebar search text — lives here (not local Inspector state) so
   // useBrowseOrder can factor it into the Translation panel's prev/next
@@ -388,6 +402,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [focusPath, setFocusPath] = useState<string[]>([])
   const [priming, setPriming] = useState(true)
   const [focusMode, setFocusMode] = useState(false)
+  const [darkMode, setDarkMode] = useState(loadStoredDarkMode)
+  useEffect(() => {
+    try {
+      localStorage.setItem(DARK_MODE_STORAGE_KEY, String(darkMode))
+    } catch {
+      // localStorage unavailable — theme choice just won't survive a reload.
+    }
+  }, [darkMode])
   const [query, setQuery] = useState('')
   const [usage, setUsage] = useState<UsageRecord[]>([])
   const [popupRequest, setPopupRequest] = useState<PopupRequest | null>(null)
@@ -605,6 +627,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setPriming,
       focusMode,
       setFocusMode,
+      darkMode,
+      setDarkMode,
       query,
       setQuery,
       usage,
@@ -710,6 +734,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       focusPath,
       priming,
       focusMode,
+      darkMode,
       query,
       usage,
       overrides,

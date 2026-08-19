@@ -72,6 +72,20 @@ export function useTranslationEditor() {
     )
   }, [rows, selectedKey, selectedOccurrence])
 
+  // The queue itself can shrink out from under the current selection — a
+  // filter or search narrows `rows`, or the Unwired filter is toggled on
+  // while a wired key was selected — leaving rowIndex at -1. Left alone,
+  // that silently disables Prev/Next entirely with no indication why (they
+  // just stop responding). Snap to the first row of the new queue instead,
+  // so switching filters always lands somewhere navigable.
+  useEffect(() => {
+    if (!selectedKey || rowIndex !== -1 || rows.length === 0) return
+    const target = rows[0]
+    navigateTo(target.key, target.screenId ?? undefined, target.zone ?? undefined)
+    syncInspectorFocus(target)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rows, rowIndex, selectedKey])
+
   const pageIndex = useMemo(() => {
     if (rowIndex < 0) return -1
     return pageSections.findIndex((s) => rowIndex >= s.startIndex && rowIndex <= s.endIndex)

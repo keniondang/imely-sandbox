@@ -140,16 +140,16 @@ export function ChatDetailScreen() {
   return (
     <div className="flex flex-col h-full relative">
       {/* header */}
-      <div className="flex items-center gap-2 px-3 py-2.5 border-b border-imely-line shrink-0">
+      <div className="flex items-center gap-2 px-3 py-2.5 border-b border-line shrink-0">
         <button
           onClick={closeChat}
-          className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink shrink-0 active:scale-90 active:bg-gray-100 transition-transform"
+          className="w-8 h-8 rounded-full flex items-center justify-center text-ink shrink-0 active:scale-90 active:bg-subtle transition-transform"
         >
           <ArrowLeft size={18} />
         </button>
         <div className="w-9 h-9 rounded-full shrink-0" style={{ backgroundColor: activeChat.color }} />
         <div className="flex-1 min-w-0">
-          <div className="font-bold text-[14.5px] text-imely-ink truncate">{ph(activeChat.name, baseLocale)}</div>
+          <div className="font-bold text-[14.5px] text-ink truncate">{ph(activeChat.name, baseLocale)}</div>
           <div className="text-[11px] text-imely-primary">
             <NoSheet>Online</NoSheet>
           </div>
@@ -163,13 +163,13 @@ export function ChatDetailScreen() {
         </button>
         <button
           onClick={() => setRelationshipOpen(true)}
-          className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink shrink-0 active:scale-90 active:bg-gray-100 transition-transform"
+          className="w-8 h-8 rounded-full flex items-center justify-center text-ink shrink-0 active:scale-90 active:bg-subtle transition-transform"
         >
           <Hand size={16} />
         </button>
         <button
           onClick={openChatOptions}
-          className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink shrink-0 active:scale-90 active:bg-gray-100 transition-transform"
+          className="w-8 h-8 rounded-full flex items-center justify-center text-ink shrink-0 active:scale-90 active:bg-subtle transition-transform"
         >
           <MoreVertical size={18} />
         </button>
@@ -218,11 +218,11 @@ export function ChatDetailScreen() {
             </div>
           </div>
         ) : (
-          <div className="mx-3 mt-2 rounded-xl bg-gray-50 px-3 py-2 shrink-0">
-            <div className="text-[11px] font-semibold text-imely-ink">
+          <div className="mx-3 mt-2 rounded-xl bg-subtle px-3 py-2 shrink-0">
+            <div className="text-[11px] font-semibold text-ink">
               <Str k="chat.bot_disclaimer_banner.title" />
             </div>
-            <div className="text-[10.5px] text-gray-400 mt-0.5">
+            <div className="text-[10.5px] text-muted mt-0.5">
               <Str k="chat.bot_disclaimer_banner.subtitle" />
             </div>
           </div>
@@ -232,7 +232,7 @@ export function ChatDetailScreen() {
           <div className="flex justify-center">
             <span
               className={`text-[11px] rounded-full px-3 py-1 capitalize ${
-                character ? 'text-white bg-black/30' : 'text-gray-400 bg-gray-100'
+                character ? 'text-white bg-black/30' : 'text-muted bg-subtle'
               }`}
             >
               <Str k="user_gem_overview.txt_today" />
@@ -250,20 +250,20 @@ export function ChatDetailScreen() {
                   <button
                     onClick={() => showToast('Putar suara — segera hadir')}
                     className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-1 active:scale-90 transition-transform ${
-                      character ? 'bg-black/30' : 'bg-gray-100'
+                      character ? 'bg-black/30' : 'bg-subtle'
                     }`}
                   >
-                    <Play size={10} className={character ? 'text-white' : 'text-imely-ink'} />
+                    <Play size={10} className={character ? 'text-white' : 'text-ink'} />
                   </button>
                   <div
                     className={`rounded-2xl rounded-bl-sm px-3 py-2 text-[13.5px] space-y-0.5 ${
-                      character ? 'bg-black/40 text-white' : 'bg-gray-100 text-imely-ink'
+                      character ? 'bg-black/40 text-white' : 'bg-subtle text-ink'
                     }`}
                   >
                     {b.text.split('\n').map((line, i) => {
                       const isAction = line.startsWith('*') && line.endsWith('*')
                       return (
-                        <div key={i} className={isAction ? `italic ${character ? 'text-white/70' : 'text-gray-500'}` : ''}>
+                        <div key={i} className={isAction ? `italic ${character ? 'text-white/70' : 'text-muted'}` : ''}>
                           {isAction ? line.slice(1, -1) : line}
                         </div>
                       )
@@ -277,7 +277,7 @@ export function ChatDetailScreen() {
             <div className="flex justify-start">
               <div
                 className={`rounded-2xl rounded-bl-sm px-3 py-2 text-[13.5px] ${
-                  character ? 'bg-black/40 text-white/70' : 'bg-gray-100 text-gray-400'
+                  character ? 'bg-black/40 text-white/70' : 'bg-subtle text-muted'
                 }`}
               >
                 ...
@@ -288,16 +288,16 @@ export function ChatDetailScreen() {
       </div>
 
       {/* mode / quick-action chips */}
-      <div className="flex items-center gap-2 px-3 py-2 border-t border-imely-line shrink-0">
+      <div className="flex items-center gap-2 px-3 py-2 border-t border-line shrink-0">
         <button
           onClick={() => setModePickerOpen(true)}
-          className="flex items-center gap-1 bg-gray-100 rounded-full px-3 py-1.5 text-[12.5px] font-medium text-imely-ink active:scale-95 transition-transform"
+          className="flex items-center gap-1 bg-subtle rounded-full px-3 py-1.5 text-[12.5px] font-medium text-ink active:scale-95 transition-transform"
         >
           💬 <Str k={chatMode.titleKey} />
         </button>
         <button
           onClick={() => showToast('Tindakan — segera hadir')}
-          className="flex items-center gap-1 bg-gray-100 rounded-full px-3 py-1.5 text-[12.5px] font-medium text-imely-ink active:scale-95 transition-transform"
+          className="flex items-center gap-1 bg-subtle rounded-full px-3 py-1.5 text-[12.5px] font-medium text-ink active:scale-95 transition-transform"
         >
           ✳ <Str k="chat.quick_action.default" />
         </button>
@@ -305,13 +305,13 @@ export function ChatDetailScreen() {
 
       {/* input bar — real placeholder string */}
       {voiceBarOpen ? (
-        <div className="flex items-center gap-2 px-3 py-2.5 border-t border-imely-line shrink-0">
+        <div className="flex items-center gap-2 px-3 py-2.5 border-t border-line shrink-0">
           <button
             onClick={() => {
               setListening(false)
               setVoiceBarOpen(false)
             }}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink shrink-0 active:scale-90 active:bg-gray-100 transition-transform"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-ink shrink-0 active:scale-90 active:bg-subtle transition-transform"
           >
             <X size={18} />
           </button>
@@ -334,10 +334,10 @@ export function ChatDetailScreen() {
           </button>
         </div>
       ) : (
-        <div className="flex items-center gap-2 px-3 py-2.5 border-t border-imely-line shrink-0">
+        <div className="flex items-center gap-2 px-3 py-2.5 border-t border-line shrink-0">
           <button
             onClick={() => showToast('Lampiran — segera hadir')}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink shrink-0 active:scale-90 active:bg-gray-100 transition-transform"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-ink shrink-0 active:scale-90 active:bg-subtle transition-transform"
           >
             <Plus size={18} />
           </button>
@@ -346,7 +346,7 @@ export function ChatDetailScreen() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && send()}
             placeholder={resolveString('chat.input_box_hint', baseLocale)}
-            className="flex-1 bg-gray-100 rounded-full px-4 py-2.5 text-[13.5px] outline-none"
+            className="flex-1 bg-subtle rounded-full px-4 py-2.5 text-[13.5px] outline-none"
             {...inputHintAttrs}
           />
           {input.trim() ? (
@@ -376,8 +376,8 @@ export function ChatDetailScreen() {
               aria-label="Close mode picker"
               className="absolute inset-0 bg-black/40"
             />
-            <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl p-4">
-              <div className="text-center font-bold text-[16px] text-imely-ink mb-3">
+            <div className="absolute bottom-0 left-0 right-0 bg-surface rounded-t-3xl p-4">
+              <div className="text-center font-bold text-[16px] text-ink mb-3">
                 <NoSheet>Mode Obrolan</NoSheet>
               </div>
               {CHAT_MODES.map((mode) => (
@@ -385,13 +385,13 @@ export function ChatDetailScreen() {
                   key={mode.id}
                   onClick={() => selectMode(mode)}
                   className={`w-full text-left rounded-2xl border p-3 mb-2 transition-colors ${
-                    chatMode.id === mode.id ? 'border-imely-primary bg-imely-mint/30' : 'border-imely-line'
+                    chatMode.id === mode.id ? 'border-imely-primary bg-imely-mint/30' : 'border-line'
                   }`}
                 >
-                  <div className="font-bold text-[14px] text-imely-ink">
+                  <div className="font-bold text-[14px] text-ink">
                     <Str k={mode.titleKey} />
                   </div>
-                  <div className="text-[12px] text-gray-500 mt-0.5">
+                  <div className="text-[12px] text-muted mt-0.5">
                     <Str k={mode.descKey} />
                   </div>
                 </button>
@@ -410,18 +410,18 @@ export function ChatDetailScreen() {
               aria-label="Close relationship level"
               className="absolute inset-0 bg-black/40"
             />
-            <div className="absolute left-3 right-3 top-1/2 -translate-y-1/2 max-h-[85%] bg-white rounded-3xl overflow-y-auto">
-              <div className="flex items-center justify-center px-4 py-4 border-b border-imely-line">
-                <div className="font-bold text-[17px] text-imely-ink">
+            <div className="absolute left-3 right-3 top-1/2 -translate-y-1/2 max-h-[85%] bg-surface rounded-3xl overflow-y-auto">
+              <div className="flex items-center justify-center px-4 py-4 border-b border-line">
+                <div className="font-bold text-[17px] text-ink">
                   <Str k="relationship.level.label" />
                 </div>
               </div>
 
               <div className="p-4">
-                <div className="flex items-center justify-between bg-gray-50 rounded-2xl p-3">
+                <div className="flex items-center justify-between bg-subtle rounded-2xl p-3">
                   <div className="flex flex-col items-center gap-1 w-16">
-                    <div className="w-11 h-11 rounded-full bg-gray-200" />
-                    <span className="text-[11px] text-imely-ink">
+                    <div className="w-11 h-11 rounded-full bg-line" />
+                    <span className="text-[11px] text-ink">
                       <Str k="relationship.detail.you" />
                     </span>
                   </div>
@@ -433,37 +433,37 @@ export function ChatDetailScreen() {
                   </div>
                   <div className="flex flex-col items-center gap-1 w-16">
                     <div className="w-11 h-11 rounded-full" style={{ backgroundColor: activeChat.color }} />
-                    <span className="text-[11px] text-imely-ink truncate w-full text-center">
+                    <span className="text-[11px] text-ink truncate w-full text-center">
                       {ph(activeChat.name, baseLocale)}
                     </span>
                   </div>
                 </div>
 
                 <div className="mt-3 flex items-center justify-between text-[13px]">
-                  <span className="text-imely-ink font-semibold">
+                  <span className="text-ink font-semibold">
                     <Str k="relationship.detail.your_score" />:
                   </span>
-                  <span className="text-imely-ink font-bold">
+                  <span className="text-ink font-bold">
                     {sentCount}/{scoreDenominator}
                   </span>
                 </div>
 
-                <div className="mt-2 text-[12px] text-gray-500 space-y-1">
+                <div className="mt-2 text-[12px] text-muted space-y-1">
                   <div>
                     • <Str k="relationship.detail.acquainted_days" />{' '}
-                    <span className="font-semibold text-imely-ink">
+                    <span className="font-semibold text-ink">
                       <Str k="relationship.detail.acquainted_days_value" vars={{ aDays: 0 }} />
                     </span>
                   </div>
                   <div>
                     • <Str k="relationship.detail.sent_messages" />{' '}
-                    <span className="font-semibold text-imely-ink">
+                    <span className="font-semibold text-ink">
                       <Str k="relationship.detail.sent_messages_value" vars={{ smCount: sentCount }} />
                     </span>
                   </div>
                 </div>
 
-                <div className="mt-4 font-bold text-[13px] text-imely-ink">
+                <div className="mt-4 font-bold text-[13px] text-ink">
                   <Str k="relationship.detail.levels" />:
                 </div>
                 <div className="mt-2 space-y-1.5">
@@ -473,13 +473,13 @@ export function ChatDetailScreen() {
                       className={`flex items-center justify-between rounded-xl px-3 py-2 ${
                         lvl.key === activeLevel.key
                           ? 'bg-imely-mint text-imely-primaryDark font-bold'
-                          : 'bg-gray-50 text-imely-ink'
+                          : 'bg-subtle text-ink'
                       }`}
                     >
                       <span className="flex items-center gap-2 text-[13px]">
                         {lvl.emoji} <Str k={lvl.key} />
                       </span>
-                      <span className="text-[12px] text-gray-400">{lvl.rangeLabel}</span>
+                      <span className="text-[12px] text-muted">{lvl.rangeLabel}</span>
                     </div>
                   ))}
                 </div>
@@ -498,24 +498,24 @@ export function ChatDetailScreen() {
               aria-label="Close role summary"
               className="absolute inset-0 bg-black/40"
             />
-            <div className="absolute left-3 right-3 top-1/2 -translate-y-1/2 bg-white rounded-2xl overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-3.5 border-b border-imely-line">
-                <div className="font-bold text-[16px] text-imely-ink">
+            <div className="absolute left-3 right-3 top-1/2 -translate-y-1/2 bg-surface rounded-2xl overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-3.5 border-b border-line">
+                <div className="font-bold text-[16px] text-ink">
                   <Str k="role.summary.title" />
                 </div>
                 <button
                   onClick={() => setRoleSummaryOpen(false)}
-                  className="text-gray-400 active:scale-90 transition-transform"
+                  className="text-muted active:scale-90 transition-transform"
                 >
                   <X size={18} />
                 </button>
               </div>
               <button
                 onClick={openRoleEdit}
-                className="w-full flex items-center justify-between px-4 py-3.5 active:bg-gray-50 transition-colors"
+                className="w-full flex items-center justify-between px-4 py-3.5 active:bg-subtle transition-colors"
               >
-                <span className="text-[14px] text-imely-ink">{personaName}</span>
-                <Pencil size={15} className="text-gray-400 shrink-0" />
+                <span className="text-[14px] text-ink">{personaName}</span>
+                <Pencil size={15} className="text-muted shrink-0" />
               </button>
             </div>
           </div>
@@ -531,35 +531,35 @@ export function ChatDetailScreen() {
               aria-label="Close edit role"
               className="absolute inset-0 bg-black/40"
             />
-            <div className="absolute left-3 right-3 top-1/2 -translate-y-1/2 bg-white rounded-2xl overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-3.5 border-b border-imely-line">
-                <div className="font-bold text-[16px] text-imely-ink">
+            <div className="absolute left-3 right-3 top-1/2 -translate-y-1/2 bg-surface rounded-2xl overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-3.5 border-b border-line">
+                <div className="font-bold text-[16px] text-ink">
                   <Str k="button.edit" />
                 </div>
                 <button
                   onClick={() => setRoleEditOpen(false)}
-                  className="text-gray-400 active:scale-90 transition-transform"
+                  className="text-muted active:scale-90 transition-transform"
                 >
                   <X size={18} />
                 </button>
               </div>
 
               <div className="px-4 py-3">
-                <div className="text-[12.5px] font-semibold text-imely-ink mb-1.5">
+                <div className="text-[12.5px] font-semibold text-ink mb-1.5">
                   <Str k="role.edit.name.label" />
                 </div>
                 <input
                   value={personaDraftName}
                   onChange={(e) => setPersonaDraftName(e.target.value)}
                   placeholder={resolveString('role.edit.name.hint', baseLocale)}
-                  className="w-full bg-gray-100 rounded-xl px-3 py-2.5 text-[13.5px] outline-none"
+                  className="w-full bg-subtle rounded-xl px-3 py-2.5 text-[13.5px] outline-none"
                   {...roleNameHintAttrs}
                 />
-                <div className="text-[11px] text-gray-400 mt-1">
+                <div className="text-[11px] text-muted mt-1">
                   20 <Str k="role.edit.character_limit" />
                 </div>
 
-                <div className="text-[12.5px] font-semibold text-imely-ink mt-4 mb-1.5">
+                <div className="text-[12.5px] font-semibold text-ink mt-4 mb-1.5">
                   <Str k="role.edit.description.label" />
                 </div>
                 <textarea
@@ -567,10 +567,10 @@ export function ChatDetailScreen() {
                   onChange={(e) => setPersonaDraftDescription(e.target.value)}
                   placeholder={resolveString('role.edit.description.hint', baseLocale)}
                   rows={3}
-                  className="w-full bg-gray-100 rounded-xl px-3 py-2.5 text-[13.5px] outline-none resize-none"
+                  className="w-full bg-subtle rounded-xl px-3 py-2.5 text-[13.5px] outline-none resize-none"
                   {...roleDescHintAttrs}
                 />
-                <div className="text-[11px] text-gray-400 mt-1">
+                <div className="text-[11px] text-muted mt-1">
                   1000 <Str k="role.edit.character_limit" />
                 </div>
 

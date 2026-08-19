@@ -39,7 +39,7 @@ export function CharacterProfileScreen() {
   }
 
   return (
-    <div className="h-full flex flex-col bg-white relative">
+    <div className="h-full flex flex-col bg-surface relative">
       <div className="sticky top-0 z-10 flex items-center justify-between px-3 py-2.5 bg-imely-ink text-white shrink-0">
         <button
           onClick={closeCharacterProfile}
@@ -68,8 +68,8 @@ export function CharacterProfileScreen() {
         <div className="h-56" style={{ backgroundColor: character.color }} />
 
         <div className="px-4 pt-3">
-          <div className="font-extrabold text-[22px] text-imely-ink">{characterName}</div>
-          <div className="flex items-center gap-1 mt-1 text-[12px] text-gray-400">
+          <div className="font-extrabold text-[22px] text-ink">{characterName}</div>
+          <div className="flex items-center gap-1 mt-1 text-[12px] text-muted">
             <Sparkles size={12} />
             <Str k="profile_bot.badge.ai_character" />
           </div>
@@ -88,7 +88,7 @@ export function CharacterProfileScreen() {
           </div>
           <div className="flex flex-wrap gap-1.5 mt-3">
             {character.tags.map((tag, i) => (
-              <span key={i} className="bg-white rounded-full px-3 py-1 text-[12px] font-medium text-imely-ink">
+              <span key={i} className="bg-surface rounded-full px-3 py-1 text-[12px] font-medium text-ink">
                 {ph(tag, baseLocale)}
               </span>
             ))}
@@ -100,36 +100,36 @@ export function CharacterProfileScreen() {
             onClick={() => openCreatorProfile(character.creatorId)}
             className="w-full flex items-center gap-2.5 active:opacity-70 transition-opacity"
           >
-            <div className="w-9 h-9 rounded-full bg-gray-200 shrink-0" />
+            <div className="w-9 h-9 rounded-full bg-line shrink-0" />
             <div className="flex-1 text-left min-w-0">
-              <div className="font-semibold text-[13.5px] text-imely-ink truncate">
+              <div className="font-semibold text-[13.5px] text-ink truncate">
                 {ph(character.creatorName, baseLocale)}
               </div>
               <span className="inline-flex items-center gap-1 text-[11px] text-pink-500 bg-pink-50 rounded-full px-2 py-0.5 mt-0.5">
                 🐣 <Str k={character.creatorBadgeKey} />
               </span>
             </div>
-            <ChevronRight size={16} className="text-gray-400 shrink-0" />
+            <ChevronRight size={16} className="text-muted shrink-0" />
           </button>
         </Section>
 
         <Section labelKey="profile_bot.info.creator_note">
-          <div className="text-[13px] text-imely-ink leading-relaxed">{ph(character.creatorNote, baseLocale)}</div>
+          <div className="text-[13px] text-ink leading-relaxed">{ph(character.creatorNote, baseLocale)}</div>
         </Section>
 
         <Section labelKey="profile_bot.info.public_info">
-          <div className="text-[13.5px] text-imely-ink leading-relaxed">{ph(character.publicInfo, baseLocale)}</div>
+          <div className="text-[13.5px] text-ink leading-relaxed">{ph(character.publicInfo, baseLocale)}</div>
         </Section>
 
         <Section labelKey="profile_bot.info.biography">
-          <div className="text-[13.5px] text-imely-ink leading-relaxed">{ph(character.biography, baseLocale)}</div>
+          <div className="text-[13.5px] text-ink leading-relaxed">{ph(character.biography, baseLocale)}</div>
         </Section>
 
         <Section labelKey="profile_bot.info.first_message">
-          <div className="flex gap-2.5 bg-gray-50 rounded-xl p-3">
+          <div className="flex gap-2.5 bg-subtle rounded-xl p-3">
             <div className="w-8 h-8 rounded-full shrink-0" style={{ backgroundColor: character.color }} />
             <div className="min-w-0">
-              <div className={`text-[13px] text-imely-ink whitespace-pre-line ${readMore ? '' : 'line-clamp-3'}`}>
+              <div className={`text-[13px] text-ink whitespace-pre-line ${readMore ? '' : 'line-clamp-3'}`}>
                 {ph(character.firstMessage, baseLocale)}
               </div>
               <button
@@ -143,7 +143,7 @@ export function CharacterProfileScreen() {
         </Section>
 
         <div className="mt-5 pb-5">
-          <div className="px-4 font-extrabold text-[16px] text-imely-ink mb-2">
+          <div className="px-4 font-extrabold text-[16px] text-ink mb-2">
             <NoSheet>Karakter Serupa</NoSheet>
           </div>
           <div className="flex gap-3 px-4 overflow-x-auto">
@@ -151,13 +151,13 @@ export function CharacterProfileScreen() {
               <button
                 key={c.id}
                 onClick={() => viewSimilar(c)}
-                className="w-32 shrink-0 rounded-2xl overflow-hidden border border-imely-line text-left active:scale-[0.97] transition-transform"
+                className="w-32 shrink-0 rounded-2xl overflow-hidden border border-line text-left active:scale-[0.97] transition-transform"
               >
                 <div className="h-28" style={{ backgroundColor: c.color }} />
                 <div className="p-2">
-                  <div className="font-bold text-[12.5px] text-imely-ink truncate">{ph(c.name, baseLocale)}</div>
-                  <div className="text-[10.5px] text-gray-500 line-clamp-2 mt-0.5">{ph(c.tagline, baseLocale)}</div>
-                  <div className="text-[10px] text-gray-400 mt-1">{c.chatCount}</div>
+                  <div className="font-bold text-[12.5px] text-ink truncate">{ph(c.name, baseLocale)}</div>
+                  <div className="text-[10.5px] text-muted line-clamp-2 mt-0.5">{ph(c.tagline, baseLocale)}</div>
+                  <div className="text-[10px] text-muted mt-1">{c.chatCount}</div>
                 </div>
               </button>
             ))}
@@ -165,7 +165,7 @@ export function CharacterProfileScreen() {
         </div>
       </div>
 
-      <div className="shrink-0 p-4 border-t border-imely-line">
+      <div className="shrink-0 p-4 border-t border-line">
         <button
           onClick={startChat}
           className="w-full bg-imely-primary text-white font-bold rounded-full py-3 active:scale-[0.97] active:bg-imely-primaryDark transition-transform"
@@ -203,8 +203,8 @@ export function CharacterProfileScreen() {
 function Stat({ value, labelKey }: { value: string; labelKey: string }) {
   return (
     <div>
-      <div className="font-bold text-[15px] text-imely-ink">{value}</div>
-      <div className="text-[11.5px] text-gray-400">
+      <div className="font-bold text-[15px] text-ink">{value}</div>
+      <div className="text-[11.5px] text-muted">
         <Str k={labelKey} />
       </div>
     </div>
@@ -214,11 +214,11 @@ function Stat({ value, labelKey }: { value: string; labelKey: string }) {
 function Section({ labelKey, children }: { labelKey: string; children: React.ReactNode }) {
   return (
     <div className="px-4 mt-4">
-      <div className="text-[12px] font-semibold text-gray-400 mb-1.5">
+      <div className="text-[12px] font-semibold text-muted mb-1.5">
         <Str k={labelKey} />
       </div>
       {children}
-      <div className="mt-4 border-b border-imely-line" />
+      <div className="mt-4 border-b border-line" />
     </div>
   )
 }

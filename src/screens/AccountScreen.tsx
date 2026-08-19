@@ -119,15 +119,15 @@ export function AccountScreen() {
   usePopupRequest('account', 'logout_confirm', modalPopup('logout'))
 
   return (
-    <div className="h-full flex flex-col bg-white relative">
-      <div className="relative flex items-center gap-2 px-3 py-2.5 border-b border-imely-line shrink-0">
+    <div className="h-full flex flex-col bg-surface relative">
+      <div className="relative flex items-center gap-2 px-3 py-2.5 border-b border-line shrink-0">
         <button
           onClick={closeAccount}
-          className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink shrink-0 active:scale-90 active:bg-gray-100 transition-transform"
+          className="w-8 h-8 rounded-full flex items-center justify-center text-ink shrink-0 active:scale-90 active:bg-subtle transition-transform"
         >
           <ArrowLeft size={18} />
         </button>
-        <div className="font-bold text-[16px] text-imely-ink">
+        <div className="font-bold text-[16px] text-ink">
           <Str k="profile_me_v4.menu.account_management" />
         </div>
       </div>
@@ -138,14 +138,14 @@ export function AccountScreen() {
           <div className="flex items-center gap-3">
             <div className="relative">
               <div
-                className="w-14 h-14 rounded-full bg-cover bg-center border border-imely-line"
+                className="w-14 h-14 rounded-full bg-cover bg-center border border-line"
                 style={{ backgroundColor: MOCK_USER.avatarColor }}
               />
               <button
                 onClick={() => showToast('Ganti foto profil — segera hadir')}
-                className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-white border border-imely-line flex items-center justify-center active:scale-90 transition-transform"
+                className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-surface border border-line flex items-center justify-center active:scale-90 transition-transform"
               >
-                <Camera size={10} className="text-imely-ink" />
+                <Camera size={10} className="text-ink" />
               </button>
             </div>
             <div className="min-w-0">
@@ -153,11 +153,11 @@ export function AccountScreen() {
                 onClick={() => showToast('Ubah nama — segera hadir')}
                 className="flex items-center gap-1.5 active:opacity-70 transition-opacity"
               >
-                <span className="font-bold text-[17px] text-imely-ink truncate">{ph(MOCK_USER.name, baseLocale)}</span>
-                <Pencil size={13} className="text-gray-400 shrink-0" />
+                <span className="font-bold text-[17px] text-ink truncate">{ph(MOCK_USER.name, baseLocale)}</span>
+                <Pencil size={13} className="text-muted shrink-0" />
               </button>
-              <div className="text-[13px] text-gray-400">{MOCK_USER.handle.replace(' (internal)', '')}</div>
-              <div className="text-[12.5px] text-gray-400">
+              <div className="text-[13px] text-muted">{MOCK_USER.handle.replace(' (internal)', '')}</div>
+              <div className="text-[12.5px] text-muted">
                 <Str k="user_profile_v2.login_by" /> {MOCK_USER.loginProvider}
               </div>
               <button
@@ -171,11 +171,11 @@ export function AccountScreen() {
 
           {/* verify banner */}
           <div className="mt-4 bg-sky-50 rounded-2xl p-4">
-            <div className="flex items-center gap-2 font-bold text-[14.5px] text-imely-ink">
+            <div className="flex items-center gap-2 font-bold text-[14.5px] text-ink">
               <ShieldCheck size={17} className="text-sky-500 shrink-0" />
               <Str k="user_profile_v2.banner_verify_acc.title_email" />
             </div>
-            <div className="mt-1.5 text-[12.5px] text-gray-500 whitespace-pre-line leading-relaxed">
+            <div className="mt-1.5 text-[12.5px] text-muted whitespace-pre-line leading-relaxed">
               <Str k="user_profile_v2.banner_verify_acc.description" />
             </div>
             <button
@@ -187,12 +187,12 @@ export function AccountScreen() {
           </div>
         </div>
 
-        <div className="border-t-8 border-imely-line px-4 pt-4">
-          <div className="font-bold text-[16px] text-imely-ink">
+        <div className="border-t-8 border-line px-4 pt-4">
+          <div className="font-bold text-[16px] text-ink">
             <Str k="user_profile_v2.identifer.verify_account" />
           </div>
 
-          <div className="mt-2 flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-2.5 text-[12.5px] text-gray-500">
+          <div className="mt-2 flex items-center gap-2 bg-subtle rounded-xl px-3 py-2.5 text-[12.5px] text-muted">
             <Lock size={14} className="shrink-0" />
             <Str k="user_profile_v2.identifer.only_show_with_you" />
           </div>
@@ -236,7 +236,7 @@ export function AccountScreen() {
             />
           </div>
 
-          <div className="mt-4 text-[13px] font-semibold text-gray-400">
+          <div className="mt-4 text-[13px] font-semibold text-muted">
             <Str k="user_profile_v2.identifer.link_account" />
           </div>
           <LinkedAccountRow
@@ -254,26 +254,26 @@ export function AccountScreen() {
             onTap={() => setModal('unlinkBlocked')}
             outlined
           />
-          <div className="pb-4 pt-1 text-[11px] text-gray-400">
+          <div className="pb-4 pt-1 text-[11px] text-muted">
             <Str k="user_profile_v2.identifer.link_account_hint" />
           </div>
         </div>
 
-        <div className="border-t-8 border-imely-line px-4 pt-4">
-          <div className="font-bold text-[16px] text-imely-ink">
+        <div className="border-t-8 border-line px-4 pt-4">
+          <div className="font-bold text-[16px] text-ink">
             <Str k="user_profile_v2.profile_info.title" />
           </div>
-          <div className="mt-2 bg-gray-50 rounded-xl px-3 py-2.5 text-[12.5px] text-gray-500">
+          <div className="mt-2 bg-subtle rounded-xl px-3 py-2.5 text-[12.5px] text-muted">
             <Str k="user_profile_v2.profile_info.privacy_title" />
           </div>
 
-          <div className="flex items-center justify-between py-3.5 border-b border-imely-line">
-            <div className="text-[14px] text-imely-ink">
+          <div className="flex items-center justify-between py-3.5 border-b border-line">
+            <div className="text-[14px] text-ink">
               <Str k="user_profile_v2.profile_info.privacy_mode" />
             </div>
             <button
               onClick={() => setModal('privacy')}
-              className="flex items-center gap-1 text-[13px] font-medium text-imely-ink border border-imely-line rounded-full px-3 py-1 active:scale-95 transition-transform"
+              className="flex items-center gap-1 text-[13px] font-medium text-ink border border-line rounded-full px-3 py-1 active:scale-95 transition-transform"
             >
               {privacy === 'only_me' ? (
                 <>
@@ -288,19 +288,19 @@ export function AccountScreen() {
                   🌐 <NoSheet>Publik</NoSheet>
                 </>
               )}
-              <ChevronDown size={13} className="text-gray-400" />
+              <ChevronDown size={13} className="text-muted" />
             </button>
           </div>
 
-          <div className="flex items-center justify-between py-3.5 border-b border-imely-line">
-            <div className="text-[14px] text-imely-ink">
+          <div className="flex items-center justify-between py-3.5 border-b border-line">
+            <div className="text-[14px] text-ink">
               <Str k="user_profile_v2.profile_info.gender_mode" />
             </div>
             <button
               onClick={() => setModal('gender')}
-              className="flex items-center gap-1 text-[13px] font-medium text-imely-ink border border-imely-line rounded-full px-3 py-1 active:scale-95 transition-transform"
+              className="flex items-center gap-1 text-[13px] font-medium text-ink border border-line rounded-full px-3 py-1 active:scale-95 transition-transform"
             >
-              <Str k={GENDER_KEY[gender]} /> <ChevronDown size={13} className="text-gray-400" />
+              <Str k={GENDER_KEY[gender]} /> <ChevronDown size={13} className="text-muted" />
             </button>
           </div>
 
@@ -309,14 +309,14 @@ export function AccountScreen() {
               setBirthdateDraft(birthdate)
               setModal('birthdate')
             }}
-            className="w-full flex items-center justify-between py-3.5 border-b border-imely-line text-left active:bg-gray-50 transition-colors"
+            className="w-full flex items-center justify-between py-3.5 border-b border-line text-left active:bg-subtle transition-colors"
           >
             <div>
-              <div className="flex items-center gap-1 text-[14px] text-imely-ink">
+              <div className="flex items-center gap-1 text-[14px] text-ink">
                 <Str k="user_profile_v2.profile_info.year_of_birth" />
-                <Pencil size={12} className="text-gray-400" />
+                <Pencil size={12} className="text-muted" />
               </div>
-              <div className="text-[12.5px] text-gray-500 mt-0.5">{fmtDate(birthdate)}</div>
+              <div className="text-[12.5px] text-muted mt-0.5">{fmtDate(birthdate)}</div>
             </div>
           </button>
 
@@ -325,24 +325,24 @@ export function AccountScreen() {
               setBioDraft(bio)
               setModal('bio')
             }}
-            className="w-full flex items-center justify-between py-3.5 text-left active:bg-gray-50 transition-colors"
+            className="w-full flex items-center justify-between py-3.5 text-left active:bg-subtle transition-colors"
           >
             <div>
-              <div className="flex items-center gap-1 text-[14px] text-imely-ink">
+              <div className="flex items-center gap-1 text-[14px] text-ink">
                 <Str k="user_profile_v2.profile_info.bio" />
-                <Pencil size={12} className="text-gray-400" />
+                <Pencil size={12} className="text-muted" />
               </div>
-              <div className="text-[12.5px] text-gray-400 mt-0.5">
+              <div className="text-[12.5px] text-muted mt-0.5">
                 {bio || <Str k="user_profile_v2.profile_info.bio_hint" />}
               </div>
             </div>
           </button>
         </div>
 
-        <div className="border-t-8 border-imely-line px-4">
+        <div className="border-t-8 border-line px-4">
           <button
             onClick={() => setModal('logout')}
-            className="w-full flex items-center gap-3 py-4 text-left active:bg-gray-50 transition-colors"
+            className="w-full flex items-center gap-3 py-4 text-left active:bg-subtle transition-colors"
           >
             <LogOut size={18} className="text-red-500" />
             <span className="font-semibold text-[14px] text-red-500">
@@ -351,10 +351,10 @@ export function AccountScreen() {
           </button>
         </div>
 
-        <div className="border-t-8 border-imely-line py-5 text-center">
+        <div className="border-t-8 border-line py-5 text-center">
           <button
             onClick={openDeleteAccount}
-            className="text-[12.5px] text-gray-400 underline active:opacity-70 transition-opacity"
+            className="text-[12.5px] text-muted underline active:opacity-70 transition-opacity"
           >
             <Str k="user_profile_v2.delete_account_AI_Hay" />
           </button>
@@ -366,12 +366,12 @@ export function AccountScreen() {
         <ZoneScope zone="verify_menu">
           <div className="absolute inset-0 z-10">
             <button onClick={() => setVerifyOpen(false)} aria-label="Close verify menu" className="absolute inset-0 bg-black/40" />
-            <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl pt-2 pb-6 px-5">
-              <div className="w-10 h-1 rounded-full bg-gray-200 mx-auto" />
+            <div className="absolute bottom-0 left-0 right-0 bg-surface rounded-t-3xl pt-2 pb-6 px-5">
+              <div className="w-10 h-1 rounded-full bg-line mx-auto" />
               <div className="flex justify-center mt-4">
                 <ShieldCheck size={44} className="text-sky-500" />
               </div>
-              <div className="text-center font-bold text-[17px] text-imely-ink mt-2">
+              <div className="text-center font-bold text-[17px] text-ink mt-2">
                 <Str k="login.opt_verify_acc.hint_verify_account" />
               </div>
               <button
@@ -379,12 +379,12 @@ export function AccountScreen() {
                   setVerifyOpen(false)
                   openVerifyEmail()
                 }}
-                className="mt-5 w-full flex items-center justify-center gap-2 border border-imely-line rounded-full py-3 font-bold text-[14px] text-imely-ink active:scale-[0.97] transition-transform"
+                className="mt-5 w-full flex items-center justify-center gap-2 border border-line rounded-full py-3 font-bold text-[14px] text-ink active:scale-[0.97] transition-transform"
               >
                 <Mail size={16} />
                 <Str k="login.opt_verify_acc.btn_verify_by_email" />
               </button>
-              <div className="mt-4 text-center text-[11.5px] text-gray-400 leading-relaxed">
+              <div className="mt-4 text-center text-[11.5px] text-muted leading-relaxed">
                 <RichStr k="login.option_login.policy_agreement" />
               </div>
             </div>
@@ -397,12 +397,12 @@ export function AccountScreen() {
         <ZoneScope zone="identity_card_edit">
           <div className="absolute inset-0 z-10">
             <button onClick={closeModal} aria-label="Close" className="absolute inset-0 bg-black/40" />
-            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-3.5 border-b border-imely-line">
-                <div className="font-bold text-[15px] text-imely-ink">
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-surface rounded-2xl overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-3.5 border-b border-line">
+                <div className="font-bold text-[15px] text-ink">
                   <Str k="user_profile_v2.identifer.identity_card" />
                 </div>
-                <button onClick={closeModal} className="text-gray-400 active:scale-90 transition-transform">
+                <button onClick={closeModal} className="text-muted active:scale-90 transition-transform">
                   <X size={18} />
                 </button>
               </div>
@@ -411,12 +411,12 @@ export function AccountScreen() {
                   value={identityCardDraft}
                   onChange={(e) => setIdentityCardDraft(e.target.value)}
                   placeholder={resolveString('profile_me.id_identifier.hint_cccd', baseLocale)}
-                  className="w-full text-[14px] text-imely-ink outline-none placeholder:text-gray-400"
+                  className="w-full text-[14px] text-ink outline-none placeholder:text-muted"
                   {...cccdHintAttrs}
                 />
               </div>
               <div className="flex justify-end gap-4 px-4 pb-4">
-                <button onClick={closeModal} className="font-semibold text-[14px] text-imely-ink active:opacity-70 transition-opacity">
+                <button onClick={closeModal} className="font-semibold text-[14px] text-ink active:opacity-70 transition-opacity">
                   <Str k="profile_me.id_identifier.btn_cancel" />
                 </button>
                 <button
@@ -439,14 +439,14 @@ export function AccountScreen() {
         <ZoneScope zone="unlink_blocked">
           <div className="absolute inset-0 z-10">
             <button onClick={closeModal} aria-label="Close" className="absolute inset-0 bg-black/40" />
-            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl overflow-hidden">
-              <div className="flex items-center gap-2 px-4 py-3.5 border-b border-imely-line">
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-surface rounded-2xl overflow-hidden">
+              <div className="flex items-center gap-2 px-4 py-3.5 border-b border-line">
                 <AlertTriangle size={17} className="text-amber-500 shrink-0" />
-                <div className="font-bold text-[14.5px] text-imely-ink">
+                <div className="font-bold text-[14.5px] text-ink">
                   <Str k="user_profile_v2.identifer.unlink_google_account_not_allowed" />
                 </div>
               </div>
-              <div className="p-4 text-[13.5px] text-imely-ink leading-relaxed">
+              <div className="p-4 text-[13.5px] text-ink leading-relaxed">
                 <Str k="user_profile_v2.identifer.unlink_last_login_method_error" />
               </div>
               <div className="px-4 pb-2">
@@ -461,7 +461,7 @@ export function AccountScreen() {
                 </button>
               </div>
               <div className="px-4 pb-4 pt-2">
-                <button onClick={closeModal} className="font-bold text-[14px] text-imely-ink active:opacity-70 transition-opacity">
+                <button onClick={closeModal} className="font-bold text-[14px] text-ink active:opacity-70 transition-opacity">
                   <Str k="common.back" />
                 </button>
               </div>
@@ -475,12 +475,12 @@ export function AccountScreen() {
         <ZoneScope zone="privacy_menu">
           <div className="absolute inset-0 z-10">
             <button onClick={closeModal} aria-label="Close" className="absolute inset-0 bg-black/40" />
-            <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl pb-6">
-              <div className="flex items-center justify-between px-4 py-4 border-b border-imely-line">
-                <div className="font-bold text-[16px] text-imely-ink">
+            <div className="absolute bottom-0 left-0 right-0 bg-surface rounded-t-3xl pb-6">
+              <div className="flex items-center justify-between px-4 py-4 border-b border-line">
+                <div className="font-bold text-[16px] text-ink">
                   <Str k="feed_privacy.header" />
                 </div>
-                <button onClick={closeModal} className="text-gray-400 active:scale-90 transition-transform">
+                <button onClick={closeModal} className="text-muted active:scale-90 transition-transform">
                   <X size={18} />
                 </button>
               </div>
@@ -524,12 +524,12 @@ export function AccountScreen() {
         <ZoneScope zone="gender_menu">
           <div className="absolute inset-0 z-10">
             <button onClick={closeModal} aria-label="Close" className="absolute inset-0 bg-black/40" />
-            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-3.5 border-b border-imely-line">
-                <div className="font-bold text-[16px] text-imely-ink">
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-surface rounded-2xl overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-3.5 border-b border-line">
+                <div className="font-bold text-[16px] text-ink">
                   <Str k="profile_me.gender_edit.title" />
                 </div>
-                <button onClick={closeModal} className="text-gray-400 active:scale-90 transition-transform">
+                <button onClick={closeModal} className="text-muted active:scale-90 transition-transform">
                   <X size={18} />
                 </button>
               </div>
@@ -540,9 +540,9 @@ export function AccountScreen() {
                     setGender(g)
                     closeModal()
                   }}
-                  className="w-full flex items-center justify-between px-4 py-3.5 border-b border-imely-line last:border-0 active:bg-gray-50 transition-colors text-left"
+                  className="w-full flex items-center justify-between px-4 py-3.5 border-b border-line last:border-0 active:bg-subtle transition-colors text-left"
                 >
-                  <span className="text-[14px] text-imely-ink">
+                  <span className="text-[14px] text-ink">
                     <Str k={GENDER_KEY[g]} />
                   </span>
                   {gender === g && <Check size={16} className="text-imely-primary" />}
@@ -558,24 +558,24 @@ export function AccountScreen() {
         <ZoneScope zone="birthdate_edit">
           <div className="absolute inset-0 z-10">
             <button onClick={closeModal} aria-label="Close" className="absolute inset-0 bg-black/40" />
-            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl overflow-hidden">
-              <div className="px-4 py-3.5 border-b border-imely-line font-bold text-[16px] text-imely-ink">
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-surface rounded-2xl overflow-hidden">
+              <div className="px-4 py-3.5 border-b border-line font-bold text-[16px] text-ink">
                 <Str k="user_profile_v2.profile_info.date_time_picker_title" />
               </div>
               <div className="flex justify-center gap-6 py-4">
                 <div className="flex flex-col items-center">
                   <button
                     onClick={() => setBirthdateDraft(shiftDay(birthdateDraft, -1))}
-                    className="text-gray-300 text-[14px] py-2 active:text-gray-400"
+                    className="text-faint text-[14px] py-2 active:text-muted"
                   >
                     {shiftDay(birthdateDraft, -1).getDate()}
                   </button>
-                  <div className="text-imely-ink text-[15px] font-semibold border-t border-b border-imely-primary py-2 px-2">
+                  <div className="text-ink text-[15px] font-semibold border-t border-b border-imely-primary py-2 px-2">
                     {String(birthdateDraft.getDate()).padStart(2, '0')}
                   </div>
                   <button
                     onClick={() => setBirthdateDraft(shiftDay(birthdateDraft, 1))}
-                    className="text-gray-300 text-[14px] py-2 active:text-gray-400"
+                    className="text-faint text-[14px] py-2 active:text-muted"
                   >
                     {shiftDay(birthdateDraft, 1).getDate()}
                   </button>
@@ -583,16 +583,16 @@ export function AccountScreen() {
                 <div className="flex flex-col items-center">
                   <button
                     onClick={() => setBirthdateDraft(shiftMonth(birthdateDraft, -1))}
-                    className="text-gray-300 text-[14px] py-2 active:text-gray-400"
+                    className="text-faint text-[14px] py-2 active:text-muted"
                   >
                     {MONTH_NAMES[shiftMonth(birthdateDraft, -1).getMonth()]}
                   </button>
-                  <div className="text-imely-ink text-[15px] font-semibold border-t border-b border-imely-primary py-2 px-2">
+                  <div className="text-ink text-[15px] font-semibold border-t border-b border-imely-primary py-2 px-2">
                     {MONTH_NAMES[birthdateDraft.getMonth()]}
                   </div>
                   <button
                     onClick={() => setBirthdateDraft(shiftMonth(birthdateDraft, 1))}
-                    className="text-gray-300 text-[14px] py-2 active:text-gray-400"
+                    className="text-faint text-[14px] py-2 active:text-muted"
                   >
                     {MONTH_NAMES[shiftMonth(birthdateDraft, 1).getMonth()]}
                   </button>
@@ -600,23 +600,23 @@ export function AccountScreen() {
                 <div className="flex flex-col items-center">
                   <button
                     onClick={() => setBirthdateDraft(shiftYear(birthdateDraft, -1))}
-                    className="text-gray-300 text-[14px] py-2 active:text-gray-400"
+                    className="text-faint text-[14px] py-2 active:text-muted"
                   >
                     {shiftYear(birthdateDraft, -1).getFullYear()}
                   </button>
-                  <div className="text-imely-ink text-[15px] font-semibold border-t border-b border-imely-primary py-2 px-2">
+                  <div className="text-ink text-[15px] font-semibold border-t border-b border-imely-primary py-2 px-2">
                     {birthdateDraft.getFullYear()}
                   </div>
                   <button
                     onClick={() => setBirthdateDraft(shiftYear(birthdateDraft, 1))}
-                    className="text-gray-300 text-[14px] py-2 active:text-gray-400"
+                    className="text-faint text-[14px] py-2 active:text-muted"
                   >
                     {shiftYear(birthdateDraft, 1).getFullYear()}
                   </button>
                 </div>
               </div>
               <div className="flex justify-end gap-4 px-4 pb-4">
-                <button onClick={closeModal} className="font-semibold text-[14px] text-imely-ink active:opacity-70 transition-opacity">
+                <button onClick={closeModal} className="font-semibold text-[14px] text-ink active:opacity-70 transition-opacity">
                   <Str k="common.cancel" />
                 </button>
                 <button
@@ -639,12 +639,12 @@ export function AccountScreen() {
         <ZoneScope zone="bio_edit">
           <div className="absolute inset-0 z-10">
             <button onClick={closeModal} aria-label="Close" className="absolute inset-0 bg-black/40" />
-            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-3.5 border-b border-imely-line">
-                <div className="font-bold text-[16px] text-imely-ink">
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-surface rounded-2xl overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-3.5 border-b border-line">
+                <div className="font-bold text-[16px] text-ink">
                   <Str k="profile_me.bio_edit.title" />
                 </div>
-                <button onClick={closeModal} className="text-gray-400 active:scale-90 transition-transform">
+                <button onClick={closeModal} className="text-muted active:scale-90 transition-transform">
                   <X size={18} />
                 </button>
               </div>
@@ -653,13 +653,13 @@ export function AccountScreen() {
                   value={bioDraft}
                   onChange={(e) => setBioDraft(e.target.value)}
                   rows={4}
-                  className="w-full text-[14px] text-imely-ink outline-none resize-none placeholder:text-gray-400"
+                  className="w-full text-[14px] text-ink outline-none resize-none placeholder:text-muted"
                   placeholder={resolveString('profile_me.bio_edit.input_box_hint', baseLocale)}
                   {...bioHintAttrs}
                 />
               </div>
               <div className="flex justify-end gap-4 px-4 pb-4">
-                <button onClick={closeModal} className="font-semibold text-[14px] text-imely-ink active:opacity-70 transition-opacity">
+                <button onClick={closeModal} className="font-semibold text-[14px] text-ink active:opacity-70 transition-opacity">
                   <Str k="profile_me.bio_edit.btn_cancel" />
                 </button>
                 <button
@@ -682,15 +682,15 @@ export function AccountScreen() {
         <ZoneScope zone="logout_confirm">
           <div className="absolute inset-0 z-10">
             <button onClick={closeModal} aria-label="Close" className="absolute inset-0 bg-black/40" />
-            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl p-5">
-              <div className="font-bold text-[16px] text-imely-ink">
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-surface rounded-2xl p-5">
+              <div className="font-bold text-[16px] text-ink">
                 <Str k="user_profile_v2.logout_action_title" />
               </div>
-              <div className="mt-1.5 text-[13px] text-gray-500">
+              <div className="mt-1.5 text-[13px] text-muted">
                 <Str k="user_profile_v2.logout_action_msg" />
               </div>
               <div className="mt-4 flex justify-end gap-4">
-                <button onClick={closeModal} className="font-semibold text-[14px] text-imely-ink active:opacity-70 transition-opacity">
+                <button onClick={closeModal} className="font-semibold text-[14px] text-ink active:opacity-70 transition-opacity">
                   <Str k="user_profile_v2.logout_action_button_cancel" />
                 </button>
                 <button
@@ -731,20 +731,20 @@ function AccountRow({
   return (
     <button
       onClick={onTap}
-      className={`w-full flex items-center gap-3 py-3.5 text-left active:bg-gray-50 transition-colors ${
-        last ? '' : 'border-b border-imely-line'
+      className={`w-full flex items-center gap-3 py-3.5 text-left active:bg-subtle transition-colors ${
+        last ? '' : 'border-b border-line'
       }`}
     >
-      <div className="text-imely-ink shrink-0">{icon}</div>
+      <div className="text-ink shrink-0">{icon}</div>
       <div className="flex-1 min-w-0">
-        <div className="font-semibold text-[14px] text-imely-ink">
+        <div className="font-semibold text-[14px] text-ink">
           {titleKey ? <Str k={titleKey} /> : <NoSheet>{title}</NoSheet>}
         </div>
-        <div className="text-[12.5px] text-gray-400 truncate">
+        <div className="text-[12.5px] text-muted truncate">
           {subtitleKey ? <Str k={subtitleKey} /> : subtitle}
         </div>
       </div>
-      <ChevronRight size={16} className="text-gray-300 shrink-0" />
+      <ChevronRight size={16} className="text-faint shrink-0" />
     </button>
   )
 }
@@ -773,14 +773,14 @@ function LinkedAccountRow({
         >
           {badge}
         </div>
-        <div className="text-[14px] text-imely-ink">
+        <div className="text-[14px] text-ink">
           <Str k={labelKey} />
         </div>
       </div>
       <button
         onClick={onTap}
         className={`text-[12.5px] font-semibold rounded-full px-3.5 py-1 active:scale-95 transition-transform ${
-          outlined ? 'border border-imely-line text-imely-ink' : 'border border-imely-primary text-imely-primaryDark'
+          outlined ? 'border border-line text-ink' : 'border border-imely-primary text-imely-primaryDark'
         }`}
       >
         <Str k={actionKey} />
@@ -810,15 +810,15 @@ function PrivacyOption({
     <button
       onClick={onSelect}
       className={`w-full flex items-start gap-3 px-4 py-3.5 text-left transition-colors ${
-        selected ? 'bg-imely-mint/40' : 'active:bg-gray-50'
+        selected ? 'bg-imely-mint/40' : 'active:bg-subtle'
       }`}
     >
-      <div className="text-imely-ink shrink-0 mt-0.5">{icon}</div>
+      <div className="text-ink shrink-0 mt-0.5">{icon}</div>
       <div className="flex-1 min-w-0">
-        <div className="font-bold text-[14.5px] text-imely-ink">
+        <div className="font-bold text-[14.5px] text-ink">
           {titleKey ? <Str k={titleKey} /> : <NoSheet>{title}</NoSheet>}
         </div>
-        <div className="text-[12.5px] text-gray-500 mt-0.5">
+        <div className="text-[12.5px] text-muted mt-0.5">
           {hintKey ? <Str k={hintKey} /> : <NoSheet>{hint}</NoSheet>}
         </div>
       </div>

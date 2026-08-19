@@ -29,14 +29,14 @@ export function NotificationScreen() {
   return (
     <div className="h-full flex flex-col relative">
       {/* header */}
-      <div className="flex items-center gap-3 px-3 py-2.5 border-b border-imely-line shrink-0">
+      <div className="flex items-center gap-3 px-3 py-2.5 border-b border-line shrink-0">
         <button
           onClick={closeNotif}
-          className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-100 transition-transform"
+          className="w-8 h-8 rounded-full flex items-center justify-center text-ink active:scale-90 active:bg-subtle transition-transform"
         >
           <ArrowLeft size={18} />
         </button>
-        <div className="font-bold text-[17px] text-imely-ink">
+        <div className="font-bold text-[17px] text-ink">
           <Str k="navigation.noti.subtab_home.noti_all_tab_name" />
         </div>
       </div>
@@ -50,7 +50,7 @@ export function NotificationScreen() {
           <ChevronRight size={16} className="text-imely-primaryDark" />
         </button>
 
-        <div className="px-4 pt-4 pb-2 font-bold text-[15px] text-imely-ink">
+        <div className="px-4 pt-4 pb-2 font-bold text-[15px] text-ink">
           <Str k="navigation.noti.subtab_home.tab_name_1" />
         </div>
 
@@ -66,12 +66,12 @@ export function NotificationScreen() {
                 🐱
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-[13.5px] text-imely-ink leading-snug">{n.text}</div>
-                <div className="text-[11px] text-gray-400 mt-1">{n.time}</div>
+                <div className="text-[13.5px] text-ink leading-snug">{n.text}</div>
+                <div className="text-[11px] text-muted mt-1">{n.time}</div>
               </div>
               <button
                 onClick={() => setOptionsFor(n.id)}
-                className="text-gray-400 shrink-0 active:scale-90 transition-transform p-1"
+                className="text-muted shrink-0 active:scale-90 transition-transform p-1"
               >
                 <MoreVertical size={16} />
               </button>
@@ -79,7 +79,7 @@ export function NotificationScreen() {
           ))}
 
           {notifications.length === 0 && (
-            <div className="text-center text-[13px] text-gray-400 py-10">
+            <div className="text-center text-[13px] text-muted py-10">
               <Str k="noti_list.empty_list" />
             </div>
           )}
@@ -95,14 +95,14 @@ export function NotificationScreen() {
               aria-label="Close options"
               className="absolute inset-0 bg-black/40"
             />
-            <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl">
-              <div className="relative flex items-center justify-center px-4 py-4 border-b border-imely-line">
-                <div className="font-bold text-[16px] text-imely-ink">
+            <div className="absolute bottom-0 left-0 right-0 bg-surface rounded-t-3xl">
+              <div className="relative flex items-center justify-center px-4 py-4 border-b border-line">
+                <div className="font-bold text-[16px] text-ink">
                   <Str k="menu.noti_option_menu.header" />
                 </div>
                 <button
                   onClick={() => setOptionsFor(null)}
-                  className="absolute right-4 text-gray-400 active:scale-90 transition-transform"
+                  className="absolute right-4 text-muted active:scale-90 transition-transform"
                 >
                   <X size={18} />
                 </button>
@@ -110,20 +110,20 @@ export function NotificationScreen() {
 
               <button
                 onClick={() => markAsRead(optionsFor)}
-                className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors"
+                className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-line active:bg-subtle transition-colors"
               >
-                <Mail size={17} className="text-imely-ink" />
-                <span className="text-[14px] text-imely-ink">
+                <Mail size={17} className="text-ink" />
+                <span className="text-[14px] text-ink">
                   <Str k="menu.noti_option_menu.mark_as_read" />
                 </span>
               </button>
 
               <button
                 onClick={() => deleteNotif(optionsFor)}
-                className="w-full flex items-center gap-3 px-4 py-3.5 active:bg-gray-50 transition-colors"
+                className="w-full flex items-center gap-3 px-4 py-3.5 active:bg-subtle transition-colors"
               >
-                <Trash2 size={17} className="text-imely-ink" />
-                <span className="text-[14px] text-imely-ink">
+                <Trash2 size={17} className="text-ink" />
+                <span className="text-[14px] text-ink">
                   <Str k="menu.noti_option_menu.delete_noti" />
                 </span>
               </button>

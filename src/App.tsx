@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { PanelLeftOpen, PanelLeftClose, X, Download, Focus } from 'lucide-react'
+import { PanelLeftOpen, PanelLeftClose, X, Download, Focus, Sun, Moon } from 'lucide-react'
 import { AppProvider, useApp } from './context/AppContext'
 import { ScreenScope } from './context/ScreenScope'
 import { useStringHighlighter } from './hooks/useStringHighlighter'
@@ -97,6 +97,8 @@ function Shell() {
     toastPreview,
     focusMode,
     setFocusMode,
+    darkMode,
+    setDarkMode,
   } = useApp()
   useStringHighlighter()
   const activeScreenId = useLivePreviewFollow()
@@ -178,7 +180,7 @@ function Shell() {
       : null
 
   return (
-    <div className="h-screen w-screen flex flex-col bg-[#F4F5F7] overflow-hidden">
+    <div className={`h-screen w-screen flex flex-col bg-subtle overflow-hidden ${darkMode ? 'dark' : ''}`}>
       {/* one shared title bar spanning the full window, split into
           color-matched segments so all three columns' content starts at the
           same y-offset instead of each panel carrying its own header height */}
@@ -192,6 +194,13 @@ function Shell() {
             <span className="text-[13px] font-semibold text-white">Focus Mode</span>
             <div className="ml-auto flex items-center gap-2.5 shrink-0">
               <button
+                onClick={() => setDarkMode(!darkMode)}
+                title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-white hover:bg-white/10 active:scale-90 transition-transform shrink-0"
+              >
+                {darkMode ? <Sun size={15} /> : <Moon size={15} />}
+              </button>
+              <button
                 onClick={() => setFocusMode(false)}
                 title="Exit Focus Mode"
                 className="flex items-center gap-1 text-[12px] font-semibold text-white border border-white/40 rounded-full pl-2.5 pr-3 py-1.5 hover:bg-white/10 active:scale-[0.97] transition-transform shrink-0"
@@ -202,30 +211,30 @@ function Shell() {
                 <button
                   onClick={() => setExportMenuOpen((v) => !v)}
                   title="Download strings as .xlsx — pick a language"
-                  className="flex items-center gap-1.5 text-[12px] font-semibold text-imely-primaryDark bg-white rounded-full pl-3 pr-3.5 py-1.5 active:scale-[0.97] transition-transform"
+                  className="flex items-center gap-1.5 text-[12px] font-semibold text-imely-primaryDark bg-surface rounded-full pl-3 pr-3.5 py-1.5 active:scale-[0.97] transition-transform"
                 >
                   <Download size={13} /> Export .xlsx
                 </button>
                 {exportMenuOpen && (
-                  <div className="absolute right-0 top-full mt-1.5 w-40 bg-white rounded-lg shadow-lg border border-imely-line py-1 z-50">
-                    <div className="px-3 py-1 text-[10px] font-semibold text-gray-400 uppercase">Source</div>
+                  <div className="absolute right-0 top-full mt-1.5 w-40 bg-surface rounded-lg shadow-lg border border-line py-1 z-50">
+                    <div className="px-3 py-1 text-[10px] font-semibold text-muted uppercase">Source</div>
                     {SOURCE_LOCALES.map((l) => (
                       <button
                         key={l}
                         onClick={() => handleExport(l)}
-                        className="w-full text-left px-3 py-1.5 text-[12.5px] text-imely-ink hover:bg-gray-50"
+                        className="w-full text-left px-3 py-1.5 text-[12.5px] text-ink hover:bg-subtle"
                       >
                         {LOCALE_LABEL[l]}
                       </button>
                     ))}
-                    <div className="px-3 py-1 mt-1 text-[10px] font-semibold text-gray-400 uppercase border-t border-imely-line pt-1.5">
+                    <div className="px-3 py-1 mt-1 text-[10px] font-semibold text-muted uppercase border-t border-line pt-1.5">
                       Target
                     </div>
                     {TARGET_LOCALES.map((l) => (
                       <button
                         key={l}
                         onClick={() => handleExport(l)}
-                        className="w-full text-left px-3 py-1.5 text-[12.5px] text-imely-ink hover:bg-gray-50"
+                        className="w-full text-left px-3 py-1.5 text-[12.5px] text-ink hover:bg-subtle"
                       >
                         {LOCALE_LABEL[l]}
                       </button>
@@ -242,13 +251,13 @@ function Shell() {
                 <div className="w-[360px] shrink-0 bg-imely-ink border-b border-white/10 flex items-center px-3">
                   <span className="text-[13px] font-semibold text-white">String Inspector</span>
                 </div>
-                <div className="w-[360px] shrink-0 bg-white border-b border-imely-line flex items-center justify-between px-3">
-                  <span className="text-[13px] font-semibold text-imely-ink">Translation</span>
+                <div className="w-[360px] shrink-0 bg-surface border-b border-line flex items-center justify-between px-3">
+                  <span className="text-[13px] font-semibold text-ink">Translation</span>
                   {selectedKey && (
                     <button
                       onClick={() => selectKey(null, null)}
                       title="Close translation panel"
-                      className="text-gray-400 active:scale-90 transition-transform"
+                      className="text-muted active:scale-90 transition-transform"
                     >
                       <X size={16} />
                     </button>
@@ -256,20 +265,27 @@ function Shell() {
                 </div>
               </>
             )}
-            <div className="flex-1 flex items-center gap-3 px-4 border-b border-imely-line bg-white min-w-0">
+            <div className="flex-1 flex items-center gap-3 px-4 border-b border-line bg-surface min-w-0">
               <button
                 onClick={() => setInspectorOpen(!inspectorOpen)}
-                className="w-7 h-7 rounded-md flex items-center justify-center text-gray-500 hover:bg-gray-100 shrink-0"
+                className="w-7 h-7 rounded-md flex items-center justify-center text-muted hover:bg-subtle shrink-0"
               >
                 {inspectorOpen ? <PanelLeftClose size={16} /> : <PanelLeftOpen size={16} />}
               </button>
-              <span className="text-[13px] font-semibold text-imely-ink truncate">imely localization sandbox</span>
-              <span className="text-[11px] text-gray-400 truncate">— live UI preview, not the real app</span>
+              <span className="text-[13px] font-semibold text-ink truncate">imely localization sandbox</span>
+              <span className="text-[11px] text-muted truncate">— live UI preview, not the real app</span>
               <div className="ml-auto flex items-center gap-2.5 shrink-0">
+                <button
+                  onClick={() => setDarkMode(!darkMode)}
+                  title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-muted hover:bg-subtle active:scale-90 transition-transform shrink-0"
+                >
+                  {darkMode ? <Sun size={16} /> : <Moon size={16} />}
+                </button>
                 <button
                   onClick={() => setFocusMode(true)}
                   title="Focus Mode — review one string at a time"
-                  className="flex items-center gap-1.5 text-[13px] font-semibold text-imely-ink border border-imely-line rounded-full pl-3 pr-3.5 py-1.5 hover:bg-gray-50 active:scale-[0.97] transition-transform"
+                  className="flex items-center gap-1.5 text-[13px] font-semibold text-ink border border-line rounded-full pl-3 pr-3.5 py-1.5 hover:bg-subtle active:scale-[0.97] transition-transform"
                 >
                   <Focus size={15} /> Focus Mode
                 </button>
@@ -282,25 +298,25 @@ function Shell() {
                     <Download size={13} /> Export .xlsx
                   </button>
                   {exportMenuOpen && (
-                    <div className="absolute right-0 top-full mt-1.5 w-40 bg-white rounded-lg shadow-lg border border-imely-line py-1 z-50">
-                      <div className="px-3 py-1 text-[10px] font-semibold text-gray-400 uppercase">Source</div>
+                    <div className="absolute right-0 top-full mt-1.5 w-40 bg-surface rounded-lg shadow-lg border border-line py-1 z-50">
+                      <div className="px-3 py-1 text-[10px] font-semibold text-muted uppercase">Source</div>
                       {SOURCE_LOCALES.map((l) => (
                         <button
                           key={l}
                           onClick={() => handleExport(l)}
-                          className="w-full text-left px-3 py-1.5 text-[12.5px] text-imely-ink hover:bg-gray-50"
+                          className="w-full text-left px-3 py-1.5 text-[12.5px] text-ink hover:bg-subtle"
                         >
                           {LOCALE_LABEL[l]}
                         </button>
                       ))}
-                      <div className="px-3 py-1 mt-1 text-[10px] font-semibold text-gray-400 uppercase border-t border-imely-line pt-1.5">
+                      <div className="px-3 py-1 mt-1 text-[10px] font-semibold text-muted uppercase border-t border-line pt-1.5">
                         Target
                       </div>
                       {TARGET_LOCALES.map((l) => (
                         <button
                           key={l}
                           onClick={() => handleExport(l)}
-                          className="w-full text-left px-3 py-1.5 text-[12.5px] text-imely-ink hover:bg-gray-50"
+                          className="w-full text-left px-3 py-1.5 text-[12.5px] text-ink hover:bg-subtle"
                         >
                           {LOCALE_LABEL[l]}
                         </button>
@@ -358,7 +374,7 @@ function Shell() {
 
             {/* full-screen chat overlay — opened by tapping a thread, or from a character profile's "Pesan" button */}
             {activeChat && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white flex flex-col">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-surface flex flex-col">
                 <ScreenScope id="chatdetail">
                   <ChatDetailScreen />
                 </ScreenScope>
@@ -367,7 +383,7 @@ function Shell() {
 
             {/* chat's Opsi page — pushed on top of chatdetail from its three-dot button */}
             {activeChat && chatOptionsOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-surface">
                 <ScreenScope id="chatoptions">
                   <ChatOptionsScreen />
                 </ScreenScope>
@@ -376,7 +392,7 @@ function Shell() {
 
             {/* character profile — opened by tapping a character card in the feed */}
             {activeCharacterId && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-surface">
                 <ScreenScope id="characterprofile">
                   <CharacterProfileScreen />
                 </ScreenScope>
@@ -386,7 +402,7 @@ function Shell() {
             {/* creator profile — pushed on top of a character profile from its "Kreator" row, or
                 reachable directly (e.g. Mengikuti's "Pencipta" tab) without a character underneath */}
             {activeCreatorId && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-surface">
                 <ScreenScope id="creatorprofile">
                   <CreatorProfileScreen />
                 </ScreenScope>
@@ -395,7 +411,7 @@ function Shell() {
 
             {/* QR code — pushed on top of Creator Profile from its share icon */}
             {qrCodeOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-40 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-40 bg-surface">
                 <ScreenScope id="qrcode">
                   <QrCodeScreen />
                 </ScreenScope>
@@ -411,7 +427,7 @@ function Shell() {
 
             {/* notification page — opened from the bell icon in the header */}
             {notifOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-surface">
                 <ScreenScope id="notification">
                   <NotificationScreen />
                 </ScreenScope>
@@ -420,7 +436,7 @@ function Shell() {
 
             {/* gem balance / missions page — opened from the gem pill in the header */}
             {gemsOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-surface">
                 <ScreenScope id="gems">
                   <GemScreen />
                 </ScreenScope>
@@ -429,7 +445,7 @@ function Shell() {
 
             {/* gem history — pushed on top of the gems page from "Riwayat Gem-mu" */}
             {gemsOpen && gemHistoryOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-surface">
                 <ScreenScope id="gemhistory">
                   <GemHistoryScreen />
                 </ScreenScope>
@@ -438,7 +454,7 @@ function Shell() {
 
             {/* MêLy Club / Gem purchase — reachable from multiple screens */}
             {purchaseOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-surface">
                 <ScreenScope id="purchase">
                   <PurchaseScreen />
                 </ScreenScope>
@@ -447,7 +463,7 @@ function Shell() {
 
             {/* active sessions — pushed on top of Profile from its account Opsi sheet */}
             {devicesOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-surface">
                 <ScreenScope id="devices">
                   <DevicesScreen />
                 </ScreenScope>
@@ -456,7 +472,7 @@ function Shell() {
 
             {/* Kelola akun — pushed on top of Profile from its pill button or the account Opsi sheet */}
             {accountOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-surface">
                 <ScreenScope id="account">
                   <AccountScreen />
                 </ScreenScope>
@@ -465,7 +481,7 @@ function Shell() {
 
             {/* Karaktermu — pushed on top of Profile from its "Karakter saya" row */}
             {myCharactersOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-surface">
                 <ScreenScope id="mycharacters">
                   <MyCharactersScreen />
                 </ScreenScope>
@@ -474,7 +490,7 @@ function Shell() {
 
             {/* Mengikuti — pushed on top of Profile from its "Mengikuti" row */}
             {followingOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-surface">
                 <ScreenScope id="following">
                   <FollowingScreen />
                 </ScreenScope>
@@ -483,7 +499,7 @@ function Shell() {
 
             {/* Lencana — pushed on top of Profile from its badge pill */}
             {badgesOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-surface">
                 <ScreenScope id="badges">
                   <BadgesScreen />
                 </ScreenScope>
@@ -492,7 +508,7 @@ function Shell() {
 
             {/* Tampilan — pushed on top of Profile from its "Tampilan & bahasa" row */}
             {appearanceOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-surface">
                 <ScreenScope id="appearance">
                   <AppearanceScreen />
                 </ScreenScope>
@@ -501,7 +517,7 @@ function Shell() {
 
             {/* Pengaturan — pushed on top of Profile from its "Pengaturan" row */}
             {settingsOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-surface">
                 <ScreenScope id="settings">
                   <SettingsScreen />
                 </ScreenScope>
@@ -510,7 +526,7 @@ function Shell() {
 
             {/* Notifikasi settings — pushed on top of Pengaturan from its "Notifikasi" row */}
             {settingsOpen && notificationSettingsOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-surface">
                 <ScreenScope id="notificationsettings">
                   <NotificationSettingsScreen />
                 </ScreenScope>
@@ -519,7 +535,7 @@ function Shell() {
 
             {/* Video settings — pushed on top of Pengaturan from its "Video" row */}
             {settingsOpen && videoSettingsOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-surface">
                 <ScreenScope id="videosettings">
                   <VideoSettingsScreen />
                 </ScreenScope>
@@ -528,7 +544,7 @@ function Shell() {
 
             {/* Tentang Kami — pushed on top of Profile from its support row */}
             {aboutOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-20 bg-surface">
                 <ScreenScope id="about">
                   <AboutScreen />
                 </ScreenScope>
@@ -538,7 +554,7 @@ function Shell() {
             {/* Verifikasi email — pushed on top of Kelola akun from its Verifikasi Akun
                 sheet or directly from the "Email" row */}
             {accountOpen && verifyEmailOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-surface">
                 <ScreenScope id="verifyemail">
                   <VerifyEmailScreen />
                 </ScreenScope>
@@ -547,7 +563,7 @@ function Shell() {
 
             {/* Nama Pengguna — pushed on top of Kelola akun from its "Nama Pengguna" row */}
             {accountOpen && usernameOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-surface">
                 <ScreenScope id="username">
                   <UsernameScreen />
                 </ScreenScope>
@@ -556,7 +572,7 @@ function Shell() {
 
             {/* Hapus akun — pushed on top of Kelola akun from its "Hapus akun imely" link */}
             {accountOpen && deleteAccountOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-30 bg-surface">
                 <ScreenScope id="deleteaccount">
                   <DeleteAccountScreen />
                 </ScreenScope>
@@ -567,7 +583,7 @@ function Shell() {
                 "+" icon, Karaktermu's "Buat Karakter" button, or its Opsi sheet's
                 "Edit Karakter" row; not scoped under any one page's overlay chain */}
             {characterFormOpen && (
-              <div className="absolute top-11 right-0 bottom-0 left-0 z-40 bg-white">
+              <div className="absolute top-11 right-0 bottom-0 left-0 z-40 bg-surface">
                 <ScreenScope id="characterform">
                   <CharacterFormScreen />
                 </ScreenScope>
@@ -631,8 +647,8 @@ function Shell() {
             {/* one-time warm-up pass so the Inspector's counts are accurate
                 immediately — covers the brief flicker through every screen */}
             {priming && (
-              <div className="absolute inset-0 z-50 bg-white flex items-center justify-center">
-                <div className="text-[12.5px] text-gray-400">Preparing preview…</div>
+              <div className="absolute inset-0 z-50 bg-surface flex items-center justify-center">
+                <div className="text-[12.5px] text-muted">Preparing preview…</div>
               </div>
             )}
           </PhoneFrame>

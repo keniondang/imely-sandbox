@@ -24,7 +24,7 @@ export function PurchaseScreen() {
   const pack = MOCK_GEM_PACKS.find((p) => p.id === packId)!
 
   return (
-    <div className="h-full flex flex-col bg-white">
+    <div className="h-full flex flex-col bg-surface">
       <div className="flex-1 overflow-y-auto">
         {/* hero */}
         <div className="relative h-44 shrink-0 bg-gradient-to-br from-imely-primaryDark via-imely-primary to-imely-mint flex items-center justify-center overflow-hidden">
@@ -51,11 +51,11 @@ export function PurchaseScreen() {
         <ZoneScope zone={tab}>
         {tab === 'club' ? (
           <div className="px-4 pb-4 space-y-4">
-            <div className="bg-gray-50 rounded-2xl p-4">
-              <div className="font-bold text-[14px] text-imely-ink mb-2">
+            <div className="bg-subtle rounded-2xl p-4">
+              <div className="font-bold text-[14px] text-ink mb-2">
                 <Str k="product_purchase.benefit_title" />:
               </div>
-              <ul className="space-y-1.5 text-[13px] text-imely-ink">
+              <ul className="space-y-1.5 text-[13px] text-ink">
                 <li>
                   • <Str k="product_purchase.benefit_1" />: 400💎
                 </li>
@@ -85,7 +85,7 @@ export function PurchaseScreen() {
                     key={p.id}
                     onClick={() => setPlanId(p.id)}
                     className={`relative w-full text-left rounded-2xl border p-3.5 flex items-center justify-between transition-colors ${
-                      active ? 'border-imely-primary bg-imely-mint/30' : 'border-imely-line bg-white'
+                      active ? 'border-imely-primary bg-imely-mint/30' : 'border-line bg-surface'
                     }`}
                   >
                     <span className="absolute -top-2.5 left-3 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
@@ -96,8 +96,8 @@ export function PurchaseScreen() {
                         <Str k={p.labelKey} />
                       </div>
                       <div className="mt-0.5 flex items-center gap-1.5">
-                        <span className="font-extrabold text-[16px] text-imely-ink">{p.price}</span>
-                        <span className="text-[12px] text-gray-400 line-through">{p.oldPrice}</span>
+                        <span className="font-extrabold text-[16px] text-ink">{p.price}</span>
+                        <span className="text-[12px] text-muted line-through">{p.oldPrice}</span>
                       </div>
                     </div>
                     {active && <CircleCheck size={20} className="text-imely-primary shrink-0" />}
@@ -106,11 +106,11 @@ export function PurchaseScreen() {
               })}
             </div>
 
-            <div className="text-[11px] text-gray-400">
+            <div className="text-[11px] text-muted">
               <Str k="product_purchase.subs_note" />
             </div>
 
-            <div className="text-[10.5px] text-gray-400 leading-relaxed">
+            <div className="text-[10.5px] text-muted leading-relaxed">
               <RichStr k="product_purchase.term_of_use" />
             </div>
           </div>
@@ -124,24 +124,24 @@ export function PurchaseScreen() {
                     key={p.id}
                     onClick={() => setPackId(p.id)}
                     className={`w-full flex items-center justify-between rounded-xl border px-4 py-3 transition-colors ${
-                      active ? 'border-imely-primary bg-imely-mint/30' : 'border-imely-line bg-gray-50'
+                      active ? 'border-imely-primary bg-imely-mint/30' : 'border-line bg-subtle'
                     }`}
                   >
-                    <span className="flex items-center gap-2 font-semibold text-[14px] text-imely-ink">
+                    <span className="flex items-center gap-2 font-semibold text-[14px] text-ink">
                       {active ? (
                         <CircleCheck size={18} className="text-imely-primary" />
                       ) : (
-                        <span className="w-[18px] h-[18px] rounded-full border border-gray-300" />
+                        <span className="w-[18px] h-[18px] rounded-full border border-line" />
                       )}
                       {p.amount.toLocaleString('id-ID')} 💎
                     </span>
-                    <span className="font-bold text-[14px] text-imely-ink">{p.price}</span>
+                    <span className="font-bold text-[14px] text-ink">{p.price}</span>
                   </button>
                 )
               })}
             </div>
 
-            <div className="text-[11px] text-gray-400">
+            <div className="text-[11px] text-muted">
               <Str k="product_purchase.gem_note" />
             </div>
           </div>
@@ -150,7 +150,7 @@ export function PurchaseScreen() {
       </div>
 
       <ZoneScope zone={tab}>
-        <div className="shrink-0 p-4 border-t border-imely-line">
+        <div className="shrink-0 p-4 border-t border-line">
           <button className="w-full bg-imely-primary text-white font-bold rounded-full py-3 flex items-center justify-center gap-2 active:scale-[0.97] active:bg-imely-primaryDark transition-transform">
             <span className="flex-1 text-right">
               {tab === 'club' ? (
@@ -201,7 +201,7 @@ function TabButton({
       className={`rounded-full px-6 py-1.5 text-[13px] font-semibold border active:scale-95 transition-transform ${
         active
           ? 'border-imely-primary text-imely-primaryDark bg-imely-mint/40'
-          : 'border-imely-line text-gray-400 bg-white'
+          : 'border-line text-muted bg-surface'
       }`}
     >
       {children}

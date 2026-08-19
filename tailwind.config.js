@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
@@ -15,6 +16,20 @@ export default {
           bg: '#FFFFFF',
           pink: '#FF5C87',
         },
+        // Theme-aware tokens — resolve to CSS variables flipped under `.dark`
+        // (see index.css), so the ~900 existing bg-white/text-imely-ink/
+        // text-gray-*/border-imely-line usages across every screen adapt to
+        // dark mode by swapping variable values, not by hand-adding a
+        // `dark:` variant to each one individually. Deliberately separate
+        // from the imely.* palette above: imely.ink/bg stay literal (used
+        // for permanently-dark chrome like the Inspector sidebar and brand
+        // badges that should NOT flip with the theme).
+        surface: 'var(--color-surface)',
+        subtle: 'var(--color-subtle)',
+        ink: 'var(--color-ink)',
+        muted: 'var(--color-muted)',
+        faint: 'var(--color-faint)',
+        line: 'var(--color-line)',
       },
       fontFamily: {
         sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],

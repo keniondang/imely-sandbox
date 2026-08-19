@@ -11,15 +11,15 @@ export function GemHistoryScreen() {
   const [tab, setTab] = useState<'activity' | 'used'>('activity')
 
   return (
-    <div className="h-full flex flex-col bg-white">
-      <div className="relative flex items-center justify-center px-3 py-2.5 border-b border-imely-line shrink-0">
+    <div className="h-full flex flex-col bg-surface">
+      <div className="relative flex items-center justify-center px-3 py-2.5 border-b border-line shrink-0">
         <button
           onClick={closeGemHistory}
-          className="absolute left-3 w-8 h-8 rounded-full flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-100 transition-transform"
+          className="absolute left-3 w-8 h-8 rounded-full flex items-center justify-center text-ink active:scale-90 active:bg-subtle transition-transform"
         >
           <ArrowLeft size={18} />
         </button>
-        <div className="font-bold text-[16px] text-imely-ink">
+        <div className="font-bold text-[16px] text-ink">
           <Str k="gem_history.title" />
         </div>
       </div>
@@ -36,7 +36,7 @@ export function GemHistoryScreen() {
       <div className="flex-1 overflow-y-auto">
         {tab === 'activity' ? (
           <>
-            <div className={`${COLS} px-4 py-2.5 border-b border-imely-line text-[11px] font-semibold text-gray-500`}>
+            <div className={`${COLS} px-4 py-2.5 border-b border-line text-[11px] font-semibold text-muted`}>
               <Str k="gem_history.receive_title_col1" />
               <Str k="gem_history.receive_title_col2" />
               <Str k="gem_history.receive_title_col3" />
@@ -45,14 +45,14 @@ export function GemHistoryScreen() {
             {MOCK_GEM_ACTIVITY.map((row) => (
               <div
                 key={row.id}
-                className={`${COLS} px-4 py-3 border-b border-gray-100 text-[12px] items-center ${
-                  row.expired ? 'text-gray-300' : 'text-imely-ink'
+                className={`${COLS} px-4 py-3 border-b border-line text-[12px] items-center ${
+                  row.expired ? 'text-faint' : 'text-ink'
                 }`}
               >
                 <div className="leading-snug">{row.description}</div>
                 <div>{row.receivedDate}</div>
                 <div>{row.expiry}</div>
-                <div className={`font-semibold ${row.expired ? 'text-gray-300' : 'text-imely-primaryDark'}`}>
+                <div className={`font-semibold ${row.expired ? 'text-faint' : 'text-imely-primaryDark'}`}>
                   {row.change}
                 </div>
               </div>
@@ -60,7 +60,7 @@ export function GemHistoryScreen() {
           </>
         ) : (
           <>
-            <div className={`${COLS} px-4 py-2.5 border-b border-imely-line text-[11px] font-semibold text-gray-500`}>
+            <div className={`${COLS} px-4 py-2.5 border-b border-line text-[11px] font-semibold text-muted`}>
               <Str k="gem_history.send_title_col1" />
               <Str k="gem_history.send_title_col2" />
               <Str k="gem_history.send_title_col3" />
@@ -69,14 +69,14 @@ export function GemHistoryScreen() {
             {MOCK_GEM_USAGE.map((row) => (
               <div
                 key={row.id}
-                className={`${COLS} px-4 py-3 border-b border-gray-100 text-[12px] items-center ${
-                  row.expired ? 'text-gray-300' : 'text-imely-ink'
+                className={`${COLS} px-4 py-3 border-b border-line text-[12px] items-center ${
+                  row.expired ? 'text-faint' : 'text-ink'
                 }`}
               >
                 <div className="leading-snug">{row.content}</div>
                 <div>{row.date}</div>
                 <div>{row.feature ?? '-'}</div>
-                <div className={`font-semibold ${row.expired ? 'text-gray-300' : 'text-imely-primaryDark'}`}>
+                <div className={`font-semibold ${row.expired ? 'text-faint' : 'text-imely-primaryDark'}`}>
                   {row.amount}
                 </div>
               </div>
@@ -103,7 +103,7 @@ function TabButton({
       className={`rounded-full px-5 py-1.5 text-[13px] font-semibold border active:scale-95 transition-transform ${
         active
           ? 'border-imely-primary text-imely-primaryDark bg-imely-mint/40'
-          : 'border-imely-line text-gray-400 bg-white'
+          : 'border-line text-muted bg-surface'
       }`}
     >
       {children}

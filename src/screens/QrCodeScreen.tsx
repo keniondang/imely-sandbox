@@ -25,7 +25,7 @@ function inFinder(row: number, col: number) {
 function FinderMark() {
   return (
     <div className="w-full h-full p-[8%] bg-imely-ink rounded-[15%]">
-      <div className="w-full h-full p-[16%] bg-white rounded-[15%]">
+      <div className="w-full h-full p-[16%] bg-surface rounded-[15%]">
         <div className="w-full h-full bg-imely-ink rounded-[15%]" />
       </div>
     </div>
@@ -52,7 +52,7 @@ function QrGraphic() {
   }
 
   return (
-    <div className="relative w-full aspect-square bg-white rounded-2xl p-4">
+    <div className="relative w-full aspect-square bg-surface rounded-2xl p-4">
       <div className="relative w-full h-full grid" style={{ gridTemplateColumns: `repeat(${GRID}, 1fr)`, gridTemplateRows: `repeat(${GRID}, 1fr)` }}>
         {cells}
         <div style={{ gridRow: '1 / span 7', gridColumn: '1 / span 7' }}>
@@ -83,21 +83,21 @@ export function QrCodeScreen() {
   const { closeQrCode, showToast } = useApp()
 
   return (
-    <div className="h-full flex flex-col bg-white">
-      <div className="relative flex items-center justify-between px-3 py-2.5 border-b border-imely-line shrink-0">
+    <div className="h-full flex flex-col bg-surface">
+      <div className="relative flex items-center justify-between px-3 py-2.5 border-b border-line shrink-0">
         <button
           onClick={closeQrCode}
-          className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink shrink-0 active:scale-90 active:bg-gray-100 transition-transform"
+          className="w-8 h-8 rounded-full flex items-center justify-center text-ink shrink-0 active:scale-90 active:bg-subtle transition-transform"
         >
           <ArrowLeft size={18} />
         </button>
-        <div className="absolute left-1/2 -translate-x-1/2 font-bold text-[16px] text-imely-ink">
+        <div className="absolute left-1/2 -translate-x-1/2 font-bold text-[16px] text-ink">
           <Str k="profile_me_v4.menu.my_qr" />
         </div>
         <button
           onClick={() => showToast('Pindai Kode QR — segera hadir')}
           aria-label="Scan QR code"
-          className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink shrink-0 active:scale-90 active:bg-gray-100 transition-transform"
+          className="w-8 h-8 rounded-full flex items-center justify-center text-ink shrink-0 active:scale-90 active:bg-subtle transition-transform"
         >
           <ScanLine size={18} />
         </button>
@@ -108,7 +108,7 @@ export function QrCodeScreen() {
           <QrGraphic />
         </div>
 
-        <div className="mt-6 text-center text-[13px] text-gray-500 leading-relaxed">
+        <div className="mt-6 text-center text-[13px] text-muted leading-relaxed">
           <Str k="profile_me_v4.qr_connect_description" />
         </div>
 
@@ -153,10 +153,10 @@ function ActionButton({
       onClick={onClick}
       className="flex flex-col items-center gap-2 active:opacity-70 transition-opacity"
     >
-      <div className="w-11 h-11 rounded-full border border-imely-line flex items-center justify-center text-imely-ink">
+      <div className="w-11 h-11 rounded-full border border-line flex items-center justify-center text-ink">
         {icon}
       </div>
-      <span className="text-[10.5px] text-imely-ink text-center leading-tight whitespace-pre-line">
+      <span className="text-[10.5px] text-ink text-center leading-tight whitespace-pre-line">
         <Str k={labelKey} />
       </span>
     </button>

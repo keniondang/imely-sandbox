@@ -19,15 +19,15 @@ export function FeedScreen() {
   return (
     <div className="pb-6">
       {/* subtabs — real strings, not touched */}
-      <div className="flex items-center gap-5 px-4 pt-1 border-b border-imely-line">
+      <div className="flex items-center gap-5 px-4 pt-1 border-b border-line">
         {SUBTABS.map((t) => (
           <button
             key={t.id}
             onClick={() => setActiveTab(t.id)}
             className={`pb-2 text-[15px] font-semibold active:opacity-60 transition-opacity ${
               activeTab === t.id
-                ? 'text-imely-ink border-b-2 border-imely-primary'
-                : 'text-gray-400'
+                ? 'text-ink border-b-2 border-imely-primary'
+                : 'text-muted'
             }`}
           >
             <Str k={t.key} />
@@ -39,7 +39,7 @@ export function FeedScreen() {
       <div className="flex items-center gap-2 px-4 py-3">
         <button
           onClick={openFilter}
-          className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center shrink-0 self-start active:scale-90 transition-transform"
+          className="w-8 h-8 rounded-full bg-subtle flex items-center justify-center shrink-0 self-start active:scale-90 transition-transform"
         >
           <SlidersHorizontal size={14} />
         </button>
@@ -54,7 +54,7 @@ export function FeedScreen() {
           {FILTER_CATEGORIES.map((tag) => (
             <span
               key={tag}
-              className="shrink-0 bg-gray-100 rounded-full px-3 py-1.5 text-[13px] font-medium text-imely-ink whitespace-nowrap"
+              className="shrink-0 bg-subtle rounded-full px-3 py-1.5 text-[13px] font-medium text-ink whitespace-nowrap"
             >
               {tag}
             </span>
@@ -63,14 +63,14 @@ export function FeedScreen() {
 
         <button
           onClick={() => setTagsExpanded((v) => !v)}
-          className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center shrink-0 self-start active:scale-90 transition-transform"
+          className="w-8 h-8 rounded-full bg-subtle flex items-center justify-center shrink-0 self-start active:scale-90 transition-transform"
         >
           {tagsExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
         </button>
       </div>
 
       {/* section title */}
-      <div className="px-4 mt-1 mb-2 font-extrabold text-[16px] text-imely-ink flex items-center gap-1">
+      <div className="px-4 mt-1 mb-2 font-extrabold text-[16px] text-ink flex items-center gap-1">
         ✨ <NoSheet>Gebetan Baru!</NoSheet>
       </div>
 
@@ -80,7 +80,7 @@ export function FeedScreen() {
           <button
             key={c.id}
             onClick={() => openCharacterProfile(c.id)}
-            className="rounded-2xl overflow-hidden border border-imely-line bg-white text-left active:scale-[0.97] transition-transform"
+            className="rounded-2xl overflow-hidden border border-line bg-surface text-left active:scale-[0.97] transition-transform"
           >
             <div className="h-36 flex items-end p-2" style={{ backgroundColor: c.color }}>
               <div className="bg-black/40 text-white text-[11px] rounded-full px-2 py-0.5 flex items-center gap-1">
@@ -89,11 +89,11 @@ export function FeedScreen() {
               </div>
             </div>
             <div className="p-2.5">
-              <div className="font-bold text-[14px] text-imely-ink">{ph(c.name, baseLocale)}</div>
-              <div className="text-[12px] text-gray-500 line-clamp-2 mt-0.5">{ph(c.tagline, baseLocale)}</div>
+              <div className="font-bold text-[14px] text-ink">{ph(c.name, baseLocale)}</div>
+              <div className="text-[12px] text-muted line-clamp-2 mt-0.5">{ph(c.tagline, baseLocale)}</div>
               <div className="flex gap-1 mt-1.5 flex-wrap">
                 {c.tags.map((tag, i) => (
-                  <span key={i} className="text-[10px] bg-gray-100 text-gray-500 rounded-full px-2 py-0.5">
+                  <span key={i} className="text-[10px] bg-subtle text-muted rounded-full px-2 py-0.5">
                     {ph(tag, baseLocale)}
                   </span>
                 ))}

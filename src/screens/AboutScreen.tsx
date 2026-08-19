@@ -6,15 +6,15 @@ export function AboutScreen() {
   const { closeAbout, showToast } = useApp()
 
   return (
-    <div className="h-full flex flex-col bg-white">
-      <div className="relative flex items-center justify-center px-3 py-2.5 border-b border-imely-line shrink-0">
+    <div className="h-full flex flex-col bg-surface">
+      <div className="relative flex items-center justify-center px-3 py-2.5 border-b border-line shrink-0">
         <button
           onClick={closeAbout}
-          className="absolute left-3 w-8 h-8 rounded-full flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-100 transition-transform"
+          className="absolute left-3 w-8 h-8 rounded-full flex items-center justify-center text-ink active:scale-90 active:bg-subtle transition-transform"
         >
           <ArrowLeft size={18} />
         </button>
-        <div className="font-bold text-[16px] text-imely-ink">
+        <div className="font-bold text-[16px] text-ink">
           <Str k="setting.app_info.about_us" />
         </div>
       </div>
@@ -25,21 +25,21 @@ export function AboutScreen() {
             🐱
           </div>
         </div>
-        <div className="text-center mt-4 font-extrabold text-[20px] text-imely-ink">imely - v26.07.02</div>
-        <div className="text-center text-[13px] text-gray-400 mt-1">build - v536</div>
+        <div className="text-center mt-4 font-extrabold text-[20px] text-ink">imely - v26.07.02</div>
+        <div className="text-center text-[13px] text-muted mt-1">build - v536</div>
 
-        <div className="text-[14px] text-imely-ink leading-relaxed mt-6">
+        <div className="text-[14px] text-ink leading-relaxed mt-6">
           <RichStr k="setting.app_info.description" />
         </div>
 
-        <div className="mt-5 font-bold text-[15px] text-imely-ink">
+        <div className="mt-5 font-bold text-[15px] text-ink">
           <Str k="setting.app_info.contact_info" />
         </div>
-        <div className="text-[14px] text-imely-ink mt-1.5">
+        <div className="text-[14px] text-ink mt-1.5">
           <Str k="setting.app_info.contact_info_email" />
         </div>
 
-        <div className="mt-5 font-bold text-[15px] text-imely-ink">
+        <div className="mt-5 font-bold text-[15px] text-ink">
           <Str k="setting.app_info.join_community" />
         </div>
         <div className="flex gap-2.5 mt-2.5">

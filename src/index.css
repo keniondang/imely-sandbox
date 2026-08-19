@@ -6,6 +6,30 @@
   box-sizing: border-box;
 }
 
+/* Theme-aware tokens (see tailwind.config.js's surface/subtle/ink/muted/
+   faint/line colors) — every bg-white, text-imely-ink, text-gray-300/400/
+   500, bg-gray-50/100, and border-imely-line/border-gray-300 across every
+   screen was renamed to one of these, so flipping these six values under
+   `.dark` reskins the whole live preview without touching each screen's
+   markup individually. */
+:root {
+  --color-surface: #FFFFFF;
+  --color-subtle: #F3F4F6;
+  --color-ink: #16181C;
+  --color-muted: #96A0AC;
+  --color-faint: #D1D5DB;
+  --color-line: #EEF0F3;
+}
+
+.dark {
+  --color-surface: #1C1E22;
+  --color-subtle: #26282E;
+  --color-ink: #EDEEF0;
+  --color-muted: #9199A6;
+  --color-faint: #5B6068;
+  --color-line: #34363C;
+}
+
 body {
   margin: 0;
   background: #F4F5F7;

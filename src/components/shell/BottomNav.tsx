@@ -13,7 +13,7 @@ export function BottomNav() {
   const { currentScreen, setCurrentScreen } = useApp()
 
   return (
-    <div className="flex items-center justify-around border-t border-imely-line py-2 shrink-0 bg-white">
+    <div className="flex items-center justify-around border-t border-line py-2 shrink-0 bg-surface">
       {TABS.map((tab) => {
         const active = currentScreen === tab.id
         return (
@@ -21,7 +21,7 @@ export function BottomNav() {
             key={tab.id}
             onClick={() => setCurrentScreen(tab.id)}
             className={`flex flex-col items-center gap-0.5 px-4 py-1 active:scale-90 transition-transform ${
-              active ? 'text-imely-primary' : 'text-gray-400'
+              active ? 'text-imely-primary' : 'text-muted'
             }`}
           >
             {tab.icon}

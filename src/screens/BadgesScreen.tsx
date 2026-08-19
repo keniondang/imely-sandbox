@@ -40,15 +40,15 @@ export function BadgesScreen() {
   }
 
   return (
-    <div className="h-full flex flex-col bg-white">
-      <div className="relative flex items-center justify-center px-3 py-2.5 border-b border-imely-line shrink-0">
+    <div className="h-full flex flex-col bg-surface">
+      <div className="relative flex items-center justify-center px-3 py-2.5 border-b border-line shrink-0">
         <button
           onClick={closeBadges}
-          className="absolute left-3 w-8 h-8 rounded-full flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-100 transition-transform"
+          className="absolute left-3 w-8 h-8 rounded-full flex items-center justify-center text-ink active:scale-90 active:bg-subtle transition-transform"
         >
           <ArrowLeft size={18} />
         </button>
-        <div className="font-bold text-[16px] text-imely-ink">
+        <div className="font-bold text-[16px] text-ink">
           <Str k="badge.screen.title" />
         </div>
       </div>
@@ -65,7 +65,7 @@ export function BadgesScreen() {
 function BadgeSection({ labelKey, items, onTap }: { labelKey: string; items: BadgeItem[]; onTap: (b: BadgeItem) => void }) {
   return (
     <div className="mb-6">
-      <div className="font-bold text-[16px] text-imely-ink mb-3">
+      <div className="font-bold text-[16px] text-ink mb-3">
         <Str k={labelKey} />
       </div>
       <div className="grid grid-cols-3 gap-3">
@@ -83,10 +83,10 @@ function BadgeSection({ labelKey, items, onTap }: { labelKey: string; items: Bad
             >
               {b.emoji}
             </div>
-            <div className="mt-2 font-semibold text-[13px] text-imely-ink">
+            <div className="mt-2 font-semibold text-[13px] text-ink">
               <Str k={b.titleKey} />
             </div>
-            <div className="text-[11px] text-gray-400 mt-0.5">
+            <div className="text-[11px] text-muted mt-0.5">
               <Str k={b.previewKey} />
             </div>
           </button>

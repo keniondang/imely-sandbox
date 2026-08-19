@@ -36,23 +36,23 @@ export function UsernameScreen() {
   }
 
   return (
-    <div className="h-full flex flex-col bg-white relative">
+    <div className="h-full flex flex-col bg-surface relative">
       <div className="relative flex items-center justify-center px-3 py-2.5 shrink-0">
         <button
           onClick={handleBack}
-          className="absolute left-3 w-8 h-8 rounded-full flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-100 transition-transform"
+          className="absolute left-3 w-8 h-8 rounded-full flex items-center justify-center text-ink active:scale-90 active:bg-subtle transition-transform"
         >
           <ArrowLeft size={18} />
         </button>
         <div className="w-7 h-7 rounded-lg bg-imely-ink flex items-center justify-center text-white text-sm">🐱</div>
       </div>
 
-      <div className="text-center font-bold text-[18px] text-imely-ink mt-1">
+      <div className="text-center font-bold text-[18px] text-ink mt-1">
         <Str k="account_info.change_user_name.title" />
       </div>
 
       <div className="flex-1 overflow-y-auto px-5 mt-4">
-        <div className="bg-imely-mint/40 rounded-xl p-3 text-[12.5px] text-imely-ink whitespace-pre-line leading-relaxed">
+        <div className="bg-imely-mint/40 rounded-xl p-3 text-[12.5px] text-ink whitespace-pre-line leading-relaxed">
           <Str k="account_info.change_user_name.hint" />
         </div>
 
@@ -63,7 +63,7 @@ export function UsernameScreen() {
             setError(false)
           }}
           placeholder={resolveString('account_info.change_user_name.input_box_hint', baseLocale)}
-          className="w-full mt-5 border-b border-imely-line pb-2 text-[14px] text-imely-ink outline-none focus:border-imely-primary placeholder:text-gray-400"
+          className="w-full mt-5 border-b border-line pb-2 text-[14px] text-ink outline-none focus:border-imely-primary placeholder:text-muted"
           {...usernameHintAttrs}
         />
         {error && (
@@ -88,17 +88,17 @@ export function UsernameScreen() {
               aria-label="Close discard confirmation"
               className="absolute inset-0 bg-black/40"
             />
-            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl p-5">
-              <div className="font-bold text-[16px] text-imely-ink">
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-surface rounded-2xl p-5">
+              <div className="font-bold text-[16px] text-ink">
                 <Str k="account_info.change_user_name.cancel_dialog_title" />
               </div>
-              <div className="mt-1.5 text-[13px] text-gray-500">
+              <div className="mt-1.5 text-[13px] text-muted">
                 <Str k="account_info.change_user_name.cancel_dialog_msg" />
               </div>
               <div className="mt-4 flex justify-end gap-4">
                 <button
                   onClick={() => setConfirmDiscard(false)}
-                  className="font-semibold text-[14px] text-imely-ink active:opacity-70 transition-opacity"
+                  className="font-semibold text-[14px] text-ink active:opacity-70 transition-opacity"
                 >
                   <Str k="account_info.change_user_name.cancel_dialog_btn_cancel" />
                 </button>

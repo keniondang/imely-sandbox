@@ -24,21 +24,21 @@ export function AppearanceScreen() {
   const [language, setLanguage] = useState<'vi' | 'en' | 'id' | 'zh'>('id')
 
   return (
-    <div className="h-full flex flex-col bg-white">
-      <div className="relative flex items-center gap-2 px-3 py-2.5 border-b border-imely-line shrink-0">
+    <div className="h-full flex flex-col bg-surface">
+      <div className="relative flex items-center gap-2 px-3 py-2.5 border-b border-line shrink-0">
         <button
           onClick={closeAppearance}
-          className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink shrink-0 active:scale-90 active:bg-gray-100 transition-transform"
+          className="w-8 h-8 rounded-full flex items-center justify-center text-ink shrink-0 active:scale-90 active:bg-subtle transition-transform"
         >
           <ArrowLeft size={18} />
         </button>
-        <div className="font-bold text-[16px] text-imely-ink">
+        <div className="font-bold text-[16px] text-ink">
           <Str k="setting.font_setting.header" />
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4">
-        <div className="text-[13px] text-gray-500 mb-2">
+        <div className="text-[13px] text-muted mb-2">
           <Str k="setting.font_setting.theme" />
         </div>
         <div className="flex gap-2">
@@ -47,7 +47,7 @@ export function AppearanceScreen() {
               key={t.id}
               onClick={() => setTheme(t.id)}
               className={`text-[13.5px] font-semibold rounded-full px-4 py-2 border active:scale-95 transition-transform ${
-                theme === t.id ? 'border-imely-primary bg-imely-mint/40 text-imely-primaryDark' : 'border-imely-line text-imely-ink'
+                theme === t.id ? 'border-imely-primary bg-imely-mint/40 text-imely-primaryDark' : 'border-line text-ink'
               }`}
             >
               <Str k={t.key} />
@@ -55,8 +55,8 @@ export function AppearanceScreen() {
           ))}
         </div>
 
-        <div className="mt-5 border-t border-imely-line pt-4">
-          <div className="text-[13px] text-gray-500 mb-2">
+        <div className="mt-5 border-t border-line pt-4">
+          <div className="text-[13px] text-muted mb-2">
             <Str k="setting.font_setting.language" />
           </div>
           <div className="grid grid-cols-2 gap-2">
@@ -65,7 +65,7 @@ export function AppearanceScreen() {
                 key={l.id}
                 onClick={() => setLanguage(l.id)}
                 className={`text-[13.5px] font-semibold rounded-full px-4 py-2.5 border active:scale-95 transition-transform ${
-                  language === l.id ? 'border-imely-primary bg-imely-mint/40 text-imely-primaryDark' : 'border-imely-line text-imely-ink'
+                  language === l.id ? 'border-imely-primary bg-imely-mint/40 text-imely-primaryDark' : 'border-line text-ink'
                 }`}
               >
                 <Str k={l.key} />

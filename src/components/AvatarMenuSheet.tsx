@@ -31,48 +31,48 @@ export function AvatarMenuSheet({
       <ZoneScope zone="avatar_menu">
         <div className="h-full relative">
           <button onClick={onClose} aria-label="Close options" className="absolute inset-0 bg-black/40" />
-          <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl">
-            <div className="flex items-center justify-between px-4 py-4 border-b border-imely-line">
-              <div className="font-bold text-[16px] text-imely-ink">
+          <div className="absolute bottom-0 left-0 right-0 bg-surface rounded-t-3xl">
+            <div className="flex items-center justify-between px-4 py-4 border-b border-line">
+              <div className="font-bold text-[16px] text-ink">
                 <Str k="user_avatar_menu.container_title" />
               </div>
-              <button onClick={onClose} className="text-gray-400 active:scale-90 transition-transform">
+              <button onClick={onClose} className="text-muted active:scale-90 transition-transform">
                 ✕
               </button>
             </div>
             <button
               onClick={onTakePhoto}
-              className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors text-left"
+              className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-line active:bg-subtle transition-colors text-left"
             >
-              <Camera size={18} className="text-imely-ink" />
-              <span className="text-[14px] text-imely-ink">
+              <Camera size={18} className="text-ink" />
+              <span className="text-[14px] text-ink">
                 <Str k="user_avatar_menu.take_photo" />
               </span>
             </button>
             <button
               onClick={onChooseGallery}
-              className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors text-left"
+              className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-line active:bg-subtle transition-colors text-left"
             >
-              <Image size={18} className="text-imely-ink" />
-              <span className="text-[14px] text-imely-ink">
+              <Image size={18} className="text-ink" />
+              <span className="text-[14px] text-ink">
                 <Str k="user_avatar_menu.pick_from_gallery" />
               </span>
             </button>
             <button
               onClick={onViewPhoto}
-              className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors text-left"
+              className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-line active:bg-subtle transition-colors text-left"
             >
-              <Eye size={18} className="text-imely-ink" />
-              <span className="text-[14px] text-imely-ink">
+              <Eye size={18} className="text-ink" />
+              <span className="text-[14px] text-ink">
                 <Str k="user_avatar_menu.view_photo" />
               </span>
             </button>
             <button
               onClick={onManageAccount}
-              className="w-full flex items-center gap-3 px-4 py-3.5 active:bg-gray-50 transition-colors text-left"
+              className="w-full flex items-center gap-3 px-4 py-3.5 active:bg-subtle transition-colors text-left"
             >
-              <UserCircle size={18} className="text-imely-ink" />
-              <span className="text-[14px] text-imely-ink">
+              <UserCircle size={18} className="text-ink" />
+              <span className="text-[14px] text-ink">
                 <Str k="profile_me_v4.menu.account_management" />
               </span>
             </button>

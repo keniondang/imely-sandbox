@@ -80,7 +80,7 @@ export function GemScreen() {
       <div className="flex items-center px-3 py-2.5 shrink-0">
         <button
           onClick={closeGems}
-          className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-100 transition-transform"
+          className="w-8 h-8 rounded-full flex items-center justify-center text-ink active:scale-90 active:bg-subtle transition-transform"
         >
           <ArrowLeft size={18} />
         </button>
@@ -88,13 +88,13 @@ export function GemScreen() {
 
       <div className="flex-1 overflow-y-auto px-4 pb-8 space-y-3">
         {/* gem overview card */}
-        <div className="rounded-2xl border border-imely-line">
+        <div className="rounded-2xl border border-line">
           <div className="text-center pt-4 pb-3">
-            <div className="font-bold text-[15px] text-imely-ink">
+            <div className="font-bold text-[15px] text-ink">
               <Str k="user_gem_overview.persist" />
             </div>
             <div className="mt-2 flex items-center justify-center gap-2">
-              <span className="text-[22px] font-extrabold text-imely-ink">{MOCK_USER.permanentGems}</span>
+              <span className="text-[22px] font-extrabold text-ink">{MOCK_USER.permanentGems}</span>
               <span className="text-lg">💎</span>
               <button
                 onClick={() => showToast('Beli gem — segera hadir')}
@@ -105,17 +105,17 @@ export function GemScreen() {
             </div>
           </div>
 
-          <div className="border-t border-imely-line px-4 py-3 text-[13.5px] text-imely-ink">
+          <div className="border-t border-line px-4 py-3 text-[13.5px] text-ink">
             <Str k="user_gem_overview.total" />: {totalGems.toLocaleString('id-ID')} 💎
           </div>
 
-          <div className="border-t border-imely-line px-4 py-3 flex items-center justify-between">
-            <div className="text-[13.5px] text-imely-ink">
+          <div className="border-t border-line px-4 py-3 flex items-center justify-between">
+            <div className="text-[13.5px] text-ink">
               <Str k="user_gem_overview.expirable" />: {dailyGems.toLocaleString('id-ID')} 💎
             </div>
             <button
               onClick={() => setDailyDetailOpen(true)}
-              className="text-[12.5px] font-semibold border border-imely-line rounded-full px-3.5 py-1.5 active:scale-95 active:bg-gray-50 transition-transform"
+              className="text-[12.5px] font-semibold border border-line rounded-full px-3.5 py-1.5 active:scale-95 active:bg-subtle transition-transform"
             >
               <Str k="common.details" />
             </button>
@@ -123,29 +123,29 @@ export function GemScreen() {
 
           <button
             onClick={openGemHistory}
-            className="w-full border-t border-imely-line px-4 py-3 flex items-center justify-between active:bg-gray-50 transition-colors rounded-b-2xl"
+            className="w-full border-t border-line px-4 py-3 flex items-center justify-between active:bg-subtle transition-colors rounded-b-2xl"
           >
-            <span className="text-[13.5px] text-imely-ink">
+            <span className="text-[13.5px] text-ink">
               <Str k="gem_detail.btn_history" />
             </span>
-            <ChevronRight size={16} className="text-gray-400" />
+            <ChevronRight size={16} className="text-muted" />
           </button>
         </div>
 
         {/* MeLy Club upgrade card */}
-        <div className="rounded-2xl border border-imely-line p-4">
-          <div className="font-extrabold text-[17px] text-imely-ink leading-snug">
+        <div className="rounded-2xl border border-line p-4">
+          <div className="font-extrabold text-[17px] text-ink leading-snug">
             <RichStr k="profile_me_v4.banner_upgrade.title" />
           </div>
-          <div className="text-[13px] text-gray-500 mt-0.5">
+          <div className="text-[13px] text-muted mt-0.5">
             <NoSheet>Buka hak istimewa – Chat MêLy seru!</NoSheet>
           </div>
 
           <div className="mt-3 grid grid-cols-3 text-[13px] items-center">
-            <div className="text-gray-400 font-medium">
+            <div className="text-muted font-medium">
               <Str k="profile_me_v4.banner_upgrade.feature_header" />
             </div>
-            <div className="text-gray-400 font-medium text-center">
+            <div className="text-muted font-medium text-center">
               <Str k="profile_me_v4.banner_upgrade.free_header" />
             </div>
             <div className="text-imely-primaryDark font-bold text-center bg-imely-mint rounded-t-lg py-1">
@@ -169,25 +169,25 @@ export function GemScreen() {
 
         {/* missions */}
         <div>
-          <div className="font-bold text-[16px] text-imely-ink mb-2">
+          <div className="font-bold text-[16px] text-ink mb-2">
             <Str k="user_task.title" />
           </div>
 
           <div className="space-y-3">
             {/* invite friends */}
-            <div className="bg-gray-100 rounded-2xl p-4">
-              <div className="font-bold text-[14px] text-imely-ink">
+            <div className="bg-subtle rounded-2xl p-4">
+              <div className="font-bold text-[14px] text-ink">
                 <Str k="user_task.btn_do_task_22" /> (0/5)
               </div>
-              <div className="text-[12px] text-gray-500 leading-relaxed mt-1.5">
+              <div className="text-[12px] text-muted leading-relaxed mt-1.5">
                 <Str k="user_task.desc_22" /> 100💎
               </div>
 
               <button
                 onClick={copyInviteCode}
-                className="mt-3 w-full bg-white rounded-xl px-3 py-2.5 flex items-center justify-between active:bg-gray-50 transition-colors"
+                className="mt-3 w-full bg-surface rounded-xl px-3 py-2.5 flex items-center justify-between active:bg-subtle transition-colors"
               >
-                <span className="text-gray-400 text-[13px]">
+                <span className="text-muted text-[13px]">
                   <Str k="user_task.invite_code_title" />
                 </span>
                 <span className="flex items-center gap-1.5 text-imely-primaryDark font-bold text-[14px]">
@@ -197,11 +197,11 @@ export function GemScreen() {
             </div>
 
             {/* enter invite code */}
-            <div className="bg-gray-100 rounded-2xl p-4">
-              <div className="font-bold text-[14px] text-imely-ink">
+            <div className="bg-subtle rounded-2xl p-4">
+              <div className="font-bold text-[14px] text-ink">
                 <Str k="user_task.txt_22_input_title" />
               </div>
-              <div className="text-[12px] text-gray-400 mt-1">
+              <div className="text-[12px] text-muted mt-1">
                 <Str k="user_task.txt_22_input_subtitle" />
               </div>
               <button
@@ -264,20 +264,20 @@ export function GemScreen() {
               aria-label="Close gem detail"
               className="absolute inset-0 bg-black/40"
             />
-            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl p-5 max-h-[70%] overflow-y-auto">
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-surface rounded-2xl p-5 max-h-[70%] overflow-y-auto">
               <div className="flex items-center justify-between">
-                <div className="font-bold text-[17px] text-imely-ink">
+                <div className="font-bold text-[17px] text-ink">
                   <Str k="user_gem_overview.title" />
                 </div>
                 <button
                   onClick={() => setDailyDetailOpen(false)}
-                  className="text-gray-400 active:scale-90 transition-transform"
+                  className="text-muted active:scale-90 transition-transform"
                 >
                   <X size={18} />
                 </button>
               </div>
 
-              <div className="mt-4 space-y-3 text-[14px] text-imely-ink">
+              <div className="mt-4 space-y-3 text-[14px] text-ink">
                 <div>
                   <Str k="user_gem_overview.total" />: <span className="font-bold">{totalGems.toLocaleString('id-ID')}</span>💎
                 </div>
@@ -286,7 +286,7 @@ export function GemScreen() {
                 </div>
                 <div>
                   <Str k="user_gem_overview.expirable" />: <span className="font-bold">{dailyGems.toLocaleString('id-ID')}</span>💎
-                  <div className="mt-1.5 space-y-1 text-[12.5px] text-gray-500">
+                  <div className="mt-1.5 space-y-1 text-[12.5px] text-muted">
                     {dailyGemLots.map((lot, i) => (
                       <div key={i}>
                         • {lot.amount}💎 <Str k="user_gem_overview.expire_at" /> 23:59{' '}
@@ -310,11 +310,11 @@ export function GemScreen() {
               aria-label="Close invite code input"
               className="absolute inset-0 bg-black/40"
             />
-            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl p-5">
-              <div className="font-bold text-[17px] text-imely-ink">
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-surface rounded-2xl p-5">
+              <div className="font-bold text-[17px] text-ink">
                 <Str k="input_invite_code.title" />
               </div>
-              <div className="text-[13px] text-gray-500 mt-1">
+              <div className="text-[13px] text-muted mt-1">
                 <Str k="input_invite_code.subtitle" />
               </div>
               <input
@@ -324,7 +324,7 @@ export function GemScreen() {
                   setInviteInputError(false)
                 }}
                 placeholder={resolveString('input_invite_code.hint', baseLocale)}
-                className="mt-4 w-full bg-gray-100 rounded-full px-4 py-2.5 text-[13.5px] outline-none"
+                className="mt-4 w-full bg-subtle rounded-full px-4 py-2.5 text-[13.5px] outline-none"
                 {...inviteHintAttrs}
               />
               {inviteInputError && (
@@ -335,7 +335,7 @@ export function GemScreen() {
               <div className="mt-4 flex gap-2">
                 <button
                   onClick={closeInviteInput}
-                  className="flex-1 border border-imely-line rounded-full py-2.5 font-semibold text-[13.5px] text-imely-ink active:scale-95 transition-transform"
+                  className="flex-1 border border-line rounded-full py-2.5 font-semibold text-[13.5px] text-ink active:scale-95 transition-transform"
                 >
                   <Str k="input_invite_code.btn_close" />
                 </button>
@@ -360,18 +360,18 @@ export function GemScreen() {
               aria-label="Close lucky wheel"
               className="absolute inset-0 bg-black/40"
             />
-            <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl px-5 pt-6 pb-5 text-center">
+            <div className="absolute bottom-0 left-0 right-0 bg-surface rounded-t-3xl px-5 pt-6 pb-5 text-center">
               <div className="text-[56px] leading-none">🎡</div>
-              <div className="mt-3 font-bold text-[16px] text-imely-ink">
+              <div className="mt-3 font-bold text-[16px] text-ink">
                 <Str k="lucky_draw.title_time2" />
               </div>
-              <div className="mt-2 text-[12.5px] text-gray-400">
+              <div className="mt-2 text-[12.5px] text-muted">
                 <Str k="lucky_draw.subtitle_time2" />
               </div>
               <div className="mt-5 flex gap-2">
                 <button
                   onClick={() => setLuckyWheelOpen(false)}
-                  className="flex-1 border border-imely-line rounded-full py-2.5 font-semibold text-[13.5px] text-imely-ink active:scale-95 transition-transform"
+                  className="flex-1 border border-line rounded-full py-2.5 font-semibold text-[13.5px] text-ink active:scale-95 transition-transform"
                 >
                   <Str k="lucky_draw.btn_close" />
                 </button>
@@ -396,11 +396,11 @@ export function GemScreen() {
               aria-label="Close lucky wheel result"
               className="absolute inset-0 bg-black/40"
             />
-            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl p-5 text-center">
-              <div className="font-bold text-[18px] text-imely-ink">
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 bg-surface rounded-2xl p-5 text-center">
+              <div className="font-bold text-[18px] text-ink">
                 <Str k="lucky_draw.congrats_title1" />
               </div>
-              <div className="mt-3 text-[15px] text-imely-ink">
+              <div className="mt-3 text-[15px] text-ink">
                 <Str k="lucky_draw.congrats_subtitle1" />: <span className="font-bold text-imely-primaryDark">{luckyReward}💎</span>
               </div>
               <button
@@ -432,10 +432,10 @@ function FeatureRow({
 }) {
   return (
     <>
-      <div className="py-2 text-imely-ink text-[13px]">
+      <div className="py-2 text-ink text-[13px]">
         {labelKey ? <Str k={labelKey} /> : <NoSheet>{label}</NoSheet>}
       </div>
-      <div className="py-2 text-center text-gray-400">{free}</div>
+      <div className="py-2 text-center text-muted">{free}</div>
       <div
         className={`py-2 text-center font-semibold text-imely-primaryDark bg-imely-mint ${last ? 'rounded-b-lg' : ''}`}
       >
@@ -459,9 +459,9 @@ function MissionCard({
   onDo: () => void
 }) {
   return (
-    <div className="bg-gray-100 rounded-2xl p-4">
-      <div className="font-bold text-[14px] text-imely-ink">{titleNode}</div>
-      <div className="text-[12px] text-gray-400 mt-1">
+    <div className="bg-subtle rounded-2xl p-4">
+      <div className="font-bold text-[14px] text-ink">{titleNode}</div>
+      <div className="text-[12px] text-muted mt-1">
         <Str k="user_task.txt_limit" /> {limit} <Str k="user_task.txt_count" />/<Str k="user_task.txt_day" />
       </div>
       <div className="mt-2.5 flex items-center justify-between">

@@ -11,7 +11,7 @@ export function Header() {
         <div className="w-7 h-7 rounded-lg bg-imely-ink flex items-center justify-center text-white text-sm">
           🐱
         </div>
-        <span className="font-extrabold text-lg text-imely-ink tracking-tight">imely</span>
+        <span className="font-extrabold text-lg text-ink tracking-tight">imely</span>
       </div>
 
       <div className="flex items-center gap-2">
@@ -34,7 +34,7 @@ function IconButton({ icon, onClick }: { icon: React.ReactNode; onClick?: () => 
   return (
     <button
       onClick={onClick}
-      className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-200 transition-transform"
+      className="w-8 h-8 rounded-full bg-subtle flex items-center justify-center text-ink active:scale-90 active:bg-line transition-transform"
     >
       {icon}
     </button>

@@ -58,25 +58,25 @@ export function CreatorProfileScreen() {
   }
 
   return (
-    <div className="h-full flex flex-col bg-white relative">
-      <div className="flex items-center justify-between px-3 py-2.5 border-b border-imely-line shrink-0">
+    <div className="h-full flex flex-col bg-surface relative">
+      <div className="flex items-center justify-between px-3 py-2.5 border-b border-line shrink-0">
         <button
           onClick={closeCreatorProfile}
-          className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-100 transition-transform"
+          className="w-8 h-8 rounded-full flex items-center justify-center text-ink active:scale-90 active:bg-subtle transition-transform"
         >
           <ArrowLeft size={18} />
         </button>
         <div className="flex items-center gap-1">
           <button
             onClick={isSelf ? openQrCode : () => showToast('Bagikan — segera hadir')}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-100 transition-transform"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-ink active:scale-90 active:bg-subtle transition-transform"
           >
             <Share2 size={16} />
           </button>
           {!isSelf && (
             <button
               onClick={() => opts.setOptionsOpen(true)}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-100 transition-transform"
+              className="w-8 h-8 rounded-full flex items-center justify-center text-ink active:scale-90 active:bg-subtle transition-transform"
             >
               <MoreVertical size={18} />
             </button>
@@ -88,20 +88,20 @@ export function CreatorProfileScreen() {
         <div className="px-4 pt-4 flex items-center gap-3">
           <div className="relative shrink-0">
             <div
-              className="w-14 h-14 rounded-full bg-gray-200 bg-cover bg-center"
+              className="w-14 h-14 rounded-full bg-line bg-cover bg-center"
               style={isSelf ? { backgroundColor: MOCK_USER.avatarColor } : undefined}
             />
             {isSelf && (
               <button
                 onClick={openAvatarMenu}
-                className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full bg-white border border-imely-line flex items-center justify-center active:scale-90 transition-transform"
+                className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full bg-surface border border-line flex items-center justify-center active:scale-90 transition-transform"
               >
-                <Camera size={10} className="text-imely-ink" />
+                <Camera size={10} className="text-ink" />
               </button>
             )}
           </div>
           <div className="flex-1 min-w-0">
-            <div className="font-bold text-[17px] text-imely-ink truncate">{creatorName}</div>
+            <div className="font-bold text-[17px] text-ink truncate">{creatorName}</div>
             <div className="flex gap-4 mt-1.5">
               <MiniStat value={isSelf ? SELF_FOLLOWERS : rep.creatorFollowers} labelKey="profile_creator.stat.followers" />
               <MiniStat value={String(characters.length)} labelKey="profile_creator.stat.characters" />
@@ -134,7 +134,7 @@ export function CreatorProfileScreen() {
               <button
                 key={c.id}
                 onClick={() => viewCharacter(c.id)}
-                className="rounded-2xl overflow-hidden border border-imely-line text-left active:scale-[0.97] transition-transform"
+                className="rounded-2xl overflow-hidden border border-line text-left active:scale-[0.97] transition-transform"
               >
                 <div className="h-36 flex items-end p-2" style={{ backgroundColor: c.color }}>
                   <div className="bg-black/40 text-white text-[11px] rounded-full px-2 py-0.5 flex items-center gap-1">
@@ -143,11 +143,11 @@ export function CreatorProfileScreen() {
                   </div>
                 </div>
                 <div className="p-2.5">
-                  <div className="font-bold text-[14px] text-imely-ink">{ph(c.name, baseLocale)}</div>
-                  <div className="text-[12px] text-gray-500 line-clamp-2 mt-0.5">{ph(c.tagline, baseLocale)}</div>
+                  <div className="font-bold text-[14px] text-ink">{ph(c.name, baseLocale)}</div>
+                  <div className="text-[12px] text-muted line-clamp-2 mt-0.5">{ph(c.tagline, baseLocale)}</div>
                   <div className="flex gap-1 mt-1.5 flex-wrap">
                     {c.tags.map((tag, i) => (
-                      <span key={i} className="text-[10px] bg-gray-100 text-gray-500 rounded-full px-2 py-0.5">
+                      <span key={i} className="text-[10px] bg-subtle text-muted rounded-full px-2 py-0.5">
                         {ph(tag, baseLocale)}
                       </span>
                     ))}
@@ -158,10 +158,10 @@ export function CreatorProfileScreen() {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
-            <div className="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center mb-3">
-              <FileText size={22} className="text-gray-300" />
+            <div className="w-14 h-14 rounded-xl bg-subtle flex items-center justify-center mb-3">
+              <FileText size={22} className="text-faint" />
             </div>
-            <div className="text-[13px] text-gray-400">
+            <div className="text-[13px] text-muted">
               <Str k="profile_creator.about.empty" />
             </div>
           </div>
@@ -169,7 +169,7 @@ export function CreatorProfileScreen() {
       </div>
 
       {!isSelf && (
-        <div className="shrink-0 p-4 border-t border-imely-line flex gap-2">
+        <div className="shrink-0 p-4 border-t border-line flex gap-2">
           <button
             onClick={opts.toggleFollow}
             className="flex-1 border border-imely-primary text-imely-primaryDark bg-imely-mint/30 font-bold rounded-full py-3 active:scale-[0.97] transition-transform"
@@ -218,8 +218,8 @@ export function CreatorProfileScreen() {
 function MiniStat({ value, labelKey }: { value: string; labelKey: string }) {
   return (
     <div>
-      <div className="font-bold text-[14px] text-imely-ink">{value}</div>
-      <div className="text-[11px] text-gray-400">
+      <div className="font-bold text-[14px] text-ink">{value}</div>
+      <div className="text-[11px] text-muted">
         <Str k={labelKey} />
       </div>
     </div>
@@ -241,7 +241,7 @@ function TabButton({
       className={`rounded-full px-6 py-1.5 text-[13px] font-semibold border active:scale-95 transition-transform ${
         active
           ? 'border-imely-primary text-imely-primaryDark bg-imely-mint/40'
-          : 'border-imely-line text-gray-400 bg-white'
+          : 'border-line text-muted bg-surface'
       }`}
     >
       {children}

@@ -31,15 +31,15 @@ export function ChatOptionsScreen() {
   }
 
   return (
-    <div className="h-full flex flex-col bg-white relative">
-      <div className="relative flex items-center px-3 py-2.5 border-b border-imely-line shrink-0">
+    <div className="h-full flex flex-col bg-surface relative">
+      <div className="relative flex items-center px-3 py-2.5 border-b border-line shrink-0">
         <button
           onClick={closeChatOptions}
-          className="w-8 h-8 rounded-full flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-100 transition-transform"
+          className="w-8 h-8 rounded-full flex items-center justify-center text-ink active:scale-90 active:bg-subtle transition-transform"
         >
           <ArrowLeft size={18} />
         </button>
-        <div className="absolute left-1/2 -translate-x-1/2 font-bold text-[16px] text-imely-ink">
+        <div className="absolute left-1/2 -translate-x-1/2 font-bold text-[16px] text-ink">
           <Str k="chat.menu.title" />
         </div>
       </div>
@@ -47,7 +47,7 @@ export function ChatOptionsScreen() {
       <div className="flex-1 overflow-y-auto pb-4">
         <div className="flex flex-col items-center pt-5 pb-4">
           <div className="w-16 h-16 rounded-full" style={{ backgroundColor: activeChat.color }} />
-          <div className="mt-2 font-bold text-[16px] text-imely-ink">{activeChatName}</div>
+          <div className="mt-2 font-bold text-[16px] text-ink">{activeChatName}</div>
         </div>
 
         <div className="px-4 grid grid-cols-3 gap-2">
@@ -61,9 +61,9 @@ export function ChatOptionsScreen() {
         </div>
 
         <div className="mt-4">
-          <div className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line">
-            <Play size={17} className="text-imely-ink shrink-0" />
-            <span className="flex-1 text-[14px] text-imely-ink">
+          <div className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-line">
+            <Play size={17} className="text-ink shrink-0" />
+            <span className="flex-1 text-[14px] text-ink">
               <Str k="chat.menu.auto_play_tts" />
             </span>
             <button
@@ -71,11 +71,11 @@ export function ChatOptionsScreen() {
               aria-label="Toggle auto-play voice"
               aria-pressed={autoPlayVoice}
               className={`w-10 h-6 rounded-full shrink-0 transition-colors relative ${
-                autoPlayVoice ? 'bg-imely-primary' : 'bg-gray-200'
+                autoPlayVoice ? 'bg-imely-primary' : 'bg-line'
               }`}
             >
               <span
-                className="absolute top-0.5 w-5 h-5 rounded-full bg-white transition-[left]"
+                className="absolute top-0.5 w-5 h-5 rounded-full bg-surface transition-[left]"
                 style={{ left: autoPlayVoice ? '18px' : '2px' }}
               />
             </button>
@@ -83,57 +83,57 @@ export function ChatOptionsScreen() {
 
           <button
             onClick={openPersonalize}
-            className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors text-left"
+            className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-line active:bg-subtle transition-colors text-left"
           >
-            <UserCog size={17} className="text-imely-ink" />
-            <span className="text-[14px] text-imely-ink">
+            <UserCog size={17} className="text-ink" />
+            <span className="text-[14px] text-ink">
               <Str k="chat.personalize_menu.title" />
             </span>
           </button>
 
           <button
             onClick={() => showToast('Hapus percakapan — segera hadir')}
-            className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors text-left"
+            className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-line active:bg-subtle transition-colors text-left"
           >
-            <Trash2 size={17} className="text-imely-ink" />
-            <span className="text-[14px] text-imely-ink">
+            <Trash2 size={17} className="text-ink" />
+            <span className="text-[14px] text-ink">
               <Str k="chat.menu.delete_conversation" />
             </span>
           </button>
 
           <button
             onClick={opts.openBlockConfirm}
-            className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors text-left"
+            className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-line active:bg-subtle transition-colors text-left"
           >
-            <Ban size={17} className="text-imely-ink" />
-            <span className="text-[14px] text-imely-ink">
+            <Ban size={17} className="text-ink" />
+            <span className="text-[14px] text-ink">
               <Str k="chat.menu.block_user" />
             </span>
           </button>
 
           <button
             onClick={() => showToast('Fitur QA internal — segera hadir')}
-            className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-imely-line active:bg-gray-50 transition-colors text-left"
+            className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-line active:bg-subtle transition-colors text-left"
           >
-            <Flag size={17} className="text-imely-ink" />
-            <span className="text-[14px] text-imely-ink">
+            <Flag size={17} className="text-ink" />
+            <span className="text-[14px] text-ink">
               <NoSheet>[Test] Top-up Gem</NoSheet>
             </span>
           </button>
 
           <button
             onClick={opts.openReport}
-            className="w-full flex items-center gap-3 px-4 py-3.5 active:bg-gray-50 transition-colors text-left"
+            className="w-full flex items-center gap-3 px-4 py-3.5 active:bg-subtle transition-colors text-left"
           >
-            <Flag size={17} className="text-imely-ink" />
-            <span className="text-[14px] text-imely-ink">
+            <Flag size={17} className="text-ink" />
+            <span className="text-[14px] text-ink">
               <Str k="chat.menu.report" />
             </span>
           </button>
         </div>
 
         <div className="mt-5">
-          <div className="px-4 font-extrabold text-[16px] text-imely-ink mb-2">
+          <div className="px-4 font-extrabold text-[16px] text-ink mb-2">
             <NoSheet>Karakter Serupa</NoSheet>
           </div>
           <div className="flex gap-3 px-4 overflow-x-auto">
@@ -141,7 +141,7 @@ export function ChatOptionsScreen() {
               <button
                 key={c.id}
                 onClick={() => openCharacterProfile(c.id)}
-                className="w-32 shrink-0 rounded-2xl overflow-hidden border border-imely-line text-left active:scale-[0.97] transition-transform"
+                className="w-32 shrink-0 rounded-2xl overflow-hidden border border-line text-left active:scale-[0.97] transition-transform"
               >
                 <div className="h-28 flex items-end p-1.5" style={{ backgroundColor: c.color }}>
                   <div className="bg-black/40 text-white text-[10px] rounded-full px-1.5 py-0.5 flex items-center gap-1">
@@ -150,8 +150,8 @@ export function ChatOptionsScreen() {
                   </div>
                 </div>
                 <div className="p-2">
-                  <div className="font-bold text-[12.5px] text-imely-ink truncate">{ph(c.name, baseLocale)}</div>
-                  <div className="text-[10.5px] text-gray-500 line-clamp-2 mt-0.5">{ph(c.tagline, baseLocale)}</div>
+                  <div className="font-bold text-[12.5px] text-ink truncate">{ph(c.name, baseLocale)}</div>
+                  <div className="text-[10.5px] text-muted line-clamp-2 mt-0.5">{ph(c.tagline, baseLocale)}</div>
                 </div>
               </button>
             ))}
@@ -190,10 +190,10 @@ function IconAction({
   return (
     <button
       onClick={onClick}
-      className="flex flex-col items-center justify-center gap-1.5 bg-gray-100 rounded-xl py-3 active:bg-gray-200 transition-colors"
+      className="flex flex-col items-center justify-center gap-1.5 bg-subtle rounded-xl py-3 active:bg-line transition-colors"
     >
-      <span className="text-imely-ink">{icon}</span>
-      <span className="text-[11.5px] text-imely-ink text-center leading-tight">
+      <span className="text-ink">{icon}</span>
+      <span className="text-[11.5px] text-ink text-center leading-tight">
         {labelKey ? <Str k={labelKey} /> : <NoSheet>{label}</NoSheet>}
       </span>
     </button>

@@ -19,11 +19,11 @@ export function VerifyEmailScreen() {
   }
 
   return (
-    <div className="h-full flex flex-col bg-white">
+    <div className="h-full flex flex-col bg-surface">
       <div className="relative flex items-center justify-center px-3 py-2.5 shrink-0">
         <button
           onClick={closeVerifyEmail}
-          className="absolute left-3 w-8 h-8 rounded-full flex items-center justify-center text-imely-ink active:scale-90 active:bg-gray-100 transition-transform"
+          className="absolute left-3 w-8 h-8 rounded-full flex items-center justify-center text-ink active:scale-90 active:bg-subtle transition-transform"
         >
           <ArrowLeft size={18} />
         </button>
@@ -31,7 +31,7 @@ export function VerifyEmailScreen() {
       </div>
 
       <div className="flex-1 overflow-y-auto px-5">
-        <div className="text-center text-[17px] text-imely-ink mt-1">
+        <div className="text-center text-[17px] text-ink mt-1">
           <Str k="login.update_email.title" />
         </div>
 
@@ -39,7 +39,7 @@ export function VerifyEmailScreen() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder={resolveString('login.update_email.tb_input_email_hint', baseLocale)}
-          className="w-full mt-6 border-b border-imely-line pb-2 text-[14px] text-imely-ink outline-none focus:border-imely-primary placeholder:text-gray-400"
+          className="w-full mt-6 border-b border-line pb-2 text-[14px] text-ink outline-none focus:border-imely-primary placeholder:text-muted"
           {...emailHintAttrs}
         />
 
@@ -49,12 +49,12 @@ export function VerifyEmailScreen() {
         >
           <span
             className={`w-[18px] h-[18px] rounded-full border shrink-0 mt-0.5 flex items-center justify-center ${
-              agreed ? 'border-imely-primary bg-imely-primary' : 'border-gray-300'
+              agreed ? 'border-imely-primary bg-imely-primary' : 'border-line'
             }`}
           >
-            {agreed && <span className="w-2 h-2 rounded-full bg-white" />}
+            {agreed && <span className="w-2 h-2 rounded-full bg-surface" />}
           </span>
-          <span className="text-[12.5px] text-gray-500 leading-relaxed">
+          <span className="text-[12.5px] text-muted leading-relaxed">
             <RichStr k="login.create_acc_by_email.confirm_policy" />
           </span>
         </button>

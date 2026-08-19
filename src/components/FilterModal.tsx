@@ -27,19 +27,19 @@ export function FilterModal({ onClose, onApply }: FilterModalProps) {
       />
 
       {/* sheet — pinned to the bottom edge of the screen */}
-      <div className="absolute bottom-0 left-0 right-0 max-h-[85%] bg-white rounded-t-3xl flex flex-col">
+      <div className="absolute bottom-0 left-0 right-0 max-h-[85%] bg-surface rounded-t-3xl flex flex-col">
         <div className="flex-1 overflow-y-auto px-5 pt-6 pb-4">
           <div className="text-center">
-            <div className="font-extrabold text-[19px] text-imely-ink">
+            <div className="font-extrabold text-[19px] text-ink">
               <NoSheet>Filter</NoSheet>
             </div>
-            <div className="text-[13px] text-gray-400 mt-0.5">
+            <div className="text-[13px] text-muted mt-0.5">
               <NoSheet>Opsi Tampilan</NoSheet>
             </div>
           </div>
 
           <div className="mt-6">
-            <div className="font-bold text-[14px] text-imely-ink mb-2.5">
+            <div className="font-bold text-[14px] text-ink mb-2.5">
               <NoSheet>Preferensi Gender:</NoSheet>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -51,8 +51,8 @@ export function FilterModal({ onClose, onApply }: FilterModalProps) {
                     onClick={() => setGender(g)}
                     className={`rounded-full px-4 py-1.5 text-[13px] font-medium active:scale-95 transition-all ${
                       active
-                        ? 'border border-imely-ink text-imely-ink bg-white'
-                        : 'bg-gray-100 text-imely-ink'
+                        ? 'border border-imely-ink text-ink bg-surface'
+                        : 'bg-subtle text-ink'
                     }`}
                   >
                     {g}
@@ -63,10 +63,10 @@ export function FilterModal({ onClose, onApply }: FilterModalProps) {
           </div>
 
           <div className="mt-6">
-            <div className="font-bold text-[14px] text-imely-ink">
+            <div className="font-bold text-[14px] text-ink">
               <NoSheet>Kategori:</NoSheet>
             </div>
-            <div className="text-[12.5px] text-gray-400 mb-2.5">
+            <div className="text-[12.5px] text-muted mb-2.5">
               <NoSheet>Pilih beberapa kategori:</NoSheet>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -77,7 +77,7 @@ export function FilterModal({ onClose, onApply }: FilterModalProps) {
                     key={c}
                     onClick={() => toggleCategory(c)}
                     className={`rounded-full px-3.5 py-1.5 text-[13px] font-medium active:scale-95 transition-all ${
-                      active ? 'bg-imely-primary text-white' : 'bg-gray-100 text-imely-ink'
+                      active ? 'bg-imely-primary text-white' : 'bg-subtle text-ink'
                     }`}
                   >
                     {c}
@@ -88,7 +88,7 @@ export function FilterModal({ onClose, onApply }: FilterModalProps) {
           </div>
         </div>
 
-        <div className="shrink-0 p-4 border-t border-imely-line">
+        <div className="shrink-0 p-4 border-t border-line">
           <button
             onClick={() => onApply(gender, categories)}
             className="w-full bg-imely-primary text-white font-bold rounded-full py-3.5 active:scale-[0.97] active:bg-imely-primaryDark transition-transform"

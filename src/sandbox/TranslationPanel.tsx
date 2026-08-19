@@ -59,9 +59,9 @@ export function TranslationPanel() {
 
   if (!entry) {
     return (
-      <div className="w-[360px] shrink-0 h-full border-r border-imely-line bg-white flex flex-col">
+      <div className="w-[360px] shrink-0 h-full border-r border-line bg-surface flex flex-col">
         <div className="flex-1 flex flex-col items-center justify-center px-6 text-center">
-          <div className="text-[13px] text-gray-400">
+          <div className="text-[13px] text-muted">
             Select a string from the list on the left to translate it here.
           </div>
         </div>
@@ -70,19 +70,19 @@ export function TranslationPanel() {
   }
 
   return (
-    <div className="w-[360px] shrink-0 h-full border-r border-imely-line bg-white flex flex-col">
-      <div className="px-3 py-2 border-b border-imely-line space-y-1.5">
+    <div className="w-[360px] shrink-0 h-full border-r border-line bg-surface flex flex-col">
+      <div className="px-3 py-2 border-b border-line space-y-1.5">
         <div className="flex items-center justify-between gap-1">
           <button
             onClick={() => goPage(-1)}
             disabled={!canPrevPage}
             title={`Previous ${pageUnitLabel}`}
-            className="flex items-center gap-0.5 text-[10.5px] text-gray-500 px-2 py-1 rounded-md hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent"
+            className="flex items-center gap-0.5 text-[10.5px] text-muted px-2 py-1 rounded-md hover:bg-subtle disabled:opacity-30 disabled:hover:bg-transparent"
           >
             <ChevronsLeft size={12} /> {pageUnitLabel}
           </button>
           <div
-            className="text-[10.5px] text-gray-400 truncate max-w-[130px] text-center"
+            className="text-[10.5px] text-muted truncate max-w-[130px] text-center"
             title={pageSections[pageIndex]?.label}
           >
             {pageIndex >= 0 ? pageSections[pageIndex]?.label : '—'}
@@ -91,7 +91,7 @@ export function TranslationPanel() {
             onClick={() => goPage(1)}
             disabled={!canNextPage}
             title={`Next ${pageUnitLabel}`}
-            className="flex items-center gap-0.5 text-[10.5px] text-gray-500 px-2 py-1 rounded-md hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent"
+            className="flex items-center gap-0.5 text-[10.5px] text-muted px-2 py-1 rounded-md hover:bg-subtle disabled:opacity-30 disabled:hover:bg-transparent"
           >
             {pageUnitLabel} <ChevronsRight size={12} />
           </button>
@@ -104,12 +104,12 @@ export function TranslationPanel() {
             onClick={() => goOverlay(-1)}
             disabled={!canPrevOverlay}
             title="Previous group (Menu/Popup within this screen)"
-            className="flex items-center gap-0.5 text-[10.5px] text-gray-500 px-2 py-1 rounded-md hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent"
+            className="flex items-center gap-0.5 text-[10.5px] text-muted px-2 py-1 rounded-md hover:bg-subtle disabled:opacity-30 disabled:hover:bg-transparent"
           >
             <ChevronLeft size={12} /> Group
           </button>
           <div
-            className="text-[10.5px] text-gray-400 truncate max-w-[110px] text-center"
+            className="text-[10.5px] text-muted truncate max-w-[110px] text-center"
             title={overlaySections[overlayIndex]?.label}
           >
             {overlayIndex >= 0 ? overlaySections[overlayIndex]?.label : '—'}
@@ -118,7 +118,7 @@ export function TranslationPanel() {
             onClick={() => goOverlay(1)}
             disabled={!canNextOverlay}
             title="Next group (Menu/Popup within this screen)"
-            className="flex items-center gap-0.5 text-[10.5px] text-gray-500 px-2 py-1 rounded-md hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent"
+            className="flex items-center gap-0.5 text-[10.5px] text-muted px-2 py-1 rounded-md hover:bg-subtle disabled:opacity-30 disabled:hover:bg-transparent"
           >
             Group <ChevronRight size={12} />
           </button>
@@ -128,18 +128,18 @@ export function TranslationPanel() {
             onClick={() => goRow(-1)}
             disabled={!canPrevRow}
             title="Previous string"
-            className="flex items-center gap-0.5 text-[11px] font-semibold text-imely-ink px-2 py-1 rounded-md hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent"
+            className="flex items-center gap-0.5 text-[11px] font-semibold text-ink px-2 py-1 rounded-md hover:bg-subtle disabled:opacity-30 disabled:hover:bg-transparent"
           >
             <ChevronLeft size={13} /> Previous
           </button>
-          <div className="text-[10.5px] text-gray-400 shrink-0">
+          <div className="text-[10.5px] text-muted shrink-0">
             {rowIndex >= 0 ? `${rowIndex + 1} / ${rows.length}` : '—'}
           </div>
           <button
             onClick={() => goRow(1)}
             disabled={!canNextRow}
             title="Next string"
-            className="flex items-center gap-0.5 text-[11px] font-semibold text-imely-ink px-2 py-1 rounded-md hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent"
+            className="flex items-center gap-0.5 text-[11px] font-semibold text-ink px-2 py-1 rounded-md hover:bg-subtle disabled:opacity-30 disabled:hover:bg-transparent"
           >
             Next <ChevronRight size={13} />
           </button>
@@ -148,16 +148,16 @@ export function TranslationPanel() {
 
       <div className="flex-1 overflow-y-auto p-3">
         <div className="flex items-center gap-1 min-w-0">
-          <div className="font-mono text-[11px] text-gray-500 break-all flex-1">{entry.key}</div>
+          <div className="font-mono text-[11px] text-muted break-all flex-1">{entry.key}</div>
           <button
             onClick={copyKey}
             title="Copy key"
-            className="text-gray-400 shrink-0 active:scale-90 transition-transform"
+            className="text-muted shrink-0 active:scale-90 transition-transform"
           >
             {copied ? <Check size={12} className="text-imely-primary" /> : <Copy size={12} />}
           </button>
         </div>
-        <div className="text-[10px] text-gray-400 mt-0.5">
+        <div className="text-[10px] text-muted mt-0.5">
           {entry.category} {entry.subcategory ? `› ${entry.subcategory}` : ''}
         </div>
 
@@ -177,13 +177,13 @@ export function TranslationPanel() {
             directly beside the translation box, instead of both stacked
             under a shared "Original string" heading with a scroll between
             them. */}
-        <div className="mt-3 rounded-xl border border-imely-line overflow-hidden">
-          <div className="grid grid-cols-2 divide-x divide-imely-line">
-            <div className="p-2.5 bg-gray-50/70">
-              <div className="text-[10px] font-semibold text-gray-400 uppercase mb-1">
+        <div className="mt-3 rounded-xl border border-line overflow-hidden">
+          <div className="grid grid-cols-2 divide-x divide-line">
+            <div className="p-2.5 bg-subtle">
+              <div className="text-[10px] font-semibold text-muted uppercase mb-1">
                 {LOCALE_LABEL[baseLocale]} · source
               </div>
-              <div className="text-[13.5px] text-imely-ink leading-snug">
+              <div className="text-[13.5px] text-ink leading-snug">
                 {entry.locales[baseLocale] || entry.locales.en || entry.locales.id}
               </div>
             </div>
@@ -196,7 +196,7 @@ export function TranslationPanel() {
                   <button
                     onClick={handleReset}
                     title="Clear this translation"
-                    className="text-gray-400 hover:text-imely-primary"
+                    className="text-muted hover:text-imely-primary"
                   >
                     <RotateCcw size={10} />
                   </button>
@@ -205,13 +205,13 @@ export function TranslationPanel() {
               {aiSuggestion ? (
                 <button
                   onClick={() => handleChange(aiSuggestion)}
-                  className="mb-1.5 w-full text-left text-[10.5px] bg-imely-mint/30 hover:bg-imely-mint/50 rounded-md px-1.5 py-1 flex items-start gap-1 text-imely-ink transition-colors"
+                  className="mb-1.5 w-full text-left text-[10.5px] bg-imely-mint/30 hover:bg-imely-mint/50 rounded-md px-1.5 py-1 flex items-start gap-1 text-ink transition-colors"
                 >
                   <Sparkles size={10} className="text-imely-primary shrink-0 mt-0.5" />
                   <span className="line-clamp-2">{aiSuggestion}</span>
                 </button>
               ) : (
-                <div className="mb-1.5 text-[10px] text-gray-300 italic">No AI suggestion yet</div>
+                <div className="mb-1.5 text-[10px] text-faint italic">No AI suggestion yet</div>
               )}
               <textarea
                 ref={textareaRef}
@@ -219,7 +219,7 @@ export function TranslationPanel() {
                 onChange={(e) => handleChange(e.target.value)}
                 onKeyDown={handleTextareaKeyDown}
                 placeholder={`Type the ${currentLocaleLabel} translation…`}
-                className="w-full text-[13.5px] text-imely-ink outline-none resize-none overflow-hidden bg-transparent placeholder:text-gray-300"
+                className="w-full text-[13.5px] text-ink outline-none resize-none overflow-hidden bg-transparent placeholder:text-faint"
                 rows={3}
               />
             </div>
@@ -230,8 +230,8 @@ export function TranslationPanel() {
             since the base-language column above covers the primary case. */}
         <div className="mt-2 space-y-1 px-0.5">
           {SOURCE_LOCALES.filter((l) => l !== baseLocale).map((l) => (
-            <div key={l} className="flex items-baseline gap-1.5 text-[10.5px] text-gray-400">
-              <span className="font-semibold text-gray-500 shrink-0">{LOCALE_LABEL[l]}:</span>
+            <div key={l} className="flex items-baseline gap-1.5 text-[10.5px] text-muted">
+              <span className="font-semibold text-muted shrink-0">{LOCALE_LABEL[l]}:</span>
               <span className="truncate">{entry.locales[l]}</span>
             </div>
           ))}
@@ -242,7 +242,7 @@ export function TranslationPanel() {
             <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" /> Unsaved changes
           </div>
         )}
-        <div className="mt-2 text-[10px] text-gray-300">Ctrl/Cmd + Enter to save</div>
+        <div className="mt-2 text-[10px] text-faint">Ctrl/Cmd + Enter to save</div>
         <button
           onClick={handleApply}
           disabled={!draftText.trim()}
