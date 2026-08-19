@@ -7,11 +7,8 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
-  SkipForward,
   Sparkles,
-  Focus,
 } from 'lucide-react'
-import { useApp } from '../context/AppContext'
 import { LOCALE_LABEL, SOURCE_LOCALES } from '../lib/strings'
 import { useTranslationEditor } from '../hooks/useTranslationEditor'
 
@@ -20,9 +17,11 @@ import { useTranslationEditor } from '../hooks/useTranslationEditor'
 // detail block bolted under the list) so there's room for the original
 // string, a real draft-then-Save workflow, and overflow feedback without
 // squeezing the list itself. Only rendered in normal mode — Focus Mode
-// swaps this + the Inspector out for FocusPanel instead (see App.tsx).
+// swaps this + the Inspector out for FocusPanel instead (see App.tsx). The
+// Focus Mode toggle itself lives in the main title bar now (see App.tsx),
+// not here — bigger and in one consistent spot regardless of whether a
+// string happens to be selected.
 export function TranslationPanel() {
-  const { setFocusMode } = useApp()
   const {
     baseLocale,
     currentLocaleLabel,
@@ -51,7 +50,6 @@ export function TranslationPanel() {
     goRow,
     goOverlay,
     goPage,
-    goNextUntranslated,
     handleChange,
     handleApply,
     handleReset,
@@ -59,23 +57,9 @@ export function TranslationPanel() {
     copyKey,
   } = useTranslationEditor()
 
-  const focusToggle = (
-    <button
-      onClick={() => setFocusMode(true)}
-      title="Focus Mode — review one string at a time"
-      className="flex items-center gap-1 text-[10.5px] font-semibold px-2 py-1 rounded-full border border-imely-line text-gray-500 hover:bg-gray-50 transition-colors"
-    >
-      <Focus size={11} /> Focus
-    </button>
-  )
-
   if (!entry) {
     return (
       <div className="w-[360px] shrink-0 h-full border-r border-imely-line bg-white flex flex-col">
-        <div className="px-3 py-2 border-b border-imely-line flex items-center justify-between">
-          <span className="text-[11px] font-bold text-gray-400 uppercase">Translation</span>
-          {focusToggle}
-        </div>
         <div className="flex-1 flex flex-col items-center justify-center px-6 text-center">
           <div className="text-[13px] text-gray-400">
             Select a string from the list on the left to translate it here.
@@ -87,10 +71,6 @@ export function TranslationPanel() {
 
   return (
     <div className="w-[360px] shrink-0 h-full border-r border-imely-line bg-white flex flex-col">
-      <div className="px-3 py-2 border-b border-imely-line flex items-center justify-between">
-        <span className="text-[11px] font-bold text-gray-400 uppercase">Translation</span>
-        {focusToggle}
-      </div>
       <div className="px-3 py-2 border-b border-imely-line space-y-1.5">
         <div className="flex items-center justify-between gap-1">
           <button
@@ -164,13 +144,6 @@ export function TranslationPanel() {
             Next <ChevronRight size={13} />
           </button>
         </div>
-        <button
-          onClick={goNextUntranslated}
-          title="Jump to the next string with no translation yet"
-          className="w-full flex items-center justify-center gap-1 text-[10.5px] font-semibold text-imely-primary px-2 py-1 rounded-md hover:bg-imely-mint/30 active:scale-[0.98] transition-transform"
-        >
-          <SkipForward size={11} /> Skip to next untranslated
-        </button>
       </div>
 
       <div className="flex-1 overflow-y-auto p-3">

@@ -55,6 +55,7 @@ export function useBrowseOrder(): {
     // Prev/Next walks THESE rows, so any divergence means it could land on
     // a string the Inspector's filtered list doesn't show, or skip one it does.
     function matchesFilter(key: string): boolean {
+      if (filterMode === 'wired') return wiredKeys.has(key)
       if (filterMode === 'unwired') return !wiredKeys.has(key)
       if (filterMode === 'translated') return Boolean(overrides[key]?.[targetLocale])
       if (filterMode === 'untranslated') return !overrides[key]?.[targetLocale]

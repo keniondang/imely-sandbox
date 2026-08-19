@@ -345,6 +345,7 @@ export function sortedZones(zones: string[]): string[] {
 // shape per locale.
 export const FILTERS: { id: FilterMode; label: string }[] = [
   { id: 'all', label: 'All' },
+  { id: 'wired', label: 'Wired' },
   { id: 'unwired', label: 'Unwired' },
   { id: 'untranslated', label: 'Untranslated' },
   { id: 'translated', label: 'Translated' },

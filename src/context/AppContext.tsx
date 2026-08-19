@@ -70,7 +70,7 @@ export type PurchaseTab = 'club' | 'gem'
 // 'translated' and 'untranslated' key off the same underlying data (whether
 // `overrides[key][targetLocale]` is set) and are exact inverses — the
 // actionable "what's done" / "what's left" split for a translator.
-export type FilterMode = 'all' | 'unwired' | 'untranslated' | 'translated'
+export type FilterMode = 'all' | 'wired' | 'unwired' | 'untranslated' | 'translated'
 
 // 'page' is a screen's always-visible content. Anything else ('menu', 'popup', ...)
 // is a sub-surface that only exists in the DOM while its own local state has it

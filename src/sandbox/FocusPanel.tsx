@@ -26,8 +26,17 @@ import type { BrowseRow, BrowseSection } from '../hooks/useBrowseOrder'
 // of editing/navigation logic with TranslationPanel via
 // useTranslationEditor — only the layout differs.
 export function FocusPanel() {
-  const { setFocusMode, targetLocale, setTargetLocale, baseLocale, setBaseLocale, query, setQuery, overrides } =
-    useApp()
+  const {
+    targetLocale,
+    setTargetLocale,
+    baseLocale,
+    setBaseLocale,
+    query,
+    setQuery,
+    overrides,
+    filterMode,
+    setFilterMode,
+  } = useApp()
   const [searchOpen, setSearchOpen] = useState(false)
   const {
     currentLocaleLabel,
@@ -146,16 +155,6 @@ export function FocusPanel() {
   return (
     <div className="flex-1 flex flex-col bg-white overflow-hidden">
       <div className="shrink-0 border-b border-imely-line px-5 py-3 flex items-center gap-2.5">
-        <button
-          onClick={() => setFocusMode(false)}
-          title="Exit Focus Mode"
-          className="flex items-center gap-1 text-[11px] font-semibold text-gray-500 px-2.5 py-1.5 rounded-full border border-imely-line hover:bg-gray-50 active:scale-95 transition-transform shrink-0"
-        >
-          <X size={12} /> Exit Focus
-        </button>
-
-        <div className="h-4 w-px bg-imely-line mx-0.5 shrink-0" />
-
         <div className="flex items-center gap-1 shrink-0">
           {TARGET_LOCALES.map((id) => (
             <button
@@ -184,6 +183,23 @@ export function FocusPanel() {
               }`}
             >
               {LOCALE_LABEL[id]}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-1 shrink-0">
+          {(['wired', 'unwired'] as const).map((mode) => (
+            <button
+              key={mode}
+              onClick={() => setFilterMode(filterMode === mode ? 'all' : mode)}
+              title={mode === 'wired' ? 'Only strings actually used in a screen' : 'Only strings not yet used anywhere'}
+              className={`text-[10px] font-semibold px-2 py-1 rounded-full border capitalize ${
+                filterMode === mode
+                  ? 'bg-imely-ink text-white border-imely-ink'
+                  : 'border-imely-line text-gray-500 hover:bg-gray-50'
+              }`}
+            >
+              {mode}
             </button>
           ))}
         </div>
