@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useRef, useState, type R
 import type { SourceLocale, TargetLocale } from '../lib/strings'
 import type { LocalizedText } from '../data/mockContent'
 import zhTwBaselineRaw from '../data/zhTwBaseline.json'
+import { supabase, type TranslationRow } from '../lib/supabase'
 
 const ZH_TW_BASELINE = zhTwBaselineRaw as Record<string, string>
 
@@ -383,6 +384,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [targetLocale, setTargetLocale] = useState<TargetLocale>('zh-TW')
   const [baseLocale, setBaseLocale] = useState<SourceLocale>('id')
   const [currentScreen, setCurrentScreen] = useState<ScreenId>('feed')
+  // Starts from whatever's in localStorage (works with no Supabase config at
+  // all — see lib/supabase.ts). Once a project's configured, Supabase rows
+  // load in right after and win over the local copy for any key they cover,
+  // since they're the shared, cross-translator source of truth; localStorage
+  // keeps being written to underneath as a same-device cache/fallback, so
+  // the tool still works offline or before that first fetch resolves.
   const [overrides, setOverrides] = useState<Record<string, Partial<Record<TargetLocale, string>>>>(loadStoredOverrides)
   useEffect(() => {
     try {
@@ -393,6 +400,26 @@ export function AppProvider({ children }: { children: ReactNode }) {
       // reload. Nothing actionable to do here, so fail silently.
     }
   }, [overrides])
+  useEffect(() => {
+    if (!supabase) return
+    let cancelled = false
+    supabase
+      .from('translations')
+      .select('key, locale, text')
+      .then(({ data, error }) => {
+        if (cancelled || error || !data) return
+        setOverrides((prev) => {
+          const next = { ...prev }
+          for (const row of data as TranslationRow[]) {
+            next[row.key] = { ...next[row.key], [row.locale]: row.text }
+          }
+          return next
+        })
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [])
   const [livePreview, setLivePreview] = useState<{ key: string; locale: TargetLocale; text: string } | null>(null)
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
   const [selectedOccurrence, setSelectedOccurrence] = useState<{ screenId: ScreenId; zone: Zone } | null>(null)
@@ -449,6 +476,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const applyOverride = (key: string, locale: TargetLocale, value: string) => {
     setOverrides((prev) => ({ ...prev, [key]: { ...prev[key], [locale]: value } }))
+    // Fire-and-forget — the local state update above is what the UI reacts
+    // to, so a slow or failed network write doesn't block a translator from
+    // continuing to work. localStorage still has the value regardless.
+    supabase?.from('translations').upsert({ key, locale, text: value, updated_at: new Date().toISOString() }).then()
   }
 
   const resetOverride = (key: string, locale: TargetLocale) => {
@@ -461,6 +492,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       else next[key] = nextForKey
       return next
     })
+    supabase?.from('translations').delete().eq('key', key).eq('locale', locale).then()
   }
 
   const selectKey = (key: string | null, occurrence: { screenId: ScreenId; zone: Zone } | null) => {
