@@ -173,6 +173,7 @@ export function Inspector({ activeScreenId }: { activeScreenId: ScreenId }) {
   }, [wiredKeys])
 
   function matchesFilter(key: string): boolean {
+    if (filterMode === 'wired') return wiredKeys.has(key)
     if (filterMode === 'unwired') return !wiredKeys.has(key)
     if (filterMode === 'translated') return Boolean(overrides[key]?.[targetLocale])
     if (filterMode === 'untranslated') return !overrides[key]?.[targetLocale]
@@ -689,8 +690,7 @@ export function Inspector({ activeScreenId }: { activeScreenId: ScreenId }) {
                 renderEntry(screenId)
               )}
 
-            {filterMode !== 'all' &&
-              (focusPath.length === 0 || focusPath[0] === '__unwired__') &&
+            {(focusPath.length === 0 || focusPath[0] === '__unwired__') &&
               unwiredCategoryGroups.some(([, entries]) => entries.some((e) => matchesFilter(e.key))) && (
               <>
                 <button

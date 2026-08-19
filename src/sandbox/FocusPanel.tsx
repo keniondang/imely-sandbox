@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   X,
   Search,
@@ -6,6 +6,7 @@ import {
   Check,
   RotateCcw,
   AlertTriangle,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
@@ -125,6 +126,38 @@ export function FocusPanel() {
     [overlaySections, overlayIndex, rows, overrides, targetLocale]
   )
 
+  // Same completion numbers, but one per entry — computed once for the
+  // jump-to dropdowns below rather than re-running the scan on every open.
+  const allPageCompletions = useMemo(
+    () => pageSections.map((s) => sectionCompletion(s, rows)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [pageSections, rows, overrides, targetLocale]
+  )
+  const allGroupCompletions = useMemo(
+    () => overlaySiblings.map((s) => sectionCompletion(s, rows)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [overlaySiblings, rows, overrides, targetLocale]
+  )
+
+  // Prev/Next only ever step one at a time — with ~24 pages, jumping
+  // straight to a distant one (e.g. Feed to Gems) otherwise takes that many
+  // clicks. Clicking the Page/Group label instead opens a full list to jump
+  // to directly; goPage/goOverlay already take a delta, so a pick just
+  // computes "how far from here" rather than needing a separate jump
+  // primitive in the shared hook.
+  const [pageMenuOpen, setPageMenuOpen] = useState(false)
+  const [groupMenuOpen, setGroupMenuOpen] = useState(false)
+  const pageMenuRef = useRef<HTMLDivElement>(null)
+  const groupMenuRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    function onClickOutside(e: MouseEvent) {
+      if (pageMenuRef.current && !pageMenuRef.current.contains(e.target as Node)) setPageMenuOpen(false)
+      if (groupMenuRef.current && !groupMenuRef.current.contains(e.target as Node)) setGroupMenuOpen(false)
+    }
+    document.addEventListener('mousedown', onClickOutside)
+    return () => document.removeEventListener('mousedown', onClickOutside)
+  }, [])
+
   // A peek at what Prev/Next actually land on — named, not just an arrow —
   // so a translator can tell at a glance whether it's worth stepping there
   // instead of discovering it only after clicking.
@@ -161,7 +194,8 @@ export function FocusPanel() {
   return (
     <div className="flex-1 flex flex-col bg-surface overflow-hidden">
       <div className="shrink-0 border-b border-line px-5 py-3 flex items-center gap-2.5">
-        <div className="flex items-center gap-1 shrink-0">
+        <div className="flex items-center gap-1 shrink-0" title="Language being translated into">
+          <span className="text-[10px] text-muted">Target:</span>
           {TARGET_LOCALES.map((id) => (
             <button
               key={id}
@@ -194,6 +228,7 @@ export function FocusPanel() {
         </div>
 
         <div className="flex items-center gap-1 shrink-0">
+          <span className="text-[10px] text-muted">Filters:</span>
           {(['wired', 'unwired', 'untranslated'] as const).map((mode) => (
             <button
               key={mode}
@@ -336,11 +371,23 @@ export function FocusPanel() {
           >
             <ChevronsLeft size={18} />
           </button>
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 relative" ref={pageMenuRef}>
             <div className="flex items-center justify-between gap-2 mb-1.5">
-              <span className="flex items-baseline gap-2 min-w-0">
+              <button
+                onClick={() => {
+                  setGroupMenuOpen(false)
+                  setPageMenuOpen((v) => !v)
+                }}
+                className="flex items-baseline gap-2 min-w-0 hover:opacity-75 transition-opacity"
+              >
                 <span className="text-[10.5px] font-semibold text-muted uppercase tracking-wide shrink-0">
                   {pageUnitLabel}
+                  {pageSections.length > 0 && pageIndex >= 0 && (
+                    <span className="text-muted normal-case font-normal">
+                      {' '}
+                      ({pageIndex + 1}/{pageSections.length})
+                    </span>
+                  )}
                 </span>
                 <span className="text-[17px] font-bold text-ink truncate">
                   {pageIndex >= 0 ? pageSections[pageIndex]?.label : '—'}
@@ -350,7 +397,8 @@ export function FocusPanel() {
                     Unwired
                   </span>
                 )}
-              </span>
+                <ChevronDown size={13} className="text-muted shrink-0" />
+              </button>
               <span className="text-[11px] text-muted shrink-0 tabular-nums">
                 {pagePosition.pos}/{pagePosition.total} here
               </span>
@@ -361,6 +409,28 @@ export function FocusPanel() {
                 style={{ width: `${pagePosition.total ? (pagePosition.pos / pagePosition.total) * 100 : 0}%` }}
               />
             </div>
+
+            {pageMenuOpen && (
+              <div className="absolute left-0 top-full mt-1.5 w-80 max-h-80 overflow-y-auto bg-surface rounded-lg shadow-lg border border-line py-1 z-50">
+                {pageSections.map((section, i) => (
+                  <button
+                    key={section.id}
+                    onClick={() => {
+                      goPage(i - pageIndex)
+                      setPageMenuOpen(false)
+                    }}
+                    className={`w-full flex items-center justify-between gap-3 px-3 py-1.5 text-left text-[12.5px] hover:bg-subtle ${
+                      i === pageIndex ? 'bg-subtle font-semibold text-ink' : 'text-ink'
+                    }`}
+                  >
+                    <span className="truncate">{section.label}</span>
+                    <span className="text-[10.5px] text-muted tabular-nums shrink-0">
+                      {allPageCompletions[i]?.done}/{allPageCompletions[i]?.total}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
           <button
             onClick={() => goPage(1)}
@@ -402,16 +472,29 @@ export function FocusPanel() {
             >
               <ChevronLeft size={16} />
             </button>
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 relative" ref={groupMenuRef}>
               <div className="flex items-center justify-between gap-2 mb-1">
-                <span className="flex items-baseline gap-1.5 min-w-0">
+                <button
+                  onClick={() => {
+                    setPageMenuOpen(false)
+                    setGroupMenuOpen((v) => !v)
+                  }}
+                  className="flex items-baseline gap-1.5 min-w-0 hover:opacity-75 transition-opacity"
+                >
                   <span className="text-[10px] font-semibold text-muted uppercase tracking-wide shrink-0">
                     Group
+                    {overlaySiblings.length > 0 && overlaySiblingIndex >= 0 && (
+                      <span className="text-muted normal-case font-normal">
+                        {' '}
+                        ({overlaySiblingIndex + 1}/{overlaySiblings.length})
+                      </span>
+                    )}
                   </span>
                   <span className="text-[13.5px] font-bold text-ink truncate">
                     {overlayIndex >= 0 ? overlaySections[overlayIndex]?.label : '—'}
                   </span>
-                </span>
+                  <ChevronDown size={12} className="text-muted shrink-0" />
+                </button>
                 <span className="text-[10.5px] text-muted shrink-0 tabular-nums">
                   {groupPosition.pos}/{groupPosition.total}
                 </span>
@@ -422,6 +505,28 @@ export function FocusPanel() {
                   style={{ width: `${groupPosition.total ? (groupPosition.pos / groupPosition.total) * 100 : 0}%` }}
                 />
               </div>
+
+              {groupMenuOpen && (
+                <div className="absolute left-0 top-full mt-1.5 w-72 max-h-80 overflow-y-auto bg-surface rounded-lg shadow-lg border border-line py-1 z-50">
+                  {overlaySiblings.map((section, i) => (
+                    <button
+                      key={section.id}
+                      onClick={() => {
+                        goOverlay(i - overlaySiblingIndex)
+                        setGroupMenuOpen(false)
+                      }}
+                      className={`w-full flex items-center justify-between gap-3 px-3 py-1.5 text-left text-[12.5px] hover:bg-subtle ${
+                        i === overlaySiblingIndex ? 'bg-subtle font-semibold text-ink' : 'text-ink'
+                      }`}
+                    >
+                      <span className="truncate">{section.label}</span>
+                      <span className="text-[10.5px] text-muted tabular-nums shrink-0">
+                        {allGroupCompletions[i]?.done}/{allGroupCompletions[i]?.total}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
             <button
               onClick={() => goOverlay(1)}
