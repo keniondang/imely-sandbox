@@ -71,14 +71,18 @@ export function useTranslationEditor() {
     )
   }, [rows, selectedKey, selectedOccurrence])
 
-  // The queue itself can shrink out from under the current selection — a
-  // filter or search narrows `rows`, or the Unwired filter is toggled on
-  // while a wired key was selected — leaving rowIndex at -1. Left alone,
-  // that silently disables Prev/Next entirely with no indication why (they
-  // just stop responding). Snap to the first row of the new queue instead,
-  // so switching filters always lands somewhere navigable.
+  // rowIndex lands on -1 two different ways, both fixed the same way: the
+  // queue can shrink out from under the current selection (a filter or
+  // search narrows `rows`, or the Unwired filter is toggled on while a
+  // wired key was selected), or nothing was ever selected in the first
+  // place (opening Translation Mode straight from the landing screen,
+  // where nothing is auto-selected — see useLivePreviewFollow's arming
+  // delay). Left alone, either one shows "no strings match" with Prev/Next
+  // silently disabled. Snap to the first row of the current queue instead,
+  // so entering the panel — or switching filters once inside it — always
+  // lands somewhere navigable.
   useEffect(() => {
-    if (!selectedKey || rowIndex !== -1 || rows.length === 0) return
+    if (rowIndex !== -1 || rows.length === 0) return
     const target = rows[0]
     navigateTo(target.key, target.screenId ?? undefined, target.zone ?? undefined)
     syncInspectorFocus(target)
