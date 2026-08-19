@@ -149,8 +149,8 @@ function useOpenOverlayChain() {
 }
 
 // Selects a key AND drives the live preview to wherever it actually renders
-// — used when clicking an actual string row (Inspector list, search, or the
-// TranslationPanel's prev/next buttons).
+// — used when clicking an actual string row (Inspector list, search, or
+// Translation Mode's prev/next buttons).
 export function useNavigateToString() {
   const { usage, selectedOccurrence, selectKey, requestPopup } = useApp()
   const openOverlayChain = useOpenOverlayChain()

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { PanelLeftOpen, PanelLeftClose, X, Download, Focus, Sun, Moon } from 'lucide-react'
+import { PanelLeftOpen, PanelLeftClose, X, Download, Languages, Sun, Moon } from 'lucide-react'
 import { AppProvider, useApp } from './context/AppContext'
 import { ScreenScope } from './context/ScreenScope'
 import { useStringHighlighter } from './hooks/useStringHighlighter'
@@ -44,7 +44,6 @@ import { ProfileMenuSheet } from './components/ProfileMenuSheet'
 import { AvatarMenuSheet } from './components/AvatarMenuSheet'
 import { Inspector } from './sandbox/Inspector'
 import { useLivePreviewFollow } from './hooks/useLivePreviewFollow'
-import { TranslationPanel } from './sandbox/TranslationPanel'
 import { FocusPanel } from './sandbox/FocusPanel'
 
 function Shell() {
@@ -84,8 +83,6 @@ function Shell() {
     usernameOpen,
     deleteAccountOpen,
     characterFormOpen,
-    selectedKey,
-    selectKey,
     requestPopup,
     toast,
     overrides,
@@ -187,11 +184,12 @@ function Shell() {
       <div className="h-12 flex items-stretch shrink-0">
         {focusMode ? (
           // One unified green bar — no sandbox title/subtitle to split it
-          // into segments for, so Focus Mode's whole header is just its own
-          // label and the Export action, not sharing space with anything else.
+          // into segments for, so Translation Mode's whole header is just
+          // its own label and the Export action, not sharing space with
+          // anything else.
           <div className="flex-1 flex items-center gap-3 px-4 bg-imely-primary min-w-0">
-            <Focus size={14} className="text-white shrink-0" />
-            <span className="text-[13px] font-semibold text-white">Focus Mode</span>
+            <Languages size={14} className="text-white shrink-0" />
+            <span className="text-[13px] font-semibold text-white">Translation Mode</span>
             <div className="ml-auto flex items-center gap-2.5 shrink-0">
               <button
                 onClick={() => setDarkMode(!darkMode)}
@@ -202,10 +200,10 @@ function Shell() {
               </button>
               <button
                 onClick={() => setFocusMode(false)}
-                title="Exit Focus Mode"
+                title="Exit Translation Mode"
                 className="flex items-center gap-1 text-[12px] font-semibold text-white border border-white/40 rounded-full pl-2.5 pr-3 py-1.5 hover:bg-white/10 active:scale-[0.97] transition-transform shrink-0"
               >
-                <X size={13} /> Exit Focus
+                <X size={13} /> Exit
               </button>
               <div className="relative shrink-0" ref={exportMenuRef}>
                 <button
@@ -247,23 +245,9 @@ function Shell() {
         ) : (
           <>
             {inspectorOpen && (
-              <>
-                <div className="w-[360px] shrink-0 bg-imely-ink border-b border-white/10 flex items-center px-3">
-                  <span className="text-[13px] font-semibold text-white">String Inspector</span>
-                </div>
-                <div className="w-[360px] shrink-0 bg-surface border-b border-line flex items-center justify-between px-3">
-                  <span className="text-[13px] font-semibold text-ink">Translation</span>
-                  {selectedKey && (
-                    <button
-                      onClick={() => selectKey(null, null)}
-                      title="Close translation panel"
-                      className="text-muted active:scale-90 transition-transform"
-                    >
-                      <X size={16} />
-                    </button>
-                  )}
-                </div>
-              </>
+              <div className="w-[360px] shrink-0 bg-imely-ink border-b border-white/10 flex items-center px-3">
+                <span className="text-[13px] font-semibold text-white">String Inspector</span>
+              </div>
             )}
             <div className="flex-1 flex items-center gap-3 px-4 border-b border-line bg-surface min-w-0">
               <button
@@ -284,10 +268,10 @@ function Shell() {
                 </button>
                 <button
                   onClick={() => setFocusMode(true)}
-                  title="Focus Mode — review one string at a time"
+                  title="Translation Mode — review one string at a time"
                   className="flex items-center gap-1.5 text-[13px] font-semibold text-ink border border-line rounded-full pl-3 pr-3.5 py-1.5 hover:bg-subtle active:scale-[0.97] transition-transform"
                 >
-                  <Focus size={15} /> Focus Mode
+                  <Languages size={15} /> Translation Mode
                 </button>
                 <div className="relative" ref={exportMenuRef}>
                   <button
@@ -334,12 +318,7 @@ function Shell() {
         {focusMode ? (
           <FocusPanel />
         ) : (
-          inspectorOpen && (
-            <>
-              <Inspector activeScreenId={activeScreenId} />
-              <TranslationPanel />
-            </>
-          )
+          inspectorOpen && <Inspector activeScreenId={activeScreenId} />
         )}
 
         <div className="flex-1 flex flex-col overflow-hidden">

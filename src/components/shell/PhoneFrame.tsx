@@ -3,8 +3,9 @@ import type { ReactNode } from 'react'
 export const FRAME_WIDTH = 390
 export const FRAME_HEIGHT = 780
 
-// `scale` (Focus Mode uses ~0.72) shrinks the whole frame via a CSS
-// transform rather than changing its width/height classes — every internal
+// `scale` (set dynamically by useFitScale to fill whatever space the
+// container has) shrinks the whole frame via a CSS transform rather than
+// changing its width/height classes — every internal
 // layout in the app is written against the real 390px frame, so scaling the
 // already-laid-out box down visually keeps that intact instead of
 // reflowing everything at a narrower width. The outer wrapper is sized to

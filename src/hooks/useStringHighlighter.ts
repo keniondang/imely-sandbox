@@ -3,11 +3,10 @@ import { useApp } from '../context/AppContext'
 import { buildStrSelector } from '../components/Str'
 
 // Keeps exactly one element highlighted: whichever key is currently selected
-// (i.e. showing in the right-side TranslationPanel). Tied to selection rather
-// than a fire-and-forget timeout, so the marker stays lit the whole time the
-// translator is working that key in the panel — clicking Apply/reset,
-// switching locale, etc. — and only clears when a different key is picked or
-// the panel is closed.
+// (i.e. showing in Translation Mode). Tied to selection rather than a
+// fire-and-forget timeout, so the marker stays lit the whole time the
+// translator is working that key — clicking Apply/reset, switching locale,
+// etc. — and only clears when a different key is picked.
 export function useStringHighlighter() {
   const { selectedKey, selectedOccurrence, setToastPreview } = useApp()
 

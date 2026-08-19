@@ -74,7 +74,7 @@ export type ScreenId =
 
 export type PurchaseTab = 'club' | 'gem'
 
-// Shared between the Inspector's browse list and the TranslationPanel's
+// Shared between the Inspector's browse list and Translation Mode's
 // prev/next navigation, so "next string" / "next page or category" steps
 // through exactly what the left sidebar is showing right now.
 // 'translated' and 'untranslated' key off the same underlying data (whether
@@ -154,8 +154,8 @@ interface AppState {
   inspectorOpen: boolean
   setInspectorOpen: (v: boolean) => void
 
-  // Browse list filter — lives in context (not local Inspector state) so the
-  // TranslationPanel's prev/next buttons can walk the same ordered list the
+  // Browse list filter — lives in context (not local Inspector state) so
+  // Translation Mode's prev/next buttons can walk the same ordered list the
   // left sidebar is currently showing.
   filterMode: FilterMode
   setFilterMode: (v: FilterMode) => void
@@ -163,8 +163,8 @@ interface AppState {
   // Which single thing is drilled into in the Inspector's tree right now —
   // e.g. ['account'] (just Kelola Akun open) or ['account', 'menu'] (drilled
   // further into just its Menu group). Lives here (not local Inspector
-  // state) so the TranslationPanel's prev/next buttons can drive the same
-  // drill-down the sidebar shows, keeping both panels in sync.
+  // state) so Translation Mode's prev/next buttons can drive the same
+  // drill-down the sidebar shows, keeping both in sync.
   focusPath: string[]
   setFocusPath: (v: string[]) => void
 

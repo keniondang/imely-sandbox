@@ -77,8 +77,8 @@ export function Inspector({ activeScreenId }: { activeScreenId: ScreenId }) {
   // path again) pops back out and the rest reappears. A plain array works
   // as a path since only one thing can ever be drilled into at a time —
   // ['account'] focused on Kelola Akun, ['account', 'menu'] focused further
-  // into just its Menu group, etc. Lives in context (not local state) so the
-  // TranslationPanel's prev/next buttons can drive the same drill-down.
+  // into just its Menu group, etc. Lives in context (not local state) so
+  // Translation Mode's prev/next buttons can drive the same drill-down.
   // Cleared on filter/search changes since a focused path may no longer
   // even be visible under a new filter.
   function toggleFocus(path: string[]) {

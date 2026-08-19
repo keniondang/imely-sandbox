@@ -6,9 +6,9 @@ import { ZONE_TYPE } from '../sandbox/browseConfig'
 // the auto-follow effect that keeps the Inspector's tree focus + selected
 // string in sync with it. Lives in its own hook (rather than inside
 // Inspector) so FocusPanel gets identical "point at anything in the
-// preview" behavior without Inspector needing to be mounted — Focus Mode
-// swaps Inspector out entirely (see App.tsx), but the live preview is still
-// tappable and should still drive what's selected.
+// preview" behavior without Inspector needing to be mounted — Translation
+// Mode swaps Inspector out entirely (see App.tsx), but the live preview is
+// still tappable and should still drive what's selected.
 export function useLivePreviewFollow(): ScreenId {
   const {
     currentScreen,
@@ -103,11 +103,11 @@ export function useLivePreviewFollow(): ScreenId {
   // navigating to a different page, opening a menu/popup, all reachable by
   // tapping directly in the preview, not just by clicking something in the
   // Inspector — drill the tree to match AND select that context's first
-  // string, so the Translation/Focus panel shows something relevant
-  // immediately instead of staying on "select a string" until a specific
-  // row is clicked. Skipped during startup warm-up, which rapidly visits
-  // every screen/zone once to register their strings — following that
-  // would flash the sidebar/panel through the whole app on every load.
+  // string, so switching into Translation Mode from here shows something
+  // relevant immediately instead of "select a string" with nothing picked.
+  // Skipped during startup warm-up, which rapidly visits every screen/zone
+  // once to register their strings — following that would flash the
+  // sidebar through the whole app on every load.
   //
   // Guarded against clobbering an explicit row click: navigateTo (see
   // useNavigateToString.ts) already calls selectKey for the exact key

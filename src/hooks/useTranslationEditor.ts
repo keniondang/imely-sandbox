@@ -8,10 +8,9 @@ import { ZONE_TYPE } from '../sandbox/browseConfig'
 
 // All the state/logic behind editing whichever string is currently
 // selected — draft-then-Save, prev/next at the string/group/page tier, AI
-// suggestion, overflow detection. Shared by TranslationPanel (narrow
-// sidebar card) and FocusPanel (the bigger one-at-a-time layout) so the two
-// presentations can never drift out of sync on how navigation or saving
-// actually behaves — only their JSX differs.
+// suggestion, overflow detection. Split out of FocusPanel (Translation
+// Mode's one-at-a-time editor) into its own hook to keep that file's JSX
+// from being buried under its state/navigation logic.
 export function useTranslationEditor() {
   const {
     targetLocale,

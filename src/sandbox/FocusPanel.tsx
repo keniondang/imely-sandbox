@@ -23,14 +23,14 @@ const FILTER_TITLE = {
   untranslated: 'Only strings with no saved translation yet',
 } as const
 
-// The one-string-at-a-time counterpart to Inspector + TranslationPanel —
-// swapped in for both of them (see App.tsx) rather than just hiding parts
+// Translation Mode — the tool's one string-at-a-time translation screen,
+// swapped in for the Inspector (see App.tsx) rather than just hiding parts
 // of the sidebar, so this reads as its own purpose-built screen: a full
 // section with generous type, a real Page/Group nav (so a translator can
 // see and move through the same structure the sidebar tree shows, without
-// the sidebar itself), and a progress bar at every tier. Shares every bit
-// of editing/navigation logic with TranslationPanel via
-// useTranslationEditor — only the layout differs.
+// the sidebar itself), and a progress bar at every tier. Its editing state
+// and navigation logic live in useTranslationEditor, kept separate so this
+// file stays about layout.
 export function FocusPanel() {
   const {
     targetLocale,

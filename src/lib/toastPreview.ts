@@ -2,8 +2,8 @@ import { applyVars, resolveString, type SourceLocale } from './strings'
 
 // A believable stand-in name/title for the handful of toast keys whose real
 // trigger site fills in something dynamic (a chat mode's title, a character
-// or user's name) — so a Focus Mode / Inspector preview shows concrete text
-// instead of a raw ${LAZY_DATA(...)} token or a literal "XXX".
+// or user's name) — so a Translation Mode / Inspector preview shows
+// concrete text instead of a raw ${LAZY_DATA(...)} token or a literal "XXX".
 const MOCK_NAME = 'Sarah'
 
 // ${LAZY_DATA(...)} vars each toast key's real showToast() call passes —
