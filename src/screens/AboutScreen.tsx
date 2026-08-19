@@ -21,8 +21,8 @@ export function AboutScreen() {
 
       <div className="flex-1 overflow-y-auto p-4">
         <div className="flex justify-center mt-4">
-          <div className="w-28 h-28 rounded-[28px] bg-imely-ink border-4 border-imely-primary flex items-center justify-center text-6xl">
-            🐱
+          <div className="w-28 h-28 rounded-[28px] border-4 border-imely-primary overflow-hidden">
+            <img src="/download.png" alt="imely" className="w-full h-full object-cover" />
           </div>
         </div>
         <div className="text-center mt-4 font-extrabold text-[20px] text-ink">imely - v26.07.02</div>

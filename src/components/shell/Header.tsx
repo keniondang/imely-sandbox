@@ -8,9 +8,7 @@ export function Header() {
   return (
     <div className="flex items-center justify-between px-4 py-3">
       <div className="flex items-center gap-1.5">
-        <div className="w-7 h-7 rounded-lg bg-imely-ink flex items-center justify-center text-white text-sm">
-          🐱
-        </div>
+        <img src="/download.png" alt="imely" className="w-7 h-7 rounded-lg object-cover" />
         <span className="font-extrabold text-lg text-ink tracking-tight">imely</span>
       </div>
 

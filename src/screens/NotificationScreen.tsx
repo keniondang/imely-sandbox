@@ -62,8 +62,8 @@ export function NotificationScreen() {
                 n.read ? 'bg-transparent' : ''
               }`}
             >
-              <div className="w-10 h-10 rounded-full border-2 border-imely-primary bg-imely-ink flex items-center justify-center text-white text-[15px] shrink-0">
-                🐱
+              <div className="w-10 h-10 rounded-full border-2 border-imely-primary overflow-hidden shrink-0">
+                <img src="/download.png" alt="imely" className="w-full h-full object-cover" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-[13.5px] text-ink leading-snug">{n.text}</div>

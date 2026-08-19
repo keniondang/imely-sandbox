@@ -27,7 +27,7 @@ export function VerifyEmailScreen() {
         >
           <ArrowLeft size={18} />
         </button>
-        <div className="w-7 h-7 rounded-lg bg-imely-ink flex items-center justify-center text-white text-sm">🐱</div>
+        <img src="/download.png" alt="imely" className="w-7 h-7 rounded-lg object-cover" />
       </div>
 
       <div className="flex-1 overflow-y-auto px-5">

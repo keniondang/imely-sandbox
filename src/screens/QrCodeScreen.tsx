@@ -70,9 +70,11 @@ function QrGraphic() {
           className="w-[19%] aspect-square rounded-full border-4 border-white relative"
           style={{ backgroundColor: MOCK_USER.avatarColor }}
         >
-          <div className="absolute -bottom-1 -right-1 w-[45%] aspect-square rounded-full bg-imely-primary border-2 border-white flex items-center justify-center">
-            <span className="text-white text-[8px]">🐱</span>
-          </div>
+          <img
+            src="/download.png"
+            alt="imely"
+            className="absolute -bottom-1 -right-1 w-[45%] aspect-square rounded-full object-cover border-2 border-white"
+          />
         </div>
       </div>
     </div>
