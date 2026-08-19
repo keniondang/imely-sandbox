@@ -426,7 +426,14 @@ export function Inspector({ activeScreenId }: { activeScreenId: ScreenId }) {
       <div key={screenId} className="mb-1">
         <button
           onClick={() => {
-            headerClick(screenId)
+            // Only steer the live preview when opening this entry. If it's
+            // already open, this click means "collapse the sidebar back to
+            // the list" — headerClick's back-navigation would change
+            // activeScreenId, which useLivePreviewFollow's auto-follow
+            // effect then treats as "the preview moved" and re-expands the
+            // parent screen's entry, undoing the very collapse the click
+            // asked for.
+            if (!isOpen) headerClick(screenId)
             toggleFocus([screenId])
           }}
           className="sticky top-0 z-10 bg-imely-ink w-full flex items-center justify-between px-2 py-1.5 rounded-md hover:bg-white/5"
@@ -685,66 +692,62 @@ export function Inspector({ activeScreenId }: { activeScreenId: ScreenId }) {
                 SCREEN_ORDER (each page immediately followed by its own
                 overlays) — no separate "Pages"/"Overlays" section, since a
                 translator checking strings doesn't need that distinction.
-                Hidden entirely while "Unused" is the focused thing. */}
+                Hidden while a no-home-screen category is open, same as
+                opening any other single entry hides its siblings. */}
             {(focusPath.length === 0 || focusPath[0] !== '__unwired__') &&
               SCREEN_ORDER.filter((id) => focusPath.length === 0 || focusPath[0] === id).map((screenId) =>
                 renderEntry(screenId)
               )}
 
+            {/* Categories with no home screen render straight into the same
+                list, no "Unused" umbrella header — each one is just another
+                collapsible group, same as a screen entry. Hidden only while
+                a screen is drilled into, same as any other sibling. Each
+                button is a plain open/closed toggle straight to `[]` (not
+                the generic toggleFocus "pop one level" — there's no
+                umbrella level to pop back up to anymore, so that would land
+                on an orphaned ['__unwired__'] breadcrumb with no UI of its
+                own, leaving the screen list stuck hidden after closing). */}
             {(focusPath.length === 0 || focusPath[0] === '__unwired__') &&
-              unwiredCategoryGroups.some(([, entries]) => entries.some((e) => matchesFilter(e.key))) && (
-              <>
-                <button
-                  onClick={() => toggleFocus(['__unwired__'])}
-                  className="mt-3 w-full flex items-center justify-between px-2 rounded-md hover:bg-white/5"
-                >
-                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wide">Unused</span>
-                  <ChevronRight
-                    size={11}
-                    className={`text-gray-500 shrink-0 transition-transform ${focusPath[0] === '__unwired__' ? 'rotate-90' : ''}`}
-                  />
-                </button>
-                {unwiredCategoryGroups
-                  .filter(([cat]) => focusPath[0] !== '__unwired__' || !focusPath[1] || focusPath[1] === cat)
-                  .map(([cat, entries]) => {
-                    const filtered = entries.filter((e) => matchesFilter(e.key))
-                    if (!filtered.length) return null
-                    const isOpen = focusPath[0] === '__unwired__' && focusPath[1] === cat
-                    return (
-                      <div key={cat} className="mt-1">
-                        <button
-                          onClick={() => toggleFocus(['__unwired__', cat])}
-                          className="sticky top-0 z-10 bg-imely-ink w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-white/5"
-                        >
-                          <span className="text-[11px] font-bold text-gray-400 uppercase truncate pr-2">
-                            {cat} · {entries.length}
-                            {filterMode === 'translated' && (
-                              <span className="text-imely-primary normal-case font-medium"> ({filtered.length} translated)</span>
-                            )}
-                          </span>
-                          <ChevronRight
-                            size={13}
-                            className={`text-gray-400 shrink-0 transition-transform ${isOpen ? 'rotate-90' : ''}`}
+              unwiredCategoryGroups
+                .filter(([cat]) => focusPath[0] !== '__unwired__' || !focusPath[1] || focusPath[1] === cat)
+                .map(([cat, entries]) => {
+                  const filtered = entries.filter((e) => matchesFilter(e.key))
+                  if (!filtered.length) return null
+                  const isOpen = focusPath[0] === '__unwired__' && focusPath[1] === cat
+                  return (
+                    <div key={cat} className="mt-1">
+                      <button
+                        onClick={() => setFocusPath(isOpen ? [] : ['__unwired__', cat])}
+                        className="sticky top-0 z-10 bg-imely-ink w-full flex items-center justify-between px-2 py-1 rounded-md hover:bg-white/5"
+                      >
+                        <span className="text-[11px] font-bold text-gray-400 uppercase truncate pr-2">
+                          {cat} · {entries.length}
+                          {filterMode === 'translated' && (
+                            <span className="text-imely-primary normal-case font-medium"> ({filtered.length} translated)</span>
+                          )}
+                        </span>
+                        <ChevronRight
+                          size={13}
+                          className={`text-gray-400 shrink-0 transition-transform ${isOpen ? 'rotate-90' : ''}`}
+                        />
+                      </button>
+                      {isOpen &&
+                        filtered.map((e) => (
+                          <KeyRow
+                            key={e.key}
+                            entryKey={e.key}
+                            label={localizedLabel(e)}
+                            wired={false}
+                            translated={isTranslated(e.key)}
+                            overflowing={false}
+                            active={selectedKey === e.key}
+                            onClick={() => navigateTo(e.key)}
                           />
-                        </button>
-                        {isOpen &&
-                          filtered.map((e) => (
-                            <KeyRow
-                              key={e.key}
-                              entryKey={e.key}
-                              label={localizedLabel(e)}
-                              wired={false}
-                              translated={isTranslated(e.key)}
-                              overflowing={false}
-                              active={selectedKey === e.key}
-                              onClick={() => navigateTo(e.key)}
-                            />
-                          ))}
-                      </div>
-                    )
-                  })}
-              </>
-            )}
+                        ))}
+                    </div>
+                  )
+                })}
           </div>
         )}
       </div>

@@ -151,6 +151,14 @@ interface AppState {
   toastPreview: { key: string; screenId: ScreenId; zone: Zone } | null
   setToastPreview: (v: { key: string; screenId: ScreenId; zone: Zone } | null) => void
 
+  // Also set by useStringHighlighter, for the other case: the selected key
+  // has no DOM element AND no known screen/zone at all (never registered by
+  // anything — the sheet has it, nothing in the sandbox renders it). There's
+  // nowhere to send the live preview, so App.tsx shows a warning bubble in
+  // place instead of silently doing nothing.
+  unwiredAlertKey: string | null
+  setUnwiredAlertKey: (v: string | null) => void
+
   inspectorOpen: boolean
   setInspectorOpen: (v: boolean) => void
 
@@ -424,6 +432,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
   const [selectedOccurrence, setSelectedOccurrence] = useState<{ screenId: ScreenId; zone: Zone } | null>(null)
   const [toastPreview, setToastPreview] = useState<{ key: string; screenId: ScreenId; zone: Zone } | null>(null)
+  const [unwiredAlertKey, setUnwiredAlertKey] = useState<string | null>(null)
   const [inspectorOpen, setInspectorOpen] = useState(true)
   const [filterMode, setFilterMode] = useState<FilterMode>('all')
   const [focusPath, setFocusPath] = useState<string[]>([])
@@ -649,6 +658,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       selectKey,
       toastPreview,
       setToastPreview,
+      unwiredAlertKey,
+      setUnwiredAlertKey,
       inspectorOpen,
       setInspectorOpen,
       filterMode,
@@ -774,6 +785,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       selectedKey,
       selectedOccurrence,
       toastPreview,
+      unwiredAlertKey,
       popupRequest,
       popupRequestToken,
       liveZone,

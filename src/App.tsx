@@ -93,6 +93,7 @@ function Shell() {
     targetLocale,
     livePreview,
     toastPreview,
+    unwiredAlertKey,
     focusMode,
     setFocusMode,
     darkMode,
@@ -638,6 +639,17 @@ function Shell() {
                 toastPreview), so a translator can still see it rendered in
                 context instead of nothing happening on selection */}
             {!toast && toastPreviewText && <ToastBubble text={toastPreviewText} style={toastAreaStyle} />}
+
+            {/* selected key isn't wired anywhere at all — no screen to jump
+                to and no toast to preview either, so this is the only
+                feedback the click gets instead of silently doing nothing */}
+            {!toast && !toastPreviewText && unwiredAlertKey && (
+              <ToastBubble
+                text={`"${unwiredAlertKey}" isn't wired to any screen`}
+                style={toastAreaStyle}
+                variant="warning"
+              />
+            )}
 
             {/* one-time warm-up pass so the Inspector's counts are accurate
                 immediately — covers the brief flicker through every screen */}

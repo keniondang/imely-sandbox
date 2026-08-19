@@ -8,15 +8,26 @@ import { buildStrSelector } from '../components/Str'
 // translator is working that key — clicking Apply/reset, switching locale,
 // etc. — and only clears when a different key is picked.
 export function useStringHighlighter() {
-  const { selectedKey, selectedOccurrence, setToastPreview } = useApp()
+  const { selectedKey, selectedOccurrence, setToastPreview, setUnwiredAlertKey } = useApp()
 
   useEffect(() => {
     document
       .querySelectorAll('[data-str-highlighted="true"]')
       .forEach((el) => el.removeAttribute('data-str-highlighted'))
     setToastPreview(null)
+    setUnwiredAlertKey(null)
 
     if (!selectedKey) return
+
+    // No known screen/zone at all — nothing registered this key anywhere,
+    // so there's no live preview to jump to and no toast to fall back on
+    // either (that needs a screen/zone to place it in). Surface a warning
+    // in the preview instead of leaving the click looking like it did
+    // nothing.
+    if (!selectedOccurrence) {
+      setUnwiredAlertKey(selectedKey)
+      return
+    }
 
     // A jump can also fire a popupRequest (see usePopupRequest) that opens a
     // menu/modal in a follow-up render — give that a tick to land in the DOM
@@ -39,14 +50,11 @@ export function useStringHighlighter() {
       // No DOM element anywhere for this key — it's a toast-only string
       // (registered via useRegisterKeys, see Str.tsx) rather than something
       // a <Str>/<RichStr> renders, so there's nothing to outline. Surface it
-      // as a toast bubble instead (see App.tsx), as long as it's actually
-      // known to live somewhere (selectedOccurrence set) — a genuinely
-      // unused key has no occurrence and gets neither.
-      if (selectedOccurrence) {
-        setToastPreview({ key: selectedKey, screenId: selectedOccurrence.screenId, zone: selectedOccurrence.zone })
-      }
+      // as a toast bubble instead (see App.tsx). selectedOccurrence is
+      // guaranteed set here — the no-occurrence case already returned above.
+      setToastPreview({ key: selectedKey, screenId: selectedOccurrence.screenId, zone: selectedOccurrence.zone })
     }, 60)
 
     return () => clearTimeout(find)
-  }, [selectedKey, selectedOccurrence, setToastPreview])
+  }, [selectedKey, selectedOccurrence, setToastPreview, setUnwiredAlertKey])
 }
