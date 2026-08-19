@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useApp, type ScreenId } from '../context/AppContext'
 import { ZONE_TYPE } from '../sandbox/browseConfig'
 
@@ -116,8 +116,32 @@ export function useLivePreviewFollow(): ScreenId {
   // "already matches -> don't touch it" leaves that selection alone and
   // only auto-picks a first key when the selection is stale (i.e. the
   // preview navigated on its own, not via an Inspector/panel click).
+  //
+  // Warm-up's own last step parks the live preview on Feed (see App.tsx),
+  // which would otherwise auto-focus straight into "FEED (BERANDA)" in the
+  // sidebar before the translator has clicked anything. Landing needs an
+  // "armed" flag rather than a one-shot skip: priming turning off and
+  // Feed's screen settling in isn't quite atomic — closing the last
+  // warm-up screen's overlay unregisters its liveZone a render late, so a
+  // second follow-effect run (liveZone stale-object -> null) sneaks in
+  // right behind the first one. A short delay before arming absorbs that
+  // trailing churn; arming itself doesn't re-trigger the effect (it's a
+  // ref, not a dependency), so it only takes effect on the next genuine
+  // navigation — an explicit preview tap or Inspector click.
+  const armedRef = useRef(false)
   useEffect(() => {
-    if (priming) return
+    if (priming) {
+      armedRef.current = false
+      return
+    }
+    const t = setTimeout(() => {
+      armedRef.current = true
+    }, 200)
+    return () => clearTimeout(t)
+  }, [priming])
+
+  useEffect(() => {
+    if (priming || !armedRef.current) return
     const targetZone = liveZone && liveZone.screenId === activeScreenId ? liveZone.zone : 'page'
     const kind = ZONE_TYPE[targetZone]
     setFocusPath(kind === 'menu' || kind === 'popup' ? [activeScreenId, kind] : [activeScreenId])
