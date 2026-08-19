@@ -1,5 +1,23 @@
 import { useState } from 'react'
-import { ArrowLeft, MoreVertical, Send, Info, ChevronDown, ChevronRight, Play, Mic, Plus, Gem, Hand, X, Pencil } from 'lucide-react'
+import {
+  ArrowLeft,
+  MoreVertical,
+  Send,
+  Info,
+  ChevronDown,
+  ChevronRight,
+  Play,
+  Mic,
+  Plus,
+  Gem,
+  Hand,
+  X,
+  Pencil,
+  Copy,
+  ThumbsUp,
+  ThumbsDown,
+  Trash2,
+} from 'lucide-react'
 import { Str, useRegisterKeys, useStrAttrs } from '../components/Str'
 import { NoSheet } from '../components/NoSheet'
 import { useApp } from '../context/AppContext'
@@ -45,9 +63,27 @@ const CHAT_MODES = [
   { id: 'pro', titleKey: 'chat.mode.pro.title', descKey: 'chat.mode.pro.description' },
 ]
 
+const REPORT_REASONS = [
+  'chat.report_message.incorrect_addressing',
+  'chat.report_message.memory_loss',
+  'chat.report_message.poor_writing_style',
+  'chat.report_message.context_misunderstanding',
+  'chat.report_message.out_of_character',
+  'chat.report_message.spelling_or_grammar_errors',
+  'chat.report_message.character_plagiarism',
+  'chat.report_message.offensive_content',
+]
+
 export function ChatDetailScreen() {
   const { activeChat, closeChat, openChatOptions, openGems, baseLocale, showToast } = useApp()
-  useRegisterKeys(['chat.mode.changed.toast', 'role.edit.success'])
+  useRegisterKeys([
+    'chat.mode.changed.toast',
+    'role.edit.success',
+    'chat.edit_message.empty_input_toast',
+    'chat.edit_message.success_toast',
+    'chat.report_message.success_toast',
+    'sz_social_397.copy_text_success',
+  ])
   const inputHintAttrs = useStrAttrs('chat.input_box_hint')
   const roleNameHintAttrs = useStrAttrs('role.edit.name.hint', 'role_edit')
   const roleDescHintAttrs = useStrAttrs('role.edit.description.hint', 'role_edit')
@@ -80,6 +116,19 @@ export function ChatDetailScreen() {
 
   const [roleEditOpen, setRoleEditOpen] = useState(false)
   usePopupRequest('chatdetail', 'role_edit', setRoleEditOpen)
+
+  const [messageMenuFor, setMessageMenuFor] = useState<string | null>(null)
+  usePopupRequest('chatdetail', 'menu', (open) => setMessageMenuFor(open ? (bubbles[0]?.id ?? null) : null))
+
+  const [editMessageOpen, setEditMessageOpen] = useState(false)
+  const [editingBubbleId, setEditingBubbleId] = useState<string | null>(null)
+  const [editDraft, setEditDraft] = useState('')
+  usePopupRequest('chatdetail', 'edit_message', setEditMessageOpen)
+
+  const [reportMessageOpen, setReportMessageOpen] = useState(false)
+  const [reportReason, setReportReason] = useState<string | null>(null)
+  const [reportOther, setReportOther] = useState('')
+  usePopupRequest('chatdetail', 'report_message', setReportMessageOpen)
 
   if (!activeChat) return null
 
@@ -135,6 +184,51 @@ export function ChatDetailScreen() {
     setPersonaDescription(personaDraftDescription)
     setRoleEditOpen(false)
     showToast(resolveString('role.edit.success', baseLocale))
+  }
+
+  function copyMessage() {
+    setMessageMenuFor(null)
+    showToast(resolveString('sz_social_397.copy_text_success', baseLocale))
+  }
+
+  function openEditMessage(id: string) {
+    const bubble = bubbles.find((b) => b.id === id)
+    setEditingBubbleId(id)
+    setEditDraft(bubble?.text ?? '')
+    setMessageMenuFor(null)
+    setEditMessageOpen(true)
+  }
+
+  function saveEditMessage() {
+    if (!editDraft.trim()) {
+      showToast(resolveString('chat.edit_message.empty_input_toast', baseLocale))
+      return
+    }
+    setBubbles((prev) => prev.map((b) => (b.id === editingBubbleId ? { ...b, text: editDraft.trim() } : b)))
+    setEditMessageOpen(false)
+    showToast(resolveString('chat.edit_message.success_toast', baseLocale))
+  }
+
+  function likeMessage() {
+    setMessageMenuFor(null)
+    showToast(resolveString('chat.report_message.success_toast', baseLocale))
+  }
+
+  function openReportMessage() {
+    setMessageMenuFor(null)
+    setReportReason(null)
+    setReportOther('')
+    setReportMessageOpen(true)
+  }
+
+  function submitReport() {
+    setReportMessageOpen(false)
+    showToast(resolveString('chat.report_message.success_toast', baseLocale))
+  }
+
+  function deleteMessage(id: string) {
+    setBubbles((prev) => prev.filter((b) => b.id !== id))
+    setMessageMenuFor(null)
   }
 
   return (
@@ -255,8 +349,9 @@ export function ChatDetailScreen() {
                   >
                     <Play size={10} className={character ? 'text-white' : 'text-ink'} />
                   </button>
-                  <div
-                    className={`rounded-2xl rounded-bl-sm px-3 py-2 text-[13.5px] space-y-0.5 ${
+                  <button
+                    onClick={() => setMessageMenuFor(b.id)}
+                    className={`text-left rounded-2xl rounded-bl-sm px-3 py-2 text-[13.5px] space-y-0.5 active:opacity-80 transition-opacity ${
                       character ? 'bg-black/40 text-white' : 'bg-subtle text-ink'
                     }`}
                   >
@@ -268,7 +363,7 @@ export function ChatDetailScreen() {
                         </div>
                       )
                     })}
-                  </div>
+                  </button>
                 </div>
               )}
             </div>
@@ -580,6 +675,189 @@ export function ChatDetailScreen() {
 
                 <button
                   onClick={saveRoleEdit}
+                  className="mt-4 w-full bg-imely-primary text-white font-bold rounded-full py-3 active:scale-[0.97] active:bg-imely-primaryDark transition-transform"
+                >
+                  <Str k="input_invite_code.btn_done" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </ZoneScope>
+      )}
+
+      {/* "Opsi" — opened by tapping a bot message bubble */}
+      {messageMenuFor && (
+        <ZoneScope zone="menu">
+          <div className="absolute inset-0 z-10">
+            <button
+              onClick={() => setMessageMenuFor(null)}
+              aria-label="Close message options"
+              className="absolute inset-0 bg-black/40"
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-surface rounded-t-3xl pb-6">
+              <div className="flex items-center justify-between px-4 py-4 border-b border-line">
+                <div className="font-bold text-[16px] text-ink">
+                  <Str k="chat.message_menu.title" />
+                </div>
+                <button
+                  onClick={() => setMessageMenuFor(null)}
+                  className="text-muted active:scale-90 transition-transform"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <button
+                onClick={copyMessage}
+                className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-line active:bg-subtle transition-colors"
+              >
+                <Copy size={17} className="text-ink" />
+                <span className="text-[14px] text-ink">
+                  <Str k="chat.message_menu.copy" />
+                </span>
+              </button>
+
+              <button
+                onClick={() => openEditMessage(messageMenuFor)}
+                className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-line active:bg-subtle transition-colors"
+              >
+                <Pencil size={17} className="text-ink" />
+                <span className="text-[14px] text-ink">
+                  <Str k="button.edit" />
+                </span>
+              </button>
+
+              <button
+                onClick={likeMessage}
+                className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-line active:bg-subtle transition-colors"
+              >
+                <ThumbsUp size={17} className="text-ink" />
+                <span className="text-[14px] text-ink">
+                  <Str k="chat.message_menu.report_like" />
+                </span>
+              </button>
+
+              <button
+                onClick={openReportMessage}
+                className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-line active:bg-subtle transition-colors"
+              >
+                <ThumbsDown size={17} className="text-ink" />
+                <span className="text-[14px] text-ink">
+                  <Str k="chat.message_menu.report_dislike" />
+                </span>
+              </button>
+
+              <button
+                onClick={() => deleteMessage(messageMenuFor)}
+                className="w-full flex items-center gap-3 px-4 py-3.5 active:bg-subtle transition-colors"
+              >
+                <Trash2 size={17} className="text-ink" />
+                <span className="text-[14px] text-ink">
+                  <Str k="chat.message_menu.delete" />
+                </span>
+              </button>
+            </div>
+          </div>
+        </ZoneScope>
+      )}
+
+      {/* Edit message — opened from the Opsi menu's "Edit" row */}
+      {editMessageOpen && (
+        <ZoneScope zone="edit_message">
+          <div className="absolute inset-0 z-20">
+            <button
+              onClick={() => setEditMessageOpen(false)}
+              aria-label="Close edit message"
+              className="absolute inset-0 bg-black/40"
+            />
+            <div className="absolute left-3 right-3 top-1/2 -translate-y-1/2 bg-surface rounded-2xl overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-3.5 border-b border-line">
+                <div className="font-bold text-[16px] text-ink">
+                  <Str k="chat.edit_message.title" />
+                </div>
+                <button
+                  onClick={() => setEditMessageOpen(false)}
+                  className="text-muted active:scale-90 transition-transform"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <div className="px-4 py-3">
+                <div className="text-[12.5px] text-ink mb-1.5">
+                  <Str k="chat.edit_message.msg" />
+                </div>
+                <textarea
+                  value={editDraft}
+                  onChange={(e) => setEditDraft(e.target.value)}
+                  rows={4}
+                  className="w-full bg-subtle rounded-xl px-3 py-2.5 text-[13.5px] outline-none resize-none"
+                />
+
+                <button
+                  onClick={saveEditMessage}
+                  className="mt-4 w-full bg-imely-primary text-white font-bold rounded-full py-3 active:scale-[0.97] active:bg-imely-primaryDark transition-transform"
+                >
+                  <Str k="input_invite_code.btn_done" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </ZoneScope>
+      )}
+
+      {/* Laporkan — opened from the Opsi menu's "Tidak Menyukai Percakapan" row */}
+      {reportMessageOpen && (
+        <ZoneScope zone="report_message">
+          <div className="absolute inset-0 z-20">
+            <button
+              onClick={() => setReportMessageOpen(false)}
+              aria-label="Close report"
+              className="absolute inset-0 bg-black/40"
+            />
+            <div className="absolute left-3 right-3 top-1/2 -translate-y-1/2 max-h-[85%] bg-surface rounded-2xl overflow-y-auto">
+              <div className="flex items-center justify-between px-4 py-3.5 border-b border-line">
+                <div className="font-bold text-[16px] text-ink">
+                  <Str k="chat.message_menu.report" />
+                </div>
+                <button
+                  onClick={() => setReportMessageOpen(false)}
+                  className="text-muted active:scale-90 transition-transform"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <div className="px-4 py-3">
+                <div className="text-[12.5px] font-semibold text-ink mb-2">
+                  <Str k="chat.report_message.msg" />
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {REPORT_REASONS.map((key) => (
+                    <button
+                      key={key}
+                      onClick={() => setReportReason(key)}
+                      className={`text-[12.5px] px-3 py-1.5 rounded-full border ${
+                        reportReason === key ? 'bg-imely-primary text-white border-imely-primary' : 'border-line text-ink'
+                      }`}
+                    >
+                      <Str k={key} />
+                    </button>
+                  ))}
+                </div>
+
+                <div className="text-[12.5px] font-semibold text-ink mt-4 mb-1.5">
+                  <Str k="chat.report_message.other" />:
+                </div>
+                <textarea
+                  value={reportOther}
+                  onChange={(e) => setReportOther(e.target.value)}
+                  rows={2}
+                  className="w-full bg-subtle rounded-xl px-3 py-2.5 text-[13.5px] outline-none resize-none"
+                />
+
+                <button
+                  onClick={submitReport}
                   className="mt-4 w-full bg-imely-primary text-white font-bold rounded-full py-3 active:scale-[0.97] active:bg-imely-primaryDark transition-transform"
                 >
                   <Str k="input_invite_code.btn_done" />

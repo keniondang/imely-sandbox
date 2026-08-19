@@ -228,7 +228,7 @@ export const WARM_UP_ZONES: Partial<Record<ScreenId, string[]>> = {
   username: ['discard_confirm'],
   characterform: ['gender_menu', 'privacy_menu', 'exit_confirm'],
   gems: ['gem_detail', 'invite_input', 'lucky_wheel', 'lucky_result'],
-  chatdetail: ['mode_picker', 'relationship', 'role_summary', 'role_edit'],
+  chatdetail: ['mode_picker', 'relationship', 'role_summary', 'role_edit', 'menu', 'edit_message', 'report_message'],
   notification: ['menu'],
   purchase: ['club', 'gem'],
   characterprofile: ['menu', 'block_confirm', 'report'],
@@ -263,6 +263,8 @@ export const ZONE_ORDER = [
   'relationship',
   'role_summary',
   'role_edit',
+  'edit_message',
+  'report_message',
   'club',
   'gem',
 ]
@@ -292,6 +294,8 @@ export const ZONE_LABEL: Record<string, string> = {
   role_edit: 'Popup: Edit Role',
   club: 'Tab: MêLy Club',
   gem: 'Tab: Gems',
+  edit_message: 'Popup: Edit Message',
+  report_message: 'Popup: Report Message',
 }
 
 // Classifies each zone by how it actually renders in the real UI — verified
@@ -327,6 +331,8 @@ export const ZONE_TYPE: Record<string, ZoneKind> = {
   role_edit: 'popup',
   club: 'tab',
   gem: 'tab',
+  edit_message: 'popup',
+  report_message: 'popup',
 }
 
 export function sortedZones(zones: string[]): string[] {

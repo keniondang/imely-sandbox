@@ -28,7 +28,22 @@ export function CharacterFormScreen() {
   const editing = characterFormEditId ? MOCK_FEED_CHARACTERS.find((c) => c.id === characterFormEditId) : undefined
   const isEdit = Boolean(editing)
 
-  useRegisterKeys(['edit_bot.text_updated_bot', 'bot.character_created_success_with_name'])
+  useRegisterKeys([
+    'edit_bot.text_updated_bot',
+    'bot.character_created_success_with_name',
+    'bot.enter',
+    'bot.continue',
+    'edit_bot.prompt_hashtag',
+    'edit_bot.prompt_tagline',
+    'edit_bot.prompt_character',
+    'edit_bot.prompt_public_info',
+    'edit_bot.prompt_backstory',
+    'edit_bot.prompt_first_msg',
+    'edit_bot.prompt_npc',
+    'edit_bot.prompt_style',
+    'edit_bot.prompt_rule',
+    'edit_bot.prompt_note',
+  ])
   const nameHintAttrs = useStrAttrs('edit_bot.name_hint')
   const hashtagHintAttrs = useStrAttrs('edit_bot.hashtag_hint')
 
@@ -113,6 +128,31 @@ export function CharacterFormScreen() {
   }
 
   function submit() {
+    const requiredFields: { filled: boolean; labelKey: string; advanced?: boolean }[] = [
+      { filled: hashtags.some((h) => h.trim().length > 0), labelKey: 'edit_bot.prompt_hashtag' },
+      { filled: tagline.trim().length > 0, labelKey: 'edit_bot.prompt_tagline' },
+      { filled: personality.trim().length > 0, labelKey: 'edit_bot.prompt_character' },
+      { filled: publicInfo.trim().length > 0, labelKey: 'edit_bot.prompt_public_info' },
+      { filled: biography.trim().length > 0, labelKey: 'edit_bot.prompt_backstory' },
+      { filled: firstMessage.trim().length > 0, labelKey: 'edit_bot.prompt_first_msg' },
+      { filled: npc.trim().length > 0, labelKey: 'edit_bot.prompt_npc', advanced: true },
+      { filled: style.trim().length > 0, labelKey: 'edit_bot.prompt_style', advanced: true },
+      { filled: rules.trim().length > 0, labelKey: 'edit_bot.prompt_rule', advanced: true },
+      { filled: note.trim().length > 0, labelKey: 'edit_bot.prompt_note', advanced: true },
+    ]
+
+    const missing = requiredFields.find((f) => !f.filled)
+    if (missing) {
+      if (missing.advanced) setAdvancedOpen(true)
+      const msg = [
+        resolveString('bot.enter', baseLocale),
+        resolveString(missing.labelKey, baseLocale),
+        resolveString('bot.continue', baseLocale),
+      ].join(' ')
+      showToast(msg)
+      return
+    }
+
     if (isEdit) {
       const msg = resolveString('edit_bot.text_updated_bot', baseLocale)
       closeCharacterForm()
