@@ -5,7 +5,7 @@ import { NoSheet } from '../components/NoSheet'
 import { useApp } from '../context/AppContext'
 import { ZoneScope } from '../context/ScreenScope'
 import { usePopupRequest } from '../hooks/usePopupRequest'
-import { resolveString } from '../lib/strings'
+import { resolveString, formatNumber } from '../lib/strings'
 import { MOCK_USER, MOCK_INVITE_CODE, MOCK_GEM_MISSIONS } from '../data/mockContent'
 
 // Placeholder — per-user gem lot breakdown, not xlsx content (see gem_history.*
@@ -106,12 +106,12 @@ export function GemScreen() {
           </div>
 
           <div className="border-t border-line px-4 py-3 text-[13.5px] text-ink">
-            <Str k="user_gem_overview.total" />: {totalGems.toLocaleString('id-ID')} 💎
+            <Str k="user_gem_overview.total" />: {formatNumber(totalGems, baseLocale)} 💎
           </div>
 
           <div className="border-t border-line px-4 py-3 flex items-center justify-between">
             <div className="text-[13.5px] text-ink">
-              <Str k="user_gem_overview.expirable" />: {dailyGems.toLocaleString('id-ID')} 💎
+              <Str k="user_gem_overview.expirable" />: {formatNumber(dailyGems, baseLocale)} 💎
             </div>
             <button
               onClick={() => setDailyDetailOpen(true)}
@@ -279,13 +279,13 @@ export function GemScreen() {
 
               <div className="mt-4 space-y-3 text-[14px] text-ink">
                 <div>
-                  <Str k="user_gem_overview.total" />: <span className="font-bold">{totalGems.toLocaleString('id-ID')}</span>💎
+                  <Str k="user_gem_overview.total" />: <span className="font-bold">{formatNumber(totalGems, baseLocale)}</span>💎
                 </div>
                 <div>
                   <Str k="user_gem_overview.persist" />: <span className="font-bold">{MOCK_USER.permanentGems}</span> 💎
                 </div>
                 <div>
-                  <Str k="user_gem_overview.expirable" />: <span className="font-bold">{dailyGems.toLocaleString('id-ID')}</span>💎
+                  <Str k="user_gem_overview.expirable" />: <span className="font-bold">{formatNumber(dailyGems, baseLocale)}</span>💎
                   <div className="mt-1.5 space-y-1 text-[12.5px] text-muted">
                     {dailyGemLots.map((lot, i) => (
                       <div key={i}>

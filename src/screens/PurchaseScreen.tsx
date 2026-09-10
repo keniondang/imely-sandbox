@@ -6,9 +6,10 @@ import { useApp, type PurchaseTab } from '../context/AppContext'
 import { ZoneScope } from '../context/ScreenScope'
 import { usePopupRequest } from '../hooks/usePopupRequest'
 import { MOCK_CLUB_PLANS, MOCK_GEM_PACKS } from '../data/mockContent'
+import { formatNumber } from '../lib/strings'
 
 export function PurchaseScreen() {
-  const { closePurchase, purchaseTab } = useApp()
+  const { closePurchase, purchaseTab, baseLocale } = useApp()
   const [tab, setTab] = useState<PurchaseTab>(purchaseTab)
   const [planId, setPlanId] = useState<'monthly' | 'yearly'>('monthly')
   const [packId, setPackId] = useState(MOCK_GEM_PACKS[0].id)
@@ -133,7 +134,7 @@ export function PurchaseScreen() {
                       ) : (
                         <span className="w-[18px] h-[18px] rounded-full border border-line" />
                       )}
-                      {p.amount.toLocaleString('id-ID')} 💎
+                      {formatNumber(p.amount, baseLocale)} 💎
                     </span>
                     <span className="font-bold text-[14px] text-ink">{p.price}</span>
                   </button>
@@ -171,7 +172,7 @@ export function PurchaseScreen() {
                     <Str k="product_purchase.btn_buy_gem" />
                   </div>
                   <div className="text-[12px] font-normal opacity-90">
-                    {pack.price}/{pack.amount.toLocaleString('id-ID')} <Str k="product_purchase.tab2" />
+                    {pack.price}/{formatNumber(pack.amount, baseLocale)} <Str k="product_purchase.tab2" />
                   </div>
                 </>
               )}

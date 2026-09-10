@@ -158,7 +158,7 @@ function ActionButton({
       <div className="w-11 h-11 rounded-full border border-line flex items-center justify-center text-ink">
         {icon}
       </div>
-      <span className="text-[10.5px] text-ink text-center leading-tight whitespace-pre-line">
+      <span className="text-[10.5px] text-ink text-center leading-snug whitespace-pre-line">
         <Str k={labelKey} />
       </span>
     </button>

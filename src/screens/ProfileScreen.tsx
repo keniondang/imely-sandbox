@@ -4,6 +4,7 @@ import { NoSheet } from '../components/NoSheet'
 import { MOCK_USER, ph } from '../data/mockContent'
 import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
+import { formatNumber } from '../lib/strings'
 
 export function ProfileScreen() {
   const {
@@ -123,7 +124,7 @@ export function ProfileScreen() {
             <Str k="user_gem_overview.total" />:
           </div>
           <div className="font-bold text-ink flex items-center gap-1">
-            {MOCK_USER.gems.toLocaleString('id-ID')} 💎
+            {formatNumber(MOCK_USER.gems, baseLocale)} 💎
           </div>
         </div>
         <button

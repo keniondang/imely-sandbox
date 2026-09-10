@@ -25,6 +25,20 @@ export function isTargetLocale(locale: Locale): locale is TargetLocale {
   return (TARGET_LOCALES as Locale[]).includes(locale)
 }
 
+// Intl tag per source locale, for formatting numbers (gem counts, prices) to
+// match whichever base language a translator is currently viewing — was
+// hardcoded to 'id-ID' at every call site, which put Indonesian thousands
+// grouping in front of an EN or VI translator regardless of their chosen base.
+const NUMBER_LOCALE_TAG: Record<SourceLocale, string> = {
+  id: 'id-ID',
+  en: 'en-US',
+  vi: 'vi-VN',
+}
+
+export function formatNumber(n: number, baseLocale: SourceLocale): string {
+  return n.toLocaleString(NUMBER_LOCALE_TAG[baseLocale])
+}
+
 export interface StringEntry {
   key: string
   category: string

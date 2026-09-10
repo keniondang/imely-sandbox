@@ -1,9 +1,10 @@
 import { Bell, Search, Plus, Gem } from 'lucide-react'
 import { MOCK_USER } from '../../data/mockContent'
 import { useApp } from '../../context/AppContext'
+import { formatNumber } from '../../lib/strings'
 
 export function Header() {
-  const { openNotif, openGems, openCharacterForm } = useApp()
+  const { openNotif, openGems, openCharacterForm, baseLocale } = useApp()
 
   return (
     <div className="flex items-center justify-between px-4 py-3">
@@ -18,7 +19,7 @@ export function Header() {
           className="flex items-center gap-1 bg-imely-mint rounded-full px-3 py-1.5 text-sm font-semibold text-imely-primaryDark active:scale-95 active:bg-imely-mintDeep transition-transform"
         >
           <Gem size={14} className="text-sky-400" />
-          {MOCK_USER.gems.toLocaleString('id-ID')}
+          {formatNumber(MOCK_USER.gems, baseLocale)}
         </button>
         <IconButton icon={<Bell size={16} />} onClick={openNotif} />
         <IconButton icon={<Search size={16} />} />

@@ -193,7 +193,7 @@ function IconAction({
       className="flex flex-col items-center justify-center gap-1.5 bg-subtle rounded-xl py-3 active:bg-line transition-colors"
     >
       <span className="text-ink">{icon}</span>
-      <span className="text-[11.5px] text-ink text-center leading-tight">
+      <span className="text-[11.5px] text-ink text-center leading-snug">
         {labelKey ? <Str k={labelKey} /> : <NoSheet>{label}</NoSheet>}
       </span>
     </button>

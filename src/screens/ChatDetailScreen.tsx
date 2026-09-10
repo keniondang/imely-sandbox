@@ -23,7 +23,7 @@ import { NoSheet } from '../components/NoSheet'
 import { useApp } from '../context/AppContext'
 import { ZoneScope } from '../context/ScreenScope'
 import { usePopupRequest } from '../hooks/usePopupRequest'
-import { resolveString } from '../lib/strings'
+import { resolveString, formatNumber } from '../lib/strings'
 import { MOCK_FEED_CHARACTERS, MOCK_USER, ph, type LocalizedText } from '../data/mockContent'
 
 const FIRST_MESSAGE_FALLBACK: LocalizedText = {
@@ -253,7 +253,7 @@ export function ChatDetailScreen() {
           className="flex items-center gap-1 bg-imely-mint rounded-full px-2.5 py-1 text-[12px] font-semibold text-imely-primaryDark shrink-0 active:scale-95 transition-transform"
         >
           <Gem size={12} className="text-sky-400" />
-          {MOCK_USER.gems.toLocaleString('id-ID')}
+          {formatNumber(MOCK_USER.gems, baseLocale)}
         </button>
         <button
           onClick={() => setRelationshipOpen(true)}
