@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
-import { PanelLeftOpen, PanelLeftClose, X, Download, Languages, Sun, Moon, HelpCircle } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { PanelLeftOpen, PanelLeftClose, X, Languages, Sun, Moon, HelpCircle } from 'lucide-react'
 import { AppProvider, useApp } from './context/AppContext'
 import { ScreenScope } from './context/ScreenScope'
 import { useStringHighlighter } from './hooks/useStringHighlighter'
 import { useOpenScreen } from './hooks/useNavigateToString'
 import { WARM_UP_SCREENS, WARM_UP_ZONES } from './sandbox/browseConfig'
-import { exportStringsToXlsx } from './lib/exportXlsx'
-import { LOCALE_LABEL, SOURCE_LOCALES, TARGET_LOCALES, type Locale } from './lib/strings'
+import { ExportMenu } from './components/shell/ExportMenu'
 import { PhoneFrame, FRAME_WIDTH, FRAME_HEIGHT } from './components/shell/PhoneFrame'
 import { useFitScale } from './hooks/useFitScale'
 import { Header } from './components/shell/Header'
@@ -140,25 +139,7 @@ function Shell() {
     closeFilter()
   }
 
-  const [exportMenuOpen, setExportMenuOpen] = useState(false)
   const [helpOpen, setHelpOpen] = useState(false)
-  const exportMenuRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (!exportMenuOpen) return
-    function onClickOutside(e: MouseEvent) {
-      if (exportMenuRef.current && !exportMenuRef.current.contains(e.target as Node)) {
-        setExportMenuOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', onClickOutside)
-    return () => document.removeEventListener('mousedown', onClickOutside)
-  }, [exportMenuOpen])
-
-  function handleExport(locale: Locale) {
-    exportStringsToXlsx(overrides, locale)
-    setExportMenuOpen(false)
-  }
 
   // Chat detail has its own input bar hugging the bottom of the frame — the
   // usual bottom-anchored toast spot would sit right on top of it, so
@@ -215,41 +196,12 @@ function Shell() {
               >
                 <X size={13} /> Exit
               </button>
-              <div className="relative shrink-0" ref={exportMenuRef}>
-                <button
-                  onClick={() => setExportMenuOpen((v) => !v)}
-                  title="Download strings as .xlsx — pick a language"
-                  className="flex items-center gap-1.5 text-[12px] font-semibold text-imely-primaryDark bg-surface rounded-full pl-3 pr-3.5 py-1.5 active:scale-[0.97] transition-transform"
-                >
-                  <Download size={13} /> Export .xlsx
-                </button>
-                {exportMenuOpen && (
-                  <div className="absolute right-0 top-full mt-1.5 w-40 bg-surface rounded-lg shadow-lg border border-line py-1 z-50">
-                    <div className="px-3 py-1 text-[10px] font-semibold text-muted uppercase">Source</div>
-                    {SOURCE_LOCALES.map((l) => (
-                      <button
-                        key={l}
-                        onClick={() => handleExport(l)}
-                        className="w-full text-left px-3 py-1.5 text-[12.5px] text-ink hover:bg-subtle"
-                      >
-                        {LOCALE_LABEL[l]}
-                      </button>
-                    ))}
-                    <div className="px-3 py-1 mt-1 text-[10px] font-semibold text-muted uppercase border-t border-line pt-1.5">
-                      Target
-                    </div>
-                    {TARGET_LOCALES.map((l) => (
-                      <button
-                        key={l}
-                        onClick={() => handleExport(l)}
-                        className="w-full text-left px-3 py-1.5 text-[12.5px] text-ink hover:bg-subtle"
-                      >
-                        {LOCALE_LABEL[l]}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <ExportMenu
+                overrides={overrides}
+                baseLocale={baseLocale}
+                targetLocale={targetLocale}
+                triggerClassName="flex items-center gap-1.5 text-[12px] font-semibold text-imely-primaryDark bg-surface rounded-full pl-3 pr-3.5 py-1.5 active:scale-[0.97] transition-transform"
+              />
             </div>
           </div>
         ) : (
@@ -290,41 +242,12 @@ function Shell() {
                 >
                   <Languages size={15} /> Translation Mode
                 </button>
-                <div className="relative" ref={exportMenuRef}>
-                  <button
-                    onClick={() => setExportMenuOpen((v) => !v)}
-                    title="Download strings as .xlsx — pick a language"
-                    className="flex items-center gap-1.5 text-[12px] font-semibold text-white bg-imely-primary rounded-full pl-3 pr-3.5 py-1.5 active:scale-[0.97] transition-transform"
-                  >
-                    <Download size={13} /> Export .xlsx
-                  </button>
-                  {exportMenuOpen && (
-                    <div className="absolute right-0 top-full mt-1.5 w-40 bg-surface rounded-lg shadow-lg border border-line py-1 z-50">
-                      <div className="px-3 py-1 text-[10px] font-semibold text-muted uppercase">Source</div>
-                      {SOURCE_LOCALES.map((l) => (
-                        <button
-                          key={l}
-                          onClick={() => handleExport(l)}
-                          className="w-full text-left px-3 py-1.5 text-[12.5px] text-ink hover:bg-subtle"
-                        >
-                          {LOCALE_LABEL[l]}
-                        </button>
-                      ))}
-                      <div className="px-3 py-1 mt-1 text-[10px] font-semibold text-muted uppercase border-t border-line pt-1.5">
-                        Target
-                      </div>
-                      {TARGET_LOCALES.map((l) => (
-                        <button
-                          key={l}
-                          onClick={() => handleExport(l)}
-                          className="w-full text-left px-3 py-1.5 text-[12.5px] text-ink hover:bg-subtle"
-                        >
-                          {LOCALE_LABEL[l]}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <ExportMenu
+                  overrides={overrides}
+                  baseLocale={baseLocale}
+                  targetLocale={targetLocale}
+                  triggerClassName="flex items-center gap-1.5 text-[12px] font-semibold text-white bg-imely-primary rounded-full pl-3 pr-3.5 py-1.5 active:scale-[0.97] transition-transform"
+                />
               </div>
             </div>
           </>
