@@ -14,7 +14,7 @@ import {
   Sparkles,
 } from 'lucide-react'
 import { useApp } from '../context/AppContext'
-import { LOCALE_LABEL, SOURCE_LOCALES, TARGET_LOCALES } from '../lib/strings'
+import { isConfirmed, LOCALE_LABEL, SOURCE_LOCALES, TARGET_LOCALES } from '../lib/strings'
 import { useTranslationEditor } from '../hooks/useTranslationEditor'
 import type { BrowseRow, BrowseSection } from '../hooks/useBrowseOrder'
 
@@ -22,6 +22,14 @@ const FILTER_TITLE = {
   wired: 'Only strings actually used in a screen',
   unwired: 'Only strings not yet used anywhere',
   untranslated: 'Only strings with no saved translation yet',
+  needs_review: 'Only strings with an unconfirmed pre-filled value (th)',
+} as const
+
+const FILTER_LABEL = {
+  wired: 'wired',
+  unwired: 'unwired',
+  untranslated: 'untranslated',
+  needs_review: 'needs review',
 } as const
 
 // Translation Mode — the tool's one string-at-a-time translation screen,
@@ -41,6 +49,7 @@ export function FocusPanel() {
     query,
     setQuery,
     overrides,
+    reviewed,
     filterMode,
     setFilterMode,
   } = useApp()
@@ -50,6 +59,7 @@ export function FocusPanel() {
     entry,
     wired,
     savedTranslation,
+    needsReview,
     aiSuggestion,
     draftText,
     overflowFlag,
@@ -111,19 +121,19 @@ export function FocusPanel() {
     let done = 0
     const total = section.endIndex - section.startIndex + 1
     for (let i = section.startIndex; i <= section.endIndex; i++) {
-      if (overrides[allRows[i].key]?.[targetLocale]) done++
+      if (isConfirmed(allRows[i].key, targetLocale, overrides, reviewed)) done++
     }
     return { done, total }
   }
   const pageCompletion = useMemo(
     () => sectionCompletion(pageSections[pageIndex], rows),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pageSections, pageIndex, rows, overrides, targetLocale]
+    [pageSections, pageIndex, rows, overrides, reviewed, targetLocale]
   )
   const groupCompletion = useMemo(
     () => sectionCompletion(overlaySections[overlayIndex], rows),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [overlaySections, overlayIndex, rows, overrides, targetLocale]
+    [overlaySections, overlayIndex, rows, overrides, reviewed, targetLocale]
   )
 
   // Same completion numbers, but one per entry — computed once for the
@@ -131,12 +141,12 @@ export function FocusPanel() {
   const allPageCompletions = useMemo(
     () => pageSections.map((s) => sectionCompletion(s, rows)),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pageSections, rows, overrides, targetLocale]
+    [pageSections, rows, overrides, reviewed, targetLocale]
   )
   const allGroupCompletions = useMemo(
     () => overlaySiblings.map((s) => sectionCompletion(s, rows)),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [overlaySiblings, rows, overrides, targetLocale]
+    [overlaySiblings, rows, overrides, reviewed, targetLocale]
   )
 
   // Prev/Next only ever step one at a time — with ~24 pages, jumping
@@ -173,7 +183,7 @@ export function FocusPanel() {
   // saved translation — a translator working through it end to end watches
   // this climb to 100%, a much more motivating signal than the static
   // row-position counter alone.
-  const translatedCount = rows.filter((r) => overrides[r.key]?.[targetLocale]).length
+  const translatedCount = rows.filter((r) => isConfirmed(r.key, targetLocale, overrides, reviewed)).length
   const totalCount = rows.length
   const pct = totalCount > 0 ? Math.round((translatedCount / totalCount) * 100) : 0
 
@@ -229,7 +239,7 @@ export function FocusPanel() {
 
         <div className="flex items-center gap-1 shrink-0">
           <span className="text-[10px] text-muted">Filters:</span>
-          {(['wired', 'unwired', 'untranslated'] as const).map((mode) => (
+          {(['wired', 'unwired', 'untranslated', 'needs_review'] as const).map((mode) => (
             <button
               key={mode}
               onClick={() => setFilterMode(filterMode === mode ? 'all' : mode)}
@@ -240,7 +250,7 @@ export function FocusPanel() {
                   : 'border-line text-muted hover:bg-subtle'
               }`}
             >
-              {mode}
+              {FILTER_LABEL[mode]}
             </button>
           ))}
         </div>
@@ -591,6 +601,12 @@ export function FocusPanel() {
                 </button>
               )}
             </div>
+            {needsReview && (
+              <div className="mb-2.5 flex items-center gap-1.5 text-[12px] text-amber-700 bg-amber-50 rounded-lg px-3 py-2">
+                <AlertTriangle size={13} className="shrink-0" /> Pre-filled from the sheet — not yet reviewed. Check
+                it, then Save to confirm.
+              </div>
+            )}
             {aiSuggestion ? (
               <button
                 onClick={() => handleChange(aiSuggestion)}

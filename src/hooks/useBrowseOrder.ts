@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useApp, type ScreenId, type Zone } from '../context/AppContext'
-import { ALL_STRINGS, getEntry } from '../lib/strings'
+import { ALL_STRINGS, getEntry, isConfirmed } from '../lib/strings'
 import { SCREEN_ORDER, SCREEN_LABEL, ZONE_TYPE, sortedZones } from '../sandbox/browseConfig'
 
 export interface BrowseRow {
@@ -46,7 +46,7 @@ export function useBrowseOrder(): {
   pageSections: BrowseSection[]
   overlaySections: BrowseOverlaySection[]
 } {
-  const { usage, overrides, filterMode, targetLocale, query } = useApp()
+  const { usage, overrides, reviewed, filterMode, targetLocale, query } = useApp()
 
   const wiredKeys = useMemo(() => new Set(usage.map((u) => u.key)), [usage])
 
@@ -54,11 +54,19 @@ export function useBrowseOrder(): {
     // Must mirror the Inspector's own matchesFilter exactly — the panel's
     // Prev/Next walks THESE rows, so any divergence means it could land on
     // a string the Inspector's filtered list doesn't show, or skip one it does.
+    // "Translated" means confirmed (isConfirmed), not just "has a value" —
+    // th's pre-filled sheet values don't count until a translator has
+    // actually saved them. "Untranslated" stays strictly "no value at all";
+    // the pre-filled-but-unconfirmed middle state gets its own filter,
+    // "Needs Review", rather than being folded into either.
     function matchesFilter(key: string): boolean {
       if (filterMode === 'wired') return wiredKeys.has(key)
       if (filterMode === 'unwired') return !wiredKeys.has(key)
-      if (filterMode === 'translated') return Boolean(overrides[key]?.[targetLocale])
+      if (filterMode === 'translated') return isConfirmed(key, targetLocale, overrides, reviewed)
       if (filterMode === 'untranslated') return !overrides[key]?.[targetLocale]
+      if (filterMode === 'needs_review') {
+        return Boolean(overrides[key]?.[targetLocale]) && !isConfirmed(key, targetLocale, overrides, reviewed)
+      }
       return true
     }
 
@@ -197,5 +205,5 @@ export function useBrowseOrder(): {
     }
 
     return { rows, pageSections, overlaySections }
-  }, [usage, overrides, filterMode, wiredKeys, targetLocale, query])
+  }, [usage, overrides, reviewed, filterMode, wiredKeys, targetLocale, query])
 }

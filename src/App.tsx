@@ -87,6 +87,7 @@ function Shell() {
     requestPopup,
     toast,
     overrides,
+    reviewed,
     priming,
     setPriming,
     baseLocale,
@@ -199,6 +200,7 @@ function Shell() {
               </button>
               <ExportMenu
                 overrides={overrides}
+                reviewed={reviewed}
                 baseLocale={baseLocale}
                 targetLocale={targetLocale}
                 triggerClassName="flex items-center gap-1.5 text-[12px] font-semibold text-imely-primaryDark bg-surface rounded-full pl-3 pr-3.5 py-1.5 active:scale-[0.97] transition-transform"
@@ -245,6 +247,7 @@ function Shell() {
                 </button>
                 <ExportMenu
                   overrides={overrides}
+                  reviewed={reviewed}
                   baseLocale={baseLocale}
                   targetLocale={targetLocale}
                   triggerClassName="flex items-center gap-1.5 text-[12px] font-semibold text-white bg-imely-primary rounded-full pl-3 pr-3.5 py-1.5 active:scale-[0.97] transition-transform"

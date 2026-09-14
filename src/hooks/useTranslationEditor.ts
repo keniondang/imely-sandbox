@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import { useApp } from '../context/AppContext'
-import { getAiSuggestion, getEntry, LOCALE_LABEL } from '../lib/strings'
+import { getAiSuggestion, getEntry, isConfirmed, LOCALE_LABEL } from '../lib/strings'
 import { buildStrSelector } from '../components/Str'
 import { useBrowseOrder, type BrowseRow } from './useBrowseOrder'
 import { useNavigateToString } from './useNavigateToString'
@@ -17,6 +17,7 @@ export function useTranslationEditor() {
     baseLocale,
     usage,
     overrides,
+    reviewed,
     applyOverride,
     resetOverride,
     setLivePreview,
@@ -151,15 +152,18 @@ export function useTranslationEditor() {
     syncInspectorFocus(targetRow)
   }
 
-  // Next string with no translation yet, searching forward from wherever we
-  // are and wrapping around — lets a translator resume mid-list without
-  // hunting for where they left off.
+  // Next string that isn't confirmed yet (see isConfirmed) — either truly
+  // blank, or (th-only) pre-filled from the sheet but not yet reviewed —
+  // searching forward from wherever we are and wrapping around. Lets a
+  // translator resume mid-list without hunting for where they left off,
+  // and for th walks straight through the whole needs-review backlog the
+  // same way it always walked through blanks.
   function nextUntranslatedRow(): BrowseRow | undefined {
     for (let i = rowIndex + 1; i < rows.length; i++) {
-      if (!overrides[rows[i].key]?.[targetLocale]) return rows[i]
+      if (!isConfirmed(rows[i].key, targetLocale, overrides, reviewed)) return rows[i]
     }
     for (let i = 0; i <= rowIndex; i++) {
-      if (!overrides[rows[i].key]?.[targetLocale]) return rows[i]
+      if (!isConfirmed(rows[i].key, targetLocale, overrides, reviewed)) return rows[i]
     }
     return undefined
   }
@@ -174,6 +178,13 @@ export function useTranslationEditor() {
   const entry = selectedKey ? getEntry(selectedKey) : null
   const wired = selectedKey ? usage.some((u) => u.key === selectedKey) : false
   const savedTranslation = selectedKey ? overrides[selectedKey]?.[targetLocale] : undefined
+  // Has a value but isn't confirmed yet (th-only, see isConfirmed) — a
+  // pre-filled sheet value nobody's actually looked at. FocusPanel shows a
+  // distinct badge for this so it doesn't read identically to a translator's
+  // own already-reviewed work.
+  const needsReview = Boolean(
+    selectedKey && savedTranslation && !isConfirmed(selectedKey, targetLocale, overrides, reviewed)
+  )
   // Blank for every key until src/data/aiSuggestions.json is filled in later
   // — see getAiSuggestion in lib/strings.ts. Nothing renders until then.
   const aiSuggestion = selectedKey ? getAiSuggestion(selectedKey, targetLocale) : undefined
@@ -254,6 +265,7 @@ export function useTranslationEditor() {
     entry,
     wired,
     savedTranslation,
+    needsReview,
     aiSuggestion,
     draftText,
     overflowFlag,

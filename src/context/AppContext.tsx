@@ -15,12 +15,29 @@ const TH_BASELINE = thBaselineRaw as Record<string, string>
 // ~5-10MB limit) rather than one key per string, to keep load/save trivial.
 const OVERRIDES_STORAGE_KEY = 'imely-sandbox:overrides'
 const DARK_MODE_STORAGE_KEY = 'imely-sandbox:dark-mode'
+// Whether a human has actually confirmed a th value, separate from whether
+// one merely exists — the th column arrived pre-translated from the sheet
+// (see TH_BASELINE below), which fills the progress bar to ~100% before any
+// translator has looked at a single one. Deliberately th-only for now (see
+// isConfirmed in lib/strings.ts) — zh-TW keeps counting "has a value" as
+// done, since that baseline has had real translator attention over many
+// sessions already, unlike th which just arrived with this sheet update.
+const REVIEWED_STORAGE_KEY = 'imely-sandbox:reviewed'
 
 function loadStoredDarkMode(): boolean {
   try {
     return localStorage.getItem(DARK_MODE_STORAGE_KEY) === 'true'
   } catch {
     return false
+  }
+}
+
+function loadStoredReviewed(): Record<string, Partial<Record<TargetLocale, boolean>>> {
+  try {
+    const raw = localStorage.getItem(REVIEWED_STORAGE_KEY)
+    return raw ? JSON.parse(raw) : {}
+  } catch {
+    return {}
   }
 }
 
@@ -86,10 +103,12 @@ export type PurchaseTab = 'club' | 'gem'
 // Shared between the Inspector's browse list and Translation Mode's
 // prev/next navigation, so "next string" / "next page or category" steps
 // through exactly what the left sidebar is showing right now.
-// 'translated' and 'untranslated' key off the same underlying data (whether
-// `overrides[key][targetLocale]` is set) and are exact inverses — the
-// actionable "what's done" / "what's left" split for a translator.
-export type FilterMode = 'all' | 'wired' | 'unwired' | 'untranslated' | 'translated'
+// 'translated' means confirmed (see isConfirmed in lib/strings.ts) — a
+// pre-filled-but-unreviewed th value is neither 'translated' nor
+// 'untranslated', it's 'needs_review'. For zh-TW those two collapse back to
+// the old has-a-value/doesn't split, since isConfirmed treats it as always
+// reviewed.
+export type FilterMode = 'all' | 'wired' | 'unwired' | 'untranslated' | 'needs_review' | 'translated'
 
 // 'page' is a screen's always-visible content. Anything else ('menu', 'popup', ...)
 // is a sub-surface that only exists in the DOM while its own local state has it
@@ -137,6 +156,12 @@ interface AppState {
   overrides: Record<string, Partial<Record<TargetLocale, string>>>
   applyOverride: (key: string, locale: TargetLocale, value: string) => void
   resetOverride: (key: string, locale: TargetLocale) => void
+
+  // Whether a human has actually confirmed a given override, th-only for
+  // now — see REVIEWED_STORAGE_KEY's comment and isConfirmed in
+  // lib/strings.ts. Set alongside overrides by applyOverride/resetOverride,
+  // never written directly.
+  reviewed: Record<string, Partial<Record<TargetLocale, boolean>>>
 
   // Ephemeral — mirrors the translation panel's textarea into the live phone
   // preview on every keystroke, before Apply commits it into `overrides`.
@@ -417,6 +442,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
       // reload. Nothing actionable to do here, so fail silently.
     }
   }, [overrides])
+  const [reviewed, setReviewed] = useState<Record<string, Partial<Record<TargetLocale, boolean>>>>(loadStoredReviewed)
+  useEffect(() => {
+    try {
+      localStorage.setItem(REVIEWED_STORAGE_KEY, JSON.stringify(reviewed))
+    } catch {
+      // same fallback as overrides above — not persisted, still usable this session.
+    }
+  }, [reviewed])
   useEffect(() => {
     if (!supabase) return
     let cancelled = false
@@ -494,6 +527,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const applyOverride = (key: string, locale: TargetLocale, value: string) => {
     setOverrides((prev) => ({ ...prev, [key]: { ...prev[key], [locale]: value } }))
+    // Saving — whether it's a from-scratch translation or just confirming a
+    // pre-filled th value unchanged — is the human-review signal itself, so
+    // mark it reviewed right alongside the value. See REVIEWED_STORAGE_KEY.
+    setReviewed((prev) => ({ ...prev, [key]: { ...prev[key], [locale]: true } }))
     // Fire-and-forget — the local state update above is what the UI reacts
     // to, so a slow or failed network write doesn't block a translator from
     // continuing to work. localStorage still has the value regardless.
@@ -502,6 +539,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const resetOverride = (key: string, locale: TargetLocale) => {
     setOverrides((prev) => {
+      if (!prev[key]) return prev
+      const nextForKey = { ...prev[key] }
+      delete nextForKey[locale]
+      const next = { ...prev }
+      if (Object.keys(nextForKey).length === 0) delete next[key]
+      else next[key] = nextForKey
+      return next
+    })
+    setReviewed((prev) => {
       if (!prev[key]) return prev
       const nextForKey = { ...prev[key] }
       delete nextForKey[locale]
@@ -660,6 +706,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       overrides,
       applyOverride,
       resetOverride,
+      reviewed,
       livePreview,
       setLivePreview,
       selectedKey,
@@ -790,6 +837,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       query,
       usage,
       overrides,
+      reviewed,
       livePreview,
       selectedKey,
       selectedOccurrence,

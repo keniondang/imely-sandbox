@@ -1,7 +1,15 @@
 import * as XLSX from 'xlsx'
-import { ALL_STRINGS, isTargetLocale, LOCALE_LABEL, type Locale, type SourceLocale, type TargetLocale } from './strings'
+import {
+  ALL_STRINGS,
+  isConfirmed,
+  isTargetLocale,
+  LOCALE_LABEL,
+  type Locale,
+  type SourceLocale,
+  type TargetLocale,
+} from './strings'
 
-export type ExportRowFilter = 'all' | 'untranslated' | 'translated'
+export type ExportRowFilter = 'all' | 'untranslated' | 'needs_review' | 'translated'
 
 // The main handoff format: Key/Category/Subcategory, the chosen reference
 // (base) language's text, and the target language's translation column right
@@ -9,16 +17,24 @@ export type ExportRowFilter = 'all' | 'untranslated' | 'translated'
 // rather than a bare target-only column with nothing to translate FROM.
 export function exportPairedXlsx(
   overrides: Record<string, Partial<Record<TargetLocale, string>>>,
+  reviewed: Record<string, Partial<Record<TargetLocale, boolean>>>,
   baseLocale: SourceLocale,
   targetLocale: TargetLocale,
   filter: ExportRowFilter = 'all'
 ) {
   const header = ['Key', 'Category', 'Subcategory', LOCALE_LABEL[baseLocale], LOCALE_LABEL[targetLocale]]
 
+  // 'translated' means confirmed (isConfirmed) — a th value pre-filled from
+  // the sheet but never reviewed by a translator doesn't count as done here
+  // either, same as the progress bar and filters elsewhere. 'needs_review'
+  // is the row filter for exactly that in-between batch.
   const rows = ALL_STRINGS.filter((entry) => {
     if (filter === 'all') return true
-    const hasTranslation = Boolean(overrides[entry.key]?.[targetLocale])
-    return filter === 'translated' ? hasTranslation : !hasTranslation
+    const hasText = Boolean(overrides[entry.key]?.[targetLocale])
+    const confirmed = isConfirmed(entry.key, targetLocale, overrides, reviewed)
+    if (filter === 'translated') return confirmed
+    if (filter === 'needs_review') return hasText && !confirmed
+    return !hasText
   })
 
   const body = rows.map((entry) => [

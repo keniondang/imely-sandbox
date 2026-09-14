@@ -5,6 +5,7 @@ import {
   ALL_STRINGS,
   CATEGORIES,
   getEntry,
+  isConfirmed,
   LOCALE_LABEL,
   SOURCE_LOCALES,
   TARGET_LOCALES,
@@ -37,6 +38,7 @@ export function Inspector({ activeScreenId }: { activeScreenId: ScreenId }) {
     setBaseLocale,
     usage,
     overrides,
+    reviewed,
     selectedKey,
     selectedOccurrence,
     filterMode,
@@ -152,7 +154,7 @@ export function Inspector({ activeScreenId }: { activeScreenId: ScreenId }) {
     let total = 0
     for (const keys of Object.values(usageByScreen[screenId])) {
       total += keys.length
-      done += keys.filter((k) => overrides[k]?.[targetLocale]).length
+      done += keys.filter((k) => isConfirmed(k, targetLocale, overrides, reviewed)).length
     }
     return { done, total }
   }
@@ -175,39 +177,59 @@ export function Inspector({ activeScreenId }: { activeScreenId: ScreenId }) {
   function matchesFilter(key: string): boolean {
     if (filterMode === 'wired') return wiredKeys.has(key)
     if (filterMode === 'unwired') return !wiredKeys.has(key)
-    if (filterMode === 'translated') return Boolean(overrides[key]?.[targetLocale])
+    if (filterMode === 'translated') return isConfirmed(key, targetLocale, overrides, reviewed)
     if (filterMode === 'untranslated') return !overrides[key]?.[targetLocale]
+    if (filterMode === 'needs_review') {
+      return Boolean(overrides[key]?.[targetLocale]) && !isConfirmed(key, targetLocale, overrides, reviewed)
+    }
     return true
   }
 
   // Row-level highlight so a translator scanning "All" can see progress at
   // a glance instead of relying purely on the filter pills.
   function isTranslated(key: string): boolean {
-    return Boolean(overrides[key]?.[targetLocale])
+    return isConfirmed(key, targetLocale, overrides, reviewed)
   }
 
-  // Whether the current target locale has any translation yet — "Translated"
-  // filters everything down to nothing until a translator has saved at
-  // least one, which otherwise looks identical to a broken filter (blank
-  // category list, screen headers with nothing underneath) rather than an
-  // expected empty starting state.
+  // Whether the current target locale has any CONFIRMED translation yet —
+  // "Translated" filters everything down to nothing until a translator has
+  // saved at least one, which otherwise looks identical to a broken filter
+  // (blank category list, screen headers with nothing underneath) rather
+  // than an expected empty starting state. Checks isConfirmed, not just
+  // "has a value" — th ships pre-filled but unreviewed, so a plain
+  // has-a-value check would never show this empty state even though the
+  // Translated filter itself (isConfirmed-based) really is empty at first.
   const hasAnyTranslation = useMemo(
-    () => Object.values(overrides).some((v) => v && v[targetLocale]),
-    [overrides, targetLocale]
+    () => ALL_STRINGS.some((s) => isConfirmed(s.key, targetLocale, overrides, reviewed)),
+    [overrides, reviewed, targetLocale]
   )
 
-  // How much of the whole sheet has a translation for the current target
-  // locale. Doubles as the "everything's done" check for the Untranslated
-  // filter's empty state.
+  // Whether every string has SOME value for the current target locale —
+  // the Untranslated filter's own empty-state check. Deliberately separate
+  // from translationProgress below (which means "confirmed", not "has a
+  // value") since th can have a value for everything while still having
+  // plenty left unconfirmed — the Untranslated filter would correctly stay
+  // empty in that case, but "confirmed count === total" would not, and this
+  // check needs to match Untranslated's own criterion, not Translated's.
+  const allHaveAValue = useMemo(
+    () => ALL_STRINGS.every((s) => overrides[s.key]?.[targetLocale]),
+    [targetLocale, overrides]
+  )
+
+  // How much of the whole sheet is actually CONFIRMED for the current
+  // target locale (see isConfirmed) — th's pre-filled-from-sheet values
+  // don't count until a translator has saved them, so this can read far
+  // below "every key has a value" for th specifically.
   const translationProgress = useMemo(() => {
     const total = ALL_STRINGS.length
-    const done = ALL_STRINGS.reduce((n, s) => n + (overrides[s.key]?.[targetLocale] ? 1 : 0), 0)
+    const done = ALL_STRINGS.reduce((n, s) => n + (isConfirmed(s.key, targetLocale, overrides, reviewed) ? 1 : 0), 0)
     return { done, total }
-  }, [targetLocale, overrides])
+  }, [targetLocale, overrides, reviewed])
 
   // Per-category completion, for the "Progress by category" breakdown —
   // lets a translator see which chunks of the sheet still need work instead
-  // of only a single sheet-wide percentage.
+  // of only a single sheet-wide percentage. Same isConfirmed basis as the
+  // main progress bar above, so the two never disagree about what "done" means.
   const categoryProgress = useMemo(() => {
     const counts = new Map<string, { done: number; total: number }>()
     for (const cat of CATEGORIES) counts.set(cat, { done: 0, total: 0 })
@@ -215,10 +237,10 @@ export function Inspector({ activeScreenId }: { activeScreenId: ScreenId }) {
       const c = counts.get(String(s.category))
       if (!c) continue
       c.total += 1
-      if (overrides[s.key]?.[targetLocale]) c.done += 1
+      if (isConfirmed(s.key, targetLocale, overrides, reviewed)) c.done += 1
     }
     return CATEGORIES.map((cat) => ({ category: cat, ...counts.get(cat)! }))
-  }, [targetLocale, overrides])
+  }, [targetLocale, overrides, reviewed])
 
   // Applied translation takes priority over the chosen base language's sheet
   // text — once a translator has saved a translation, the row should show
@@ -673,7 +695,7 @@ export function Inspector({ activeScreenId }: { activeScreenId: ScreenId }) {
               View All Strings
             </button>
           </div>
-        ) : filterMode === 'untranslated' && translationProgress.done === translationProgress.total ? (
+        ) : filterMode === 'untranslated' && allHaveAValue ? (
           <div className="p-5 text-center">
             <div className="text-[12.5px] text-gray-400 leading-relaxed">
               🎉 All <span className="font-semibold text-white">{translationProgress.total.toLocaleString()}</span>{' '}

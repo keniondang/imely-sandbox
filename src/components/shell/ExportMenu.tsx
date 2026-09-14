@@ -7,6 +7,7 @@ import type { Locale } from '../../lib/strings'
 const ROW_FILTERS: { id: ExportRowFilter; label: string }[] = [
   { id: 'all', label: 'All rows' },
   { id: 'untranslated', label: 'Untranslated only' },
+  { id: 'needs_review', label: 'Needs review only' },
   { id: 'translated', label: 'Translated only' },
 ]
 
@@ -17,11 +18,13 @@ const ROW_FILTERS: { id: ExportRowFilter; label: string }[] = [
 // column dump of one language on its own with no pairing.
 export function ExportMenu({
   overrides,
+  reviewed,
   baseLocale,
   targetLocale,
   triggerClassName,
 }: {
   overrides: Record<string, Partial<Record<TargetLocale, string>>>
+  reviewed: Record<string, Partial<Record<TargetLocale, boolean>>>
   baseLocale: SourceLocale
   targetLocale: TargetLocale
   triggerClassName: string
@@ -41,7 +44,7 @@ export function ExportMenu({
   }, [open])
 
   function handlePaired(target: TargetLocale) {
-    exportPairedXlsx(overrides, baseLocale, target, filter)
+    exportPairedXlsx(overrides, reviewed, baseLocale, target, filter)
     setOpen(false)
   }
 

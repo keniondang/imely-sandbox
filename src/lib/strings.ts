@@ -104,6 +104,29 @@ export function resolvePlaceholder(
   return resolveString(key, baseLocale, vars)
 }
 
+// Whether a string counts as actually DONE for progress bars, the
+// Translated/Untranslated filters, and export — as opposed to merely having
+// a value. th shipped ~99% pre-translated straight from the sheet (see
+// AppContext's TH_BASELINE), which made the progress bar read ~100% before
+// any translator had looked at a single one — a false "already fixed"
+// signal. th values only count once a translator has actually hit Save on
+// them (see `reviewed`, set by applyOverride); everywhere else the sandbox
+// still shows the pre-filled text as-is (the live preview, the draft
+// textarea, placeholders) — this only gates counting, not display.
+// zh-TW is deliberately excluded: its baseline has had real translator
+// attention over many sessions already, so it keeps counting "has a value"
+// as done, same as before this existed.
+export function isConfirmed(
+  key: string,
+  targetLocale: TargetLocale,
+  overrides: Record<string, Partial<Record<TargetLocale, string>>>,
+  reviewed: Record<string, Partial<Record<TargetLocale, boolean>>>
+): boolean {
+  if (!overrides[key]?.[targetLocale]) return false
+  if (targetLocale !== 'th') return true
+  return Boolean(reviewed[key]?.th)
+}
+
 export const CATEGORIES = Array.from(
   new Set(ALL_STRINGS.map((s) => String(s.category)))
 ).sort()

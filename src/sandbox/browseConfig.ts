@@ -357,5 +357,6 @@ export const FILTERS: { id: FilterMode; label: string }[] = [
   { id: 'wired', label: 'Wired' },
   { id: 'unwired', label: 'Unwired' },
   { id: 'untranslated', label: 'Untranslated' },
+  { id: 'needs_review', label: 'Needs Review' },
   { id: 'translated', label: 'Translated' },
 ]
