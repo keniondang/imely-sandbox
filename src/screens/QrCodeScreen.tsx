@@ -2,6 +2,7 @@ import { ArrowLeft, ScanLine, Download, Share2, Link2, QrCode } from 'lucide-rea
 import { Str } from '../components/Str'
 import { useApp } from '../context/AppContext'
 import { MOCK_USER } from '../data/mockContent'
+import { stubToast } from '../lib/stubToast'
 
 // Cosmetic-only QR pattern — a real encoder is unnecessary for a
 // localization preview (nothing scans it), just needs to visually read as a
@@ -82,7 +83,7 @@ function QrGraphic() {
 }
 
 export function QrCodeScreen() {
-  const { closeQrCode, showToast } = useApp()
+  const { closeQrCode, showToast, baseLocale } = useApp()
 
   return (
     <div className="h-full flex flex-col bg-surface">
@@ -97,7 +98,7 @@ export function QrCodeScreen() {
           <Str k="profile_me_v4.menu.my_qr" />
         </div>
         <button
-          onClick={() => showToast('Pindai Kode QR — segera hadir')}
+          onClick={() => showToast(stubToast('scanQrCode', baseLocale))}
           aria-label="Scan QR code"
           className="w-8 h-8 rounded-full flex items-center justify-center text-ink shrink-0 active:scale-90 active:bg-subtle transition-transform"
         >
@@ -118,22 +119,22 @@ export function QrCodeScreen() {
           <ActionButton
             icon={<QrCode size={18} />}
             labelKey="profile_me_v4.share_qr_code"
-            onClick={() => showToast('Bagikan Kode QR — segera hadir')}
+            onClick={() => showToast(stubToast('shareQrCode', baseLocale))}
           />
           <ActionButton
             icon={<Download size={18} />}
             labelKey="profile_me_v4.save_qr_image"
-            onClick={() => showToast('Simpan gambar QR — segera hadir')}
+            onClick={() => showToast(stubToast('saveQrImage', baseLocale))}
           />
           <ActionButton
             icon={<Share2 size={18} />}
             labelKey="profile_me_v4.share_profile"
-            onClick={() => showToast('Bagikan profil — segera hadir')}
+            onClick={() => showToast(stubToast('shareProfile', baseLocale))}
           />
           <ActionButton
             icon={<Link2 size={18} />}
             labelKey="chat.message_menu.copy_link"
-            onClick={() => showToast('Salin tautan — segera hadir')}
+            onClick={() => showToast(stubToast('copyLink', baseLocale))}
           />
         </div>
       </div>

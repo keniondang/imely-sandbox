@@ -5,6 +5,7 @@ import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
 import { resolveString, resolvePlaceholder } from '../lib/strings'
+import { stubToast } from '../lib/stubToast'
 import { MOCK_FEED_CHARACTERS, ph } from '../data/mockContent'
 
 type Gender = 'male' | 'female'
@@ -181,7 +182,7 @@ export function CharacterFormScreen() {
       <div className="flex-1 overflow-y-auto p-4">
         <div className="flex justify-center">
           <button
-            onClick={() => showToast('Avatar — segera hadir')}
+            onClick={() => showToast(stubToast('avatar', baseLocale))}
             className="w-28 h-36 rounded-2xl border border-line flex flex-col items-center justify-center gap-2 active:scale-[0.97] transition-transform"
             style={editing ? { backgroundColor: editing.color } : undefined}
           >

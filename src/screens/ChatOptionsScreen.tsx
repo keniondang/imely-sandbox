@@ -6,6 +6,7 @@ import { BlockConfirmDialog, ReportReasonsSheet } from '../components/ProfileOpt
 import { useApp } from '../context/AppContext'
 import { useProfileOptions } from '../hooks/useProfileOptions'
 import { MOCK_FEED_CHARACTERS, ph } from '../data/mockContent'
+import { stubToast } from '../lib/stubToast'
 
 export function ChatOptionsScreen() {
   const { activeChat, closeChat, closeChatOptions, openCharacterProfile, requestPopup, showToast, baseLocale } =
@@ -22,7 +23,7 @@ export function ChatOptionsScreen() {
 
   function viewProfile() {
     if (character) openCharacterProfile(character.id)
-    else showToast('Lihat profil — segera hadir')
+    else showToast(stubToast('viewProfile', baseLocale))
   }
 
   function openPersonalize() {
@@ -52,11 +53,11 @@ export function ChatOptionsScreen() {
 
         <div className="px-4 grid grid-cols-3 gap-2">
           <IconAction icon={<User size={18} />} labelKey="chat.menu.view_profile" onClick={viewProfile} />
-          <IconAction icon={<Phone size={18} />} label="Call" onClick={() => showToast('Call — segera hadir')} />
+          <IconAction icon={<Phone size={18} />} labelKey="chat.menu.call" onClick={() => showToast(stubToast('call', baseLocale))} />
           <IconAction
             icon={<Share2 size={18} />}
             labelKey="menu.common.share"
-            onClick={() => showToast('Bagikan — segera hadir')}
+            onClick={() => showToast(stubToast('share', baseLocale))}
           />
         </div>
 
@@ -92,7 +93,7 @@ export function ChatOptionsScreen() {
           </button>
 
           <button
-            onClick={() => showToast('Hapus percakapan — segera hadir')}
+            onClick={() => showToast(stubToast('deleteConversation', baseLocale))}
             className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-line active:bg-subtle transition-colors text-left"
           >
             <Trash2 size={17} className="text-ink" />
@@ -112,7 +113,7 @@ export function ChatOptionsScreen() {
           </button>
 
           <button
-            onClick={() => showToast('Fitur QA internal — segera hadir')}
+            onClick={() => showToast(stubToast('internalQaFeature', baseLocale))}
             className="w-full flex items-center gap-3 px-4 py-3.5 border-b border-line active:bg-subtle transition-colors text-left"
           >
             <Flag size={17} className="text-ink" />

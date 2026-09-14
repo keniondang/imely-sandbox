@@ -3,6 +3,7 @@ import { ArrowLeft } from 'lucide-react'
 import { Str } from '../components/Str'
 import { useApp } from '../context/AppContext'
 import { MOCK_FEED_CHARACTERS, ph } from '../data/mockContent'
+import { stubToast } from '../lib/stubToast'
 
 // Same character/creator counts as Beranda — derived from the same data
 // rather than a separate placeholder list, so the numbers stay consistent
@@ -60,7 +61,7 @@ export function FollowingScreen() {
                   </div>
                 </button>
                 <button
-                  onClick={() => showToast('Berhenti mengikuti — segera hadir')}
+                  onClick={() => showToast(stubToast('unfollow', baseLocale))}
                   className="shrink-0 bg-subtle text-ink text-[12.5px] font-semibold rounded-full px-3.5 py-1.5 active:scale-95 transition-transform"
                 >
                   <Str k="identity.follow.btn_followed" />
@@ -82,7 +83,7 @@ export function FollowingScreen() {
                   </div>
                 </button>
                 <button
-                  onClick={() => showToast('Berhenti mengikuti — segera hadir')}
+                  onClick={() => showToast(stubToast('unfollow', baseLocale))}
                   className="shrink-0 bg-subtle text-ink text-[12.5px] font-semibold rounded-full px-3.5 py-1.5 active:scale-95 transition-transform"
                 >
                   <Str k="identity.follow.btn_followed" />

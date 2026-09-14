@@ -5,7 +5,8 @@ import { NoSheet } from '../components/NoSheet'
 import { useApp } from '../context/AppContext'
 import { ZoneScope } from '../context/ScreenScope'
 import { usePopupRequest } from '../hooks/usePopupRequest'
-import { resolveString, formatNumber } from '../lib/strings'
+import { resolvePlaceholder, formatNumber } from '../lib/strings'
+import { stubToast } from '../lib/stubToast'
 import { MOCK_USER, MOCK_INVITE_CODE, MOCK_GEM_MISSIONS } from '../data/mockContent'
 
 // Placeholder — per-user gem lot breakdown, not xlsx content (see gem_history.*
@@ -18,7 +19,7 @@ const DAILY_GEM_LOTS = [
 ]
 
 export function GemScreen() {
-  const { baseLocale, closeGems, openGemHistory, openPurchase, showToast } = useApp()
+  const { baseLocale, targetLocale, overrides, closeGems, openGemHistory, openPurchase, showToast } = useApp()
   const inviteHintAttrs = useStrAttrs('input_invite_code.hint', 'invite_input')
 
   // Balances/mission progress are local session state, not fixed mock
@@ -97,7 +98,7 @@ export function GemScreen() {
               <span className="text-[22px] font-extrabold text-ink">{MOCK_USER.permanentGems}</span>
               <span className="text-lg">💎</span>
               <button
-                onClick={() => showToast('Beli gem — segera hadir')}
+                onClick={() => showToast(stubToast('buyGem', baseLocale))}
                 className="w-6 h-6 rounded-full bg-imely-primary text-white flex items-center justify-center active:scale-90 transition-transform"
               >
                 <Plus size={14} />
@@ -138,7 +139,7 @@ export function GemScreen() {
             <RichStr k="profile_me_v4.banner_upgrade.title" />
           </div>
           <div className="text-[13px] text-muted mt-0.5">
-            <NoSheet>Buka hak istimewa – Chat MêLy seru!</NoSheet>
+            <Str k="profile_me_v4.banner_upgrade.subtitle" />
           </div>
 
           <div className="mt-3 grid grid-cols-3 text-[13px] items-center">
@@ -154,8 +155,8 @@ export function GemScreen() {
 
             <FeatureRow labelKey="profile_me_v4.banner_upgrade.feature_daily_gem" free="100 💎" club="400 💎" />
             <FeatureRow labelKey="profile_me_v4.banner_upgrade.feature_unlimited_gem" free="X" club="800 💎" />
-            <FeatureRow label="Model AI canggih" free="X" club="Ya" />
-            <FeatureRow label="Jangan tampilkan iklan" free="X" club="Ya" />
+            <FeatureRow labelKey="profile_me_v4.banner_upgrade.premium_AI" free="X" club="Ya" />
+            <FeatureRow labelKey="product_purchase.benefit_6" free="X" club="Ya" />
             <FeatureRow labelKey="profile_me_v4.banner_upgrade.feature_avatar" free="X" club="Ya" last />
           </div>
 
@@ -223,7 +224,7 @@ export function GemScreen() {
               limit={20}
               reward={missions[0].reward}
               done={missions[0].done}
-              onDo={() => showToast('Tonton iklan — segera hadir')}
+              onDo={() => showToast(stubToast('watchAd', baseLocale))}
             />
 
             {/* lucky wheel */}
@@ -249,7 +250,7 @@ export function GemScreen() {
               limit={1}
               reward={missions[2].reward}
               done={missions[2].done}
-              onDo={() => showToast('Hadiah harian — segera hadir')}
+              onDo={() => showToast(stubToast('dailyReward', baseLocale))}
             />
           </div>
         </div>
@@ -323,7 +324,7 @@ export function GemScreen() {
                   setInviteInputValue(e.target.value)
                   setInviteInputError(false)
                 }}
-                placeholder={resolveString('input_invite_code.hint', baseLocale)}
+                placeholder={resolvePlaceholder('input_invite_code.hint', targetLocale, baseLocale, overrides)}
                 className="mt-4 w-full bg-subtle rounded-full px-4 py-2.5 text-[13.5px] outline-none"
                 {...inviteHintAttrs}
               />

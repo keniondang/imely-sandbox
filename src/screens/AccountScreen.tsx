@@ -24,7 +24,8 @@ import { NoSheet } from '../components/NoSheet'
 import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
-import { resolveString } from '../lib/strings'
+import { resolvePlaceholder } from '../lib/strings'
+import { stubToast } from '../lib/stubToast'
 import { MOCK_USER, ph } from '../data/mockContent'
 
 type PrivacyMode = 'only_me' | 'only_link' | 'public'
@@ -79,6 +80,8 @@ export function AccountScreen() {
     accountUsername,
     showToast,
     baseLocale,
+    targetLocale,
+    overrides,
   } = useApp()
   const cccdHintAttrs = useStrAttrs('profile_me.id_identifier.hint_cccd', 'identity_card_edit')
   const bioHintAttrs = useStrAttrs('profile_me.bio_edit.input_box_hint', 'bio_edit')
@@ -142,7 +145,7 @@ export function AccountScreen() {
                 style={{ backgroundColor: MOCK_USER.avatarColor }}
               />
               <button
-                onClick={() => showToast('Ganti foto profil — segera hadir')}
+                onClick={() => showToast(stubToast('changeProfilePhoto', baseLocale))}
                 className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-surface border border-line flex items-center justify-center active:scale-90 transition-transform"
               >
                 <Camera size={10} className="text-ink" />
@@ -150,7 +153,7 @@ export function AccountScreen() {
             </div>
             <div className="min-w-0">
               <button
-                onClick={() => showToast('Ubah nama — segera hadir')}
+                onClick={() => showToast(stubToast('changeName', baseLocale))}
                 className="flex items-center gap-1.5 active:opacity-70 transition-opacity"
               >
                 <span className="font-bold text-[17px] text-ink truncate">{ph(MOCK_USER.name, baseLocale)}</span>
@@ -208,7 +211,7 @@ export function AccountScreen() {
               icon={<AtSign size={18} />}
               title="User ID"
               subtitle={MOCK_USER.handle.replace(' (internal)', '')}
-              onTap={() => showToast('User ID — segera hadir')}
+              onTap={() => showToast(stubToast('userId', baseLocale))}
             />
             <AccountRow
               icon={<User size={18} />}
@@ -244,7 +247,7 @@ export function AccountScreen() {
             badge="f"
             badgeColor="#1877F2"
             actionKey="user_profile_v2.identifer.link_account_button"
-            onTap={() => showToast('Hubungkan Facebook — segera hadir')}
+            onTap={() => showToast(stubToast('connectFacebook', baseLocale))}
           />
           <LinkedAccountRow
             labelKey="user_profile_v2.identifer.link_account_google"
@@ -285,7 +288,7 @@ export function AccountScreen() {
                 </>
               ) : (
                 <>
-                  🌐 <NoSheet>Publik</NoSheet>
+                  🌐 <Str k="feed_privacy.mode.public" />
                 </>
               )}
               <ChevronDown size={13} className="text-muted" />
@@ -410,7 +413,7 @@ export function AccountScreen() {
                 <input
                   value={identityCardDraft}
                   onChange={(e) => setIdentityCardDraft(e.target.value)}
-                  placeholder={resolveString('profile_me.id_identifier.hint_cccd', baseLocale)}
+                  placeholder={resolvePlaceholder('profile_me.id_identifier.hint_cccd', targetLocale, baseLocale, overrides)}
                   className="w-full text-[14px] text-ink outline-none placeholder:text-muted"
                   {...cccdHintAttrs}
                 />
@@ -654,7 +657,7 @@ export function AccountScreen() {
                   onChange={(e) => setBioDraft(e.target.value)}
                   rows={4}
                   className="w-full text-[14px] text-ink outline-none resize-none placeholder:text-muted"
-                  placeholder={resolveString('profile_me.bio_edit.input_box_hint', baseLocale)}
+                  placeholder={resolvePlaceholder('profile_me.bio_edit.input_box_hint', targetLocale, baseLocale, overrides)}
                   {...bioHintAttrs}
                 />
               </div>
@@ -696,7 +699,7 @@ export function AccountScreen() {
                 <button
                   onClick={() => {
                     closeModal()
-                    showToast('Keluar — segera hadir')
+                    showToast(stubToast('logout', baseLocale))
                   }}
                   className="font-semibold text-[14px] text-imely-primaryDark active:opacity-70 transition-opacity"
                 >

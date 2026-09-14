@@ -4,12 +4,12 @@ import { Str, useStrAttrs } from '../components/Str'
 import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
-import { resolveString } from '../lib/strings'
+import { resolvePlaceholder } from '../lib/strings'
 
 const USERNAME_RE = /^[A-Za-z][A-Za-z0-9_-]{3,31}$/
 
 export function UsernameScreen() {
-  const { closeUsername, setAccountUsername, showToast, baseLocale } = useApp()
+  const { closeUsername, setAccountUsername, showToast, baseLocale, targetLocale, overrides } = useApp()
   const usernameHintAttrs = useStrAttrs('account_info.change_user_name.input_box_hint')
   const [username, setUsername] = useState('')
   const [error, setError] = useState(false)
@@ -62,7 +62,7 @@ export function UsernameScreen() {
             setUsername(e.target.value)
             setError(false)
           }}
-          placeholder={resolveString('account_info.change_user_name.input_box_hint', baseLocale)}
+          placeholder={resolvePlaceholder('account_info.change_user_name.input_box_hint', targetLocale, baseLocale, overrides)}
           className="w-full mt-5 border-b border-line pb-2 text-[14px] text-ink outline-none focus:border-imely-primary placeholder:text-muted"
           {...usernameHintAttrs}
         />

@@ -5,6 +5,7 @@ import { MOCK_USER, ph } from '../data/mockContent'
 import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
 import { formatNumber } from '../lib/strings'
+import { stubToast } from '../lib/stubToast'
 
 export function ProfileScreen() {
   const {
@@ -104,8 +105,8 @@ export function ProfileScreen() {
 
           <FeatureRow labelKey="profile_me_v4.banner_upgrade.feature_daily_gem" free="100 💎" club="400 💎" />
           <FeatureRow labelKey="profile_me_v4.banner_upgrade.feature_unlimited_gem" free="X" club="800 💎" />
-          <FeatureRow labelKey={null} label="Model AI canggih" free="X" club="Ya" />
-          <FeatureRow labelKey={null} label="Jangan tampilkan iklan" free="X" club="Ya" />
+          <FeatureRow labelKey="profile_me_v4.banner_upgrade.premium_AI" free="X" club="Ya" />
+          <FeatureRow labelKey="product_purchase.benefit_6" free="X" club="Ya" />
           <FeatureRow labelKey="profile_me_v4.banner_upgrade.feature_avatar" free="X" club="Ya" last />
         </div>
 
@@ -171,10 +172,10 @@ export function ProfileScreen() {
           <Str k="profile_me_v4.support" />
         </div>
         <div className="mt-2">
-          <SupportRow labelKey="profile_me_v4.send_email" onTap={() => showToast('Kirim masukan — segera hadir')} />
-          <SupportRow labelKey="profile_me_v4.term_of_service" onTap={() => showToast('Ketentuan Layanan — segera hadir')} />
-          <SupportRow labelKey="profile_me_v4.privacy_policy" onTap={() => showToast('Kebijakan Privasi — segera hadir')} />
-          <SupportRow labelKey="profile_me_v4.copyright" onTap={() => showToast('Kebijakan Hak Cipta — segera hadir')} />
+          <SupportRow labelKey="profile_me_v4.send_email" onTap={() => showToast(stubToast('sendFeedback', baseLocale))} />
+          <SupportRow labelKey="profile_me_v4.term_of_service" onTap={() => showToast(stubToast('termsOfService', baseLocale))} />
+          <SupportRow labelKey="profile_me_v4.privacy_policy" onTap={() => showToast(stubToast('privacyPolicy', baseLocale))} />
+          <SupportRow labelKey="profile_me_v4.copyright" onTap={() => showToast(stubToast('copyrightPolicy', baseLocale))} />
           <SupportRow labelKey="profile_me_v4.about_us" onTap={openAbout} />
         </div>
       </div>

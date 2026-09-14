@@ -12,6 +12,7 @@ import { Header } from './components/shell/Header'
 import { BottomNav } from './components/shell/BottomNav'
 import { ToastBubble } from './components/shell/ToastBubble'
 import { resolveToastPreview } from './lib/toastPreview'
+import { stubToast } from './lib/stubToast'
 import { FilterModal } from './components/FilterModal'
 import { FeedScreen } from './screens/FeedScreen'
 import { ChatListScreen } from './screens/ChatListScreen'
@@ -340,7 +341,9 @@ function Shell() {
             {/* filter bottom-sheet — opened from the Beranda tag row */}
             {filterOpen && (
               <div className="absolute top-11 right-0 bottom-0 left-0 z-30">
-                <FilterModal onClose={closeFilter} onApply={applyFilter} />
+                <ScreenScope id="feed">
+                  <FilterModal onClose={closeFilter} onApply={applyFilter} />
+                </ScreenScope>
               </div>
             )}
 
@@ -536,15 +539,15 @@ function Shell() {
                   onClose={closeAvatarMenu}
                   onTakePhoto={() => {
                     closeAvatarMenu()
-                    showToast('Ambil foto — segera hadir')
+                    showToast(stubToast('takePhoto', baseLocale))
                   }}
                   onChooseGallery={() => {
                     closeAvatarMenu()
-                    showToast('Pilih foto dari galeri — segera hadir')
+                    showToast(stubToast('pickFromGallery', baseLocale))
                   }}
                   onViewPhoto={() => {
                     closeAvatarMenu()
-                    showToast('Lihat avatar — segera hadir')
+                    showToast(stubToast('viewAvatar', baseLocale))
                   }}
                   onManageAccount={() => {
                     closeAvatarMenu()

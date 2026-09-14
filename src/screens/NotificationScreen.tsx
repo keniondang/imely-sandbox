@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { ArrowLeft, ChevronRight, MoreVertical, X, Mail, Trash2 } from 'lucide-react'
 import { Str } from '../components/Str'
-import { NoSheet } from '../components/NoSheet'
 import { useApp } from '../context/AppContext'
 import { ZoneScope } from '../context/ScreenScope'
 import { usePopupRequest } from '../hooks/usePopupRequest'
@@ -45,7 +44,7 @@ export function NotificationScreen() {
         {/* placeholder promo banner */}
         <button className="w-full flex items-center justify-between bg-imely-mint px-4 py-3 active:bg-imely-mintDeep transition-colors">
           <span className="text-[13.5px] font-semibold text-imely-primaryDark">
-            📢 <NoSheet>Pemberitahuan dari imely</NoSheet>
+            📢 <Str k="notification.header.notice" />
           </span>
           <ChevronRight size={16} className="text-imely-primaryDark" />
         </button>

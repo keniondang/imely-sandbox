@@ -3,6 +3,7 @@ import { ArrowLeft } from 'lucide-react'
 import { Str, RichStr, useStrAttrs } from '../components/Str'
 import { useApp } from '../context/AppContext'
 import { resolvePlaceholder } from '../lib/strings'
+import { stubToast } from '../lib/stubToast'
 
 export function VerifyEmailScreen() {
   const { closeVerifyEmail, showToast, baseLocale, targetLocale, overrides } = useApp()
@@ -15,7 +16,7 @@ export function VerifyEmailScreen() {
   function submit() {
     if (!canContinue) return
     closeVerifyEmail()
-    showToast('Kode verifikasi dikirim — segera hadir')
+    showToast(stubToast('verificationCodeSent', baseLocale))
   }
 
   return (

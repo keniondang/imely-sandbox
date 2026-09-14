@@ -265,6 +265,7 @@ export const ZONE_ORDER = [
   'role_edit',
   'edit_message',
   'report_message',
+  'filter',
   'club',
   'gem',
 ]
@@ -296,6 +297,7 @@ export const ZONE_LABEL: Record<string, string> = {
   gem: 'Tab: Gems',
   edit_message: 'Popup: Edit Message',
   report_message: 'Popup: Report Message',
+  filter: 'Menu: Filter',
 }
 
 // Classifies each zone by how it actually renders in the real UI — verified
@@ -313,6 +315,7 @@ export const ZONE_TYPE: Record<string, ZoneKind> = {
   mode_picker: 'menu',
   report: 'menu',
   lucky_wheel: 'menu',
+  filter: 'menu',
   gem_detail: 'popup',
   invite_input: 'popup',
   lucky_result: 'popup',

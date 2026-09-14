@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { X, ArrowRight, CircleCheck } from 'lucide-react'
 import { Str, RichStr } from '../components/Str'
-import { NoSheet } from '../components/NoSheet'
 import { useApp, type PurchaseTab } from '../context/AppContext'
 import { ZoneScope } from '../context/ScreenScope'
 import { usePopupRequest } from '../hooks/usePopupRequest'
@@ -64,13 +63,13 @@ export function PurchaseScreen() {
                   • <Str k="product_purchase.benefit_2" />: 800💎
                 </li>
                 <li>
-                  • <NoSheet>Model AI canggih</NoSheet>
+                  • <Str k="product_purchase.benefit_5" />
                 </li>
                 <li>
                   • <Str k="product_purchase.benefit_3" />
                 </li>
                 <li>
-                  • <NoSheet>Jangan tampilkan iklan</NoSheet>
+                  • <Str k="product_purchase.benefit_6" />
                 </li>
                 <li>
                   • <Str k="product_purchase.benefit_4" />

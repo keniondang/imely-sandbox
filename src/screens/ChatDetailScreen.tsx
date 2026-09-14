@@ -23,7 +23,8 @@ import { NoSheet } from '../components/NoSheet'
 import { useApp } from '../context/AppContext'
 import { ZoneScope } from '../context/ScreenScope'
 import { usePopupRequest } from '../hooks/usePopupRequest'
-import { resolveString, formatNumber } from '../lib/strings'
+import { resolveString, resolvePlaceholder, formatNumber } from '../lib/strings'
+import { stubToast } from '../lib/stubToast'
 import { MOCK_FEED_CHARACTERS, MOCK_USER, ph, type LocalizedText } from '../data/mockContent'
 
 const FIRST_MESSAGE_FALLBACK: LocalizedText = {
@@ -75,7 +76,7 @@ const REPORT_REASONS = [
 ]
 
 export function ChatDetailScreen() {
-  const { activeChat, closeChat, openChatOptions, openGems, baseLocale, showToast } = useApp()
+  const { activeChat, closeChat, openChatOptions, openGems, baseLocale, targetLocale, overrides, showToast } = useApp()
   useRegisterKeys([
     'chat.mode.changed.toast',
     'role.edit.success',
@@ -342,7 +343,7 @@ export function ChatDetailScreen() {
               ) : (
                 <div className="max-w-[80%] flex items-start gap-1.5">
                   <button
-                    onClick={() => showToast('Putar suara — segera hadir')}
+                    onClick={() => showToast(stubToast('playVoice', baseLocale))}
                     className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-1 active:scale-90 transition-transform ${
                       character ? 'bg-black/30' : 'bg-subtle'
                     }`}
@@ -391,7 +392,7 @@ export function ChatDetailScreen() {
           💬 <Str k={chatMode.titleKey} />
         </button>
         <button
-          onClick={() => showToast('Tindakan — segera hadir')}
+          onClick={() => showToast(stubToast('quickAction', baseLocale))}
           className="flex items-center gap-1 bg-subtle rounded-full px-3 py-1.5 text-[12.5px] font-medium text-ink active:scale-95 transition-transform"
         >
           ✳ <Str k="chat.quick_action.default" />
@@ -431,7 +432,7 @@ export function ChatDetailScreen() {
       ) : (
         <div className="flex items-center gap-2 px-3 py-2.5 border-t border-line shrink-0">
           <button
-            onClick={() => showToast('Lampiran — segera hadir')}
+            onClick={() => showToast(stubToast('attachment', baseLocale))}
             className="w-8 h-8 rounded-full flex items-center justify-center text-ink shrink-0 active:scale-90 active:bg-subtle transition-transform"
           >
             <Plus size={18} />
@@ -440,7 +441,7 @@ export function ChatDetailScreen() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && send()}
-            placeholder={resolveString('chat.input_box_hint', baseLocale)}
+            placeholder={resolvePlaceholder('chat.input_box_hint', targetLocale, baseLocale, overrides)}
             className="flex-1 bg-subtle rounded-full px-4 py-2.5 text-[13.5px] outline-none"
             {...inputHintAttrs}
           />
@@ -473,7 +474,7 @@ export function ChatDetailScreen() {
             />
             <div className="absolute bottom-0 left-0 right-0 bg-surface rounded-t-3xl p-4">
               <div className="text-center font-bold text-[16px] text-ink mb-3">
-                <NoSheet>Mode Obrolan</NoSheet>
+                <Str k="chat.mode.title" />
               </div>
               {CHAT_MODES.map((mode) => (
                 <button
@@ -646,7 +647,7 @@ export function ChatDetailScreen() {
                 <input
                   value={personaDraftName}
                   onChange={(e) => setPersonaDraftName(e.target.value)}
-                  placeholder={resolveString('role.edit.name.hint', baseLocale)}
+                  placeholder={resolvePlaceholder('role.edit.name.hint', targetLocale, baseLocale, overrides)}
                   className="w-full bg-subtle rounded-xl px-3 py-2.5 text-[13.5px] outline-none"
                   {...roleNameHintAttrs}
                 />
@@ -660,7 +661,7 @@ export function ChatDetailScreen() {
                 <textarea
                   value={personaDraftDescription}
                   onChange={(e) => setPersonaDraftDescription(e.target.value)}
-                  placeholder={resolveString('role.edit.description.hint', baseLocale)}
+                  placeholder={resolvePlaceholder('role.edit.description.hint', targetLocale, baseLocale, overrides)}
                   rows={3}
                   className="w-full bg-subtle rounded-xl px-3 py-2.5 text-[13.5px] outline-none resize-none"
                   {...roleDescHintAttrs}

@@ -5,6 +5,7 @@ import { OpsiMenuSheet, BlockConfirmDialog, ReportReasonsSheet } from '../compon
 import { useApp } from '../context/AppContext'
 import { useProfileOptions } from '../hooks/useProfileOptions'
 import { MOCK_FEED_CHARACTERS, MOCK_USER, ph } from '../data/mockContent'
+import { stubToast } from '../lib/stubToast'
 
 // Reachable two ways: from a character's "Kreator" row (viewing SOMEONE
 // ELSE'S creator profile, activeCreatorId = a real creatorId), or by tapping
@@ -68,7 +69,7 @@ export function CreatorProfileScreen() {
         </button>
         <div className="flex items-center gap-1">
           <button
-            onClick={isSelf ? openQrCode : () => showToast('Bagikan — segera hadir')}
+            onClick={isSelf ? openQrCode : () => showToast(stubToast('share', baseLocale))}
             className="w-8 h-8 rounded-full flex items-center justify-center text-ink active:scale-90 active:bg-subtle transition-transform"
           >
             <Share2 size={16} />
@@ -177,7 +178,7 @@ export function CreatorProfileScreen() {
             <Str k={opts.following ? 'identity.follow.btn_followed' : 'identity.follow.btn_follow'} />
           </button>
           <button
-            onClick={() => showToast('Pesan — segera hadir')}
+            onClick={() => showToast(stubToast('message', baseLocale))}
             className="flex-1 bg-imely-primary text-white font-bold rounded-full py-3 active:scale-[0.97] active:bg-imely-primaryDark transition-transform"
           >
             <Str k="toolbar_menu.chat" />

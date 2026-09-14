@@ -1,9 +1,10 @@
 import { ArrowLeft } from 'lucide-react'
 import { Str, RichStr } from '../components/Str'
 import { useApp } from '../context/AppContext'
+import { stubToast } from '../lib/stubToast'
 
 export function AboutScreen() {
-  const { closeAbout, showToast } = useApp()
+  const { closeAbout, showToast, baseLocale } = useApp()
 
   return (
     <div className="h-full flex flex-col bg-surface">
@@ -44,13 +45,13 @@ export function AboutScreen() {
         </div>
         <div className="flex gap-2.5 mt-2.5">
           <button
-            onClick={() => showToast('TikTok — segera hadir')}
+            onClick={() => showToast(stubToast('tiktok', baseLocale))}
             className="w-9 h-9 rounded-lg bg-black text-white flex items-center justify-center text-[13px] font-bold active:scale-90 transition-transform"
           >
             TT
           </button>
           <button
-            onClick={() => showToast('Discord — segera hadir')}
+            onClick={() => showToast(stubToast('discord', baseLocale))}
             className="w-9 h-9 rounded-lg bg-indigo-500 text-white flex items-center justify-center text-[13px] font-bold active:scale-90 transition-transform"
           >
             D

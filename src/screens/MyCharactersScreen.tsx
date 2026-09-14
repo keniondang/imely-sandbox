@@ -5,6 +5,7 @@ import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
 import { MOCK_FEED_CHARACTERS, ph, type MockCharacter } from '../data/mockContent'
+import { stubToast } from '../lib/stubToast'
 
 // Same character line-up as Beranda/Obrolan — these are the characters this
 // user has created, kept in sync with the rest of the sandbox rather than
@@ -161,7 +162,7 @@ export function MyCharactersScreen() {
                 <button
                   onClick={() => {
                     setDeleteConfirmFor(null)
-                    showToast('Karakter dihapus — segera hadir')
+                    showToast(stubToast('characterDeleted', baseLocale))
                   }}
                   className="font-semibold text-[14px] text-red-500 active:opacity-70 transition-opacity"
                 >

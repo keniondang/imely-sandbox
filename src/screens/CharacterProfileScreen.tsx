@@ -6,6 +6,7 @@ import { OpsiMenuSheet, BlockConfirmDialog, ReportReasonsSheet } from '../compon
 import { useApp } from '../context/AppContext'
 import { useProfileOptions } from '../hooks/useProfileOptions'
 import { MOCK_FEED_CHARACTERS, ph, type MockCharacter } from '../data/mockContent'
+import { stubToast } from '../lib/stubToast'
 
 export function CharacterProfileScreen() {
   const {
@@ -50,7 +51,7 @@ export function CharacterProfileScreen() {
         <div className="font-bold text-[15px] flex-1 px-2 truncate">{characterName}</div>
         <div className="flex items-center gap-1">
           <button
-            onClick={() => showToast('Bagikan — segera hadir')}
+            onClick={() => showToast(stubToast('share', baseLocale))}
             className="w-8 h-8 rounded-full flex items-center justify-center active:scale-90 active:bg-white/10 transition-transform"
           >
             <Share2 size={16} />

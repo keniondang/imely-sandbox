@@ -2,6 +2,7 @@ import { ArrowLeft, Smartphone, Info } from 'lucide-react'
 import { Str } from '../components/Str'
 import { useApp } from '../context/AppContext'
 import { MOCK_USER, MOCK_DEVICES, ph } from '../data/mockContent'
+import { stubToast } from '../lib/stubToast'
 
 export function DevicesScreen() {
   const { closeDevices, showToast, baseLocale } = useApp()
@@ -54,7 +55,7 @@ export function DevicesScreen() {
                 <div className="text-[12px] text-muted">{d.city}</div>
                 {!d.current && (
                   <button
-                    onClick={() => showToast('Hapus dan keluar — segera hadir')}
+                    onClick={() => showToast(stubToast('deleteAndLogout', baseLocale))}
                     className="mt-1.5 text-[12px] font-semibold text-red-500 bg-red-50 rounded-full px-3 py-1 active:scale-95 transition-transform"
                   >
                     <Str k="active_session.text_remove_logout" />

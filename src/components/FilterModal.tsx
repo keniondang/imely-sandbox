@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { FILTER_CATEGORIES, GENDER_OPTIONS } from '../data/mockContent'
-import { NoSheet } from './NoSheet'
+import { Str } from './Str'
+import { ZoneScope } from '../context/ScreenScope'
 
 interface FilterModalProps {
   onClose: () => void
@@ -18,6 +19,7 @@ export function FilterModal({ onClose, onApply }: FilterModalProps) {
   }
 
   return (
+    <ZoneScope zone="filter">
     <div className="h-full relative">
       {/* backdrop */}
       <button
@@ -31,16 +33,16 @@ export function FilterModal({ onClose, onApply }: FilterModalProps) {
         <div className="flex-1 overflow-y-auto px-5 pt-6 pb-4">
           <div className="text-center">
             <div className="font-extrabold text-[19px] text-ink">
-              <NoSheet>Filter</NoSheet>
+              <Str k="discover_filter.header_title" />
             </div>
             <div className="text-[13px] text-muted mt-0.5">
-              <NoSheet>Opsi Tampilan</NoSheet>
+              <Str k="discover_filter.header_subtitle" />
             </div>
           </div>
 
           <div className="mt-6">
             <div className="font-bold text-[14px] text-ink mb-2.5">
-              <NoSheet>Preferensi Gender:</NoSheet>
+              <Str k="discover_filter.gender_title" />
             </div>
             <div className="flex flex-wrap gap-2">
               {GENDER_OPTIONS.map((g) => {
@@ -64,10 +66,10 @@ export function FilterModal({ onClose, onApply }: FilterModalProps) {
 
           <div className="mt-6">
             <div className="font-bold text-[14px] text-ink">
-              <NoSheet>Kategori:</NoSheet>
+              <Str k="discover_filter.tag_title" />
             </div>
             <div className="text-[12.5px] text-muted mb-2.5">
-              <NoSheet>Pilih beberapa kategori:</NoSheet>
+              <Str k="discover_filter.tag_subtitle" />
             </div>
             <div className="flex flex-wrap gap-2">
               {FILTER_CATEGORIES.map((c) => {
@@ -93,10 +95,11 @@ export function FilterModal({ onClose, onApply }: FilterModalProps) {
             onClick={() => onApply(gender, categories)}
             className="w-full bg-imely-primary text-white font-bold rounded-full py-3.5 active:scale-[0.97] active:bg-imely-primaryDark transition-transform"
           >
-            <NoSheet>Terapkan</NoSheet>
+            <Str k="discover_filter.button_footer" />
           </button>
         </div>
       </div>
     </div>
+    </ZoneScope>
   )
 }
