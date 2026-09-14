@@ -2,9 +2,11 @@ import { createContext, useContext, useEffect, useMemo, useRef, useState, type R
 import type { SourceLocale, TargetLocale } from '../lib/strings'
 import type { LocalizedText } from '../data/mockContent'
 import zhTwBaselineRaw from '../data/zhTwBaseline.json'
+import thBaselineRaw from '../data/thBaseline.json'
 import { supabase, type TranslationRow } from '../lib/supabase'
 
 const ZH_TW_BASELINE = zhTwBaselineRaw as Record<string, string>
+const TH_BASELINE = thBaselineRaw as Record<string, string>
 
 // Translations are real work product now, not throwaway test drafts — a
 // translator producing ~1,479 x 2 new-language strings across many sessions
@@ -30,16 +32,23 @@ function loadStoredOverrides(): Record<string, Partial<Record<TargetLocale, stri
   } catch {
     stored = {}
   }
-  // The source sheet now ships zh-TW ~99% pre-translated (imported via
-  // scripts/import-strings.mjs into zhTwBaseline.json) — seed it in as the
-  // starting value for any key the translator hasn't touched yet, so a
-  // fresh session starts near-complete instead of at 0%. Idempotent: only
-  // fills gaps, never overwrites a translator's own saved edit (even one
-  // that deliberately differs from the sheet).
+  // The source sheet now ships zh-TW and th both ~99% pre-translated
+  // (imported via scripts/import-strings.mjs into zhTwBaseline.json /
+  // thBaseline.json) — seed each in as the starting value for any key the
+  // translator hasn't touched yet, so a fresh session starts near-complete
+  // instead of at 0%. Idempotent: only fills gaps, never overwrites a
+  // translator's own saved edit (even one that deliberately differs from
+  // the sheet). Distinct from aiSuggestions.json (see lib/strings.ts) —
+  // that's a hint shown alongside an empty draft, never written into
+  // overrides itself.
   const merged: Record<string, Partial<Record<TargetLocale, string>>> = { ...stored }
   for (const key in ZH_TW_BASELINE) {
     if (merged[key]?.['zh-TW'] !== undefined) continue
     merged[key] = { ...merged[key], 'zh-TW': ZH_TW_BASELINE[key] }
+  }
+  for (const key in TH_BASELINE) {
+    if (merged[key]?.th !== undefined) continue
+    merged[key] = { ...merged[key], th: TH_BASELINE[key] }
   }
   return merged
 }

@@ -4,7 +4,7 @@ import { Str, useRegisterKeys, useStrAttrs } from '../components/Str'
 import { ZoneScope } from '../context/ScreenScope'
 import { useApp } from '../context/AppContext'
 import { usePopupRequest } from '../hooks/usePopupRequest'
-import { resolveString } from '../lib/strings'
+import { resolveString, resolvePlaceholder } from '../lib/strings'
 import { MOCK_FEED_CHARACTERS, ph } from '../data/mockContent'
 
 type Gender = 'male' | 'female'
@@ -24,7 +24,7 @@ const STYLE_SUGGESTIONS = [
 ]
 
 export function CharacterFormScreen() {
-  const { characterFormEditId, closeCharacterForm, baseLocale, showToast } = useApp()
+  const { characterFormEditId, closeCharacterForm, baseLocale, targetLocale, overrides, showToast } = useApp()
   const editing = characterFormEditId ? MOCK_FEED_CHARACTERS.find((c) => c.id === characterFormEditId) : undefined
   const isEdit = Boolean(editing)
 
@@ -200,7 +200,7 @@ export function CharacterFormScreen() {
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder={resolveString('edit_bot.name_hint', baseLocale)}
+            placeholder={resolvePlaceholder('edit_bot.name_hint', targetLocale, baseLocale, overrides)}
             className="w-full bg-subtle rounded-xl px-3.5 py-3 text-[14px] text-ink outline-none placeholder:text-muted"
             {...nameHintAttrs}
           />
@@ -236,7 +236,7 @@ export function CharacterFormScreen() {
                 <input
                   value={h}
                   onChange={(e) => updateHashtag(i, e.target.value)}
-                  placeholder={resolveString('edit_bot.hashtag_hint', baseLocale)}
+                  placeholder={resolvePlaceholder('edit_bot.hashtag_hint', targetLocale, baseLocale, overrides)}
                   className="flex-1 bg-transparent text-[14px] text-ink outline-none placeholder:text-muted min-w-0"
                   {...hashtagHintAttrs}
                 />
@@ -521,14 +521,14 @@ function TextArea({
   placeholderKey: string
   showCount?: boolean
 }) {
-  const { baseLocale } = useApp()
+  const { baseLocale, targetLocale, overrides } = useApp()
   const strAttrs = useStrAttrs(placeholderKey)
   return (
     <div className="relative bg-subtle rounded-xl">
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder={resolveString(placeholderKey, baseLocale)}
+        placeholder={resolvePlaceholder(placeholderKey, targetLocale, baseLocale, overrides)}
         rows={4}
         className="w-full bg-transparent px-3.5 py-3 text-[14px] text-ink outline-none resize-none placeholder:text-muted"
         {...strAttrs}

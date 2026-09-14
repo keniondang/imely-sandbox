@@ -1,8 +1,9 @@
-// Regenerates src/data/strings.json and src/data/zhTwBaseline.json from
-// source-data/strings.xlsx. Reusable — drop in an updated spreadsheet and
-// re-run `npm run import-strings` any time the source sheet changes.
+// Regenerates src/data/strings.json, src/data/zhTwBaseline.json, and
+// src/data/thBaseline.json from source-data/strings.xlsx. Reusable — drop in
+// an updated spreadsheet and re-run `npm run import-strings` any time the
+// source sheet changes.
 //
-// Sheet layout (as of the 2172026 sheet): 2 blank rows, then a header row,
+// Sheet layout (as of the "String" sheet): 2 blank rows, then a header row,
 // then data. Category and Sub cate use merged cells in the spreadsheet, so
 // only the first row of each group has a value — everything below it reads
 // as blank until the next explicit value, which this script forward-fills.
@@ -16,7 +17,8 @@ const ROOT = path.join(__dirname, '..')
 const SRC_XLSX = path.join(ROOT, 'source-data', 'strings.xlsx')
 const OUT_STRINGS = path.join(ROOT, 'src', 'data', 'strings.json')
 const OUT_ZH_BASELINE = path.join(ROOT, 'src', 'data', 'zhTwBaseline.json')
-const SHEET_NAME = '2172026'
+const OUT_TH_BASELINE = path.join(ROOT, 'src', 'data', 'thBaseline.json')
+const SHEET_NAME = 'String'
 
 if (!fs.existsSync(SRC_XLSX)) {
   console.error(`No spreadsheet found at ${SRC_XLSX}`)
@@ -32,11 +34,12 @@ if (!worksheet) {
 
 const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 })
 // rows[0..1] are blank, rows[2] is the header (STT/Category/Sub cate/Key/
-// Vie/Eng/Indo/zh-TW/Owner/Note/Preview) — real data starts at rows[3].
+// Vie/Eng/Indo/zh-TW/Thai/Owner/Note/Preview) — real data starts at rows[3].
 const data = rows.slice(3)
 
 const strings = []
 const zhTwBaseline = {}
+const thBaseline = {}
 const seenKeys = new Set()
 let lastCategory = ''
 let lastSubcat = null
@@ -45,7 +48,7 @@ let skippedDupe = 0
 
 for (const row of data) {
   if (!row || row.length === 0) continue
-  const [, catCell, subCell, key, vi, en, id, zh] = row
+  const [, catCell, subCell, key, vi, en, id, zh, th] = row
 
   // Merged cells: a new category resets the tracked subcategory to
   // whatever (if anything) that same row specifies, so a subcategory never
@@ -83,11 +86,14 @@ for (const row of data) {
   })
 
   if (zh) zhTwBaseline[keyStr] = String(zh)
+  if (th) thBaseline[keyStr] = String(th)
 }
 
 fs.writeFileSync(OUT_STRINGS, JSON.stringify(strings, null, 2) + '\n')
 fs.writeFileSync(OUT_ZH_BASELINE, JSON.stringify(zhTwBaseline, null, 2) + '\n')
+fs.writeFileSync(OUT_TH_BASELINE, JSON.stringify(thBaseline, null, 2) + '\n')
 
 console.log(`Imported ${strings.length} strings from "${SHEET_NAME}".`)
 console.log(`  skipped ${skippedNoKey} non-blank rows with no key, ${skippedDupe} duplicate keys.`)
 console.log(`  zh-TW baseline: ${Object.keys(zhTwBaseline).length} / ${strings.length} keys already have a translation in the sheet.`)
+console.log(`  th baseline: ${Object.keys(thBaseline).length} / ${strings.length} keys already have a translation in the sheet.`)

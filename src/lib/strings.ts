@@ -85,6 +85,25 @@ export function resolveString(
   return applyVars(text, vars)
 }
 
+// For placeholder attributes — these can't be a <Str> child, so they need
+// the same override-then-base-fallback precedence <Str> does inline
+// (overrides[k]?.[targetLocale] ?? resolveString(k, baseLocale)) spelled out
+// as a function instead. Without this, a placeholder always shows the base
+// language's hint even once a translator has saved a real target-locale
+// translation for it — no way to see your own translated placeholder text
+// rendered in context.
+export function resolvePlaceholder(
+  key: string,
+  targetLocale: TargetLocale,
+  baseLocale: SourceLocale,
+  overrides: Record<string, Partial<Record<TargetLocale, string>>>,
+  vars?: Record<string, string | number>
+): string {
+  const override = overrides[key]?.[targetLocale]
+  if (override) return applyVars(override, vars)
+  return resolveString(key, baseLocale, vars)
+}
+
 export const CATEGORIES = Array.from(
   new Set(ALL_STRINGS.map((s) => String(s.category)))
 ).sort()

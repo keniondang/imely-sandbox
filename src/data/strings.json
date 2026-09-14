@@ -50,6 +50,16 @@
     }
   },
   {
+    "key": "toast.link_unavailable",
+    "category": "Toast",
+    "subcategory": null,
+    "locales": {
+      "id": "Tautan tidak tersedia.",
+      "en": "Link unavailable",
+      "vi": "Link không khả dụng"
+    }
+  },
+  {
     "key": "alert.camera_permission_title",
     "category": "Alert",
     "subcategory": null,
@@ -330,6 +340,26 @@
     }
   },
   {
+    "key": "button.got_it",
+    "category": "Button",
+    "subcategory": null,
+    "locales": {
+      "id": "Dipahami",
+      "en": "Got it",
+      "vi": "Đã hiểu"
+    }
+  },
+  {
+    "key": "button.view_detail",
+    "category": "Button",
+    "subcategory": null,
+    "locales": {
+      "id": "Lihat detailnya",
+      "en": "View details",
+      "vi": "Xem chi tiết"
+    }
+  },
+  {
     "key": "error.unexpected",
     "category": "Error",
     "subcategory": null,
@@ -384,9 +414,9 @@
     "category": "Error",
     "subcategory": null,
     "locales": {
-      "id": "Terjadi kesalahan saat memuat iklan. Silakan coba lagi!",
-      "en": "An error occurred while loading the ads. Please try again!",
-      "vi": "Có lỗi xảy ra khi tải ads. Vui lòng thử lại!"
+      "id": "Sistem sedang sibuk. Silakan coba lagi nanti.",
+      "en": "System is busy. Please try again later.",
+      "vi": "Hệ thống đang quá tải, vui lòng thử lại sau!"
     }
   },
   {
@@ -397,6 +427,26 @@
       "id": "Fitur ini sedang dalam perbaikan. Silakan periksa kembali nanti.",
       "en": "This feature is currently under maintenance. Please check back later.",
       "vi": "Tính năng này đang bảo trì. Vui lòng quay lại sau."
+    }
+  },
+  {
+    "key": "error.no_qr_info_found",
+    "category": "Error",
+    "subcategory": null,
+    "locales": {
+      "id": "Tidak ditemukan kode QR pada gambar.",
+      "en": "No QR code found in the image",
+      "vi": "Không tìm thấy mã QR trong ảnh"
+    }
+  },
+  {
+    "key": "error.link_unavailable",
+    "category": "Error",
+    "subcategory": null,
+    "locales": {
+      "id": "Tautan tidak tersedia",
+      "en": "Link unavailable",
+      "vi": "Link không khả dụng"
     }
   },
   {
@@ -775,7 +825,7 @@
     "subcategory": null,
     "locales": {
       "id": "Meow... imely sedang error!",
-      "en": "Meow... imely is experiencing an error!",
+      "en": "Meow... cat brain error!",
       "vi": "Meow... não mèo đang kẹt rồi!"
     }
   },
@@ -797,6 +847,26 @@
       "id": "Muat ulang",
       "en": "Reload",
       "vi": "Tải lại"
+    }
+  },
+  {
+    "key": "common.loading",
+    "category": "Common",
+    "subcategory": null,
+    "locales": {
+      "id": "Memuat",
+      "en": "Loading",
+      "vi": "Đang tải"
+    }
+  },
+  {
+    "key": "common.imely_pro_feature_title",
+    "category": "Common",
+    "subcategory": null,
+    "locales": {
+      "id": "Anda harus menjadi anggota Mêly Club untuk menggunakan fitur ini.",
+      "en": "You need to be a Mêly Club member to use this feature.",
+      "vi": "Bạn cần là hội viên Mêly Club để sử dụng tính năng này."
     }
   },
   {
@@ -1560,11 +1630,21 @@
     }
   },
   {
+    "key": "login.option_login.login_with_line",
+    "category": "Login",
+    "subcategory": "Option Login",
+    "locales": {
+      "id": "Lanjutkan dengan Line",
+      "en": "Continue with Line",
+      "vi": "Tiếp tục với Line"
+    }
+  },
+  {
     "key": "login.option_login.login_with_email",
     "category": "Login",
     "subcategory": "Option Login",
     "locales": {
-      "id": "Gunakan email/nama pengguna",
+      "id": "Gunakan email/nama pengguna.",
       "en": "Use email / username",
       "vi": "Dùng email / username"
     }
@@ -1585,7 +1665,7 @@
     "subcategory": "Option Login",
     "locales": {
       "id": "Belum punya akun imely?",
-      "en": "Don't have a imely account yet?",
+      "en": "You don't have an imely account yet?",
       "vi": "Bạn chưa có tài khoản imely?"
     }
   },
@@ -1905,7 +1985,7 @@
     "subcategory": "Option Create Account",
     "locales": {
       "id": "Buat akun imely gratis!",
-      "en": "Create an imely account for free!",
+      "en": "Create a free imely account!",
       "vi": "Tạo tài khoản imely miễn phí!"
     }
   },
@@ -1915,7 +1995,7 @@
     "subcategory": "Option Create Account",
     "locales": {
       "id": "Buat akun imely gratis!",
-      "en": "Create an imely account for free!",
+      "en": "Create a free imely account!",
       "vi": "Tạo tài khoản imely miễn phí!"
     }
   },
@@ -1995,7 +2075,7 @@
     "subcategory": "Option Create Account",
     "locales": {
       "id": "Sudah punya akun imely?",
-      "en": "Do you have an imely account?",
+      "en": "Do you already have a imely account?",
       "vi": "Bạn đã có tài khoản imely?"
     }
   },
@@ -2035,7 +2115,7 @@
     "subcategory": "Create Account by Email",
     "locales": {
       "id": "Buat akun imely",
-      "en": "Create an imely account",
+      "en": "Create a imely account",
       "vi": "Tạo tài khoản imely"
     }
   },
@@ -2135,7 +2215,7 @@
     "subcategory": "Create Account by Email",
     "locales": {
       "id": "Email ini sudah memiliki akun imely",
-      "en": "This email has created an imely account",
+      "en": "This email has created a imely account",
       "vi": "Email này đã tạo tài khoản imely"
     }
   },
@@ -2185,7 +2265,7 @@
     "subcategory": "Create Account By Phone",
     "locales": {
       "id": "Buat akun imely",
-      "en": "Create an imely account",
+      "en": "Create a imely account",
       "vi": "Tạo tài khoản imely"
     }
   },
@@ -2285,7 +2365,7 @@
     "subcategory": "Create Account By Phone",
     "locales": {
       "id": "Nomor ini telah membuat akun imely.",
-      "en": "This number has created an imely account",
+      "en": "This number has created a imely account",
       "vi": "Số này đã tạo tài khoản imely"
     }
   },
@@ -2354,8 +2434,8 @@
     "category": "Login",
     "subcategory": "Option Verify Account",
     "locales": {
-      "id": "Sesuai Dekret 147/2024/ND-CP kamu perlu memverifikasi akun imely-mu",
-      "en": "According to Decree 147/2024/ND-CP you need to verify your imely account",
+      "id": "Sesuai Dekret 147/2024/ND-CP\n  kamu perlu memverifikasi akun imely-mu",
+      "en": "According to Decree 147/2024/ND-CP\n you need to verify your imely account",
       "vi": "Theo Nghị định 147/2024/NĐ-CP\\nbạn cần xác thực tài khoản imely"
     }
   },
@@ -2804,7 +2884,7 @@
     "category": "750",
     "subcategory": null,
     "locales": {
-      "id": "imely punya versi baru.",
+      "id": "imely memiliki versi baru.",
       "en": "imely has a new version",
       "vi": "imely có phiên bản mới"
     }
@@ -3390,13 +3470,23 @@
     }
   },
   {
+    "key": "profile_me_v4.banner_upgrade.title1",
+    "category": "profile_me_v4",
+    "subcategory": "Subscription Managment",
+    "locales": {
+      "id": "Gabung MêLy Club",
+      "en": "Become a MêLy Club member",
+      "vi": "Trở thành hội viên MêLy Club"
+    }
+  },
+  {
     "key": "profile_me_v4.banner_upgrade.subtitle",
     "category": "profile_me_v4",
     "subcategory": "Subscription Managment",
     "locales": {
-      "id": "Keuntungan anggota:",
-      "en": "Exclusive member benefits:",
-      "vi": "Quyền lợi riêng cho hội viên:"
+      "id": "Buka hak istimewa – Chat MêLy seru!",
+      "en": "Unlock privileges – Chat MêLy style!",
+      "vi": "Mở khóa đặc quyền – Trò chuyện MêLy!"
     }
   },
   {
@@ -3447,6 +3537,16 @@
       "id": "Gem permanen",
       "en": "Non-expiring gems",
       "vi": "Gem không thời hạn"
+    }
+  },
+  {
+    "key": "profile_me_v4.banner_upgrade.premium_AI",
+    "category": "profile_me_v4",
+    "subcategory": "Subscription Managment",
+    "locales": {
+      "id": "Model AI canggih",
+      "en": "Premium AI model",
+      "vi": "Mô hình AI chất lượng cao"
     }
   },
   {
@@ -4000,6 +4100,16 @@
     }
   },
   {
+    "key": "profile_me_v4.menu.block_list",
+    "category": "Active Pro",
+    "subcategory": "profile_me_menu_v2",
+    "locales": {
+      "id": "Daftar blokir",
+      "en": "Blocked list",
+      "vi": "Danh sách chặn"
+    }
+  },
+  {
     "key": "profile_me_v4.change_name.enter_you_name",
     "category": "Active Pro",
     "subcategory": "profile_me_menu_v2",
@@ -4034,7 +4144,7 @@
     "category": "Active Pro",
     "subcategory": "profile_me_menu_v2",
     "locales": {
-      "id": "Orang lain bisa menemukan dan terhubung sama kamu di imely lewat kode QR ini.",
+      "id": "Orang bisa menemukan dan terhubung sama kamu di imely lewat kode QR ini.",
       "en": "People can easily find and connect with you on imely by scanning this QR code.",
       "vi": "Mọi người có thể dễ dàng tìm và kết nối với bạn trên imely khi quét mã QR này."
     }
@@ -4304,9 +4414,9 @@
     "category": "user_profile_v2",
     "subcategory": "UI_User_Profile_Identifier",
     "locales": {
-      "id": "Untuk mengubah kata sandi, kamu perlu <font color=\"#00B6A1\"><b>Memverifikasi akun</b></font>...",
-      "en": "To change your password, you need to <font color=\"#00B6A1\"><b>Identify your account</b></font>",
-      "vi": "Để thay đổi mật khẩu, bạn cần <font color=\"#00B6A1\"><b>Định danh tài khoản</b></font>"
+      "id": "Untuk mengubah kata sandi, kamu perlu <font color='common(ChatbotPrimary1)dark(D_ChatbotPrimary1)'><b>Memverifikasi akun</b></font>",
+      "en": "To change your password, you need to <font color='common(ChatbotPrimary1)dark(D_ChatbotPrimary1)'><b>Identify your account</b></font>",
+      "vi": "Để thay đổi mật khẩu, bạn cần <font color='common(ChatbotPrimary1)dark(D_ChatbotPrimary1)'><b>Định danh tài khoản</b></font>"
     }
   },
   {
@@ -4314,9 +4424,9 @@
     "category": "user_profile_v2",
     "subcategory": "UI_User_Profile_Identifier",
     "locales": {
-      "id": "Buat kata sandi setelah akunmu <font color=\"#00B6A1\"><b>diverifikasi</b></font>...",
-      "en": "To create a password, you need to <font color=\"#00B6A1\"><b>Identify your account</b></font>",
-      "vi": "Để tạo mật khẩu, bạn cần <font color=\"#00B6A1\"><b>Định danh tài khoản</b></font>"
+      "id": "Buat kata sandi setelah akunmu <font color='common(ChatbotPrimary1)dark(D_ChatbotPrimary1)'><b>diverifikasi</b></font>",
+      "en": "To create a password, you need to <font color='common(ChatbotPrimary1)dark(D_ChatbotPrimary1)'><b>Identify your account</b></font>",
+      "vi": "Để tạo mật khẩu, bạn cần <font color='common(ChatbotPrimary1)dark(D_ChatbotPrimary1)'><b>Định danh tài khoản</b></font>"
     }
   },
   {
@@ -4880,6 +4990,16 @@
     }
   },
   {
+    "key": "profile_user.not_available",
+    "category": "user_profile_v2",
+    "subcategory": "Profile Me",
+    "locales": {
+      "id": "Akun tidak tersedia",
+      "en": "Account unavailable",
+      "vi": "Tài khoản không khả dụng"
+    }
+  },
+  {
     "key": "profile_user.deleted",
     "category": "user_profile_v2",
     "subcategory": "Profile Me",
@@ -4897,6 +5017,36 @@
       "id": "Kamu tidak dapat mengirim pesan ke akun ini.",
       "en": "You cannot send messages to this account",
       "vi": "Bạn không thể gửi tin nhắn đến tài khoản này"
+    }
+  },
+  {
+    "key": "profile_user.blocked_chat_desc",
+    "category": "user_profile_v2",
+    "subcategory": "Profile Me",
+    "locales": {
+      "id": "Kamu tidak dapat mengirim pesan ke akun ini.",
+      "en": "You cannot send messages to this account",
+      "vi": "Bạn không thể gửi tin nhắn đến tài khoản này"
+    }
+  },
+  {
+    "key": "profile_bot.not_available",
+    "category": "user_profile_v2",
+    "subcategory": "Profile Me",
+    "locales": {
+      "id": "Karakter tidak tersedia",
+      "en": "Character unavailable",
+      "vi": "Nhân vật không khả dụng"
+    }
+  },
+  {
+    "key": "profile_bot.reviewing",
+    "category": "user_profile_v2",
+    "subcategory": "Profile Me",
+    "locales": {
+      "id": "Karakter sedang menunggu persetujuan",
+      "en": "Character pending review",
+      "vi": "Nhân vật chờ xét duyệt"
     }
   },
   {
@@ -6735,7 +6885,7 @@
     "subcategory": "Ask - Plugin Personalization",
     "locales": {
       "id": "dengan apa imely bisa memanggilmu?",
-      "en": "What can imely call you?",
+      "en": "What will imely call you?",
       "vi": "imely sẽ gọi bạn là gì?"
     }
   },
@@ -7370,6 +7520,16 @@
     }
   },
   {
+    "key": "setting_menu.theme",
+    "category": "setting",
+    "subcategory": "TEMPLATE_Setting",
+    "locales": {
+      "id": "Antarmuka & Tema",
+      "en": "Interface & Theme",
+      "vi": "Giao diện & chủ đề"
+    }
+  },
+  {
     "key": "setting_menu.help",
     "category": "setting",
     "subcategory": "TEMPLATE_Setting",
@@ -7484,9 +7644,19 @@
     "category": "setting",
     "subcategory": "font_setting",
     "locales": {
-      "id": "Tampilan",
-      "en": "Interface",
-      "vi": "Giao diện"
+      "id": "Tampilan:",
+      "en": "Interface:",
+      "vi": "Giao diện:"
+    }
+  },
+  {
+    "key": "setting.font_setting.palette_header",
+    "category": "setting",
+    "subcategory": "font_setting",
+    "locales": {
+      "id": "Tema:",
+      "en": "Theme:",
+      "vi": "Chủ đề:"
     }
   },
   {
@@ -7530,6 +7700,16 @@
     }
   },
   {
+    "key": "setting.font_setting.select_language",
+    "category": "setting",
+    "subcategory": "font_setting",
+    "locales": {
+      "id": "Pilih bahasa:",
+      "en": "Select language:",
+      "vi": "Chọn ngôn ngữ:"
+    }
+  },
+  {
     "key": "setting.font_setting.language_vie",
     "category": "setting",
     "subcategory": "font_setting",
@@ -7567,6 +7747,16 @@
       "id": "繁體中文",
       "en": "繁體中文",
       "vi": "繁體中文"
+    }
+  },
+  {
+    "key": "setting.font_setting.language_th",
+    "category": "setting",
+    "subcategory": "font_setting",
+    "locales": {
+      "id": "อักษรไทย",
+      "en": "อักษรไทย",
+      "vi": "อักษรไทย"
     }
   },
   {
@@ -7705,8 +7895,8 @@
     "subcategory": "app_info_container",
     "locales": {
       "id": "Berbincanglah dengan karakter virtual unik yang memahamimu. <b>imely</b> menghidupkan kepribadian AI masing-masing dengan kisah, gaya, dan suara mereka sendiri.",
-      "en": "Chat with unique virtual characters that understand you. <b>imely</b> brings AI personalities to life — each with their own story, style, and voice.",
-      "vi": "Trò chuyện với những nhân vật ảo độc bản luôn thấu hiểu bạn. <b>imely</b> thổi hồn vào các cá tính AI — mỗi nhân vật đều có câu chuyện, phong cách và giọng nói riêng biệt."
+      "en": "Chat with unique virtual characters that understand you. <b>IMELY</b> brings AI personalities to life — each with their own story, style, and voice.",
+      "vi": "Trò chuyện với những nhân vật ảo độc bản luôn thấu hiểu bạn. <b>IMELY</b> thổi hồn vào các cá tính AI — mỗi nhân vật đều có câu chuyện, phong cách và giọng nói riêng biệt."
     }
   },
   {
@@ -8374,9 +8564,49 @@
     "category": "menu",
     "subcategory": "report_news",
     "locales": {
-      "id": "Laporkan Masalah",
-      "en": "Report Issue",
-      "vi": "Report Issue"
+      "id": "Laporkan masalah",
+      "en": "Report an issue",
+      "vi": "Báo lỗi"
+    }
+  },
+  {
+    "key": "report_news.community_guidelines_violation",
+    "category": "menu",
+    "subcategory": "report_news",
+    "locales": {
+      "id": "Pelanggaran pedoman komunitas",
+      "en": "Community guidelines violation",
+      "vi": "Vi phạm tiêu chuẩn cộng đồng"
+    }
+  },
+  {
+    "key": "report_news.copyright_infringing_image",
+    "category": "menu",
+    "subcategory": "report_news",
+    "locales": {
+      "id": "Gambar yang melanggar hak cipta",
+      "en": "Copyright-infringing image",
+      "vi": "Ảnh vi phạm bản quyền"
+    }
+  },
+  {
+    "key": "report_news.copyright_infringing_content",
+    "category": "menu",
+    "subcategory": "report_news",
+    "locales": {
+      "id": "Konten yang melanggar hak cipta",
+      "en": "Copyright-infringing content",
+      "vi": "Nội dung vi phạm bản quyền"
+    }
+  },
+  {
+    "key": "report_news.impersonating_real_person",
+    "category": "menu",
+    "subcategory": "report_news",
+    "locales": {
+      "id": "Meniru orang asli",
+      "en": "Impersonating a real person",
+      "vi": "Mạo danh người thật"
     }
   },
   {
@@ -8434,7 +8664,7 @@
     "category": "menu",
     "subcategory": "feed_privacy",
     "locales": {
-      "id": "Semua orang",
+      "id": "Publik",
       "en": "Public",
       "vi": "Mọi người"
     }
@@ -8454,7 +8684,7 @@
     "category": "menu",
     "subcategory": "feed_privacy",
     "locales": {
-      "id": "Cuma kamu yang bisa lihat karakter ini.",
+      "id": "Hanya kamu yang bisa melihat. Orang yang punya tautannya pun nggak bisa buka.",
       "en": "Visible to you only. Even people with the link can’t view this content.",
       "vi": "Chỉ hiển thị với bạn. Người có link cũng không xem được nội dung này."
     }
@@ -8504,7 +8734,7 @@
     "category": "menu",
     "subcategory": "feed_privacy",
     "locales": {
-      "id": "Semua orang di imely bisa lihat karakter ini.",
+      "id": "Semua pengguna bisa lihat.",
       "en": "All imely users will see this content.",
       "vi": "Tất cả người dùng imely sẽ thấy nội dung này."
     }
@@ -8617,6 +8847,26 @@
       "id": "Koleksi",
       "en": "Collection",
       "vi": "Bộ sưu tập"
+    }
+  },
+  {
+    "key": "list_interest.character_tab",
+    "category": "menu",
+    "subcategory": "TEMPLATE_List_Interest",
+    "locales": {
+      "id": "Karakter",
+      "en": "Characters",
+      "vi": "Nhân vật"
+    }
+  },
+  {
+    "key": "list_interest.creator_tab",
+    "category": "menu",
+    "subcategory": "TEMPLATE_List_Interest",
+    "locales": {
+      "id": "Pencipta",
+      "en": "Creator",
+      "vi": "Creator"
     }
   },
   {
@@ -10744,7 +10994,7 @@
     "category": "sz_30202",
     "subcategory": "sz_501",
     "locales": {
-      "id": "imely memiliki pembaruan baru",
+      "id": "imely memiliki pembaruan baru.",
       "en": "imely has a new update",
       "vi": "imely có bản cập nhật mới"
     }
@@ -10844,8 +11094,8 @@
     "category": "sz_30202",
     "subcategory": "sz_503",
     "locales": {
-      "id": "Notifikasi dari imely dinonaktifkan",
-      "en": "Notifications from imely are turned off",
+      "id": "Notifikasi dari imely nonaktif",
+      "en": "Notification from imely is off",
       "vi": "Thông báo từ imely đang tắt"
     }
   },
@@ -11025,8 +11275,8 @@
     "subcategory": "sz_510",
     "locales": {
       "id": "ULAS imely",
-      "en": "REVIEW imely",
-      "vi": "ĐÁNH GIÁ imely"
+      "en": "REVIEW IMELY",
+      "vi": "ĐÁNH GIÁ IMELY"
     }
   },
   {
@@ -11034,9 +11284,9 @@
     "category": "sz_30202",
     "subcategory": "sz_518",
     "locales": {
-      "id": "Posting TikTok imely, dapetin 💎",
-      "en": "Post TikTok for imely, get 💎",
-      "vi": "Đăng Tiktok về imely cày 💎"
+      "id": "Posting video imely untuk dapat 💎",
+      "en": "Post an imely clip to earn 💎",
+      "vi": "Đăng Clip về imely cày 💎"
     }
   },
   {
@@ -11117,6 +11367,96 @@
       "id": "Ngobrol Sekarang",
       "en": "Chat Now",
       "vi": "Chat ngay"
+    }
+  },
+  {
+    "key": "sz_518.type_5_title",
+    "category": "sz_30202",
+    "subcategory": "sz_518",
+    "locales": {
+      "id": "Karakter Eksklusif",
+      "en": "Exclusive Characters",
+      "vi": "Ra mắt Char Độc Quyền"
+    }
+  },
+  {
+    "key": "sz_518.type_5_subtitle",
+    "category": "sz_30202",
+    "subcategory": "sz_518",
+    "locales": {
+      "id": "Karakter Eksklusif",
+      "en": "Only on imely 💚",
+      "vi": "Nhân vật chỉ có trên imely 💚"
+    }
+  },
+  {
+    "key": "sz_518.type_5_btn",
+    "category": "sz_30202",
+    "subcategory": "sz_518",
+    "locales": {
+      "id": "Chat Sekarang",
+      "en": "Chat Now",
+      "vi": "Chat ngay"
+    }
+  },
+  {
+    "key": "sz_518.type_6_title",
+    "category": "sz_30202",
+    "subcategory": "sz_518",
+    "locales": {
+      "id": "Paket Bulanan MêLy Club",
+      "en": "Monthly MêLy Club Plan",
+      "vi": "Gói tháng MêLy Club"
+    }
+  },
+  {
+    "key": "sz_518.type_6_subtitle",
+    "category": "sz_30202",
+    "subcategory": "sz_518",
+    "locales": {
+      "id": "Dapatkan 400💎 setiap hari",
+      "en": "Get 400💎 every day",
+      "vi": "Nhận 400💎 mỗi ngày!"
+    }
+  },
+  {
+    "key": "sz_518.type_6_btn",
+    "category": "sz_30202",
+    "subcategory": "sz_518",
+    "locales": {
+      "id": "Dapatkan Sekarang",
+      "en": "Get It Now",
+      "vi": "Quất ngay"
+    }
+  },
+  {
+    "key": "sz_518.type_8_title",
+    "category": "sz_30202",
+    "subcategory": "sz_518",
+    "locales": {
+      "id": "Ingin banyak karakter mengejar Anda?",
+      "en": "Want multiple characters chasing you?",
+      "vi": "Được nhiều char theo đuổi?"
+    }
+  },
+  {
+    "key": "sz_518.type_8_subtitle",
+    "category": "sz_30202",
+    "subcategory": "sz_518",
+    "locales": {
+      "id": "Jelajahi Karakter Gameshow & Harem",
+      "en": "Explore Gameshow & Harem Characters",
+      "vi": "Khám phá char Gameshow/Harem"
+    }
+  },
+  {
+    "key": "sz_518.type_8_btn",
+    "category": "sz_30202",
+    "subcategory": "sz_518",
+    "locales": {
+      "id": "Chat Sekarang!",
+      "en": "Chat Now!",
+      "vi": "Chat ngay!"
     }
   },
   {
@@ -13600,6 +13940,16 @@
     }
   },
   {
+    "key": "chat.menu.call",
+    "category": "Chat",
+    "subcategory": "Chat Menu",
+    "locales": {
+      "id": "Panggilan",
+      "en": "Call",
+      "vi": "Gọi thoại"
+    }
+  },
+  {
     "key": "chat.message_menu.title",
     "category": "Chat",
     "subcategory": "Message Menu",
@@ -14070,6 +14420,16 @@
     }
   },
   {
+    "key": "chat.mode.title",
+    "category": "Chat",
+    "subcategory": "Chat Bubble",
+    "locales": {
+      "id": "Mode obrolan",
+      "en": "Chat mode",
+      "vi": "Chế độ trò chuyện"
+    }
+  },
+  {
     "key": "chat.mode.lite.title",
     "category": "Chat",
     "subcategory": "Chat Bubble",
@@ -14500,13 +14860,23 @@
     }
   },
   {
+    "key": "chat.option.unblock_msg_from_chat",
+    "category": "Chat",
+    "subcategory": "Speech To Text",
+    "locales": {
+      "id": "Anda telah memblokir ${LAZY_DATA(name)}. Buka blokir untuk melanjutkan berkirim pesan.",
+      "en": "You've blocked ${LAZY_DATA(name)}. Unblock to continue messaging.",
+      "vi": "Bạn đã chặn ${LAZY_DATA(name)}. Bỏ chặn để tiếp tục nhắn tin."
+    }
+  },
+  {
     "key": "chat.option.unblock_msg",
     "category": "Chat",
     "subcategory": "Speech To Text",
     "locales": {
-      "id": "Kamu perlu membuka blokir ${LAZY_DATA(name)} untuk mengirim pesan.",
-      "en": "You need to unblock ${LAZY_DATA(name)} to send messages.",
-      "vi": "Bạn cần bỏ chặn ${LAZY_DATA(name)}  để gửi tin nhắn"
+      "id": "${LAZY_DATA(name)} akan dapat mengirim pesan kepada Anda lagi.",
+      "en": "${LAZY_DATA(name)} will be able to message you again.",
+      "vi": "${LAZY_DATA(name)} sẽ có thể gửi tin nhắn cho bạn trở lại."
     }
   },
   {
@@ -14514,9 +14884,9 @@
     "category": "Chat",
     "subcategory": "Speech To Text",
     "locales": {
-      "id": "${LAZY_DATA(name)} tidak akan bisa mengirim pesan kepadamu",
-      "en": "${LAZY_DATA(name)} will not be able to message you",
-      "vi": "${LAZY_DATA(name)} sẽ không thể nhắn tin cho bạn"
+      "id": "${LAZY_DATA(name)} tidak akan bisa lagi mengirim pesan kepada Anda. Anda dapat membuka blokir kapan saja.",
+      "en": "${LAZY_DATA(name)} will no longer be able to message you. You can unblock anytime.",
+      "vi": "${LAZY_DATA(name)} sẽ không thể gửi tin nhắn cho bạn nữa. Bạn có thể bỏ chặn bất cứ lúc nào."
     }
   },
   {
@@ -14870,6 +15240,66 @@
     }
   },
   {
+    "key": "chat.ai_consent.title",
+    "category": "Chat",
+    "subcategory": "Report Message",
+    "locales": {
+      "id": "Sebelum Anda mengobrol",
+      "en": "Before you chat",
+      "vi": "Trước khi trò chuyện"
+    }
+  },
+  {
+    "key": "chat.ai_consent.msg",
+    "category": "Chat",
+    "subcategory": "Report Message",
+    "locales": {
+      "id": "Teks masukan (seperti pesan) dan suara Anda akan dikirimkan secara aman kepada penyedia AI kami untuk menghasilkan tanggapan.<br><br>Dengan melanjutkan, Anda menyetujui [citation:1] dan [citation:2] kami.",
+      "en": "Your input text (such as messages) and voice will be sent securely to our AI providers to generate responses.<br><br>By continuing, you agree to our [citation:1] and [citation:2]",
+      "vi": "Nội dung bạn nhập (chẳng hạn như tin nhắn) và giọng nói của bạn sẽ được gửi một cách an toàn đến các nhà cung cấp AI của chúng tôi để tạo phản hồi.<br><br>Khi tiếp tục, bạn đồng ý với [citation:1] và [citation:2] của chúng tôi."
+    }
+  },
+  {
+    "key": "chat.ai_consent.confirm",
+    "category": "Chat",
+    "subcategory": "Report Message",
+    "locales": {
+      "id": "Saya mengerti & melanjutkan",
+      "en": "I understand & continue",
+      "vi": "Tôi hiểu và tiếp tục"
+    }
+  },
+  {
+    "key": "chat.ai_consent.read_privacy",
+    "category": "Chat",
+    "subcategory": "Report Message",
+    "locales": {
+      "id": "Baca Kebijakan Privasi",
+      "en": "Read Privacy Policy",
+      "vi": "Đọc Chính sách quyền riêng tư"
+    }
+  },
+  {
+    "key": "chat.ai_consent.terms",
+    "category": "Chat",
+    "subcategory": "Report Message",
+    "locales": {
+      "id": "Ketentuan Layanan",
+      "en": "Terms of Service",
+      "vi": "Điều khoản Dịch vụ"
+    }
+  },
+  {
+    "key": "chat.ai_consent.privacy",
+    "category": "Chat",
+    "subcategory": "Report Message",
+    "locales": {
+      "id": "Kebijakan Privasi",
+      "en": "Privacy Policy",
+      "vi": "Chính sách quyền riêng tư"
+    }
+  },
+  {
     "key": "call.option.block_msg",
     "category": "Chat",
     "subcategory": "Report Message",
@@ -14910,9 +15340,69 @@
     }
   },
   {
+    "key": "chat.reaction_detail.title",
+    "category": "Call",
+    "subcategory": "Reaction",
+    "locales": {
+      "id": "Detail",
+      "en": "Detail",
+      "vi": "Chi tiết"
+    }
+  },
+  {
+    "key": "chat.reaction_tutorial_detail.title",
+    "category": "Call",
+    "subcategory": "Reaction",
+    "locales": {
+      "id": "Saya suka pesannya",
+      "en": "React to a message with a heart",
+      "vi": "Thả tim tin nhắn"
+    }
+  },
+  {
+    "key": "chat.reaction_tutorial_detail.content1",
+    "category": "Call",
+    "subcategory": "Reaction",
+    "locales": {
+      "id": "Mengungkapkan emosi Anda membuat percakapan dengan karakter menjadi lebih intim.",
+      "en": "Expressing your feelings makes the conversation with the character more intimate.",
+      "vi": "Bày tỏ cảm xúc của bạn làm cuộc trò chuyện với nhân vật trở nên thân mật hơn."
+    }
+  },
+  {
+    "key": "chat.reaction_tutorial_detail.content2",
+    "category": "Call",
+    "subcategory": "Reaction",
+    "locales": {
+      "id": "Anda dapat menyukai beberapa pesan sekaligus.",
+      "en": "You can react to a single message with multiple hearts.",
+      "vi": "Có thể thả nhiều tim cho 1 tin nhắn"
+    }
+  },
+  {
+    "key": "chat.reaction_tutorial_detail.conversion",
+    "category": "Call",
+    "subcategory": "Reaction",
+    "locales": {
+      "id": "Konversi",
+      "en": "Conversion",
+      "vi": "Quy đổi"
+    }
+  },
+  {
+    "key": "chat.reaction_tutorial.title",
+    "category": "Call",
+    "subcategory": "Reaction",
+    "locales": {
+      "id": "Klik ikon hati 💜 untuk membuat percakapan lebih intim.",
+      "en": "Tap the heart 💜 to make the conversation feel more intimate.",
+      "vi": "Bấm thả tim 💜 để cuộc trò chuyện trở nên thân mật hơn."
+    }
+  },
+  {
     "key": "post_ask.speech_to_text.cancelled",
     "category": "Call",
-    "subcategory": null,
+    "subcategory": "Reaction",
     "locales": {
       "id": "Pengenalan suara dibatalkan",
       "en": "Speech recognition cancelled",
@@ -14922,7 +15412,7 @@
   {
     "key": "post_ask.speech_to_text.filled_text",
     "category": "Call",
-    "subcategory": null,
+    "subcategory": "Reaction",
     "locales": {
       "id": "Teks diisi dari ucapan",
       "en": "Text filled from speech",
@@ -15155,7 +15645,7 @@
     "subcategory": "sz_70000",
     "locales": {
       "id": "Terima kasih telah membagikan pertanyaanmu di komunitas imely",
-      "en": "Thank you for sharing your question publicly with the imely community.",
+      "en": "Thank you for sharing your question publicly with the iMely community.",
       "vi": "Cảm ơn bạn đã chia sẻ câu hỏi công khai với cộng đồng imely"
     }
   },
@@ -15454,8 +15944,8 @@
     "category": "sz_70001",
     "subcategory": "sz_70001",
     "locales": {
-      "id": "Kamu telah berhasil menukarkan paket imely Pro 30 harimu.",
-      "en": "You have successfully redeemed your imely Pro 30-day package.",
+      "id": "Kamu telah berhasil menukarkan paket iMely Pro 30 harimu.",
+      "en": "You have successfully redeemed your iMely Pro 30-day package.",
       "vi": "Bạn đã đổi thành công gói imely Pro 30 ngày"
     }
   },
@@ -15474,8 +15964,8 @@
     "category": "sz_70003",
     "subcategory": "sz_70003",
     "locales": {
-      "id": "Yuk, makin aktif pakai imely biar dapet lebih banyak bintang!",
-      "en": "Use imely actively to earn more stars!",
+      "id": "Yuk, makin aktif pakai imely biar dapet lebih banyak bintang, Sobat!",
+      "en": "Use imely actively to earn more stars, buddy!",
       "vi": "Hăng hái sử dụng imely để có thêm nhiều điểm bạn ơi!"
     }
   },
@@ -16104,7 +16594,7 @@
     "category": "update_follow_community",
     "subcategory": "sz_551",
     "locales": {
-      "id": "Belum ada obrolan",
+      "id": "Daftar kosong",
       "en": "Empty list",
       "vi": "Danh sách trống"
     }
@@ -16114,7 +16604,7 @@
     "category": "update_follow_community",
     "subcategory": "sz_551",
     "locales": {
-      "id": "Yuk, mulai obrolan pertamamu",
+      "id": "Kamu belum memiliki pesan",
       "en": "You have no messages yet",
       "vi": "Bạn chưa có tin nhắn nào"
     }
@@ -16124,9 +16614,9 @@
     "category": "update_follow_community",
     "subcategory": "sz_551",
     "locales": {
-      "id": "Cari karakter",
-      "en": "Chat with friends",
-      "vi": "Trò chuyện với bạn bè"
+      "id": "Berbincanglah dengan karakter-karakter tersebut",
+      "en": "Chat with characters",
+      "vi": "Trò chuyện với nhân vật"
     }
   },
   {
@@ -17034,7 +17524,7 @@
     "category": "Bot",
     "subcategory": "TEMPLATE_Edit_Bot",
     "locales": {
-      "id": "Semua orang",
+      "id": "Publik",
       "en": "Public",
       "vi": "Mọi người"
     }
@@ -19341,7 +19831,7 @@
     "subcategory": "Usage Cost",
     "locales": {
       "id": "1. Bandingkan paket imely",
-      "en": "1. Compare the imely packages",
+      "en": "1. Compare the iMely packages",
       "vi": "1. So sánh các gói imely"
     }
   },
@@ -19380,8 +19870,8 @@
     "category": "Wallet V2",
     "subcategory": "Usage Cost",
     "locales": {
-      "id": "imely mengubah \"jumlah pertanyaan\" menjadi \"bintang 🌟\" agar lebih sederhana dan mudah digunakan.\\n\\nSebelumnya:\\n* Saat Anda mengajukan pertanyaan, menyelesaikan masalah, menerjemahkan, dll., itu dihitung berdasarkan penggunaan, ditampilkan secara terpisah, dan sulit dikelola.\\n\\nSekarang:\\n* Semua fungsi sekarang digunakan berdasarkan \"bintang 🌟\", sehingga lebih mudah dikelola dan digunakan sesuai keinginan Anda.\\n* Semua bintang akan ditampilkan secara real-time di pojok kanan atas.\\n* Jika bintang Anda akan segera kedaluwarsa, sistem akan memprioritaskan penggunaannya terlebih dahulu.\\n* Anda dapat [melihat biaya penggunaan](tab_biaya_penggunaan)",
-      "en": "imely is converting \"question count\" to \"stars🌟\" to make it simpler and easier for you to use.\\n\\nPreviously:\\n* When you ask questions, solve problems, translate, etc., it's counted based on usage, displayed separately, and difficult to manage.\\n\\nNow:\\n* All functions are now consumed based on \"stars 🌟\", making it easier for you to manage and use as you like.\\n* All stars will be displayed in real time in the upper right corner.\\n* If your stars are about to expire, the system will prioritize using them first.\\n* You can [view usage cost](usage_cost_tab)",
+      "id": "Timely mengubah \"jumlah pertanyaan\" menjadi \"bintang 🌟\" agar lebih sederhana dan mudah digunakan.\\n\\nSebelumnya:\\n* Saat Anda mengajukan pertanyaan, menyelesaikan masalah, menerjemahkan, dll., itu dihitung berdasarkan penggunaan, ditampilkan secara terpisah, dan sulit dikelola.\\n\\nSekarang:\\n* Semua fungsi sekarang digunakan berdasarkan \"bintang 🌟\", sehingga lebih mudah dikelola dan digunakan sesuai keinginan Anda.\\n* Semua bintang akan ditampilkan secara real-time di pojok kanan atas.\\n* Jika bintang Anda akan segera kedaluwarsa, sistem akan memprioritaskan penggunaannya terlebih dahulu.\\n* Anda dapat [melihat biaya penggunaan](tab_biaya_penggunaan)",
+      "en": "Timely is converting \"question count\" to \"stars🌟\" to make it simpler and easier for you to use.\\n\\nPreviously:\\n* When you ask questions, solve problems, translate, etc., it's counted based on usage, displayed separately, and difficult to manage.\\n\\nNow:\\n* All functions are now consumed based on \"stars 🌟\", making it easier for you to manage and use as you like.\\n* All stars will be displayed in real time in the upper right corner.\\n* If your stars are about to expire, the system will prioritize using them first.\\n* You can [view usage cost](usage_cost_tab)",
       "vi": "imely chuyển đổi \"lượt hỏi\" thành \"sao🌟\" nhằm mục đích giúp bạn sử dụng đơn giản và dễ hiểu hơn\\n\\nTrước đây:\\n* Khi bạn hỏi, giải bài, dịch, ... được tính theo lượt sử dụng, hiển thị rời rạc, khó quản lý\\n\\nBây giờ:\\n* Mọi chức năng đều quy về tiêu thụ \\\"sao 🌟\\\", giúp bạn dễ quản lý và sử dụng theo ý thích.\\n* Tất cả sao sẽ hiển thị theo thời gian thực ở góc trên bên phải.\\n* Nếu bạn có sao sắp hết hạn, hệ thống sẽ ưu tiên sử dụng trước.\\n* Bạn có thể [xem chi phí sử dụng](usage_cost_tab)"
     }
   },
@@ -19390,8 +19880,8 @@
     "category": "Wallet V2",
     "subcategory": "Usage Cost",
     "locales": {
-      "id": "3. Jenis-jenis bintang di imely",
-      "en": "3. Types of stars in imely",
+      "id": "3. Jenis-jenis bintang di iMely",
+      "en": "3. Types of stars in iMely",
       "vi": "3. Các loại sao trong imely"
     }
   },
@@ -19420,8 +19910,8 @@
     "category": "Wallet V2",
     "subcategory": "Usage Cost",
     "locales": {
-      "id": "imely akan secara otomatis mengubah permintaan pertanyaan Anda menjadi bintang berdasarkan paket yang Anda gunakan:",
-      "en": "imely will automatically convert your question requests into stars based on the plan you are using:",
+      "id": "Timely akan secara otomatis mengubah permintaan pertanyaan Anda menjadi bintang berdasarkan paket yang Anda gunakan:",
+      "en": "Timely will automatically convert your question requests into stars based on the plan you are using:",
       "vi": "imely sẽ tự động đổi lượt hỏi của bạn thành sao dựa trên gói đang sử dụng:"
     }
   },
@@ -19540,8 +20030,8 @@
     "category": "Wallet V2",
     "subcategory": "Usage Cost",
     "locales": {
-      "id": "Berikut adalah daftar fitur-fitur imely.",
-      "en": "Below is a list of features of imely.",
+      "id": "Berikut adalah daftar fitur-fitur iMely.",
+      "en": "Below is a list of features of iMely.",
       "vi": "Dưới đây là bảng danh sách các tính năng của imely"
     }
   },
@@ -20050,7 +20540,7 @@
     "category": "Product Purchase",
     "subcategory": null,
     "locales": {
-      "id": "Keuntungan MêLy Club",
+      "id": "Keuntungan MeLy Club",
       "en": "MêLy Club Benefits",
       "vi": "Quyền lợi MêLy Club"
     }
@@ -20093,6 +20583,26 @@
       "id": "Acara & hadiah eksklusif untuk anggota",
       "en": "Exclusive events & member rewards",
       "vi": "Sự kiện & quà bất ngờ dành riêng cho hội viên"
+    }
+  },
+  {
+    "key": "product_purchase.benefit_5",
+    "category": "Product Purchase",
+    "subcategory": null,
+    "locales": {
+      "id": "Model AI canggih",
+      "en": "Premium AI model",
+      "vi": "Mô hình AI chất lượng cao"
+    }
+  },
+  {
+    "key": "product_purchase.benefit_6",
+    "category": "Product Purchase",
+    "subcategory": null,
+    "locales": {
+      "id": "Jangan tampilkan iklan",
+      "en": "No ads",
+      "vi": "Không hiển thị quảng cáo"
     }
   },
   {
@@ -20163,6 +20673,66 @@
       "id": "Paket Saat Ini",
       "en": "Current Plan",
       "vi": "Đang sử dụng"
+    }
+  },
+  {
+    "key": "product_purchase.free_trial_try",
+    "category": "Product Purchase",
+    "subcategory": null,
+    "locales": {
+      "id": "Coba",
+      "en": "Try",
+      "vi": "Dùng thử"
+    }
+  },
+  {
+    "key": "product_purchase.free_trial_days_price",
+    "category": "Product Purchase",
+    "subcategory": null,
+    "locales": {
+      "id": "hari dengan harga",
+      "en": "days for",
+      "vi": "ngày giá"
+    }
+  },
+  {
+    "key": "product_purchase.free_trial_then",
+    "category": "Product Purchase",
+    "subcategory": null,
+    "locales": {
+      "id": "Setelah itu",
+      "en": "Then",
+      "vi": "Sau đó"
+    }
+  },
+  {
+    "key": "product_purchase.billing_period_month",
+    "category": "Product Purchase",
+    "subcategory": null,
+    "locales": {
+      "id": "bulan",
+      "en": "month",
+      "vi": "tháng"
+    }
+  },
+  {
+    "key": "product_purchase.free_trial_gem_unavailable",
+    "category": "Product Purchase",
+    "subcategory": null,
+    "locales": {
+      "id": "Gem ini tidak tersedia selama masa uji coba gratis",
+      "en": "These Gems are not available during the free trial",
+      "vi": "Gem này không khả dụng trong các ngày dùng thử"
+    }
+  },
+  {
+    "key": "product_purchase.free_trial_title",
+    "category": "Product Purchase",
+    "subcategory": null,
+    "locales": {
+      "id": "Uji Coba Gratis 3 Hari",
+      "en": "3-Day Free Trial",
+      "vi": "Dùng thử 3 ngày miễn phí"
     }
   },
   {
@@ -20582,7 +21152,27 @@
     "locales": {
       "id": "Tren",
       "en": "Trending",
-      "vi": "Xu hướng"
+      "vi": "Trending"
+    }
+  },
+  {
+    "key": "companion_discover.tab_name_2",
+    "category": "Discover",
+    "subcategory": "NAV_Companion_Discover",
+    "locales": {
+      "id": "Baru",
+      "en": "New",
+      "vi": "New"
+    }
+  },
+  {
+    "key": "companion_discover.tab_name_3",
+    "category": "Discover",
+    "subcategory": "NAV_Companion_Discover",
+    "locales": {
+      "id": "Untuk Anda",
+      "en": "For you",
+      "vi": "For you"
     }
   },
   {
@@ -20746,6 +21336,26 @@
     }
   },
   {
+    "key": "companion_explore.title",
+    "category": "Discover",
+    "subcategory": "Companion Expore More",
+    "locales": {
+      "id": "Jelajahi Karakter",
+      "en": "Explore Characters",
+      "vi": "Khám phá nhân vật"
+    }
+  },
+  {
+    "key": "companion_explore.title_unique",
+    "category": "Discover",
+    "subcategory": "Companion Expore More",
+    "locales": {
+      "id": "Jelajahi Karakter Eksklusif",
+      "en": "Explore Exclusive Characters",
+      "vi": "Khám phá nhân vật độc quyền"
+    }
+  },
+  {
     "key": "companion_header.banners.retry",
     "category": "Discover",
     "subcategory": "Header_Companion_Promote_Banner",
@@ -20793,6 +21403,106 @@
       "id": "Kreator Teratas Minggu Ini",
       "en": "Top Creators This Week",
       "vi": "Top Creators tuần này"
+    }
+  },
+  {
+    "key": "discover_filter.header_title",
+    "category": "Discover",
+    "subcategory": "Discover Filter",
+    "locales": {
+      "id": "Filter",
+      "en": "Filters",
+      "vi": "Bộ lọc"
+    }
+  },
+  {
+    "key": "discover_filter.header_subtitle",
+    "category": "Discover",
+    "subcategory": "Discover Filter",
+    "locales": {
+      "id": "Opsi Tampilan",
+      "en": "Display Options",
+      "vi": "Tùy chọn hiển thị"
+    }
+  },
+  {
+    "key": "discover_filter.gender_title",
+    "category": "Discover",
+    "subcategory": "Discover Filter",
+    "locales": {
+      "id": "Preferensi Gender:",
+      "en": "Gender Preference:",
+      "vi": "Sở thích giới tính:"
+    }
+  },
+  {
+    "key": "discover_filter.gender_0",
+    "category": "Discover",
+    "subcategory": "Discover Filter",
+    "locales": {
+      "id": "All",
+      "en": "All",
+      "vi": "Tất cả"
+    }
+  },
+  {
+    "key": "discover_filter.gender_1",
+    "category": "Discover",
+    "subcategory": "Discover Filter",
+    "locales": {
+      "id": "Pria",
+      "en": "Male",
+      "vi": "Nam"
+    }
+  },
+  {
+    "key": "discover_filter.gender_2",
+    "category": "Discover",
+    "subcategory": "Discover Filter",
+    "locales": {
+      "id": "Wanita",
+      "en": "Female",
+      "vi": "Nữ"
+    }
+  },
+  {
+    "key": "discover_filter.gender_3",
+    "category": "Discover",
+    "subcategory": "Discover Filter",
+    "locales": {
+      "id": "Non-biner",
+      "en": "Non-binary",
+      "vi": "Non-binary"
+    }
+  },
+  {
+    "key": "discover_filter.tag_title",
+    "category": "Discover",
+    "subcategory": "Discover Filter",
+    "locales": {
+      "id": "Kategori:",
+      "en": "Category:",
+      "vi": "Thể loại:"
+    }
+  },
+  {
+    "key": "discover_filter.tag_subtitle",
+    "category": "Discover",
+    "subcategory": "Discover Filter",
+    "locales": {
+      "id": "Pilih beberapa kategori:",
+      "en": "Select multiple categories:",
+      "vi": "Có thể chọn nhiều loại:"
+    }
+  },
+  {
+    "key": "discover_filter.button_footer",
+    "category": "Discover",
+    "subcategory": "Discover Filter",
+    "locales": {
+      "id": "Terapkan",
+      "en": "Apply",
+      "vi": "Áp dụng"
     }
   },
   {
@@ -21176,6 +21886,16 @@
     }
   },
   {
+    "key": "user_task.btn_do_task_36",
+    "category": "User Task",
+    "subcategory": "Task List",
+    "locales": {
+      "id": "Dapatkan Sekarang",
+      "en": "Get Now",
+      "vi": "Nhận ngay"
+    }
+  },
+  {
     "key": "user_task.txt_limit",
     "category": "User Task",
     "subcategory": "Task List",
@@ -21226,6 +21946,16 @@
     }
   },
   {
+    "key": "user_task.txt_22",
+    "category": "User Task",
+    "subcategory": "Task List",
+    "locales": {
+      "id": "Undang teman",
+      "en": "Invite friends",
+      "vi": "Mời bạn"
+    }
+  },
+  {
     "key": "user_task.txt_22_input_title",
     "category": "User Task",
     "subcategory": "Task List",
@@ -21256,22 +21986,114 @@
     }
   },
   {
+    "key": "user_task.txt_23",
+    "category": "User Task",
+    "subcategory": "Task List",
+    "locales": {
+      "id": "Hadiah Harian",
+      "en": "Daily Rewards",
+      "vi": "Phần thưởng mỗi ngày"
+    }
+  },
+  {
     "key": "user_task.txt_30",
     "category": "User Task",
     "subcategory": "Task List",
-    "locales": {}
-  },
-  {
-    "key": "user_task.txt_31",
-    "category": "User Task",
-    "subcategory": "Task List",
-    "locales": {}
+    "locales": {
+      "id": "Tonton Iklan",
+      "en": "Watch Ads",
+      "vi": "Xem quảng cáo"
+    }
   },
   {
     "key": "user_task.txt_32",
     "category": "User Task",
     "subcategory": "Task List",
-    "locales": {}
+    "locales": {
+      "id": "Roda Keberuntungan",
+      "en": "Lucky Spin",
+      "vi": "Vòng xoay may mắn"
+    }
+  },
+  {
+    "key": "user_task.txt_33",
+    "category": "User Task",
+    "subcategory": "Task List",
+    "locales": {
+      "id": "Dapatkan 600💎 Sekarang",
+      "en": "Get 600💎 Now",
+      "vi": "Nhận ngay 600💎"
+    }
+  },
+  {
+    "key": "user_task.txt_33_desc",
+    "category": "User Task",
+    "subcategory": "Task List",
+    "locales": {
+      "id": "Saat pertama kali membeli paket 300💎, dapatkan bonus 300💎.",
+      "en": "On your first purchase of the 300💎 pack, get 300💎 bonus.",
+      "vi": "Khi nạp Gói 300💎 lần đầu, nhận ngay 300💎 thưởng"
+    }
+  },
+  {
+    "key": "user_task.txt_34",
+    "category": "User Task",
+    "subcategory": "Task List",
+    "locales": {
+      "id": "Promo Spesial Agustus",
+      "en": "August Special",
+      "vi": "Tri ân tháng 8 "
+    }
+  },
+  {
+    "key": "user_task.txt_34_desc",
+    "category": "User Task",
+    "subcategory": "Task List",
+    "locales": {
+      "id": "Khusus untuk paket 600💎 di aplikasi.",
+      "en": "For the 600💎 in-app pack.",
+      "vi": "Dành cho gói nạp 600💎 trên app."
+    }
+  },
+  {
+    "key": "user_task.txt_35",
+    "category": "User Task",
+    "subcategory": "Task List",
+    "locales": {
+      "id": "Dapatkan 900💎 Sekarang",
+      "en": "Get 900💎 Now",
+      "vi": "Nhận ngay 900💎"
+    }
+  },
+  {
+    "key": "user_task.txt_35_desc",
+    "category": "User Task",
+    "subcategory": "Task List",
+    "locales": {
+      "id": "Saat kedua kali membeli paket 600💎, dapatkan bonus 300💎.",
+      "en": "On your second purchase of the 600💎 pack, get 300💎 bonus.",
+      "vi": "Khi nạp Gói 600💎 lần thứ hai, nhận ngay 300💎 thưởng"
+    }
+  },
+  {
+    "key": "user_task.txt_36",
+    "category": "User Task",
+    "subcategory": "Task List",
+    "locales": {
+      "id": "Dapatkan MêLy Club Gratis 3 Hari",
+      "en": "Get 3 Days of MêLy Club Free",
+      "vi": "Nhận ngay MêLy Club 3 ngày miễn phí"
+    }
+  },
+  {
+    "key": "user_task.txt_36_desc",
+    "category": "User Task",
+    "subcategory": "Task List",
+    "locales": {
+      "id": "Saat total isi ulang Gem mencapai 900💎.",
+      "en": "When your total Gem top-ups reach 900💎.",
+      "vi": "Khi nạp gem tích luỹ đủ 900💎"
+    }
   },
   {
     "key": "user_task.desc_22",
@@ -21281,6 +22103,26 @@
       "id": "• Maksimal 5 undangan/hari, setiap teman hanya sekali\\n • Jika berhasil kalian berdua akan mendapat",
       "en": " • Up to 5 invites/day, each friend only once\\n • Successful invite: you both get",
       "vi": " • Tối đa 5 lượt/ngày. Mỗi bạn chỉ được mời 1 lần\\n • Mời thành công: bạn và người được mời nhận"
+    }
+  },
+  {
+    "key": "user_task.desc_23",
+    "category": "User Task",
+    "subcategory": "Task List",
+    "locales": {
+      "id": "Gem harian akan kedaluwarsa pada pukul 23.59 setiap hari.",
+      "en": "Daily Gems expire at 11:59 PM each day.",
+      "vi": "Gem hằng ngày sẽ hết hạn lúc 23:59 mỗi ngày."
+    }
+  },
+  {
+    "key": "user_task.desc_23_2",
+    "category": "User Task",
+    "subcategory": "Task List",
+    "locales": {
+      "id": "Gem Anda akan diperbarui dalam",
+      "en": "Your Gems will refresh in",
+      "vi": "Gem của bạn sẽ làm mới sau"
     }
   },
   {
@@ -21604,6 +22446,16 @@
     }
   },
   {
+    "key": "gem_product.finish_subtitle2",
+    "category": "Gem Product",
+    "subcategory": "List",
+    "locales": {
+      "id": "Terima kasih telah bersama iMely.\\nSemoga Anda menikmati percakapan yang menginspirasi.",
+      "en": "Thank you for being with iMely.\\nWe hope you enjoy inspiring conversations.",
+      "vi": "Cảm ơn bạn đã đồng hành cùng iMely.\\nChúc bạn có những cuộc trò chuyện đầy cảm hứng."
+    }
+  },
+  {
     "key": "gem_product.finish_btn_done",
     "category": "Gem Product",
     "subcategory": "List",
@@ -21611,6 +22463,26 @@
       "id": "Selesai",
       "en": "Done",
       "vi": "Xong"
+    }
+  },
+  {
+    "key": "gem_product.finish_btn_continue_chat",
+    "category": "Gem Product",
+    "subcategory": "List",
+    "locales": {
+      "id": "Lanjutkan Chat",
+      "en": "Continue Chatting",
+      "vi": "Tiếp tục trò chuyện"
+    }
+  },
+  {
+    "key": "gem_product.finish_btn_gem_detail",
+    "category": "Gem Product",
+    "subcategory": "List",
+    "locales": {
+      "id": "Lihat Saldo Gem",
+      "en": "View Gem Balance",
+      "vi": "Xem số dư Gem"
     }
   },
   {
@@ -21644,6 +22516,26 @@
     }
   },
   {
+    "key": "gem_product.pro_monthly",
+    "category": "Gem Product",
+    "subcategory": "List",
+    "locales": {
+      "id": "MêLy Club 1 Bulan",
+      "en": "1-Month MêLy Club",
+      "vi": "MêLy Club 1 tháng"
+    }
+  },
+  {
+    "key": "gem_product.pro_yearly",
+    "category": "Gem Product",
+    "subcategory": "List",
+    "locales": {
+      "id": "MêLy Club 1 Tahun",
+      "en": "1-Year MêLy Club",
+      "vi": "MêLy Club 1 năm"
+    }
+  },
+  {
     "key": "gem_product.finish_pro_subtitle",
     "category": "Gem Product",
     "subcategory": "List",
@@ -21654,8 +22546,138 @@
     }
   },
   {
-    "key": "gem_product.buy_success",
+    "key": "gem_product.processing_title",
     "category": "Gem Product",
+    "subcategory": "List",
+    "locales": {
+      "id": "Transaksi Sedang Diproses",
+      "en": "Transaction in Progress",
+      "vi": "Giao dịch đang được xử lý"
+    }
+  },
+  {
+    "key": "gem_product.processing_note_gem",
+    "category": "Gem Product",
+    "subcategory": "List",
+    "locales": {
+      "id": "Pembelian Anda telah diterima! imely sedang memverifikasi dengan store dan Gem akan segera ditambahkan ke dompet Anda",
+      "en": "Your purchase has been received! imely is verifying it with the store and will add the Gems to your wallet shortly",
+      "vi": "Giao dịch đã được ghi nhận! imely đang xác minh với store để cộng Gem vào ví của bạn. Quá trình này sẽ hoàn tất trong giây lát."
+    }
+  },
+  {
+    "key": "gem_product.processing_note_pro",
+    "category": "Gem Product",
+    "subcategory": "List",
+    "locales": {
+      "id": "Pembelian Anda telah diterima! imely sedang memverifikasi dengan store dan MêLy Club Anda akan segera diaktifkan",
+      "en": "Your purchase has been received! imely is verifying it with the store and will activate your MêLy Club shortly",
+      "vi": "Giao dịch đã được ghi nhận! imely đang xác minh với store để kích hoạt MêLy Club cho bạn. Quyền lợi sẽ sẵn sàng ngay trong giây lát!"
+    }
+  },
+  {
+    "key": "gem_promotion.give_txt",
+    "category": "Gem Promotion",
+    "subcategory": null,
+    "locales": {
+      "id": "Hadiah",
+      "en": "Gift",
+      "vi": "Tặng"
+    }
+  },
+  {
+    "key": "paywall_bts.title_react_msg",
+    "category": "Paywall",
+    "subcategory": "Open_Paywall_Bts",
+    "locales": {
+      "id": "Gem permanen Anda sudah habis",
+      "en": "You’re out of permanent Gems",
+      "vi": "Bạn đã hết gem vĩnh viễn"
+    }
+  },
+  {
+    "key": "paywall_bts.desc_react_msg",
+    "category": "Paywall",
+    "subcategory": "Open_Paywall_Bts",
+    "locales": {
+      "id": "Dapatkan lebih banyak Gem untuk terus memberi hati\\nkepada karakter favorit Anda!",
+      "en": "Get more Gems to keep sending hearts\\nto your favorite character!",
+      "vi": "Hãy nạp thêm gem để tiếp tục thả tim\\ncho nhân vật yêu thích nhé!"
+    }
+  },
+  {
+    "key": "insufficient_gem.title",
+    "category": "Insufficient Gem Paywall",
+    "subcategory": "Action_Open_Insufficient_Gem_Bts",
+    "locales": {
+      "id": "Isi Ulang Gem",
+      "en": "Get More Gems",
+      "vi": "Nhận thêm Gem"
+    }
+  },
+  {
+    "key": "insufficient_gem.subtitle",
+    "category": "Insufficient Gem Paywall",
+    "subcategory": "Action_Open_Insufficient_Gem_Bts",
+    "locales": {
+      "id": "Perlu lebih banyak Gem untuk melanjutkan obrolan",
+      "en": "Need more Gems to keep chatting",
+      "vi": "Cần thêm Gem để tiếp tục trò chuyện"
+    }
+  },
+  {
+    "key": "insufficient_gem.suggest_pro",
+    "category": "Insufficient Gem Paywall",
+    "subcategory": "Action_Open_Insufficient_Gem_Bts",
+    "locales": {
+      "id": "Gabung MêLy Club dan dapatkan lebih banyak Gem setiap hari!",
+      "en": "Join MêLy Club and get more Gems every day!",
+      "vi": "Nhận MêLy Club nhận nhiều Gem hơn mỗi ngày!"
+    }
+  },
+  {
+    "key": "insufficient_gem.suggest_pro_btn",
+    "category": "Insufficient Gem Paywall",
+    "subcategory": "Action_Open_Insufficient_Gem_Bts",
+    "locales": {
+      "id": "Gabung Sekarang",
+      "en": "Join Now",
+      "vi": "Nhận ngay"
+    }
+  },
+  {
+    "key": "insufficient_gem_soon.title",
+    "category": "Insufficient Gem Soon",
+    "subcategory": "Open_Insufficient_Gem_Soon",
+    "locales": {
+      "id": "Wah! Gem kamu hampir habis!",
+      "en": "Oh! You’re almost out of Gems!",
+      "vi": "ÔI! Bạn sắp hết Gem rồi nè!"
+    }
+  },
+  {
+    "key": "insufficient_gem_soon.subtitle",
+    "category": "Insufficient Gem Soon",
+    "subcategory": "Open_Insufficient_Gem_Soon",
+    "locales": {
+      "id": "- Isi ulang sekarang agar obrolan tetap lancar.\\n\n- Gem gratis akan selalu digunakan terlebih dahulu.\\n\n- Gem yang dibeli tidak akan kedaluwarsa.",
+      "en": "- Top up now to keep chatting without interruption.\\n\n- Free Gems are always used first.\\n\n- Purchased Gems never expire.",
+      "vi": "- Nạp ngay để tiếp tục trò chuyện liền mạch.\\n\n- Gem miễn phí luôn được sử dụng trước.\\n\n- Gem đã nạp không bao giờ hết hạn."
+    }
+  },
+  {
+    "key": "insufficient_gem_soon.btn_topup",
+    "category": "Insufficient Gem Soon",
+    "subcategory": "Open_Insufficient_Gem_Soon",
+    "locales": {
+      "id": "Isi Gem Sekarang",
+      "en": "Top up now",
+      "vi": "Nạp Gem ngay"
+    }
+  },
+  {
+    "key": "gem_product.buy_success",
+    "category": "Insufficient Gem Soon",
     "subcategory": "product_transaction",
     "locales": {
       "id": "Pembelian gem berhasil",
@@ -21665,7 +22687,7 @@
   },
   {
     "key": "gem_product.buy_complete",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "product_transaction",
     "locales": {
       "id": "Transaksi berhasil",
@@ -21675,7 +22697,7 @@
   },
   {
     "key": "gem_product.buy_fail_by_server",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "product_transaction",
     "locales": {
       "id": "Transaksi gagal",
@@ -21685,7 +22707,7 @@
   },
   {
     "key": "gem_product.error_code",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "product_transaction",
     "locales": {
       "id": "Kode kesalahan",
@@ -21695,7 +22717,7 @@
   },
   {
     "key": "gem_product.buy_fail_by_store",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "product_transaction",
     "locales": {
       "id": "Pembelian gagal",
@@ -21705,7 +22727,7 @@
   },
   {
     "key": "purchase_transaction.miss_param_toast",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Purchase Transaction",
     "locales": {
       "id": "Informasi produk tidak ditemukan. Silakan coba lagi.",
@@ -21715,25 +22737,45 @@
   },
   {
     "key": "purchase_transaction.btn_gem_success_title",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Purchase Transaction",
     "locales": {}
   },
   {
     "key": "purchase_transaction.btn_gem_success_subtitle",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Purchase Transaction",
     "locales": {}
   },
   {
     "key": "purchase_transaction.success_note",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Purchase Transaction",
     "locales": {}
   },
   {
+    "key": "purchase_promotion.ineligible_trial",
+    "category": "Insufficient Gem Soon",
+    "subcategory": "Purchase Promotion",
+    "locales": {
+      "id": "Akun Anda tidak memenuhi syarat untuk “Uji Coba Gratis” dari store",
+      "en": "Your account isn’t eligible for the “Free Trial” from the store",
+      "vi": "Tài khoản không đủ điều kiện nhận \"Gói dùng thử\" từ cửa hàng ứng dụng."
+    }
+  },
+  {
+    "key": "purchase_promotion.invalid_trial_app_version",
+    "category": "Insufficient Gem Soon",
+    "subcategory": "Purchase Promotion",
+    "locales": {
+      "id": "Silakan perbarui aplikasi untuk membuka fitur ini",
+      "en": "Please update the app to unlock this feature",
+      "vi": "Vui lòng cập nhật ứng dụng để mở khóa tính năng này."
+    }
+  },
+  {
     "key": "purchase_feedback.header",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "Masukan - Laporkan Masalah",
@@ -21743,7 +22785,7 @@
   },
   {
     "key": "purchase_feedback.title_0",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "Masalah apa yang kamu alami?",
@@ -21753,17 +22795,17 @@
   },
   {
     "key": "purchase_feedback.title_1",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
-      "id": "Bagaimana kamu ingin membayar?",
-      "en": "How would you like to pay?",
-      "vi": "Bạn muốn thanh toán bằng cách nào?"
+      "id": "Ingin mengusulkan metode pembayaran lain atau melaporkan masalah lain?",
+      "en": "Want to suggest another payment method or report another issue?",
+      "vi": "Bạn muốn thêm phương thức khác hoặc có lỗi khác muốn góp ý?"
     }
   },
   {
     "key": "purchase_feedback.item_0_0",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "Pembayaran ZaloPay gagal",
@@ -21773,7 +22815,7 @@
   },
   {
     "key": "purchase_feedback.item_0_1",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "Pembayaran MoMo gagal",
@@ -21783,7 +22825,7 @@
   },
   {
     "key": "purchase_feedback.item_0_2",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "Masalah rekening bank",
@@ -21793,7 +22835,7 @@
   },
   {
     "key": "purchase_feedback.item_0_3",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "Masalah Google Play / App Store",
@@ -21803,7 +22845,7 @@
   },
   {
     "key": "purchase_feedback.item_0_4",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "Saya tidak memiliki rekening bank",
@@ -21813,7 +22855,7 @@
   },
   {
     "key": "purchase_feedback.item_0_5",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "Kartu ditolak / kedaluwarsa",
@@ -21823,7 +22865,7 @@
   },
   {
     "key": "purchase_feedback.item_0_6",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "Masalah lainnya",
@@ -21832,8 +22874,28 @@
     }
   },
   {
+    "key": "purchase_feedback.item_0_7",
+    "category": "Insufficient Gem Soon",
+    "subcategory": "Report Purchase",
+    "locales": {
+      "id": "Pembayaran e-wallet gagal",
+      "en": "E-wallet payment failed",
+      "vi": "Ví điện tử không thanh toán được"
+    }
+  },
+  {
+    "key": "purchase_feedback.item_0_8",
+    "category": "Insufficient Gem Soon",
+    "subcategory": "Report Purchase",
+    "locales": {
+      "id": "Masalah QR / transfer bank",
+      "en": "QR / Bank transfer issue",
+      "vi": "Lỗi QR / chuyển khoản ngân hàng"
+    }
+  },
+  {
     "key": "purchase_feedback.item_1_0",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "Pulsa / voucher isi ulang",
@@ -21843,7 +22905,7 @@
   },
   {
     "key": "purchase_feedback.item_1_1",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "QR / VietQR",
@@ -21853,7 +22915,7 @@
   },
   {
     "key": "purchase_feedback.item_1_2",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "MoMo",
@@ -21863,7 +22925,7 @@
   },
   {
     "key": "purchase_feedback.item_1_3",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "Shopee Pay",
@@ -21873,7 +22935,7 @@
   },
   {
     "key": "purchase_feedback.item_1_4",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "Viettel Money",
@@ -21883,7 +22945,7 @@
   },
   {
     "key": "purchase_feedback.item_1_5",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "Kartu ATM domestik",
@@ -21893,7 +22955,7 @@
   },
   {
     "key": "purchase_feedback.item_1_6",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "Visa / Mastercard",
@@ -21903,7 +22965,7 @@
   },
   {
     "key": "purchase_feedback.item_1_7",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "Metode pembayaran lain",
@@ -21913,7 +22975,7 @@
   },
   {
     "key": "purchase_feedback.btn_done",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "Kirim Masukan",
@@ -21923,7 +22985,7 @@
   },
   {
     "key": "purchase_feedback.toast_msg",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "❤️ Terima kasih atas masukanmu",
@@ -21933,17 +22995,17 @@
   },
   {
     "key": "purchase_feedback.input_hint",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
-      "id": "Jelaskan masalahnya…",
-      "en": "Describe the issue…",
-      "vi": "Nhập nội dung lỗi..."
+      "id": "Masukkan masukan Anda…",
+      "en": "Enter your feedback…",
+      "vi": "Nhập góp ý của bạn…"
     }
   },
   {
     "key": "purchase_feedback.input_done",
-    "category": "Gem Product",
+    "category": "Insufficient Gem Soon",
     "subcategory": "Report Purchase",
     "locales": {
       "id": "Selesai",
@@ -22202,6 +23264,16 @@
     }
   },
   {
+    "key": "user_gem_overview.txt_tomorrow",
+    "category": "User Gem",
+    "subcategory": "Overview",
+    "locales": {
+      "id": "besok",
+      "en": "tomorrow",
+      "vi": "ngày mai"
+    }
+  },
+  {
     "key": "gem_chat.not_enough_gems",
     "category": "Gem Chat",
     "subcategory": null,
@@ -22372,6 +23444,16 @@
     }
   },
   {
+    "key": "notification.header.notice",
+    "category": "Notification",
+    "subcategory": "notification_option_menu",
+    "locales": {
+      "id": "Pemberitahuan dari imely",
+      "en": "Notification from imely",
+      "vi": "Thông báo từ imely"
+    }
+  },
+  {
     "key": "noti_list.empty_list",
     "category": "Notification",
     "subcategory": "user_noti_list",
@@ -22379,6 +23461,16 @@
       "id": "Belum ada notifikasi",
       "en": "No notifications yet",
       "vi": "Chưa có thông báo nào"
+    }
+  },
+  {
+    "key": "sz_822.general_title",
+    "category": "Notification",
+    "subcategory": "sz_822",
+    "locales": {
+      "id": "Anda memiliki notifikasi baru",
+      "en": "You have a new notification",
+      "vi": "Bạn có thông báo mới"
     }
   },
   {
@@ -22409,6 +23501,36 @@
       "id": "Karakter Teratas",
       "en": "Top Characters",
       "vi": "Top Characters"
+    }
+  },
+  {
+    "key": "ranking.top_weekly",
+    "category": "Ranking",
+    "subcategory": "ranking_templates",
+    "locales": {
+      "id": "Minggu",
+      "en": "Week",
+      "vi": "Tuần"
+    }
+  },
+  {
+    "key": "ranking.top_monthly",
+    "category": "Ranking",
+    "subcategory": "ranking_templates",
+    "locales": {
+      "id": "Bulan",
+      "en": "Month",
+      "vi": "Tháng"
+    }
+  },
+  {
+    "key": "ranking.top_all",
+    "category": "Ranking",
+    "subcategory": "ranking_templates",
+    "locales": {
+      "id": "Semua",
+      "en": "All",
+      "vi": "Tất cả"
     }
   },
   {
@@ -22476,9 +23598,19 @@
     "category": "Trending",
     "subcategory": "sz_30078",
     "locales": {
-      "id": "obrolan minggu ini",
+      "id": "chat minggu ini",
       "en": "chats this week",
       "vi": "chat tuần này"
+    }
+  },
+  {
+    "key": "sz_30078.monthly_msg",
+    "category": "Trending",
+    "subcategory": "sz_30078",
+    "locales": {
+      "id": "chat bulan ini",
+      "en": "chats this month",
+      "vi": "chat tháng này"
     }
   },
   {
@@ -22509,6 +23641,16 @@
       "id": "obrolan minggu ini",
       "en": "chats this week",
       "vi": "chat tuần này"
+    }
+  },
+  {
+    "key": "sz_30079.monthly_msg",
+    "category": "Trending",
+    "subcategory": "sz_30079",
+    "locales": {
+      "id": "chat bulan ini",
+      "en": "chats this month",
+      "vi": "chat tháng này"
     }
   },
   {
@@ -23399,6 +24541,56 @@
       "id": "Membuka kunci konten ini membutuhkan",
       "en": "Unlocking this content costs",
       "vi": "Mở khóa nội dung này tốn"
+    }
+  },
+  {
+    "key": "block_list.header",
+    "category": "Block List Screen",
+    "subcategory": null,
+    "locales": {
+      "id": "Daftar blokir",
+      "en": "Blocked list",
+      "vi": "Danh sách chặn"
+    }
+  },
+  {
+    "key": "share.function.others",
+    "category": "Share",
+    "subcategory": null,
+    "locales": {
+      "id": "Opsi lainnya",
+      "en": "Other options",
+      "vi": "Tuỳ chọn khác"
+    }
+  },
+  {
+    "key": "share.function.download",
+    "category": "Share",
+    "subcategory": null,
+    "locales": {
+      "id": "Unduh",
+      "en": "Download",
+      "vi": "Lưu về máy"
+    }
+  },
+  {
+    "key": "share.function.screenshot",
+    "category": "Share",
+    "subcategory": null,
+    "locales": {
+      "id": "Ambil tangkapan layar",
+      "en": "Take a screenshot",
+      "vi": "Chụp ảnh màn hình"
+    }
+  },
+  {
+    "key": "share.function.copy_link",
+    "category": "Share",
+    "subcategory": null,
+    "locales": {
+      "id": "Salin tautan",
+      "en": "Copy link",
+      "vi": "Sao chép link"
     }
   }
 ]

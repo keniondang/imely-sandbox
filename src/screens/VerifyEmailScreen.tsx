@@ -2,10 +2,10 @@ import { useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
 import { Str, RichStr, useStrAttrs } from '../components/Str'
 import { useApp } from '../context/AppContext'
-import { resolveString } from '../lib/strings'
+import { resolvePlaceholder } from '../lib/strings'
 
 export function VerifyEmailScreen() {
-  const { closeVerifyEmail, showToast, baseLocale } = useApp()
+  const { closeVerifyEmail, showToast, baseLocale, targetLocale, overrides } = useApp()
   const emailHintAttrs = useStrAttrs('login.update_email.tb_input_email_hint')
   const [email, setEmail] = useState('')
   const [agreed, setAgreed] = useState(false)
@@ -38,7 +38,7 @@ export function VerifyEmailScreen() {
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder={resolveString('login.update_email.tb_input_email_hint', baseLocale)}
+          placeholder={resolvePlaceholder('login.update_email.tb_input_email_hint', targetLocale, baseLocale, overrides)}
           className="w-full mt-6 border-b border-line pb-2 text-[14px] text-ink outline-none focus:border-imely-primary placeholder:text-muted"
           {...emailHintAttrs}
         />
