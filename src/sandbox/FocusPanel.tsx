@@ -14,7 +14,13 @@ import {
   Sparkles,
 } from 'lucide-react'
 import { useApp } from '../context/AppContext'
-import { isConfirmed, LOCALE_LABEL, SOURCE_LOCALES, TARGET_LOCALES } from '../lib/strings'
+import {
+  isConfirmed,
+  LOCALE_LABEL,
+  SOURCE_LOCALES,
+  VISIBLE_SOURCE_LOCALES,
+  VISIBLE_TARGET_LOCALES,
+} from '../lib/strings'
 import { useTranslationEditor } from '../hooks/useTranslationEditor'
 import type { BrowseRow, BrowseSection } from '../hooks/useBrowseOrder'
 
@@ -206,7 +212,7 @@ export function FocusPanel() {
       <div className="shrink-0 border-b border-line px-5 py-3 flex items-center gap-2.5">
         <div className="flex items-center gap-1 shrink-0" title="Language being translated into">
           <span className="text-[10px] text-muted">Target:</span>
-          {TARGET_LOCALES.map((id) => (
+          {VISIBLE_TARGET_LOCALES.map((id) => (
             <button
               key={id}
               onClick={() => setTargetLocale(id)}
@@ -224,7 +230,7 @@ export function FocusPanel() {
 
         <div className="flex items-center gap-1 shrink-0" title="Reference language">
           <span className="text-[10px] text-muted">Base:</span>
-          {SOURCE_LOCALES.map((id) => (
+          {VISIBLE_SOURCE_LOCALES.map((id) => (
             <button
               key={id}
               onClick={() => setBaseLocale(id)}

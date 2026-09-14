@@ -13,6 +13,16 @@ export type Locale = SourceLocale | TargetLocale
 export const SOURCE_LOCALES: SourceLocale[] = ['id', 'en', 'vi']
 export const TARGET_LOCALES: TargetLocale[] = ['zh-TW', 'th']
 
+// UI-visible subset for the locale pill buttons — current rollout is TH
+// translators referencing EN, so ZH-TW/ID/VI are hidden from the switcher
+// rather than removed. The feature itself is untouched: SOURCE_LOCALES/
+// TARGET_LOCALES stay the full set, zh-TW overrides/export/everything else
+// still works exactly as before — only these two lists (used solely for
+// which pill buttons render) are restricted. Widen them again to bring a
+// hidden locale's button back.
+export const VISIBLE_SOURCE_LOCALES: SourceLocale[] = ['en']
+export const VISIBLE_TARGET_LOCALES: TargetLocale[] = ['th']
+
 export const LOCALE_LABEL: Record<Locale, string> = {
   id: 'ID',
   en: 'EN',

@@ -1,7 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { ChevronDown, Download } from 'lucide-react'
 import { exportPairedXlsx, exportSingleLocaleXlsx, type ExportRowFilter } from '../../lib/exportXlsx'
-import { LOCALE_LABEL, SOURCE_LOCALES, TARGET_LOCALES, type SourceLocale, type TargetLocale } from '../../lib/strings'
+import {
+  LOCALE_LABEL,
+  VISIBLE_SOURCE_LOCALES,
+  VISIBLE_TARGET_LOCALES,
+  type SourceLocale,
+  type TargetLocale,
+} from '../../lib/strings'
 import type { Locale } from '../../lib/strings'
 
 const ROW_FILTERS: { id: ExportRowFilter; label: string }[] = [
@@ -82,7 +88,7 @@ export function ExportMenu({
               </button>
             ))}
           </div>
-          {TARGET_LOCALES.map((l) => (
+          {VISIBLE_TARGET_LOCALES.map((l) => (
             <button
               key={l}
               onClick={() => handlePaired(l)}
@@ -103,7 +109,7 @@ export function ExportMenu({
           {showSingleColumn && (
             <div className="pb-1">
               <div className="px-3 pt-1 text-[9.5px] font-semibold text-muted/70 uppercase">Source</div>
-              {SOURCE_LOCALES.map((l) => (
+              {VISIBLE_SOURCE_LOCALES.map((l) => (
                 <button
                   key={l}
                   onClick={() => handleSingle(l)}
@@ -113,7 +119,7 @@ export function ExportMenu({
                 </button>
               ))}
               <div className="px-3 pt-1 text-[9.5px] font-semibold text-muted/70 uppercase">Target</div>
-              {TARGET_LOCALES.map((l) => (
+              {VISIBLE_TARGET_LOCALES.map((l) => (
                 <button
                   key={l}
                   onClick={() => handleSingle(l)}

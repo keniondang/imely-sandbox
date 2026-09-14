@@ -423,8 +423,12 @@ interface AppState {
 const AppCtx = createContext<AppState | null>(null)
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [targetLocale, setTargetLocale] = useState<TargetLocale>('zh-TW')
-  const [baseLocale, setBaseLocale] = useState<SourceLocale>('id')
+  // Defaults match the only pill buttons currently visible in the UI (see
+  // VISIBLE_TARGET_LOCALES/VISIBLE_SOURCE_LOCALES in lib/strings.ts) — a
+  // translator has no in-app way to reach zh-TW/id/vi anymore, so starting
+  // there would land on a locale with no active-looking button anywhere.
+  const [targetLocale, setTargetLocale] = useState<TargetLocale>('th')
+  const [baseLocale, setBaseLocale] = useState<SourceLocale>('en')
   const [currentScreen, setCurrentScreen] = useState<ScreenId>('feed')
   // Starts from whatever's in localStorage (works with no Supabase config at
   // all — see lib/supabase.ts). Once a project's configured, Supabase rows

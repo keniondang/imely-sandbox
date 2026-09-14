@@ -7,8 +7,8 @@ import {
   getEntry,
   isConfirmed,
   LOCALE_LABEL,
-  SOURCE_LOCALES,
-  TARGET_LOCALES,
+  VISIBLE_SOURCE_LOCALES,
+  VISIBLE_TARGET_LOCALES,
   type StringEntry,
 } from '../lib/strings'
 import { useNavigateToString, useOpenScreen } from '../hooks/useNavigateToString'
@@ -536,7 +536,7 @@ export function Inspector({ activeScreenId }: { activeScreenId: ScreenId }) {
         </div>
         <div className="flex items-center gap-1.5 mt-2 flex-wrap">
           <span className="text-[10px] text-gray-500">Target:</span>
-          {TARGET_LOCALES.map((id) => (
+          {VISIBLE_TARGET_LOCALES.map((id) => (
             <button
               key={id}
               onClick={() => setTargetLocale(id)}
@@ -557,7 +557,7 @@ export function Inspector({ activeScreenId }: { activeScreenId: ScreenId }) {
           title="Reference language shown for anything not translated yet — id/en/vi themselves are never edited here, only chosen"
         >
           <span className="text-[10px] text-gray-500">Base:</span>
-          {SOURCE_LOCALES.map((id) => (
+          {VISIBLE_SOURCE_LOCALES.map((id) => (
             <button
               key={id}
               onClick={() => setBaseLocale(id)}
