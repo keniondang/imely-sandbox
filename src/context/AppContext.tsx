@@ -156,6 +156,12 @@ interface AppState {
   overrides: Record<string, Partial<Record<TargetLocale, string>>>
   applyOverride: (key: string, locale: TargetLocale, value: string) => void
   resetOverride: (key: string, locale: TargetLocale) => void
+  // Restores an override (and its reviewed flag) to an exact prior state —
+  // used by Translation Mode's post-save Undo, since re-running
+  // applyOverride would wrongly force reviewed=true even when undoing back
+  // to a pre-filled-but-unreviewed value. `value` undefined means "there
+  // was nothing before" and clears via resetOverride.
+  restoreOverride: (key: string, locale: TargetLocale, value: string | undefined, wasReviewed: boolean) => void
 
   // Whether a human has actually confirmed a given override, th-only for
   // now — see REVIEWED_STORAGE_KEY's comment and isConfirmed in
@@ -563,6 +569,25 @@ export function AppProvider({ children }: { children: ReactNode }) {
     supabase?.from('translations').delete().eq('key', key).eq('locale', locale).then()
   }
 
+  // Undo, for the "Save & Next" flow — restores exactly what was there
+  // immediately before the save being undone, including its review status.
+  // Deliberately separate from applyOverride: that always marks a save as
+  // reviewed (correct for a real save, since saving IS the review signal),
+  // but undoing back to a th value that was only ever pre-filled from the
+  // sheet must restore it as still-unreviewed, not silently mark it
+  // reviewed just because it flowed through the same setter. `value`
+  // undefined means there was nothing there before — undoes to fully blank
+  // via resetOverride rather than writing an empty string.
+  const restoreOverride = (key: string, locale: TargetLocale, value: string | undefined, wasReviewed: boolean) => {
+    if (value === undefined) {
+      resetOverride(key, locale)
+      return
+    }
+    setOverrides((prev) => ({ ...prev, [key]: { ...prev[key], [locale]: value } }))
+    setReviewed((prev) => ({ ...prev, [key]: { ...prev[key], [locale]: wasReviewed } }))
+    supabase?.from('translations').upsert({ key, locale, text: value, updated_at: new Date().toISOString() }).then()
+  }
+
   const selectKey = (key: string | null, occurrence: { screenId: ScreenId; zone: Zone } | null) => {
     setSelectedKey(key)
     setSelectedOccurrence(occurrence)
@@ -710,6 +735,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       overrides,
       applyOverride,
       resetOverride,
+      restoreOverride,
       reviewed,
       livePreview,
       setLivePreview,

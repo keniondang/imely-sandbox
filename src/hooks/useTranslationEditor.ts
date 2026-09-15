@@ -1,10 +1,30 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
-import { useApp } from '../context/AppContext'
-import { getAiSuggestion, getEntry, isConfirmed, LOCALE_LABEL } from '../lib/strings'
+import { useApp, type ScreenId, type Zone } from '../context/AppContext'
+import { getAiSuggestion, getEntry, isConfirmed, LOCALE_LABEL, type TargetLocale } from '../lib/strings'
 import { buildStrSelector } from '../components/Str'
 import { useBrowseOrder, type BrowseRow } from './useBrowseOrder'
 import { useNavigateToString } from './useNavigateToString'
 import { ZONE_TYPE } from '../sandbox/browseConfig'
+
+// Snapshot of a save, taken right before it happens — captures whatever was
+// there immediately prior so Undo can put it back exactly, review status
+// included (see restoreOverride in AppContext). Kept separate from
+// `savedTranslation` (the CURRENT saved value) since the whole point is
+// remembering the PREVIOUS one.
+interface UndoSnapshot {
+  key: string
+  locale: TargetLocale
+  screenId: ScreenId | null
+  zone: Zone | null
+  previousValue: string | undefined
+  previousReviewed: boolean
+}
+
+// How long the Undo affordance stays available after a save — long enough
+// to notice past the brief "Saved" checkmark flash (which auto-advance
+// usually outlives), short enough that it doesn't linger as a trap for
+// undoing some much-later, unrelated save.
+const UNDO_WINDOW_MS = 8000
 
 // All the state/logic behind editing whichever string is currently
 // selected — draft-then-Save, prev/next at the string/group/page tier, AI
@@ -20,6 +40,7 @@ export function useTranslationEditor() {
     reviewed,
     applyOverride,
     resetOverride,
+    restoreOverride,
     setLivePreview,
     selectedKey,
     selectedOccurrence,
@@ -47,6 +68,8 @@ export function useTranslationEditor() {
   const [overflowFlag, setOverflowFlag] = useState<boolean | null>(null)
   const [justApplied, setJustApplied] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [undoSnapshot, setUndoSnapshot] = useState<UndoSnapshot | null>(null)
+  const undoTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   // Auto-grows the translation box to fit its content, so it sits flush
@@ -207,10 +230,27 @@ export function useTranslationEditor() {
 
   function handleApply() {
     if (!selectedKey || !draftText.trim()) return
+    // Snapshot whatever was there right before this save overwrites it, so
+    // Undo can put back the exact prior value AND its review status — not
+    // just re-apply old text and have that wrongly count as freshly
+    // reviewed. Occurrence is captured too, purely so Undo can jump back to
+    // where this string lives instead of leaving the translator on whatever
+    // row auto-advance already moved them to.
+    const snapshot: UndoSnapshot = {
+      key: selectedKey,
+      locale: targetLocale,
+      screenId: selectedOccurrence?.screenId ?? null,
+      zone: selectedOccurrence?.zone ?? null,
+      previousValue: overrides[selectedKey]?.[targetLocale],
+      previousReviewed: Boolean(reviewed[selectedKey]?.[targetLocale]),
+    }
     applyOverride(selectedKey, targetLocale, draftText)
     setLivePreview(null)
     setJustApplied(true)
     setTimeout(() => setJustApplied(false), 1200)
+    if (undoTimer.current) clearTimeout(undoTimer.current)
+    setUndoSnapshot(snapshot)
+    undoTimer.current = setTimeout(() => setUndoSnapshot(null), UNDO_WINDOW_MS)
     // Translating into a new language is a long march through ~1,500 keys —
     // auto-advancing to the next gap keeps a translator's hands on the
     // keyboard instead of re-hunting the list after every save.
@@ -218,6 +258,28 @@ export function useTranslationEditor() {
     if (target) {
       navigateTo(target.key, target.screenId ?? undefined, target.zone ?? undefined)
       syncInspectorFocus(target)
+    }
+  }
+
+  function handleUndo() {
+    if (!undoSnapshot) return
+    const { key, locale, screenId, zone, previousValue, previousReviewed } = undoSnapshot
+    restoreOverride(key, locale, previousValue, previousReviewed)
+    if (undoTimer.current) clearTimeout(undoTimer.current)
+    setUndoSnapshot(null)
+    // Jump back to the undone string so the translator lands somewhere that
+    // visibly reflects the revert, rather than staying on whatever row
+    // auto-advance had already moved them to.
+    navigateTo(key, screenId ?? undefined, zone ?? undefined)
+    const row = rows.find((r) => r.key === key && r.screenId === screenId && r.zone === zone)
+    if (row) syncInspectorFocus(row)
+    // If we're already sitting on the undone key/locale (auto-advance never
+    // moved us, or Undo brought us right back to it), the [selectedKey,
+    // targetLocale]-keyed resync effect below won't refire on its own —
+    // refresh the draft here instead.
+    if (key === selectedKey && locale === targetLocale) {
+      setDraftText(previousValue ?? '')
+      setLivePreview(null)
     }
   }
 
@@ -234,6 +296,12 @@ export function useTranslationEditor() {
     setDraftText('')
     setLivePreview(null)
   }
+
+  useEffect(() => {
+    return () => {
+      if (undoTimer.current) clearTimeout(undoTimer.current)
+    }
+  }, [])
 
   function copyKey() {
     if (!selectedKey) return
@@ -293,6 +361,8 @@ export function useTranslationEditor() {
     goNextUntranslated,
     handleChange,
     handleApply,
+    handleUndo,
+    canUndo: undoSnapshot !== null,
     handleReset,
     handleTextareaKeyDown,
     copyKey,

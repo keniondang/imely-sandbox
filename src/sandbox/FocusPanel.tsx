@@ -12,6 +12,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
   Sparkles,
+  Undo2,
 } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import {
@@ -92,6 +93,8 @@ export function FocusPanel() {
     goPage,
     handleChange,
     handleApply,
+    handleUndo,
+    canUndo,
     handleReset,
     handleTextareaKeyDown,
     copyKey,
@@ -657,6 +660,23 @@ export function FocusPanel() {
           </div>
         )}
       </div>
+
+      {/* Undo affordance for the save that just happened — separate from the
+          brief "Saved" checkmark inside Save & Next, since auto-advance to
+          the next string usually carries the translator past that flash
+          before they'd have a chance to act on it. Self-clears after
+          UNDO_WINDOW_MS in the hook; clicking it also clears immediately. */}
+      {canUndo && (
+        <div className="shrink-0 border-t border-line px-6 py-2.5 flex items-center justify-between gap-2 bg-subtle">
+          <span className="text-[12.5px] text-muted">Saved.</span>
+          <button
+            onClick={handleUndo}
+            className="flex items-center gap-1.5 text-[12.5px] font-semibold text-imely-primary hover:underline"
+          >
+            <Undo2 size={13} /> Undo
+          </button>
+        </div>
+      )}
 
       {/* bottom action bar — Prev/Next as real buttons, not side arrows, so
           the whole panel reads as one continuous review flow */}
